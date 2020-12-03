@@ -8,13 +8,13 @@ import java.util.Collection;
 
 public interface EntityDAO<T extends Entity> {
 
-    boolean create(T t);
+    boolean create(T t) throws SQLException;
 
-    T read(int id);
+    T read(int id) throws FactoryException, SQLException;
 
-    T update(T t);
+    boolean update(T t) throws SQLException;
 
-    boolean delete(int id);
+    boolean delete(int id) throws SQLException;
 
     Collection<T> findAll() throws SQLException, FactoryException;
 

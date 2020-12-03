@@ -7,7 +7,7 @@ import java.util.Collection;
 
 public class AuthorFinder extends EntityFinder<Author> {
     private final static String SQL_QUERY = "SELECT * FROM ([QUERY])";
-    private final static String VIEW = "[VIEW]}";
+    private final static String VIEW = "[VIEW]";
     private final static String VIEW_NAME = "authors";
     private static final String WHERE = "WHERE [PARAMETER] = [VALUE]";
     private static final String PARAMETER = "[PARAMETER]";
@@ -15,8 +15,6 @@ public class AuthorFinder extends EntityFinder<Author> {
     private static final String FIRSTNAME = "FIRSTNAME";
     private static final String ID = "ID";
     private static final CharSequence LASTNAME = "LASTNAME";
-
-    private String query = "SELECT * FROM [VIEW]".replace(VIEW, VIEW_NAME);
 
     public AuthorFinder() {
         super(VIEW_NAME);

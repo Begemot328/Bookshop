@@ -2,26 +2,27 @@ package by.epam.bookshop.dao.impl;
 
 import by.epam.bookshop.dao.EntityDAO;
 import by.epam.bookshop.dao.EntityFinder;
-import by.epam.bookshop.entity.Entity;
 import by.epam.bookshop.entity.EntityFactory;
 import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.entity.author.AuthorFactory;
 import by.epam.bookshop.exceptions.FactoryException;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
 
 public class AuthorDAO implements EntityDAO<Author> {
     private static final String ID = "ID";
     private static final String FIRSTNAME = "firstname";
     private static final String LASTNAME = "lastname";
+
+    private static final String INSERT_QUERY =
+            "INSERT INTO BOOKSHOP.authors(FIRST_NAME, LAST_NAME) VALUES (?,?);";
+
+    private static final String DELETE_QUERY =
+            "DELETE FROM BOOKSHOP.authors where ID = ?;";
+    private static final String UPDATE_QUERY =
+            "UPDATE BOOKSHOP.authors SET FIRST_NAME = ?, LAST_NAME = ? WHERE ID = ?;";
 
     private Connection connection;
 
@@ -30,23 +31,50 @@ public class AuthorDAO implements EntityDAO<Author> {
     }
 
     @Override
-    public boolean create(Author author) {
-        return false;
+    public boolean create(Author author) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(
+                INSERT_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);) {
+            statement.setString(1, author.getFirstName());
+            statement.setString(2, author.getLastName());
+
+            statement.executeUpdate();
+
+            if (statement.getGeneratedKeys().next()) {
+                author.setId(statement.getGeneratedKeys().getInt(0));
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
     @Override
-    public Author read(int id) {
-        return null;
+    public Author read(int id) throws FactoryException, SQLException {
+        return findById(id);
     }
 
     @Override
-    public Author update(Author author) {
-        return null;
+    public boolean update(Author author) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(
+                UPDATE_QUERY)) {
+            statement.setString(1, author.getFirstName());
+            statement.setString(2, author.getLastName());
+            statement.setInt(3, author.getId());
+
+            statement.executeUpdate();
+            return true;
+        }
     }
 
     @Override
-    public boolean delete(int id) {
-        return false;
+    public boolean delete(int id) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(
+                DELETE_QUERY)) {
+            statement.setInt(1, id);
+
+            statement.executeUpdate();
+            return true;
+        }
     }
 
     @Override
