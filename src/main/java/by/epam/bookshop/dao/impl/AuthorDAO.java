@@ -54,7 +54,7 @@ public class AuthorDAO implements EntityDAO<Author> {
     }
 
     @Override
-    public boolean update(Author author) throws SQLException {
+    public void update(Author author) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(
                 UPDATE_QUERY)) {
             statement.setString(1, author.getFirstName());
@@ -62,18 +62,16 @@ public class AuthorDAO implements EntityDAO<Author> {
             statement.setInt(3, author.getId());
 
             statement.executeUpdate();
-            return true;
         }
     }
 
     @Override
-    public boolean delete(int id) throws SQLException {
+    public void delete(int id) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(
                 DELETE_QUERY)) {
             statement.setInt(1, id);
 
             statement.executeUpdate();
-            return true;
         }
     }
 

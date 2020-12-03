@@ -12,9 +12,9 @@ public interface EntityDAO<T extends Entity> {
 
     T read(int id) throws FactoryException, SQLException;
 
-    boolean update(T t) throws SQLException;
+    void update(T t) throws SQLException;
 
-    boolean delete(int id) throws SQLException;
+    void delete(int id) throws SQLException;
 
     Collection<T> findAll() throws SQLException, FactoryException;
 
