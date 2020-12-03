@@ -1,6 +1,10 @@
-package by.epam.bookshop.entity;
+package by.epam.bookshop.entity.book_action;
 
-import by.epam.bookshop.entity.factory.EntityFactory;
+import by.epam.bookshop.entity.position.PositionStatus;
+import by.epam.bookshop.entity.shop.Shop;
+import by.epam.bookshop.entity.user.User;
+import by.epam.bookshop.entity.book.Book;
+import by.epam.bookshop.entity.EntityFactory;
 import by.epam.bookshop.exceptions.FactoryException;
 
 import java.time.LocalDateTime;

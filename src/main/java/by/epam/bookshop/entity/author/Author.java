@@ -1,8 +1,10 @@
-package by.epam.bookshop.entity;
+package by.epam.bookshop.entity.author;
+
+import by.epam.bookshop.entity.Entity;
 
 import java.util.Objects;
 
-public class Author extends Entity{
+public class Author extends Entity {
     private int id;
     private String firstName;
     private String lastName;

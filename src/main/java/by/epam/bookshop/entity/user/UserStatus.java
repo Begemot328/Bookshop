@@ -1,4 +1,4 @@
-package by.epam.bookshop.entity;
+package by.epam.bookshop.entity.user;
 
 
 public enum UserStatus {

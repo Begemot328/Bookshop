@@ -1,6 +1,5 @@
-package by.epam.bookshop.entity.factory;
+package by.epam.bookshop.entity;
 
-import by.epam.bookshop.entity.BookAction;
 import by.epam.bookshop.entity.Entity;
 import by.epam.bookshop.exceptions.FactoryException;
 

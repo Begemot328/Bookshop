@@ -1,6 +1,7 @@
-package by.epam.bookshop.entity;
+package by.epam.bookshop.entity.book;
 
-import by.epam.bookshop.entity.factory.EntityFactory;
+import by.epam.bookshop.entity.author.Author;
+import by.epam.bookshop.entity.EntityFactory;
 import by.epam.bookshop.exceptions.FactoryException;
 
 public class BookFactory implements EntityFactory<Book> {

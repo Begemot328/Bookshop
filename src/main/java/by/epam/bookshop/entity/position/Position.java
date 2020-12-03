@@ -1,8 +1,13 @@
-package by.epam.bookshop.entity;
+package by.epam.bookshop.entity.position;
+
+import by.epam.bookshop.entity.Entity;
+import by.epam.bookshop.entity.Pricefull;
+import by.epam.bookshop.entity.shop.Shop;
+import by.epam.bookshop.entity.book.Book;
 
 import java.util.Objects;
 
-public class Position extends Entity implements Pricefull{
+public class Position extends Entity implements Pricefull {
     private int id;
     private Book book;
     private Shop shop;

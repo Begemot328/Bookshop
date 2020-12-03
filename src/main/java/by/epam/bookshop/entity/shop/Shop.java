@@ -1,8 +1,10 @@
-package by.epam.bookshop.entity;
+package by.epam.bookshop.entity.shop;
+
+import by.epam.bookshop.entity.Entity;
 
 import java.util.Objects;
 
-public class Shop extends Entity{
+public class Shop extends Entity {
     private int id;
     private String name;
     private String adress;

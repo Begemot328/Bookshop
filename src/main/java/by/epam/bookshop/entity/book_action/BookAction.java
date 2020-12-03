@@ -1,9 +1,15 @@
-package by.epam.bookshop.entity;
+package by.epam.bookshop.entity.book_action;
+
+import by.epam.bookshop.entity.*;
+import by.epam.bookshop.entity.book.Book;
+import by.epam.bookshop.entity.position.PositionStatus;
+import by.epam.bookshop.entity.shop.Shop;
+import by.epam.bookshop.entity.user.User;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class BookAction extends Entity implements Pricefull{
+public class BookAction extends Entity implements Pricefull {
     private int id;
     private Book book;
     private User buyer;

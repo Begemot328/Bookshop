@@ -1,17 +1,19 @@
-package by.epam.bookshop.entity;
+package by.epam.bookshop.entity.user;
 
-public class User extends Entity{
+import by.epam.bookshop.entity.Entity;
+
+public class User extends Entity {
     private int id;
     private String firstName;
     private String lastName;
     private String login;
-    private String password;
+    private int password;
     private String adress;
     private String photoLink;
     private UserStatus status;
 
     public User(String firstName, String lastName,
-                String login, String password,
+                String login, int password,
                 String adress, String photoLink,
                 UserStatus status) {
         this.firstName = firstName;
@@ -39,11 +41,11 @@ public class User extends Entity{
         this.login = login;
     }
 
-    public String getPassword() {
+    public int getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(int password) {
         this.password = password;
     }
 

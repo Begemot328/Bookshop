@@ -200,11 +200,14 @@ drop view if exists bookshop.books_by_author;
 create view bookshop.books_by_author as
 select bookshop.authors.first_name,
        bookshop.authors.last_name,
-       bookshop.books.title
+       bookshop.books.title,
+       bookshop.books.price
 from bookshop.authors
          join bookshop.books
               on bookshop.authors.id =  bookshop.books.author_id
 group by books.title;
+
+select * from bookshop.books_by_author where books_by_author.price > 20;
 
 #root admin, do not change!
 insert users(id, first_name, last_name, login, password, adress, status)
