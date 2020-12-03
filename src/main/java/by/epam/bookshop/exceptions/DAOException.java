@@ -1,11 +1,12 @@
 package by.epam.bookshop.exceptions;
 
-public class FactoryException extends ProjectException {
-    public FactoryException(String message) {
+public class DAOException extends ProjectException{
+    public DAOException(String message) {
         super(message);
     }
 
-    public FactoryException(String message, Exception e) {
+
+    public DAOException(String message, Exception e) {
         super(message + e.getMessage());
         this.setStackTrace (e.getStackTrace());
     }

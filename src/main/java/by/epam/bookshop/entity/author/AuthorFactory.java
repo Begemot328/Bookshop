@@ -5,7 +5,6 @@ import by.epam.bookshop.exceptions.FactoryException;
 
 public class AuthorFactory implements EntityFactory<Author> {
 
-    private static final String WRONG_INPUT_DATA = "Wrong input data";
 
     @Override
     public Author create(Object... args) throws FactoryException {

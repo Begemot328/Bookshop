@@ -78,7 +78,7 @@ create index admin_index on user_actions (id_admin);
 create table authors
 (
     id         int primary key auto_increment,
-    first_name varchar(40),
+    first_name varchar(40) not null,
     last_name  varchar(40) not null
 
 );
@@ -198,16 +198,22 @@ group by users.id;
 
 drop view if exists bookshop.books_by_author;
 create view bookshop.books_by_author as
-select bookshop.authors.first_name,
+select bookshop.authors.id,
+       bookshop.authors.first_name,
        bookshop.authors.last_name,
        bookshop.books.title,
        bookshop.books.price
 from bookshop.authors
          join bookshop.books
-              on bookshop.authors.id =  bookshop.books.author_id
+              on bookshop.authors.id = bookshop.books.author_id
 group by books.title;
 
-select * from bookshop.books_by_author where books_by_author.price > 20;
+select *
+from (
+         select *
+         from bookshop.books_by_author
+         where books_by_author.price > 20) as q1
+where id = 2;
 
 #root admin, do not change!
 insert users(id, first_name, last_name, login, password, adress, status)
@@ -242,7 +248,9 @@ VALUES (1, 5, '2020_10_27 09:20:11', 0, 2);
 insert authors (id, first_name, last_name)
 VALUES (2, 'George', 'Martin');
 insert authors (id, first_name, last_name)
-VALUES (1, null, 'The Church');
+VALUES (1, ' ', 'The Church');
+insert authors (id, first_name, last_name)
+VALUES (3, 'George', 'Orwell');
 
 insert shops(id, name, adress, position)
 values (1, 'Na Grushevke', 'Dzerzhynskogo prospekt, 15', '');
@@ -280,8 +288,14 @@ values (4, 1, 2, 2, null, 2);
 insert book_actions(book_id, buyer_id, seller_id, date_time, initial_status, final_status, shop_id, quantity)
 values (1, null, 3, '2020_11_10 09:30:11', 1, 2, 2, 2);
 
-
 insert book_actions(book_id, buyer_id, seller_id, date_time, initial_status, final_status, shop_id, quantity)
 values (1, 4, 3, '2020_11_10 09:30:11', 2, 4, 2, 1);
 insert book_actions(book_id, buyer_id, seller_id, date_time, initial_status, final_status, shop_id, quantity)
 values (2, 5, 3, '2020_11_10 09:30:11', 2, 3, 1, 1);
+
+insert books(id, title, author_id, price, description)
+VALUES (4, '1984', 3, 35, null);
+insert positions(id, book_id, shop_id, status, note, quantity)
+values (6, 4, 1, 2, null, 1);
+insert book_actions(book_id, buyer_id, seller_id, date_time, initial_status, final_status, shop_id, quantity)
+values (6, null, 2, '2020_12_15 09:25:11', 1, 2, 1, 1);
