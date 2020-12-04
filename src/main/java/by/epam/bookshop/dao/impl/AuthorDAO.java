@@ -19,11 +19,11 @@ public class AuthorDAO implements EntityDAO<Author> {
 
     private static final String INSERT_QUERY =
             "INSERT INTO BOOKSHOP.authors(FIRST_NAME, LAST_NAME) VALUES (?,?);";
-
     private static final String DELETE_QUERY =
             "DELETE FROM BOOKSHOP.authors where ID = ?;";
     private static final String UPDATE_QUERY =
             "UPDATE BOOKSHOP.authors SET FIRST_NAME = ?, LAST_NAME = ? WHERE ID = ?;";
+
     private static final String SQL_EXCEPTION = "SQL Exception: ";
     private static final String FACTORY_EXCEPTION = "Factory Exception: ";
 
