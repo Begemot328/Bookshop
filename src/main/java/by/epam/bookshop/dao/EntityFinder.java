@@ -5,6 +5,12 @@ import by.epam.bookshop.entity.Entity;
 public abstract class EntityFinder<T extends Entity> {
     protected final static String SELECT_FROM_RESULT = "SELECT * FROM ([QUERY]) AS [ALIAS]";
 
+    protected final static String SQL_QUERY = "SELECT * FROM [QUERY]";
+    protected static final String WHERE = " WHERE [PARAMETER] = '[VALUE]'";
+    protected static final String WHERE_LIKE = " WHERE [PARAMETER] LIKE '%[VALUE]%'";
+    protected static final String PARAMETER = "[PARAMETER]";
+    protected static final String VALUE = "[VALUE]";
+
     protected final static String RESULT = "([QUERY]) AS [ALIAS]";
     protected final static String SELECT_FROM_TABLE = "SELECT * FROM [QUERY]";
     public static final String QUERY = "[QUERY]";

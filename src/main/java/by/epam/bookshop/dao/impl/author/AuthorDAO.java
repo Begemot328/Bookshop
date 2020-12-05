@@ -1,4 +1,4 @@
-package by.epam.bookshop.dao.impl;
+package by.epam.bookshop.dao.impl.author;
 
 import by.epam.bookshop.dao.EntityDAO;
 import by.epam.bookshop.dao.EntityFinder;
@@ -11,7 +11,7 @@ import by.epam.bookshop.exceptions.FactoryException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
-
+// Can be deleted
 public class AuthorDAO implements EntityDAO<Author> {
     private static final String ID = "ID";
     private static final String FIRSTNAME = "first_name";

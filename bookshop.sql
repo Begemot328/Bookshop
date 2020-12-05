@@ -65,10 +65,10 @@ create table user_actions
     initial_status tinyint                        not null,
     final_status   tinyint                        not null,
 
-    foreign key (id_user) references users (id),
-    foreign key (id_admin) references users (id),
-    foreign key (initial_status) references user_status (id),
-    foreign key (final_status) references user_status (id)
+    foreign key (id_user) references users (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    foreign key (id_admin) references users (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    foreign key (initial_status) references user_status (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    foreign key (final_status) references user_status (id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 create index id_index on user_actions (id);
@@ -92,7 +92,7 @@ create table books
     author_id   int         not null,
     price       float,
     description text,
-    foreign key (author_id) references authors (id)
+    foreign key (author_id) references authors (id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 create index id_index on books (id);
@@ -104,7 +104,7 @@ create table shops
 (
     id       int primary key auto_increment not null,
     name     varchar(40)                    not null,
-    adress   varchar(40),
+    adress   varchar(100),
     position varchar(40)
 );
 
@@ -118,9 +118,9 @@ create table positions
     status   tinyint not null,
     note     text,
     quantity int     not null default 1,
-    foreign key (status) references position_status (id),
-    foreign key (shop_id) references shops (id),
-    foreign key (book_id) references books (id)
+    foreign key (status) references position_status (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    foreign key (shop_id) references shops (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    foreign key (book_id) references books (id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 create index id_index on positions (id);
@@ -140,11 +140,11 @@ create table book_actions
     shop_id        int                            not null,
 
 
-    foreign key (initial_status) references position_status (id),
-    foreign key (final_status) references position_status (id),
-    foreign key (book_id) references books (id),
-    foreign key (buyer_id) references users (id),
-    foreign key (seller_id) references users (id)
+    foreign key (initial_status) references position_status (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    foreign key (final_status) references position_status (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    foreign key (book_id) references books (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    foreign key (buyer_id) references users (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    foreign key (seller_id) references users (id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 create index id_index on book_actions (id);

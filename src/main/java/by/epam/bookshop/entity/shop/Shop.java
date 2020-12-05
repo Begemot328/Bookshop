@@ -16,6 +16,30 @@ public class Shop extends Entity {
         this.position = position;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getAdress() {
+        return adress;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAdress(String adress) {
+        this.adress = adress;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
     public int getId() {
         return id;
     }
