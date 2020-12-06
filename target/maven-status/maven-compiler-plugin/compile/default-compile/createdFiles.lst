@@ -1,0 +1,5 @@
+by\epam\bookshop\dao\impl\shop\MySQLShopDAO.class
+by\epam\bookshop\dao\impl\author\MySQLAuthorDAO.class
+by\epam\bookshop\dao\impl\shop\ShopFinder.class
+by\epam\bookshop\dao\impl\author\AuthorDAO.class
+by\epam\bookshop\dao\impl\author\AuthorFinder.class
