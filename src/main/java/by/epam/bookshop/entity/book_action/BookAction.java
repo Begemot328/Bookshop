@@ -19,11 +19,12 @@ public class BookAction extends Entity implements Pricefull {
     private PositionStatus initialStatus;
     private PositionStatus finalStatus;
     private Shop shop;
+    private float currentPrice;
 
     public BookAction(Book book, User buyer, User seller,
                       LocalDateTime date, int quantity,
                       PositionStatus initialStatus, PositionStatus finalStatus,
-                      Shop shop) {
+                      Shop shop, Float currentPrice) {
         this.book = book;
         this.buyer = buyer;
         this.seller = seller;
@@ -32,6 +33,7 @@ public class BookAction extends Entity implements Pricefull {
         this.initialStatus = initialStatus;
         this.finalStatus = finalStatus;
         this.shop = shop;
+        this.currentPrice = currentPrice;
     }
     @Override
     public float getTotalPrice() {
@@ -74,6 +76,50 @@ public class BookAction extends Entity implements Pricefull {
         return shop;
     }
 
+    public Book getBook() {
+        return book;
+    }
+
+    public float getCurrentPrice() {
+        return currentPrice;
+    }
+
+    public void setCurrentPrice(float currentPrice) {
+        this.currentPrice = currentPrice;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
+    public void setBuyer(User buyer) {
+        this.buyer = buyer;
+    }
+
+    public void setSeller(User seller) {
+        this.seller = seller;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setInitialStatus(PositionStatus initialStatus) {
+        this.initialStatus = initialStatus;
+    }
+
+    public void setFinalStatus(PositionStatus finalStatus) {
+        this.finalStatus = finalStatus;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
+    }
+
     @Override
     public String toString() {
         return "BookAction{" +
@@ -86,6 +132,7 @@ public class BookAction extends Entity implements Pricefull {
                 ", initialStatus=" + initialStatus +
                 ", finalStatus=" + finalStatus +
                 ", \n shop=" + shop +
+                ", \n current price =" + currentPrice +
                 "\n}";
     }
 
@@ -102,12 +149,13 @@ public class BookAction extends Entity implements Pricefull {
                 Objects.equals(date, that.date) &&
                 initialStatus == that.initialStatus &&
                 finalStatus == that.finalStatus &&
-                Objects.equals(shop, that.shop);
+                Objects.equals(shop, that.shop)
+                && currentPrice == that.currentPrice;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, book, buyer, seller, date,
-                quantity, initialStatus, finalStatus, shop);
+                quantity, initialStatus, finalStatus, shop, currentPrice);
     }
 }

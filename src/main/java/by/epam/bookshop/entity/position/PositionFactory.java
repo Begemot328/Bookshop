@@ -13,7 +13,7 @@ public class PositionFactory implements EntityFactory<Position> {
 
     @Override
     public Position create(Object... args) throws FactoryException {
-        if (args.length < 7
+        if (args.length < 4
                 || !(args[0] instanceof Book)
                 || !(args[1] instanceof Shop)
                 || !(args[2] instanceof PositionStatus)

@@ -2,8 +2,13 @@ package by.epam.bookshop;
 
 import by.epam.bookshop.dao.EntityDAO;
 import by.epam.bookshop.dao.impl.author.MySQLAuthorDAO;
+import by.epam.bookshop.dao.impl.book.MySQLBookDAO;
 import by.epam.bookshop.dao.impl.shop.MySQLShopDAO;
+import by.epam.bookshop.entity.EntityFactory;
 import by.epam.bookshop.entity.author.Author;
+import by.epam.bookshop.entity.author.AuthorFactory;
+import by.epam.bookshop.entity.book.Book;
+import by.epam.bookshop.entity.book.BookFactory;
 import by.epam.bookshop.entity.shop.Shop;
 import by.epam.bookshop.entity.shop.ShopFactory;
 import by.epam.bookshop.exceptions.DAOException;
@@ -36,43 +41,43 @@ public class Runner {
             throwables.printStackTrace();
         }
 
-*/
+
         System.out.println("MySQLAuthorDAO");
-        try (Connection connection = DriverManager.getConnection(
+*/        try (Connection connection = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/bookshop?useUnicode=true&serverTimezone=UTC", "root", "1234567890");) {
 
-           EntityDAO<Author> dao =  new MySQLAuthorDAO(connection);
+           EntityDAO<Author> authorDao =  new MySQLAuthorDAO(connection);
  /*            System.out.println("all");
-            dao.findAll().stream().forEach(System.out::println);
+            authorDao.findAll().stream().forEach(System.out::println);
 
             System.out.println("G");
-            dao.findBy(new AuthorFinder()
+            authorDao.findBy(new AuthorFinder()
                     .findByFirstName("G")).stream()
                     .forEach(System.out::println);
             System.out.println("G + M");
-            dao.findBy(new AuthorFinder()
+            authorDao.findBy(new AuthorFinder()
                     .findByFirstName("G").findByLastName("M")).stream()
                     .forEach(System.out::println);
-            System.out.println("id =1  " + dao.read(1));
+            System.out.println("id =1  " + authorDao.read(1));
 
             EntityFactory<Author> factory= new AuthorFactory();
             Author author = factory.create("Alexander", "Pushkin");
-            dao.create(author);
+            authorDao.create(author);
 
-            System.out.println(dao.findAll());
+            System.out.println(authorDao.findAll());
 
             author.setLastName("Poooshkin");
-            dao.update(author);
+            authorDao.update(author);
 
-            System.out.println(dao.findAll());
+            System.out.println(authorDao.findAll());
 
-            if (dao.read(author.getId()).equals(author)) {
+            if (authorDao.read(author.getId()).equals(author)) {
                 System.out.println("OK");
             }
-            dao.delete(author.getId());
+            authorDao.delete(author.getId());
 
-            System.out.println(dao.findAll());
-*/
+            System.out.println(authorDao.findAll());
+
             MySQLShopDAO shopDAO = new MySQLShopDAO(connection);
             ShopFactory shopFactory = new ShopFactory();
 
@@ -89,6 +94,31 @@ public class Runner {
             }
 
             shopDAO.delete(shop.getId());
+*/
+
+            EntityFactory<Author> authorFactory= new AuthorFactory();
+            Author author = authorFactory.create("Alexander", "Pushkin");
+            authorDao.create(author);
+
+            EntityDAO<Book> bookDAO =  new MySQLBookDAO(connection);
+
+            EntityFactory<Book> bookFactory= new BookFactory();
+            Book book = bookFactory.create("The tale about the Golden Rooster",
+                    author, "The tale about the Golden Rooster by Alexander Pushkin", (float) 10.1);
+
+            bookDAO.create(book);
+            System.out.println(bookDAO.findAll());
+
+            book.setDescription("You know it, everybody knows");
+            bookDAO.update(book);
+            System.out.println(bookDAO.findAll());
+            if (bookDAO.read(book.getId()).equals(book)) {
+                System.out.println("OK");
+            }
+            bookDAO.delete(book.getId());
+            authorDao.delete(author.getId());
+            System.out.println(bookDAO.findAll());
+
 
         } catch (SQLException | DAOException throwables) {
             throwables.printStackTrace();

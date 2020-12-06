@@ -54,6 +54,26 @@ public class Position extends Entity implements Pricefull {
         this.note = note;
     }
 
+    public Book getBook() {
+        return book;
+    }
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    public PositionStatus getStatus() {
+        return status;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }

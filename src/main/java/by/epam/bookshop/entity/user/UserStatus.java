@@ -20,9 +20,9 @@ public enum UserStatus {
      * @throws UnknownEntityException if such id does not exist
      */
     public static UserStatus resolveById(int id) throws UnknownEntityException {
-        UserStatus[] ranks = UserStatus.values();
-        Stream<UserStatus> stream = Arrays.stream(ranks);
-        Optional<UserStatus> result =  stream.filter((rank) -> rank.getId() == id)
+        UserStatus[] statuses = UserStatus.values();
+        Stream<UserStatus> stream = Arrays.stream(statuses);
+        Optional<UserStatus> result =  stream.filter((status) -> status.getId() == id)
                 .findAny();
         if(result.isPresent()) {
             return result.get();
