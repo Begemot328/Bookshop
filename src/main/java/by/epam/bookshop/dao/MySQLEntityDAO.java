@@ -128,6 +128,4 @@ public abstract class MySQLEntityDAO<T  extends Entity> implements EntityDAO<T> 
             throw new DAOException(SQL_EXCEPTION + e.getLocalizedMessage());
         }
     }
-
-
 }
