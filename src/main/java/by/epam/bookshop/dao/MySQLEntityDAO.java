@@ -74,8 +74,33 @@ public abstract class MySQLEntityDAO<T  extends Entity> implements EntityDAO<T> 
         }
         parameters = parameters.substring(0, parameters.length() - 2);
         result = result.replace(PARAMETERS, parameters);
-
         return result;
+    }
+
+    public boolean create(T t, String schemaName, String tableName, Map<String, Object> map) throws DAOException {
+
+        try (PreparedStatement statement = connection.prepareStatement(
+                getInsertQuery(schemaName, tableName, map),
+                PreparedStatement.RETURN_GENERATED_KEYS);) {
+
+            Set<String> keySet = map.keySet();
+            int i = 0;
+            for (String key: keySet) {
+                statement.setObject( ++i,map.get(key));
+            }
+            statement.executeUpdate();
+
+            ResultSet resultSet = statement.getGeneratedKeys();
+
+            if (resultSet.next()) {
+                t.setId(resultSet.getInt(1));
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new DAOException(SQL_EXCEPTION, e);
+        }
     }
 
     public void update(T t, String schemaName, String tableName, Map<String, Object> map) throws DAOException {
@@ -104,29 +129,5 @@ public abstract class MySQLEntityDAO<T  extends Entity> implements EntityDAO<T> 
         }
     }
 
-    public boolean create(T t, String schemaName, String tableName, Map<String, Object> map) throws DAOException {
 
-        try (PreparedStatement statement = connection.prepareStatement(
-                getInsertQuery(schemaName, tableName, map),
-                PreparedStatement.RETURN_GENERATED_KEYS);) {
-
-            Set<String> keySet = map.keySet();
-            int i = 0;
-            for (String key: keySet) {
-                statement.setObject( ++i,map.get(key));
-            }
-            statement.executeUpdate();
-
-            ResultSet resultSet = statement.getGeneratedKeys();
-
-            if (resultSet.next()) {
-                t.setId(resultSet.getInt(1));
-                return true;
-            } else {
-                return false;
-            }
-        } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION, e);
-        }
-    }
 }
