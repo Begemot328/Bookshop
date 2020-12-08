@@ -20,9 +20,8 @@ public class ConnectionPool implements Closeable {
 
     private static final String INTERRUPTED_EXCEPTION = "Interrupted exception: ";
     private static final String SQL_EXCEPTION = "SQL exception: ";
-    private static final int TIMEOUT = 1;
-            //= Integer.parseInt(
-            //DbResourceManager.getInstance().getValue(DbParameter.DB_TIMEOUT));
+    private static final int TIMEOUT = Integer.parseInt(
+            DbResourceManager.getInstance().getValue(DbParameter.DB_TIMEOUT));
     private static final int CONNECTION_ATTEMPTIONS = Integer.parseInt(
             DbResourceManager.getInstance().getValue(DbParameter.DB_ATTEMPTIONS));
     private static final int DEFAULT_POOL_SIZE = Integer.parseInt(

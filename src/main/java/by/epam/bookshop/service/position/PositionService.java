@@ -30,18 +30,27 @@ public class PositionService implements EntityService<Position> {
 
     public Position create(Object... args) throws ServiceException {
         try (Connection connection = getConnection()) {
-            Position position = new PositionFactory().create(args);
-            new MySQLPositionDAO(connection).create(position);
-            BookAction action = new BookActionFactory().create(args);
-            new MySQLBookActionDAO(connection).create(action);
-
-            return position;
+            try {
+                connection.setAutoCommit(false);
+                Position position = new PositionFactory().create(args);
+                new MySQLPositionDAO(connection).create(position);
+                BookAction action = new BookActionFactory().create(args);
+                new MySQLBookActionDAO(connection).create(action);
+            // @todo
+                connection.commit();
+                connection.setAutoCommit(true);
+                return position;
+            } catch (SQLException e) {
+                connection.rollback();
+                connection.setAutoCommit(true);
+                throw new ServiceException(SQL_CONNECTION_EXCEPTION, e);
+            } catch (DAOException e) {
+                throw new ServiceException(DAO_EXCEPTION, e);
+            } catch (FactoryException e) {
+                throw new ServiceException(FACTORY_EXCEPTION, e);
+            }
         } catch (SQLException e) {
             throw new ServiceException(SQL_CONNECTION_EXCEPTION, e);
-        } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION, e);
-        } catch (FactoryException e) {
-            throw new ServiceException(FACTORY_EXCEPTION, e);
         }
     }
 
