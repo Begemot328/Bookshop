@@ -13,6 +13,8 @@ import by.epam.bookshop.entity.shop.Shop;
 import by.epam.bookshop.entity.shop.ShopFactory;
 import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.FactoryException;
+import by.epam.bookshop.pool.ConnectionPool;
+import by.epam.bookshop.pool.ConnectionPoolException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -43,8 +45,7 @@ public class Runner {
 
 
         System.out.println("MySQLAuthorDAO");
-*/        try (Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/bookshop?useUnicode=true&serverTimezone=UTC", "root", "1234567890");) {
+*/        try (Connection connection = ConnectionPool.getInstance().getConnection()) {
 
            EntityDAO<Author> authorDao =  new MySQLAuthorDAO(connection);
  /*            System.out.println("all");
@@ -120,7 +121,7 @@ public class Runner {
             System.out.println(bookDAO.findAll());
 
 
-        } catch (SQLException | DAOException throwables) {
+        } catch (SQLException | DAOException | ConnectionPoolException throwables) {
             throwables.printStackTrace();
         }
     }

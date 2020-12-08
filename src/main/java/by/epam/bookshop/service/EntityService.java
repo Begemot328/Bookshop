@@ -1,19 +1,24 @@
 package by.epam.bookshop.service;
 
+
 import by.epam.bookshop.dao.EntityFinder;
-import by.epam.bookshop.dao.MySQLEntityDAO;
-import by.epam.bookshop.dao.impl.pool.ConnectionPool;
 import by.epam.bookshop.entity.Entity;
 import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.ServiceException;
+import by.epam.bookshop.pool.ConnectionPool;
+import by.epam.bookshop.pool.ConnectionPoolException;
 
 import java.sql.Connection;
 import java.util.Collection;
 
 public interface EntityService<T extends Entity> {
 
-    default Connection getConnection() {
-        return ConnectionPool.getConnection();
+    default Connection getConnection() throws ServiceException {
+        try {
+            return ConnectionPool.getInstance().getConnection();
+        } catch (ConnectionPoolException e) {
+            throw new ServiceException(e.getClass().getSimpleName(), e);
+        }
     }
 
     public EntityService<T> getInstance();
