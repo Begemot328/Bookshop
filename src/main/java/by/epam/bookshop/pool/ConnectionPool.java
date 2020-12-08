@@ -8,6 +8,8 @@ import java.io.ObjectInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -18,8 +20,9 @@ public class ConnectionPool implements Closeable {
 
     private static final String INTERRUPTED_EXCEPTION = "Interrupted exception: ";
     private static final String SQL_EXCEPTION = "SQL exception: ";
-    private static final int TIMEOUT = Integer.parseInt(
-            DbResourceManager.getInstance().getValue(DbParameter.DB_TIMEOUT));
+    private static final int TIMEOUT = 1;
+            //= Integer.parseInt(
+            //DbResourceManager.getInstance().getValue(DbParameter.DB_TIMEOUT));
     private static final int CONNECTION_ATTEMPTIONS = Integer.parseInt(
             DbResourceManager.getInstance().getValue(DbParameter.DB_ATTEMPTIONS));
     private static final int DEFAULT_POOL_SIZE = Integer.parseInt(
@@ -41,22 +44,42 @@ public class ConnectionPool implements Closeable {
         freeConnections = new ArrayBlockingQueue<>(DEFAULT_POOL_SIZE);
         workingConnections = new ArrayBlockingQueue<>(DEFAULT_POOL_SIZE);
 
-        for (ConnectionProxy connection: freeConnections
-             ) {
+        Stream.generate(() -> {
+            try {
+                ConnectionProxy connectionProxy
+                 = new ConnectionProxy(DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/bookshop?useUnicode=true&serverTimezone=UTC",
+                    "root", "1234567890"));
+                 return connectionProxy;
+            } catch (SQLException e) {
+                throw new ConnectionPoolRuntimeException(SQL_EXCEPTION, e);
+            }})
+            .limit(10).forEach(e1 -> {
+                    try {
+                        freeConnections.put(e1);
+                    } catch (InterruptedException e) {
+                        throw new ConnectionPoolRuntimeException(SQL_EXCEPTION, e);
+                    }
+                });
+
+
+     /*   for (ConnectionProxy connection: freeConnections) {
             connection = new ConnectionProxy(DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/bookshop?useUnicode=true&serverTimezone=UTC",
                     "root", "1234567890"));
-        }
+*/
+    }
 
-            }
 
+
+        
     public static ConnectionPool getInstance() throws ConnectionPoolException {
         if (INSTANCE == null) {
             INSTANCE = new ConnectionPool();
             try {
                 INSTANCE.init();
             } catch (SQLException e) {
-                throw new ConnectionPoolException( SQL_EXCEPTION, e);
+                throw new ConnectionPoolException(SQL_EXCEPTION, e);
             }
         }
         return INSTANCE;
@@ -64,28 +87,15 @@ public class ConnectionPool implements Closeable {
 
     public Connection getConnection() throws ConnectionPoolException {
         ConnectionProxy connection;
-        for (int i = 0; i < CONNECTION_ATTEMPTIONS; i++) {
             try {
-                connection = freeConnections.take();
+                connection = freeConnections.poll(TIMEOUT, TimeUnit.SECONDS);
                 workingConnections.add(connection);
                 return connection;
             } catch (InterruptedException e) {
-                try {
-                    TimeUnit.SECONDS.sleep(TIMEOUT);
-                } catch (InterruptedException interruptedException) {
-                    interruptedException.printStackTrace();
-                }
+                throw new ConnectionPoolException(INTERRUPTED_EXCEPTION, e);
             }
         }
-        try {
-            connection = freeConnections.take();
-            workingConnections.add(connection);
-            return connection;
-        } catch (InterruptedException e) {
-            throw new ConnectionPoolException(INTERRUPTED_EXCEPTION, e);
-        }
 
-    }
 
     @Override
     public void close() throws IOException {

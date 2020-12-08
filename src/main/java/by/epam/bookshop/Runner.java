@@ -15,10 +15,13 @@ import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.FactoryException;
 import by.epam.bookshop.pool.ConnectionPool;
 import by.epam.bookshop.pool.ConnectionPoolException;
+import by.epam.bookshop.pool.ConnectionProxy;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.concurrent.TimeUnit;
 
 public class Runner {
     public static void main(String[] args) throws FactoryException {
@@ -95,7 +98,7 @@ public class Runner {
             }
 
             shopDAO.delete(shop.getId());
-*/
+
 
             EntityFactory<Author> authorFactory= new AuthorFactory();
             Author author = authorFactory.create("Alexander", "Pushkin");
@@ -120,9 +123,39 @@ public class Runner {
             authorDao.delete(author.getId());
             System.out.println(bookDAO.findAll());
 
-
-        } catch (SQLException | DAOException | ConnectionPoolException throwables) {
+*/
+        } catch (SQLException  | ConnectionPoolException throwables) {
             throwables.printStackTrace();
+        }
+
+
+        for (int i = 0; i< 100; i++) {
+            new Thread(new DAOTester("Thread" + i)).start();
+        }
+    }
+}
+
+ class DAOTester implements Runnable {
+    private String name;
+
+    public DAOTester(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public void run() {
+        ConnectionProxy connection;
+        try {
+            for (int i = 0; i<10; i++) {
+                connection  = (ConnectionProxy) ConnectionPool.getInstance().getConnection();
+                EntityDAO<Book> b1 = new MySQLBookDAO(connection);
+                System.out.println(LocalDateTime.now() + "  " +  name + "  " + "iteration " + i + " " +  b1.read(1).getTitle());
+                //TimeUnit.SECONDS.sleep(1);
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
+
+        } catch (ConnectionPoolException | DAOException e) {
+            e.printStackTrace();
         }
     }
 }
