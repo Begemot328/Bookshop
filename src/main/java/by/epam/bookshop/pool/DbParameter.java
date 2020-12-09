@@ -26,6 +26,15 @@ public final class DbParameter {
     /** The Constant DB_TIMEOUT. */
     public static final String DB_ATTEMPTIONS="db.attempt";
 
+    /** The Constant DB_ENCODING. */
+    public static final String DB_ENCODING="db.encoding";
+
+    /** The Constant DB_TIMEZONE. */
+    public static final String DB_TIMEZONE="db.timezone";
+
+    /** The Constant DB_USE_UNICODE. */
+    public static final String DB_USE_UNICODE="db.useUnicode";
+
   
   /**
    * Instantiates a new db parameter.
