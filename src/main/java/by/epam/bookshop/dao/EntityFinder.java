@@ -7,6 +7,7 @@ public abstract class EntityFinder<T extends Entity> {
 
     protected final static String SQL_QUERY = "SELECT * FROM [QUERY]";
     protected static final String WHERE = " WHERE [PARAMETER] = '[VALUE]'";
+    protected static final String OR = " OR [PARAMETER] = '[VALUE]'";
 
     protected static final String WHERE_COMPARING = " WHERE [PARAMETER] [COMPARE] '[VALUE]'";
     protected static final String COMPARE = "[COMPARE]";

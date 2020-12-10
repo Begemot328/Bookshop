@@ -1,18 +1,19 @@
-package by.epam.bookshop.dao.impl.book_action;
+package by.epam.bookshop.dao.impl.position_action;
 
 import by.epam.bookshop.dao.EntityFinder;
-import by.epam.bookshop.dao.impl.book.BookFinder;
-import by.epam.bookshop.entity.book_action.BookAction;
+import by.epam.bookshop.entity.position_action.PositionAction;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 
 
-public class BookActionFinder extends EntityFinder<BookAction> {
+public class PositionActionFinder extends EntityFinder<PositionAction> {
 
 
-    private final static String VIEW_NAME = "BOOK_ACTIONS";
+    private final static String VIEW_NAME = "POSITION_ACTIONS";
+    private static final String INITIAL_POSITION_ID = "INITIAL_POSITION_ID";
+    private static final String FINAL_POSITION_ID = "FINAL_POSITION_ID";
     private static final String BOOK_ID = "BOOK_ID";
     private static final String BUYER_ID = "BUYER_ID";
     private static final String SELLER_ID = "SELLER_ID";
@@ -26,97 +27,99 @@ public class BookActionFinder extends EntityFinder<BookAction> {
     private static final String ID = "ID";
     private static final String TIMESTAMP_FORMAT = "yyyy-mm-dd hh:mm:ss";
 
-    public BookActionFinder() {
+    public PositionActionFinder() {
         super(VIEW_NAME);
     }
 
-    public BookActionFinder findByID(int id) {
-        BookActionFinder finder  = (BookActionFinder) this.findBy(SQL_QUERY +
+    public PositionActionFinder findByID(int id) {
+        PositionActionFinder finder  = (PositionActionFinder) this.findBy(SQL_QUERY +
                 WHERE.replace(PARAMETER, ID)
                         .replace(VALUE, Integer.toString(id)));
         return finder;
     }
 
-    public BookActionFinder findByBuyer(int id) {
-        return (BookActionFinder) this.findBy(SQL_QUERY +
+    public PositionActionFinder findByBuyer(int id) {
+        return (PositionActionFinder) this.findBy(SQL_QUERY +
                 WHERE_LIKE.replace(PARAMETER, BUYER_ID)
                         .replace(VALUE, Integer.toString(id)));
     }
 
-    public BookActionFinder findByBook(int id) {
-        return (BookActionFinder) this.findBy(SQL_QUERY +
-                WHERE_LIKE.replace(PARAMETER, BOOK_ID)
-                        .replace(VALUE, Integer.toString(id)));
+    public PositionActionFinder findByPosition(int id) {
+        return ((PositionActionFinder) this.findBy(SQL_QUERY +
+                WHERE_LIKE.replace(PARAMETER, INITIAL_POSITION_ID)
+                        .replace(VALUE, Integer.toString(id))
+                + OR.replace(PARAMETER, FINAL_POSITION_ID)
+                .replace(VALUE, Integer.toString(id))));
     }
 
-    public BookActionFinder findBySeller(int id) {
-        return (BookActionFinder) this.findBy(SQL_QUERY +
+    public PositionActionFinder findBySeller(int id) {
+        return (PositionActionFinder) this.findBy(SQL_QUERY +
                 WHERE_LIKE.replace(PARAMETER, SELLER_ID)
                         .replace(VALUE, Integer.toString(id)));
     }
 
-    public BookActionFinder findByShop(int id) {
-        return (BookActionFinder) this.findBy(SQL_QUERY +
+    public PositionActionFinder findByShop(int id) {
+        return (PositionActionFinder) this.findBy(SQL_QUERY +
                 WHERE_LIKE.replace(PARAMETER, SHOP_ID)
                         .replace(VALUE, Integer.toString(id)));
     }
 
-    public BookActionFinder findByQuantityMore(Integer quantity) {
-        return (BookActionFinder) this.findBy(SQL_QUERY +
+    public PositionActionFinder findByQuantityMore(Integer quantity) {
+        return (PositionActionFinder) this.findBy(SQL_QUERY +
                 WHERE_COMPARING.replace(PARAMETER, QUANTITY).replace(COMPARE, MORE)
                         .replace(VALUE, Float.toString(quantity)));
     }
 
-    public BookActionFinder findByQuantityLess(Integer quantity) {
-        return (BookActionFinder) this.findBy(SQL_QUERY +
+    public PositionActionFinder findByQuantityLess(Integer quantity) {
+        return (PositionActionFinder) this.findBy(SQL_QUERY +
                 WHERE_COMPARING.replace(PARAMETER, QUANTITY).replace(COMPARE, LESS)
                         .replace(VALUE, Float.toString(quantity)));
     }
 
-    public BookActionFinder findByQuantity(Integer quantity) {
-        return (BookActionFinder) this.findBy(SQL_QUERY +
+    public PositionActionFinder findByQuantity(Integer quantity) {
+        return (PositionActionFinder) this.findBy(SQL_QUERY +
                 WHERE.replace(PARAMETER, QUANTITY)
                         .replace(VALUE, Integer.toString(quantity)));
     }
 
-    public BookActionFinder findByInitialStatus(Integer status) {
-        return (BookActionFinder) this.findBy(SQL_QUERY +
+    public PositionActionFinder findByInitialStatus(Integer status) {
+        return (PositionActionFinder) this.findBy(SQL_QUERY +
                 WHERE.replace(PARAMETER, INITIAL_STATUS)
                         .replace(VALUE, Integer.toString(status)));
     }
 
-    public BookActionFinder findByFinalStatus(Integer status) {
-        return (BookActionFinder) this.findBy(SQL_QUERY +
+    public PositionActionFinder findByFinalStatus(Integer status) {
+        return (PositionActionFinder) this.findBy(SQL_QUERY +
                 WHERE.replace(PARAMETER, FINAL_STATUS)
                         .replace(VALUE, Integer.toString(status)));
     }
 
-    public BookActionFinder findByDateLater(Timestamp dateTime) {
-        return (BookActionFinder) this.findBy(SQL_QUERY +
+    public PositionActionFinder findByDateLater(Timestamp dateTime) {
+        return (PositionActionFinder) this.findBy(SQL_QUERY +
                 WHERE_COMPARING.replace(PARAMETER, DATE_TIME).replace(COMPARE, MORE)
                         .replace(VALUE, new SimpleDateFormat(TIMESTAMP_FORMAT).format(dateTime)));
     }
 
-    public BookActionFinder findByDateEarlier(LocalDateTime dateTime) {
-        return (BookActionFinder) this.findBy(SQL_QUERY +
+    public PositionActionFinder findByDateEarlier(LocalDateTime dateTime) {
+        return (PositionActionFinder) this.findBy(SQL_QUERY +
                 WHERE_COMPARING.replace(PARAMETER, DATE_TIME).replace(COMPARE, LESS)
                         .replace(VALUE, new SimpleDateFormat(TIMESTAMP_FORMAT).format(dateTime)));
     }
 
-    public BookActionFinder findByPriceMore(Float price) {
-        return (BookActionFinder) this.findBy(SQL_QUERY +
+    public PositionActionFinder findByPriceMore(Float price) {
+        return (PositionActionFinder) this.findBy(SQL_QUERY +
                 WHERE_COMPARING.replace(PARAMETER, CURRENT_PRICE).replace(COMPARE, MORE)
                         .replace(VALUE, Float.toString(price)));
     }
 
-    public BookActionFinder findByPriceLess(Float price) {
-        return (BookActionFinder) this.findBy(SQL_QUERY +
+    public PositionActionFinder findByPriceLess(Float price) {
+        return (PositionActionFinder) this.findBy(SQL_QUERY +
                 WHERE_COMPARING.replace(PARAMETER, CURRENT_PRICE).replace(COMPARE, LESS)
                         .replace(VALUE, Float.toString(price)));
     }
 
-    public BookActionFinder findByPrice(Float price) {
-        return (BookActionFinder) this.findBy(SQL_QUERY +
+    public PositionActionFinder findByPrice(Float price) {
+        return (PositionActionFinder) this.findBy(SQL_QUERY +
                 WHERE.replace(PARAMETER, CURRENT_PRICE)
                         .replace(VALUE, Float.toString(price)));
     }

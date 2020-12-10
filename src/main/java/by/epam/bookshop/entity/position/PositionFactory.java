@@ -2,12 +2,8 @@ package by.epam.bookshop.entity.position;
 
 import by.epam.bookshop.entity.EntityFactory;
 import by.epam.bookshop.entity.book.Book;
-import by.epam.bookshop.entity.book_action.BookAction;
 import by.epam.bookshop.entity.shop.Shop;
-import by.epam.bookshop.entity.user.User;
 import by.epam.bookshop.exceptions.FactoryException;
-
-import java.time.LocalDateTime;
 
 public class PositionFactory implements EntityFactory<Position> {
 

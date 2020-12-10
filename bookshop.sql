@@ -127,32 +127,35 @@ create index id_index on positions (id);
 create index book_index on positions (book_id);
 create index shop_index on positions (shop_id);
 
-create table book_actions
+create table position_actions
 (
     id             int primary key auto_increment not null,
-    book_id        int                            not null,
+    initial_position    int,
+    final_position    int                            not null,
+    initial_status tinyint                        not null,
+    final_status   tinyint                        not null,
     buyer_id       int,
     seller_id      int                            not null,
     date_time      datetime,
     quantity       int                            not null default 1,
-    initial_status tinyint                        not null,
-    final_status   tinyint                        not null,
     shop_id        int                            not null,
     current_price  double                         not null,
 
 
     foreign key (initial_status) references position_status (id) ON DELETE RESTRICT ON UPDATE CASCADE,
     foreign key (final_status) references position_status (id) ON DELETE RESTRICT ON UPDATE CASCADE,
-    foreign key (book_id) references books (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    foreign key (initial_position) references positions (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    foreign key (final_position) references positions (id) ON DELETE RESTRICT ON UPDATE CASCADE,
     foreign key (buyer_id) references users (id) ON DELETE RESTRICT ON UPDATE CASCADE,
     foreign key (seller_id) references users (id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-create index id_index on book_actions (id);
-create index book_index on book_actions (book_id);
-create index librarian_index on book_actions (seller_id);
-create index reader_index on book_actions (buyer_id);
-create index current_price_index on book_actions (current_price);
+create index id_index on position_actions (id);
+create index initial_position_index on position_actions (initial_position);
+create index final_position_index on position_actions (final_position);
+create index librarian_index on position_actions (seller_id);
+create index reader_index on position_actions (buyer_id);
+create index current_price_index on position_actions (current_price);
 
 #views
 #all books in stock
@@ -191,11 +194,13 @@ select users.first_name,
        authors.first_name as authors_first_name,
        authors.last_name  as authors_last_name,
        ps.name
-from book_actions
-         join books on book_actions.book_id = books.id
-         join users on book_actions.buyer_id = users.id
+from position_actions
+         join positions on position_actions.initial_position = positions.id
+    or position_actions.final_position = positions.id
+         join books on positions.book_id = books.id
+         join users on position_actions.buyer_id = users.id
          join authors on books.author_id = authors.id
-         join position_status ps on book_actions.final_status = ps.id
+         join position_status ps on position_actions.final_status = ps.id
 group by users.id;
 
 drop view if exists bookshop.books_by_author;
@@ -263,49 +268,56 @@ values (2, 'Na Malinovke', 'Dzerzhynskogo prospekt, 130', '');
 insert books(id, title, author_id, price, description)
 VALUES (1, 'Holy bible', 1, 26, null);
 insert positions(id, book_id, shop_id, status, note, quantity)
-VALUES (1, 1, 1, 2, null, 1);
-insert book_actions(book_id, buyer_id, seller_id, date_time,
-                    initial_status, final_status, shop_id, quantity, current_price)
-values (1, null, 2, '2020_11_10 09:10:11', 1, 2, 1, 1, 26);
+VALUES (1, 1, 1, 1, null, 1);
+insert position_actions(final_position, buyer_id, seller_id, date_time,
+                        initial_status, final_status, shop_id, quantity, current_price)
+values (1, null, 2, '2020_11_10 09:10:11', 0, 1, 1, 1, 26);
 
 insert books(id, title, author_id, price, description)
 VALUES (2, 'Game of thrones', 2, 54, null);
 insert positions(id, book_id, shop_id, status, note, quantity)
-values (2, 2, 1, 2, null, 1);
-insert book_actions(book_id, buyer_id, seller_id, date_time,
-                    initial_status, final_status, shop_id, quantity, current_price)
-values (2, null, 2, '2020_11_10 09:20:11', 1, 2, 1, 1, 54);
+values (2, 2, 1, 1, null, 1);
+insert position_actions(final_position, buyer_id, seller_id, date_time,
+                        initial_status, final_status, shop_id, quantity, current_price)
+values (2, null, 2, '2020_11_10 09:20:11', 0, 1, 1, 1, 54);
 
 insert books(id, title, author_id, price, description)
 VALUES (3, 'Clash of kings', 2, 35, null);
 insert positions(id, book_id, shop_id, status, note, quantity)
-values (5, 2, 1, 2, null, 1);
-insert book_actions(book_id, buyer_id, seller_id, date_time,
-                    initial_status, final_status, shop_id, quantity, current_price)
-values (3, null, 2, '2020_11_15 09:25:11', 1, 2, 1, 1, 35);
+values (5, 2, 1, 1, null, 1);
+insert position_actions(initial_position, final_position, buyer_id, seller_id, date_time,
+                        initial_status, final_status, shop_id, quantity, current_price)
+values (null, 5, null, 2, '2020_11_15 09:25:11', 0, 1, 1, 1, 35);
 
 insert positions(id, book_id, shop_id, status, note, quantity)
-values (3, 2, 1, 2, null, 3);
-insert book_actions(book_id, buyer_id, seller_id, date_time,
-                    initial_status, final_status, shop_id, quantity, current_price)
-values (2, null, 2, '2020_11_10 09:20:11', 1, 2, 1, 3, 54);
+values (3, 2, 1, 1, null, 3);
+insert position_actions(initial_position, final_position, buyer_id, seller_id, date_time,
+                        initial_status, final_status, shop_id, quantity, current_price)
+values (null, 3, null, 2, '2020_11_10 09:20:11', 0, 1, 1, 3, 54);
 insert positions(id, book_id, shop_id, status, note, quantity)
-values (4, 1, 2, 2, null, 2);
-insert book_actions(book_id, buyer_id, seller_id, date_time,
-                    initial_status, final_status, shop_id, quantity, current_price)
-values (1, null, 3, '2020_11_10 09:30:11', 1, 2, 2, 2, 26);
+values (4, 1, 2, 1, null, 2);
+insert position_actions(final_position, buyer_id, seller_id, date_time,
+                        initial_status, final_status, shop_id, quantity, current_price)
+values (4, null, 3, '2020_11_10 09:30:11', 0, 1, 2, 2, 26);
 
-insert book_actions(book_id, buyer_id, seller_id, date_time,
-                    initial_status, final_status, shop_id, quantity, current_price)
-                    values (1, 4, 3, '2020_11_10 09:30:11', 2, 4, 2, 1, 26);
-insert book_actions(book_id, buyer_id, seller_id, date_time,
-                    initial_status, final_status, shop_id, quantity, current_price)
-                    values (2, 5, 3, '2020_11_10 09:30:11', 2, 3, 1, 1, 54);
+insert position_actions(initial_position, final_position, buyer_id, seller_id, date_time,
+                        initial_status, final_status, shop_id, quantity, current_price)
+values (1, 1, 4, 3, '2020_11_10 09:30:11', 1, 3, 2, 1, 26);
+insert position_actions(initial_position, final_position, buyer_id, seller_id, date_time,
+                        initial_status, final_status, shop_id, quantity, current_price)
+values (2, 2, 5, 3, '2020_11_10 09:30:11', 1, 2, 1, 1, 54);
 
 insert books(id, title, author_id, price, description)
 VALUES (4, '1984', 3, 35, null);
 insert positions(id, book_id, shop_id, status, note, quantity)
-values (6, 4, 1, 2, null, 1);
-insert book_actions(book_id, buyer_id, seller_id, date_time, initial_status,
-                    final_status, shop_id, quantity, current_price)
-values (4, null, 2, '2020_12_15 09:25:11', 1, 2, 1, 1, 35);
+values (6, 4, 1, 1, null, 2);
+insert position_actions(initial_position, final_position, buyer_id, seller_id, date_time,
+                        initial_status, final_status, shop_id, quantity, current_price)
+values (6, 6, 5, 3, '2020_11_10 09:30:11', 0, 1, 1, 2, 35);
+
+insert positions(id, book_id, shop_id, status, note, quantity)
+values (7, 4, 1, 2, null, 1);
+insert position_actions(initial_position, final_position, buyer_id, seller_id, date_time,
+                        initial_status, final_status, shop_id, quantity, current_price)
+values (6, 7, null, 2, '2020_12_15 09:25:11', 1, 2, 1, 1, 35);
+update positions set quantity = 1 where id = 6;

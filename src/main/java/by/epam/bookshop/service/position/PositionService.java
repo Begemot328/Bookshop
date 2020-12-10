@@ -1,11 +1,11 @@
 package by.epam.bookshop.service.position;
 
 import by.epam.bookshop.dao.EntityFinder;
-import by.epam.bookshop.dao.impl.book_action.MySQLBookActionDAO;
+import by.epam.bookshop.dao.impl.position_action.MySQLPositionActionDAO;
 import by.epam.bookshop.dao.impl.position.MySQLPositionDAO;
 import by.epam.bookshop.entity.book.Book;
-import by.epam.bookshop.entity.book_action.BookAction;
-import by.epam.bookshop.entity.book_action.BookActionFactory;
+import by.epam.bookshop.entity.position_action.PositionAction;
+import by.epam.bookshop.entity.position_action.PositionActionFactory;
 import by.epam.bookshop.entity.position.Position;
 import by.epam.bookshop.entity.position.PositionFactory;
 import by.epam.bookshop.entity.position.PositionStatus;
@@ -28,6 +28,8 @@ public class PositionService implements EntityService<Position> {
     private static final String FACTORY_EXCEPTION = "User factory Exception: ";
     private static final String NO_RIGHTS_EXCEPTION
             = "Only admin or seller can manage books";
+    private static final String WRONG_INPUT_EXCEPTION
+            = "Wrong data input!";
 
     @Override
     public EntityService<Position> getInstance() {
@@ -36,17 +38,53 @@ public class PositionService implements EntityService<Position> {
 
 
     public Position create(Object... args) throws ServiceException {
+        if (args[0] instanceof User
+        && args[1] instanceof Book
+        && args[2] instanceof Shop
+        && args[3] instanceof String
+        && args[4] instanceof Integer
+                && ((Integer) args[4]) > 0) {
+            return createPosition(
+                    (User) args[0],
+                    (Book) args[1],
+                    (Shop) args[2],
+                    (String) args[3],
+            (Integer) args[4]);
+        } else {
+            throw new ServiceException(WRONG_INPUT_EXCEPTION);
+        }
+    }
+
+    public Position reservePosition(Position position, Integer quantity, User user, String note)
+            throws ServiceException {
+        if (quantity > position.getQuantity()) {
+            throw new ServiceException(WRONG_INPUT_EXCEPTION);
+        }
+
+
         try (Connection connection = getConnection()) {
             try {
-                connection.setAutoCommit(false);
-                Position position = new PositionFactory().create(args);
-                new MySQLPositionDAO(connection).create(position);
-                BookAction action = new BookActionFactory().create(args);
-                new MySQLBookActionDAO(connection).create(action);
 
+                Position reservedPosition = new PositionFactory().create(
+                        position.getBook(),
+                        position.getShop(),
+                        PositionStatus.RESERVED,
+                        note,
+                        quantity);
+                position.setQuantity(position.getQuantity() - quantity);
+
+                connection.setAutoCommit(false);
+                MySQLPositionDAO positionDAO = new MySQLPositionDAO(connection);
+                positionDAO.create(reservedPosition);
+                positionDAO.update(position);
+                MySQLPositionActionDAO positionActionDAO = new MySQLPositionActionDAO(connection);
+                positionActionDAO.create (new PositionActionFactory().create(
+                        position, reservedPosition, user, null, LocalDateTime.now(),
+                        quantity, PositionStatus.READY, PositionStatus.RESERVED,
+                        reservedPosition.getShop(), reservedPosition.getBook().getPrice()));
                 connection.commit();
                 connection.setAutoCommit(true);
-                return position;
+                return reservedPosition;
             } catch (SQLException e) {
                 connection.rollback();
                 connection.setAutoCommit(true);
@@ -61,7 +99,6 @@ public class PositionService implements EntityService<Position> {
         }
     }
 
-
     public Position createPosition(User user, Book book,
                            Shop shop,
                            String note,
@@ -75,14 +112,14 @@ public class PositionService implements EntityService<Position> {
 
                 Position position = new PositionFactory().create(
                         book, shop, PositionStatus.READY, note, quantity);
-                BookAction action = new BookActionFactory().create(
+                PositionAction action = new PositionActionFactory().create(
                         book, null, user, LocalDateTime.now(), quantity,
                         PositionStatus.NON_EXISTENT,
                         PositionStatus.READY,
                         shop, book.getPrice());
                 connection.setAutoCommit(false);
                 new MySQLPositionDAO(connection).create(position);
-                new MySQLBookActionDAO(connection).create(action);
+                new MySQLPositionActionDAO(connection).create(action);
                 connection.commit();
                 connection.setAutoCommit(true);
                 return position;

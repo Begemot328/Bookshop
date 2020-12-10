@@ -1,7 +1,7 @@
-package by.epam.bookshop.entity.book_action;
+package by.epam.bookshop.entity.position_action;
 
 import by.epam.bookshop.entity.*;
-import by.epam.bookshop.entity.book.Book;
+import by.epam.bookshop.entity.position.Position;
 import by.epam.bookshop.entity.position.PositionStatus;
 import by.epam.bookshop.entity.shop.Shop;
 import by.epam.bookshop.entity.user.User;
@@ -9,9 +9,10 @@ import by.epam.bookshop.entity.user.User;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class BookAction extends Entity implements Pricefull {
+public class PositionAction extends Entity implements Pricefull {
     private int id;
-    private Book book;
+    private Position initialPosition;
+    private Position finalPosition;
     private User buyer;
     private User seller;
     private LocalDateTime date;
@@ -21,11 +22,13 @@ public class BookAction extends Entity implements Pricefull {
     private Shop shop;
     private float currentPrice;
 
-    public BookAction(Book book, User buyer, User seller,
-                      LocalDateTime date, int quantity,
-                      PositionStatus initialStatus, PositionStatus finalStatus,
-                      Shop shop, Float currentPrice) {
-        this.book = book;
+    public PositionAction(Position initialPosition, Position finalPosition,
+                          User buyer, User seller,
+                          LocalDateTime date, int quantity,
+                          PositionStatus initialStatus, PositionStatus finalStatus,
+                          Shop shop, Float currentPrice) {
+        this.initialPosition = initialPosition;
+        this.finalPosition = finalPosition;
         this.buyer = buyer;
         this.seller = seller;
         this.date = date;
@@ -35,9 +38,26 @@ public class BookAction extends Entity implements Pricefull {
         this.shop = shop;
         this.currentPrice = currentPrice;
     }
+
+    public Position getInitialPosition() {
+        return initialPosition;
+    }
+
+    public void setInitialPosition(Position initialPosition) {
+        this.initialPosition = initialPosition;
+    }
+
+    public Position getFinalPosition() {
+        return finalPosition;
+    }
+
+    public void setFinalPosition(Position finalPosition) {
+        this.finalPosition = finalPosition;
+    }
+
     @Override
     public float getTotalPrice() {
-        return book.getPrice() * quantity;
+        return currentPrice * quantity;
     }
 
     public int getId() {
@@ -76,20 +96,12 @@ public class BookAction extends Entity implements Pricefull {
         return shop;
     }
 
-    public Book getBook() {
-        return book;
-    }
-
     public float getCurrentPrice() {
         return currentPrice;
     }
 
     public void setCurrentPrice(float currentPrice) {
         this.currentPrice = currentPrice;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
     }
 
     public void setBuyer(User buyer) {
@@ -124,7 +136,8 @@ public class BookAction extends Entity implements Pricefull {
     public String toString() {
         return "BookAction{" +
                 "id=" + id +
-                ", \n book=" + book +
+                ", \n initial position=" + initialPosition +
+                ", \n final position=" + finalPosition +
                 ", \n buyer=" + buyer +
                 ", \n seller=" + seller +
                 ", date=" + date +
@@ -139,11 +152,12 @@ public class BookAction extends Entity implements Pricefull {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof BookAction)) return false;
-        BookAction that = (BookAction) o;
+        if (!(o instanceof PositionAction)) return false;
+        PositionAction that = (PositionAction) o;
         return id == that.id &&
                 quantity == that.quantity &&
-                Objects.equals(book, that.book) &&
+                Objects.equals(initialPosition, that.initialPosition) &&
+                Objects.equals(finalPosition, that.finalPosition) &&
                 Objects.equals(buyer, that.buyer) &&
                 Objects.equals(seller, that.seller) &&
                 Objects.equals(date, that.date) &&
@@ -155,7 +169,7 @@ public class BookAction extends Entity implements Pricefull {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, book, buyer, seller, date,
+        return Objects.hash(id, initialPosition, finalPosition, buyer, seller, date,
                 quantity, initialStatus, finalStatus, shop, currentPrice);
     }
 }
