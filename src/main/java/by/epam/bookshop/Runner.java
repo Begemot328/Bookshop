@@ -1,6 +1,7 @@
 package by.epam.bookshop;
 
 import by.epam.bookshop.dao.EntityDAO;
+import by.epam.bookshop.dao.impl.author.AuthorFinder;
 import by.epam.bookshop.dao.impl.author.MySQLAuthorDAO;
 import by.epam.bookshop.dao.impl.book.MySQLBookDAO;
 import by.epam.bookshop.dao.impl.shop.MySQLShopDAO;
@@ -51,7 +52,7 @@ public class Runner {
 */        try (Connection connection = ConnectionPool.getInstance().getConnection()) {
 
            EntityDAO<Author> authorDao =  new MySQLAuthorDAO(connection);
- /*            System.out.println("all");
+            System.out.println("all");
             authorDao.findAll().stream().forEach(System.out::println);
 
             System.out.println("G");
@@ -101,7 +102,7 @@ public class Runner {
 
 
             EntityFactory<Author> authorFactory= new AuthorFactory();
-            Author author = authorFactory.create("Alexander", "Pushkin");
+           /* Author */ author = authorFactory.create("Alexander", "Pushkin");
             authorDao.create(author);
 
             EntityDAO<Book> bookDAO =  new MySQLBookDAO(connection);
@@ -123,15 +124,17 @@ public class Runner {
             authorDao.delete(author.getId());
             System.out.println(bookDAO.findAll());
 
-*/
-        } catch (SQLException  | ConnectionPoolException throwables) {
+
+        } catch (SQLException | ConnectionPoolException | DAOException throwables) {
             throwables.printStackTrace();
         }
 
-
+/*
         for (int i = 0; i< 100; i++) {
             new Thread(new DAOTester("Thread" + i)).start();
         }
+        */
+
     }
 }
 

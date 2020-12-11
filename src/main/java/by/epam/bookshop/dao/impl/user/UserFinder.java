@@ -56,4 +56,11 @@ public class UserFinder extends EntityFinder<User> {
                         .replace(VALUE, Integer.toString(id)));
         return finder;
     }
+
+    public UserFinder findByLogin(String login) {
+        UserFinder finder  = (UserFinder) this.findBy(SQL_QUERY +
+                WHERE.replace(PARAMETER, LOGIN)
+                        .replace(VALUE, login));
+        return finder;
+    }
 }

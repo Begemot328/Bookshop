@@ -2,6 +2,7 @@ package by.epam.bookshop.service.user;
 
 import by.epam.bookshop.dao.EntityFinder;
 import by.epam.bookshop.dao.impl.user.MySQLUserDAO;
+import by.epam.bookshop.dao.impl.user.UserFinder;
 import by.epam.bookshop.entity.user.User;
 import by.epam.bookshop.entity.user.UserFactory;
 import by.epam.bookshop.entity.user.UserStatus;
@@ -20,6 +21,8 @@ public class UserService implements EntityService<User> {
     private static final String SQL_CONNECTION_EXCEPTION = "SQL Exception: ";
     private static final String DAO_EXCEPTION = "User DAO Exception: ";
     private static final String FACTORY_EXCEPTION = "User factory Exception: ";
+    private static final String WRONG_INPUT_EXCEPTION
+            = "Wrong data input!";
 
     private static final UserService INSTANCE = new UserService();
 
@@ -109,5 +112,59 @@ public class UserService implements EntityService<User> {
             args[6] = status;
         }
         return create(args);
+    }
+
+    public User signIn(String login, String password) throws ServiceException {
+        User user = findBy(new UserFinder().findByLogin(login)).stream().findAny().get();
+        if (user == null) {
+            return null;
+        }
+        if (password.hashCode() == user.getPassword()) {
+            return user;
+        } else {
+            return null;
+        }
+    }
+
+    private  User register(String firstName,
+                         String lastName,
+                         String login,
+                         int password,
+                         String adress,
+                         String photoLink, UserStatus status) throws ServiceException {
+        if (!findBy(new UserFinder().findByLogin(login)).isEmpty()) {
+            return null;
+        }
+
+        try {
+            User user = new UserFactory().create(
+                    firstName, lastName, login, password, adress, photoLink, status);
+        } catch (FactoryException e) {
+            throw new ServiceException(FACTORY_EXCEPTION,e);
+        }
+        return create(firstName, lastName, login, password, adress, photoLink, status);
+    }
+
+    public User registerBuyer(String firstName,
+                            String lastName,
+                            String login,
+                            int password,
+                            String adress,
+                            String photoLink) throws ServiceException {
+        return register(firstName, lastName, login, password, adress, photoLink, UserStatus.BUYER);
+    }
+
+    public User registerWorker(User user, String firstName,
+                               String lastName,
+                               String login,
+                               int password,
+                               String adress,
+                               String photoLink, UserStatus status) throws ServiceException {
+        if ((status != UserStatus.SELLER && (status != UserStatus.COURIER))
+                || user.getStatus() != UserStatus.ADMIN) {
+            return null;
+        }
+        return  register(firstName, lastName, login, password, adress, photoLink, status);
+
     }
 }

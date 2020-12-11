@@ -55,36 +55,43 @@ public class PositionService implements EntityService<Position> {
         }
     }
 
-    public Position reservePosition(Position position, Integer quantity, User user, String note)
+    public Position transferPosition(Position position, Shop destination)
+            throws ServiceException {
+        position.setShop(destination);
+        update(position);
+        return position;
+    }
+
+    public Position splitPosition(Position position, Integer quantity,
+                                  User user, User librarian, String note, PositionStatus status)
             throws ServiceException {
         if (quantity > position.getQuantity()) {
             throw new ServiceException(WRONG_INPUT_EXCEPTION);
         }
 
-
         try (Connection connection = getConnection()) {
             try {
 
-                Position reservedPosition = new PositionFactory().create(
+                Position newPosition = new PositionFactory().create(
                         position.getBook(),
                         position.getShop(),
-                        PositionStatus.RESERVED,
+                        status,
                         note,
                         quantity);
                 position.setQuantity(position.getQuantity() - quantity);
 
                 connection.setAutoCommit(false);
                 MySQLPositionDAO positionDAO = new MySQLPositionDAO(connection);
-                positionDAO.create(reservedPosition);
+                positionDAO.create(newPosition);
                 positionDAO.update(position);
                 MySQLPositionActionDAO positionActionDAO = new MySQLPositionActionDAO(connection);
                 positionActionDAO.create (new PositionActionFactory().create(
-                        position, reservedPosition, user, null, LocalDateTime.now(),
-                        quantity, PositionStatus.READY, PositionStatus.RESERVED,
-                        reservedPosition.getShop(), reservedPosition.getBook().getPrice()));
+                        position, newPosition, user, librarian, LocalDateTime.now(),
+                        quantity, PositionStatus.READY, status,
+                        newPosition.getShop(), newPosition.getBook().getPrice()));
                 connection.commit();
                 connection.setAutoCommit(true);
-                return reservedPosition;
+                return newPosition;
             } catch (SQLException e) {
                 connection.rollback();
                 connection.setAutoCommit(true);
