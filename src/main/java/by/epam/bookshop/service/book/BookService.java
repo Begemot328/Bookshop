@@ -23,8 +23,8 @@ public class BookService implements EntityService<Book> {
     private BookService() {
     }
 
-    @Override
-    public EntityService<Book> getInstance() {
+
+    public static EntityService<Book> getInstance() {
         return INSTANCE;
     }
 

@@ -28,7 +28,7 @@ public class UserService implements EntityService<User> {
 
     private UserService() {};
 
-    @Override
+
     public EntityService<User> getInstance() {
         return INSTANCE;
     }

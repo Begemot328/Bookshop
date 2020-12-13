@@ -109,7 +109,7 @@ public class Runner {
 
             EntityFactory<Book> bookFactory= new BookFactory();
             Book book = bookFactory.create("The tale about the Golden Rooster",
-                    author, "The tale about the Golden Rooster by Alexander Pushkin", (float) 10.1);
+                    author, "The tale about the Golden Rooster by Alexander Pushkin", (float) 10.1, null);
 
             bookDAO.create(book);
             System.out.println(bookDAO.findAll());

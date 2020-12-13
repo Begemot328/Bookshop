@@ -21,8 +21,6 @@ public interface EntityService<T extends Entity> {
         }
     }
 
-    public EntityService<T> getInstance();
-
     public T create(Object ... args) throws ServiceException;
 
     public T read(int id) throws ServiceException;

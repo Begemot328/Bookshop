@@ -49,7 +49,7 @@ create table users
     login      varchar(10) not null,
     password   int(10)     not null,
     adress     varchar(40) not null,
-    photo_link varchar(40),
+    photo_link varchar(40) not null default 'user photo default link',
     status     tinyint
 );
 
@@ -92,6 +92,7 @@ create table books
     author_id   int         not null,
     price       float,
     description text,
+    photo_link varchar(40) not null default 'book photo default link',
     foreign key (author_id) references authors (id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -117,7 +118,7 @@ create table positions
     shop_id  int,
     status   tinyint not null,
     note     text,
-    quantity int     not null default 1,
+    quantity int not null default 1,
     foreign key (status) references position_status (id) ON DELETE RESTRICT ON UPDATE CASCADE,
     foreign key (shop_id) references shops (id) ON DELETE RESTRICT ON UPDATE CASCADE,
     foreign key (book_id) references books (id) ON DELETE RESTRICT ON UPDATE CASCADE

@@ -8,11 +8,13 @@ public class BookFactory implements EntityFactory<Book> {
 
     @Override
     public Book create(Object... args) throws FactoryException {
-        if (args.length < 4
+        if (args.length < 5
                 || !(args[0] instanceof String)
                 || !(args[1] instanceof Author)
-                || !(args[2] instanceof String || args[2] == null)
+                || !(args[2] instanceof String
+                || args[2] == null)
                 || !(args[3] instanceof Float)
+         //       || !(args[4] instanceof String)
                 || ((String) args[0]).isEmpty()) {
         //      || ((String) args[2]).isEmpty()) {
 
@@ -21,6 +23,7 @@ public class BookFactory implements EntityFactory<Book> {
         return new Book((String) args[0],
                 (Author) args[1],
                 (String) args[2],
-                Float.parseFloat(args[3].toString()));
+                Float.parseFloat(args[3].toString()),
+                (String) args[4]);
     }
 }

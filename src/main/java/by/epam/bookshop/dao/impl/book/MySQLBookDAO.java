@@ -30,6 +30,7 @@ public class MySQLBookDAO extends MySQLEntityDAO<Book> {
     private static final String AUTHOR_ID = "AUTHOR_ID";
     private static final String PRICE = "PRICE";
     private static final String DESCRIPTION = "DESCRIPTION";
+    private static final String PHOTO_LINK = "PHOTO_LINK";
 
     private static final String SQL_EXCEPTION = "SQL Exception: ";
     private static final String FACTORY_EXCEPTION = "Factory Exception: ";
@@ -89,6 +90,7 @@ public class MySQLBookDAO extends MySQLEntityDAO<Book> {
         map.put(AUTHOR_ID, book.getAuthor().getId());
         map.put(PRICE, book.getPrice());
         map.put(DESCRIPTION, book.getDescription());
+        map.put(PHOTO_LINK, book.getPhotoLink());
         return map;
     }
 
@@ -103,7 +105,8 @@ public class MySQLBookDAO extends MySQLEntityDAO<Book> {
                         new MySQLAuthorDAO(connection)
                                 .read(resultSet.getInt(AUTHOR_ID)),
                         resultSet.getString(DESCRIPTION),
-                        resultSet.getFloat(PRICE)));
+                        resultSet.getFloat(PRICE),
+                resultSet.getString(PRICE)));
             }
             return result;
         } catch (SQLException e) {

@@ -95,13 +95,14 @@ public class ConnectionPool implements Closeable {
 
         Stream.generate(() -> {
             try {
+                Class.forName("com.mysql.jdbc.Driver").newInstance();
                 ConnectionProxy connectionProxy
                  = new ConnectionProxy(DriverManager.getConnection(
                   //  "jdbc:mysql://localhost:3306/bookshop?useUnicode=true&serverTimezone=UTC",
                   getDbUrl(),
                   DB_USER, DB_PASSWORD));
                  return connectionProxy;
-            } catch (SQLException e) {
+            } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
                 throw new ConnectionPoolRuntimeException(SQL_EXCEPTION, e);
             }})
             .limit(10).forEach(e1 -> {

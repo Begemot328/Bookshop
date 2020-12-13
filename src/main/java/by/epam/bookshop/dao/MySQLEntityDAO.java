@@ -37,17 +37,21 @@ public abstract class MySQLEntityDAO<T  extends Entity> implements EntityDAO<T> 
 
     //public abstract T mapToObject(ResultSet resultSet) throws DAOException;
 
-    private String getInsertQuery(String schemaName, String tableName, Map<String, Object> map) throws SQLException {
+    private String getInsertQuery(String schemaName, String tableName, Map<String, Object> map) throws DAOException {
         String result = INSERT_QUERY.replace(SCHEMA, schemaName).replace(TABLE, tableName);
         String values = new String();
         String parameters = new String();
         Set<String> keySet = map.keySet();
 
         for (String key: keySet) {
-            if (key == null || key.isEmpty() || (!(map.get(key) instanceof  String)
+            if (key == null || key.isEmpty() || (map.get(key) != null
+                    && !(map.get(key) instanceof String)
                     && !(map.get(key) instanceof  Number)
                     && !(map.get(key) instanceof Date))) {
-                throw new SQLException(WRONG_INPUT);
+                throw new DAOException(WRONG_INPUT);
+            }
+            if (map.get(key) == null) {
+                continue;
             }
             parameters += key + DELIMETER;
             values +="?" + DELIMETER;
@@ -59,16 +63,20 @@ public abstract class MySQLEntityDAO<T  extends Entity> implements EntityDAO<T> 
         return result;
     }
 
-    private String getUpdateQuery(String schemaName, String tableName, Map<String, Object> map) throws SQLException {
+    private String getUpdateQuery(String schemaName, String tableName, Map<String, Object> map) throws DAOException {
         String result = UPDATE_QUERY.replace(SCHEMA, schemaName).replace(TABLE, tableName);
         String parameters = new String();
         Set<String> keySet = map.keySet();
 
         for (String key: keySet) {
-            if (key == null || key.isEmpty() || (!(map.get(key) instanceof  String)
+            if (key == null || key.isEmpty() || (map.get(key) != null
+                    && !(map.get(key) instanceof String)
                     && !(map.get(key) instanceof  Number)
                     && !(map.get(key) instanceof Date))) {
-                throw new SQLException(WRONG_INPUT);
+                throw new DAOException(WRONG_INPUT);
+            }
+            if (map.get(key) == null) {
+                continue;
             }
             parameters += key + " = ?" + DELIMETER;
         }
@@ -86,7 +94,11 @@ public abstract class MySQLEntityDAO<T  extends Entity> implements EntityDAO<T> 
             Set<String> keySet = map.keySet();
             int i = 0;
             for (String key: keySet) {
+                if (map.get(key) == null) {
+                    continue;
+                }
                 statement.setObject( ++i,map.get(key));
+
             }
             statement.executeUpdate();
 
@@ -109,6 +121,9 @@ public abstract class MySQLEntityDAO<T  extends Entity> implements EntityDAO<T> 
             Set<String> keySet = map.keySet();
             int i = 0;
             for (String key: keySet) {
+                if (map.get(key) == null) {
+                    continue;
+                }
                 statement.setObject( ++i,map.get(key));
             }
             statement.setInt(++i, t.getId());

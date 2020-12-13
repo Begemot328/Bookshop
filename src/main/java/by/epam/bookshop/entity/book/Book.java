@@ -11,12 +11,14 @@ public class Book extends Entity {
     private Author author;
     private String description;
     private float price;
+    private String photoLink;
 
-    public Book(String title, Author author, String description, float price) {
+    public Book(String title, Author author, String description, float price, String photoLink) {
         this.title = title;
         this.author = author;
         this.description = description;
         this.price = price;
+        this.photoLink = photoLink;
     }
 
     public int getId() {
@@ -49,6 +51,14 @@ public class Book extends Entity {
 
     public void setAuthor(Author author) {
         this.author = author;
+    }
+
+    public String getPhotoLink() {
+        return photoLink;
+    }
+
+    public void setPhotoLink(String photoLink) {
+        this.photoLink = photoLink;
     }
 
     public void setDescription(String description) {

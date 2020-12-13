@@ -31,7 +31,7 @@ public class PositionService implements EntityService<Position> {
     private static final String WRONG_INPUT_EXCEPTION
             = "Wrong data input!";
 
-    @Override
+
     public EntityService<Position> getInstance() {
         return null;
     }
