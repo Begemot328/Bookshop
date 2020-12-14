@@ -14,25 +14,29 @@
     <style>
         body {
             display: block;
-            background: green url("${pageContext.request.contextPath}/resources/images/library.jpg") no-repeat;
-            background-size: cover;
-            repeat: fixed;
-            width: 100%;
-            height: 35em;
+            background-image: url("${pageContext.request.contextPath}/resources/images/library.jpg");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
         }
     </style>
 </head>
 <body>
-
+<div class="w3-container w3-purple">
+    <h1>B.B.B.</h1>
+    <h3>Best Belorussian Bookshop</h3>
+</div>
 <div class="w3-display-container">
-    <div class="w3-row">
-        <c:forEach var="book" items="${books}">
-            <div class="w3-col w3-border w3-border-white w3-hover-border-red w3-pale-blue l1 m3 s6 w3-center">
-                <img src="${pageContext.request.contextPath}/resources/images/book_cover.jpg" class="w3-image" style="width: 100%">
-                <p><c:out value="${book.title}"/>" by <c:out value="${book.author.firstName}"/> <c:out
-                        value="${book.author.lastName}"/></p>
-            </div>
-        </c:forEach>
+    <div class="w3-container w3-twothird w3-display-topmiddle">
+    <div class="w3-row-padding">
+            <c:forEach var="book" items="${books}">
+                <div class="w3-col w3-border w3-border-white w3-hover-border-red l2 m3 s9">
+                    <img src="${pageContext.request.contextPath}/resources/images/book_cover.jpg" class="w3-image"
+                         style="width: 100%">
+                    <p><c:out value="${book.title}"/>" by <c:out value="${book.author.firstName}"/> <c:out
+                            value="${book.author.lastName}"/></p>
+                </div>
+            </c:forEach>
+        </div>
     </div>
 </div>
 </body>

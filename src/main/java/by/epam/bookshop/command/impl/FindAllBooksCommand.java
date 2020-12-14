@@ -9,12 +9,17 @@ import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.service.book.BookService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.stream.Collector;
 
 public class FindAllBooksCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
         try {
-            request.setAttribute("books", BookService.getInstance().findAll().toArray());
+            Book[] books = new Book[50];
+            Arrays.fill(books, BookService.getInstance().findAll().stream().findAny().get());
+            request.setAttribute("books",books);
         } catch (DAOException|ServiceException e) {
             return new Router(JSPPages.ERROR_PAGE);
         }
