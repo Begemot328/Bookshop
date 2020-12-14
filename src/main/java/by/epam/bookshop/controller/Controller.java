@@ -4,11 +4,13 @@ import by.epam.bookshop.command.Command;
 import by.epam.bookshop.command.CommandEnum;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@WebServlet("/ControllerURL")
 public class Controller  extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

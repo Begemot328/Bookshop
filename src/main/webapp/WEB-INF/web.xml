@@ -9,16 +9,7 @@
     <display-name>Archetype Created Web Application</display-name>
 
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>/WEB-INF/index.jsp</welcome-file>
     </welcome-file-list>
-
-    <servlet>
-        <servlet-name>ControllerName</servlet-name>
-        <servlet-class>by.epam.bookshop.controller.Controller</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ControllerName</servlet-name>
-        <url-pattern>/ControllerURL</url-pattern>
-    </servlet-mapping>
 
 </web-app>
