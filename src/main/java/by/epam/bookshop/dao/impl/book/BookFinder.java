@@ -1,6 +1,7 @@
 package by.epam.bookshop.dao.impl.book;
 
 import by.epam.bookshop.dao.EntityFinder;
+import by.epam.bookshop.dao.impl.author.AuthorFinder;
 import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.entity.book.Book;
 import by.epam.bookshop.entity.user.User;

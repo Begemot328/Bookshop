@@ -18,7 +18,10 @@ public final class DbParameter {
     public static final String DB_PASSWORD="db.password";
     
     /** The Constant DB_POOL_SIZE. */
-    public static final String DB_POOL_SIZE="db.poolsize";
+    public static final String DB_POOL_SIZE="db.initpoolsize";
+
+    /** The Constant DB_POOL_SIZE. */
+    public static final String DB_MAX_POOL_SIZE="db.maxpoolsize";
 
     /** The Constant DB_TIMEOUT. */
     public static final String DB_TIMEOUT="db.timeout";
