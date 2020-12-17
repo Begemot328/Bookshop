@@ -2,9 +2,10 @@ package by.epam.bookshop.command;
 
 import by.epam.bookshop.command.impl.EmptyCommand;
 import by.epam.bookshop.command.impl.FindAllBooksCommand;
+import by.epam.bookshop.command.impl.FindBooksCommand;
 
 public enum CommandEnum {
-    EMPTY_COMMAND(new EmptyCommand()), SEARCH_BOOKS(new FindAllBooksCommand());
+    EMPTY_COMMAND(new EmptyCommand()), SEARCH_BOOKS(new FindBooksCommand());
 
     private Command command;
 

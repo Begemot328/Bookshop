@@ -7,6 +7,9 @@ import by.epam.bookshop.entity.book.Book;
 import by.epam.bookshop.entity.user.User;
 import by.epam.bookshop.entity.user.UserStatus;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 
 public class BookFinder extends EntityFinder<Book> {
 
@@ -31,6 +34,28 @@ public class BookFinder extends EntityFinder<Book> {
         return (BookFinder) this.findBy(SQL_QUERY +
                 WHERE.replace(PARAMETER, AUTHOR_ID)
                         .replace(VALUE, Integer.toString(authorId)));
+    }
+
+    public BookFinder findByAuthors(Collection<Author> authors) {
+        String authorsQuery = new String();
+
+        if(authors.isEmpty()) {
+            return new BookFinder().findByID(-1);
+        }
+
+                boolean first = true;
+
+        for (Author author:authors) {
+            if (first) {
+                first = true;
+                authorsQuery = WHERE.replace(PARAMETER, AUTHOR_ID).replace(VALUE, Integer.toString(author.getId()));
+            } else {
+                authorsQuery = authorsQuery.concat(
+                        OR.replace(PARAMETER, AUTHOR_ID)
+                                .replace(VALUE, Integer.toString(author.getId())));
+            }
+        }
+        return (BookFinder) this.findBy(SQL_QUERY + authorsQuery);
     }
 
     public BookFinder findByPriceMore(Float price) {

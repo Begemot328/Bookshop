@@ -3,6 +3,7 @@ package by.epam.bookshop.controller;
 import by.epam.bookshop.command.Command;
 import by.epam.bookshop.command.CommandEnum;
 import by.epam.bookshop.command.JSPPages;
+import by.epam.bookshop.exceptions.CommandException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,13 +26,16 @@ public class Controller  extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println(request.getAttribute("command"));
         String newPage = request.getParameter("command");
         System.out.println(newPage);
         if (newPage.isEmpty() || newPage == null) {
             newPage = JSPPages.ERROR_PAGE;
         }
         Command command = CommandEnum.valueOf(request.getParameter("command").toString().toUpperCase()).getCommand();
-        request.getRequestDispatcher(command.execute(request).getPage()).forward(request, response);
+        try {
+            request.getRequestDispatcher(command.execute(request).getPage()).forward(request, response);
+        } catch (CommandException e) {
+            request.getRequestDispatcher(JSPPages.ERROR_PAGE).forward(request, response);
+        }
     }
 }

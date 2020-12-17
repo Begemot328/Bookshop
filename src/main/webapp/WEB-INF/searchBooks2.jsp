@@ -101,20 +101,44 @@
         </div>
     </div>
     <div class="w3-cell w3-padding-large" style="width:70%">
+        <form class="w3-row-padding" method="POST" action="${pageContext.request.contextPath}/ControllerURL">
+            <input type="hidden" name="command" value="SEARCH_BOOKS">
+            <div class="w3-col" style="width:15%">
+                <input class="w3-input w3-border" type="text" name="author-firstname" placeholder="Authors firstname">
+            </div>
+            <div class="w3-col" style="width:15%">
+                <input class="w3-input w3-border" type="text"  name="author-lastname" placeholder="Authors lastname">
+            </div>
+            <div class="w3-col" style="width:25%">
+                <input class="w3-input w3-border" type="text" name="title" placeholder="Title">
+            </div>
+            <div class="w3-col" style="width:10%">
+                <input class="w3-input w3-border" type="number" name="min-price" placeholder="Min price">
+            </div>
+            <div class="w3-col" style="width:10%">
+                <input class="w3-input w3-border" type="number" name="max-price" placeholder="Max price">
+            </div>
+            <div class="w3-col" style="width:10%">
+                <input class="w3-btn w3-deep-purple w3-ripple w3-hover-purple" type="submit" value="Go!">
+            </div>
+        </form>
         <div class="w3-row-padding">
             <c:forEach var="book" items="${books}">
                 <form class="w3-col l2 m6 s12  w3-center"
-                      action="https://www.w3schools.com/w3css/w3css_web_tmp_architect.asp"
-                      target="_self">
+                      method="POST" action="${pageContext.request.contextPath}/ControllerURL">
+                    <input type="hidden" name="command" value="VIEW_BOOK">
                     <button class="w3-button  w3-ripple">
                         <img src="${pageContext.request.contextPath}/resources/images/book_cover.jpg"
                              class="w3-image">
                     </button>
                     <p class="w3-signal-blue w3-large w3-opacity-min">
-                        <c:out value="${book.title}"/>"
+                        <c:out value="${book.title}"/>
                         <br/>
-                        <c:out value="${book.author.firstName}"/> <c:out
-                            value="${book.author.lastName}"/></p>
+                        <c:out value="${book.author.firstName}"/>
+                        <c:out value="${book.author.lastName}"/>
+                        <br/>
+                        <c:out value="${book.price}"/> BYN
+                    </p>
                 </form>
             </c:forEach>
         </div>
