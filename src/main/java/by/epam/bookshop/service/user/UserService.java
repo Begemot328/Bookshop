@@ -29,7 +29,7 @@ public class UserService implements EntityService<User> {
     private UserService() {};
 
 
-    public EntityService<User> getInstance() {
+    public static EntityService<User> getInstance() {
         return INSTANCE;
     }
 
@@ -133,7 +133,7 @@ public class UserService implements EntityService<User> {
                          String adress,
                          String photoLink, UserStatus status) throws ServiceException {
         if (!findBy(new UserFinder().findByLogin(login)).isEmpty()) {
-            return null;
+            throw new ServiceException(WRONG_INPUT_EXCEPTION);
         }
 
         try {

@@ -31,6 +31,8 @@ public class ConnectionPool implements Closeable {
             DbResourceManager.getInstance().getValue(DbParameter.DB_ATTEMPTIONS));
     private static final int DEFAULT_POOL_SIZE = Integer.parseInt(
             DbResourceManager.getInstance().getValue(DbParameter.DB_POOL_SIZE));
+    private static final int MAX_POOL_SIZE = Integer.parseInt(
+            DbResourceManager.getInstance().getValue(DbParameter.DB_POOL_SIZE));
     private static final String DB_URL =
             DbResourceManager.getInstance().getValue(DbParameter.DB_URL);
     private static final String DB_PASSWORD =
@@ -43,11 +45,12 @@ public class ConnectionPool implements Closeable {
             DbResourceManager.getInstance().getValue(DbParameter.DB_ENCODING);
     private static final String DB_USE_UNICODE =
             DbResourceManager.getInstance().getValue(DbParameter.DB_USE_UNICODE);
+    private static int capacity;
 
 
     private static void addDBparameter(String parameterName, String value) {
         if (parameterName != null && !parameterName.isEmpty()
-        && value != null && !value.isEmpty() ) {
+                && value != null && !value.isEmpty()) {
             dbParameters.put(parameterName, value);
         }
     }
@@ -59,10 +62,14 @@ public class ConnectionPool implements Closeable {
         addDBparameter(USE_UNICODE, DB_USE_UNICODE);
     }
 
-    /** The free connections. */
+    /**
+     * The free connections.
+     */
     private BlockingQueue<ConnectionProxy> freeConnections;
 
-    /** The working connections. */
+    /**
+     * The working connections.
+     */
     private BlockingQueue<ConnectionProxy> workingConnections;
 
     private static ConnectionPool INSTANCE;
@@ -81,9 +88,9 @@ public class ConnectionPool implements Closeable {
 
         result = result.concat(QUESTION_MARK);
 
-        for (String key: keyset) {
+        for (String key : keyset) {
             result = result.concat(
-                key + EQUALS_MARK + dbParameters.get(key) + AMPERSAND);
+                    key + EQUALS_MARK + dbParameters.get(key) + AMPERSAND);
         }
         result = result.substring(0, result.length() - 1);
         return result;
@@ -92,33 +99,27 @@ public class ConnectionPool implements Closeable {
     private void init() throws SQLException {
         freeConnections = new ArrayBlockingQueue<>(DEFAULT_POOL_SIZE);
         workingConnections = new ArrayBlockingQueue<>(DEFAULT_POOL_SIZE);
-
+        capacity = DEFAULT_POOL_SIZE;
         Stream.generate(() -> {
             try {
                 Class.forName("com.mysql.jdbc.Driver").newInstance();
                 ConnectionProxy connectionProxy
-                 = new ConnectionProxy(DriverManager.getConnection(
-                  //  "jdbc:mysql://localhost:3306/bookshop?useUnicode=true&serverTimezone=UTC",
-                  getDbUrl(),
-                  DB_USER, DB_PASSWORD));
-                 return connectionProxy;
+                        = new ConnectionProxy(DriverManager.getConnection(
+                        //  "jdbc:mysql://localhost:3306/bookshop?useUnicode=true&serverTimezone=UTC",
+                        getDbUrl(),
+                        DB_USER, DB_PASSWORD));
+                return connectionProxy;
             } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
                 throw new ConnectionPoolRuntimeException(SQL_EXCEPTION, e);
-            }})
-            .limit(10).forEach(e1 -> {
-                    try {
-                        freeConnections.put(e1);
-                    } catch (InterruptedException e) {
-                        throw new ConnectionPoolRuntimeException(SQL_EXCEPTION, e);
-                    }
-                });
-
-
-     /*   for (ConnectionProxy connection: freeConnections) {
-            connection = new ConnectionProxy(DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/bookshop?useUnicode=true&serverTimezone=UTC",
-                    "root", "1234567890"));
-*/
+            }
+        })
+                .limit(10).forEach(e1 -> {
+            try {
+                freeConnections.put(e1);
+            } catch (InterruptedException e) {
+                throw new ConnectionPoolRuntimeException(SQL_EXCEPTION, e);
+            }
+        });
     }
 
     public static ConnectionPool getInstance() throws ConnectionPoolException {
@@ -135,14 +136,23 @@ public class ConnectionPool implements Closeable {
 
     public Connection getConnection() throws ConnectionPoolException {
         ConnectionProxy connection;
-            try {
-                connection = freeConnections.poll(TIMEOUT, TimeUnit.SECONDS);
-                workingConnections.add(connection);
-                return connection;
-            } catch (InterruptedException e) {
-                throw new ConnectionPoolException(INTERRUPTED_EXCEPTION, e);
-            }
+
+        if (freeConnections.remainingCapacity() == 0 && capacity < MAX_POOL_SIZE) {
+            freeConnections = new ArrayBlockingQueue<ConnectionProxy>(++capacity);
+            BlockingQueue<ConnectionProxy> newWorkingConnections = new ArrayBlockingQueue<ConnectionProxy>(++capacity);
+            newWorkingConnections.addAll(workingConnections);
+            workingConnections = newWorkingConnections;
         }
+
+
+        try {
+            connection = freeConnections.poll(TIMEOUT, TimeUnit.SECONDS);
+            workingConnections.add(connection);
+            return connection;
+        } catch (InterruptedException e) {
+            throw new ConnectionPoolException(INTERRUPTED_EXCEPTION, e);
+        }
+    }
 
 
     @Override
