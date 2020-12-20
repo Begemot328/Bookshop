@@ -103,7 +103,7 @@ public class MySQLUserDAO extends MySQLEntityDAO<User> {
                         resultSet.getString(FIRST_NAME),
                         resultSet.getString(LAST_NAME),
                         resultSet.getString(LOGIN),
-                        resultSet.getString(PASSWORD),
+                        resultSet.getInt(PASSWORD),
                         resultSet.getString(ADRESS),
                         resultSet.getString(PHOTO_LINK),
                         UserStatus.resolveById(resultSet.getInt(STATUS))));

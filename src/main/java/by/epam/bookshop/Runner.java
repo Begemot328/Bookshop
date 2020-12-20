@@ -17,6 +17,7 @@ import by.epam.bookshop.exceptions.FactoryException;
 import by.epam.bookshop.pool.ConnectionPool;
 import by.epam.bookshop.pool.ConnectionPoolException;
 import by.epam.bookshop.pool.ConnectionProxy;
+import by.epam.bookshop.util.PasswordCoder;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,6 +27,8 @@ import java.util.concurrent.TimeUnit;
 
 public class Runner {
     public static void main(String[] args) throws FactoryException {
+        System.out.println(PasswordCoder.code("root"));
+        System.out.println(PasswordCoder.code("qwerty"));
       /*  System.out.println("AuthorDAO");
         try (Connection connection = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/bookshop?useUnicode=true&serverTimezone=UTC", "root", "1234567890");) {

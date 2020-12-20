@@ -18,11 +18,11 @@ public class FindBooksCommand implements Command {
     public Router execute(HttpServletRequest request) {
         BookFinder finder = new BookFinder();
         Enumeration<String> stringEnum = request.getParameterNames();
+
         while (stringEnum.hasMoreElements()) {
             String par = stringEnum.nextElement();
             System.out.println(par + " '" + request.getParameter(par) + "'");
         }
-
 
         if (isNotEmpty(request.getParameter(RequestParameters.TITLE))) {
             finder = finder.findByTitle(request.getParameter(RequestParameters.TITLE));
@@ -65,7 +65,7 @@ public class FindBooksCommand implements Command {
         } catch (ServiceException e) {
             return new Router(JSPPages.ERROR_PAGE);
         }
-        return new Router(JSPPages.SEARCH_BOOKS);
+        return new Router(JSPPages.SEARCH_BOOKS_PAGE);
     }
 
     private boolean isNotEmpty(String string) {

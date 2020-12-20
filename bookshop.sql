@@ -225,30 +225,30 @@ where id = 2;
 
 #root admin, do not change!
 insert users(id, first_name, last_name, login, password, adress, status)
-values (1, 'Yury', 'Zmushko', 'root', 1234567890, #change to hash
+values (1, 'Yury', 'Zmushko', 'root', 3506402, #change to hash
         'unknown', 4);
 
 #populating tables
 insert users(id, first_name, last_name, login, password, adress, status)
-values (2, 'Ivan', 'Ivanoy', 'IIvanoy', 1234567890, #change to hash
+values (2, 'Ivan', 'Ivanoy', 'IIvanoy', -946852072, #change to hash
         'Dom Ivanovyh', 3);
 insert user_actions(id_admin, id_user, date_time, initial_status, final_status)
 VALUES (1, 2, '2020_10_27 09:20:11', 0, 3);
 
 insert users(id, first_name, last_name, login, password, adress, status)
-values (3, 'Petr', 'Petroy', 'PPetroy', 1234567890, #change to hash
+values (3, 'Petr', 'Petroy', 'PPetroy', -946852072, #change to hash
         'Dom Petrovyh', 3);
 insert user_actions(id_admin, id_user, date_time, initial_status, final_status)
 VALUES (1, 3, '2020_10_27 09:20:11', 0, 3);
 
 insert users(id, first_name, last_name, login, password, adress, status)
-values (4, 'Sidor ', 'Sidorov', 'SSidorov', 1234567890, #change to hash
+values (4, 'Sidor ', 'Sidorov', 'SSidorov', -946852072, #change to hash
         'Dom Sidorovyh', 2);
 insert user_actions(id_admin, id_user, date_time, initial_status, final_status)
 VALUES (1, 4, '2020_10_27 09:20:11', 0, 2);
 
 insert users(id, first_name, last_name, login, password, adress, status)
-values (5, 'Morozov ', 'Igor', 'IMorozov', 1234567890, #change to hash
+values (5, 'Morozov ', 'Igor', 'IMorozov', -946852072, #change to hash
         'Dom Morozovyh', 2);
 insert user_actions(id_admin, id_user, date_time, initial_status, final_status)
 VALUES (1, 5, '2020_10_27 09:20:11', 0, 2);
