@@ -49,7 +49,7 @@ create table users
     login      varchar(10) not null,
     password   int(10)     not null,
     adress     varchar(40) not null,
-    photo_link varchar(40) not null default 'user photo default link',
+    photo_link varchar(100),
     status     tinyint
 );
 
@@ -282,8 +282,9 @@ insert position_actions(final_position, buyer_id, seller_id, date_time,
                         initial_status, final_status, shop_id, quantity, current_price)
 values (2, null, 2, '2020_11_10 09:20:11', 0, 1, 1, 1, 54);
 
-insert books(id, title, author_id, price, description)
-VALUES (3, 'Clash of kings', 2, 35, null);
+insert books(id, title, author_id, price, description, photo_link)
+VALUES (3, 'Clash of kings', 2, 35, null,
+'https://drive.google.com/file/d/10KL--ZudHfEul_uWVBTdm-4GHVsfZzxc/view?usp=sharing');
 insert positions(id, book_id, shop_id, status, note, quantity)
 values (5, 2, 1, 1, null, 1);
 insert position_actions(initial_position, final_position, buyer_id, seller_id, date_time,

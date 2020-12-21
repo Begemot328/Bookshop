@@ -106,7 +106,7 @@ public class MySQLBookDAO extends MySQLEntityDAO<Book> {
                                 .read(resultSet.getInt(AUTHOR_ID)),
                         resultSet.getString(DESCRIPTION),
                         resultSet.getFloat(PRICE),
-                resultSet.getString(PRICE)));
+                resultSet.getString(PHOTO_LINK)));
             }
             return result;
         } catch (SQLException e) {
