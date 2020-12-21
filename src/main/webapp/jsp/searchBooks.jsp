@@ -114,7 +114,7 @@
                         <i class="fa fa-globe"></i>
                     </button>
                     <div class="w3-dropdown-content w3-bar-block w3-deep-purple">
-                        <form class="w3-bar-item" method="POST"
+                        <form class="w3-bar-item" method="GET"
                               action="${pageContext.request.contextPath}/ControllerURL">
                             <input type="hidden" name="command" value="CHANGE_LOCALE_COMMAND">
                             <input type="hidden" name="language" value="RU">
@@ -183,10 +183,11 @@
             </div>
         </form>
         <div class="w3-row-padding">
-            <c:forEach var="book" items="${books}">
+            <c:forEach var="book" items="${sessionScope.books}">
                 <form class="w3-col l2 m6 s12  w3-center"
                       method="POST" action="${pageContext.request.contextPath}/ControllerURL">
                     <input type="hidden" name="command" value="VIEW_BOOK_COMMAND">
+                    <input type="hidden" name="book-id" value="${book.id}">
                     <button class="w3-button  w3-ripple">
                         <img src="${pageContext.request.contextPath}/resources/images/book_cover.jpg"
                              class="w3-image">

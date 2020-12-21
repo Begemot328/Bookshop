@@ -13,7 +13,9 @@ public class FindAllBooksCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
         try {
-            request.setAttribute("books", BookService.getInstance().findAll().toArray());
+            request.getSession()
+                    .setAttribute(SessionParameters.BOOKS,
+                            BookService.getInstance().findAll().toArray());
         } catch (DAOException|ServiceException e) {
             return new Router(JSPPages.ERROR_PAGE);
         }

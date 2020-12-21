@@ -113,7 +113,7 @@
                         <i class="fa fa-globe"></i>
                     </button>
                     <div class="w3-dropdown-content w3-bar-block w3-deep-purple">
-                        <form class="w3-bar-item" method="POST"
+                        <form class="w3-bar-item" method="GET"
                               action="${pageContext.request.contextPath}/ControllerURL">
                             <input type="hidden" name="command" value="CHANGE_LOCALE_COMMAND">
                             <input type="hidden" name="language" value="RU">

@@ -4,9 +4,10 @@ public class RequestParameters {
     public static final String USER = "user";
     static final String MAX_PRICE = "max-price";
     static final String MIN_PRICE = "min-price";
-    static final String BOOKS = "books";
     static final String AUTHOR_FIRSTNAME = "author-firstname";
     static final String AUTHOR_LASTNAME = "author-lastname";
+
+    static final String BOOK_ID = "book-id";
 
     static final String AUTHOR = "author";
     static final String TITLE = "title";
