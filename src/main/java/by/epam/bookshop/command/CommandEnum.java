@@ -10,6 +10,9 @@ public enum CommandEnum {
     REGISTER_MENU_COMMAND(new ForwardCommand(JSPPages.REGISTER_PAGE)),
     CHANGE_LOCALE_COMMAND(new ChangeLocaleCommand()),
     LOGOUT_COMMAND(new LogOutCommand()),
+    VIEW_BOOK_COMMAND(new ViewBookCommand()),
+    VIEW_AUTHOR_COMMAND(new ViewAuthorCommand()),
+    //VIEW_SHOP_COMMAND(new ViewShopCommand()),
     REGISTER_COMMAND(new LoginCommand());
 
     private Command command;
