@@ -44,7 +44,8 @@
         }
     </style>
 </head>
-<body>
+<>
+<!-- Top panel -->
 <div class="w3-container w3-stretch">
     <div class="w3-cell-row w3-purple w3-opacity-min">
         <div class="w3-cell w3-container" style="width: 65%">
@@ -53,6 +54,7 @@
         </div>
         <div class="w3-cell w3-container w3-cell-middle">
             <div class="w3-cell-row">
+                <!-- Dropdown menus -->
                 <div class="w3-dropdown-hover">
                     <button class="w3-button w3-purple w3-opacity-min">
                         <i class="material-icons">search</i>

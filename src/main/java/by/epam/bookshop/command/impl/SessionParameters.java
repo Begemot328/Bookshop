@@ -10,4 +10,5 @@ public class SessionParameters {
     public static final String BOOKS = "books";
     public static final String AUTHORS = "authors";
     public static final String SHOPS = "shops";
+    public static final String POSITIONS = "positions";
 }

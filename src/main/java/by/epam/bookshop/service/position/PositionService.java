@@ -32,7 +32,7 @@ public class PositionService implements EntityService<Position> {
             = "Wrong data input!";
 
 
-    public EntityService<Position> getInstance() {
+    public static EntityService<Position> getInstance() {
         return null;
     }
 
