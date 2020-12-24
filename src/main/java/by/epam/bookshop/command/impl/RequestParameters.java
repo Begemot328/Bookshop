@@ -12,7 +12,7 @@ public class RequestParameters {
 
     static final String SHOP_ID = "shop-id";
     static final String SHOP_NAME = "shop-name";
-    static final String SHOP_ADRESS = "shop-adress";
+    static final String SHOP_ADRESS = "shop-address";
 
     static final String BOOK_ID = "book-id";
     static final String AUTHOR = "author";

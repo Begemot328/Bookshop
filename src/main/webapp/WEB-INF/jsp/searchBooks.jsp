@@ -220,13 +220,20 @@
             </c:forEach>
         </div>
         <div class="w3-bar w3-purple w3-opacity-min w3-center">
-            <a href="#" class="w3-button">&laquo;</a>
-            <a href="#" class="w3-button w3-indigo">1</a>
-            <a href="#" class="w3-button">2</a>
-            <a href="#" class="w3-button">3</a>
-            <a href="#" class="w3-button">4</a>
-            <a href="#" class="w3-button">5</a>
-            <a href="#" class="w3-button">&raquo;</a>
+            <a href="#" class="w3-button w3-purple">&laquo;</a>
+            <c:forEach begin="1" end="2" var="p">
+                <c:out value="${sessionScope.current-page}"></c:out>
+                <c:out value="${sessionScope.page-quantity}"></c:out>
+                <c:choose>
+                    <c:when test="${sessionScope.current-page == 1}">
+                        <h1 href="#" class="w3-button w3-indigo">${p}</h1>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="#" class="w3-button w3-purple">${p}</a>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+            <a href="#" class="w3-button w3-purple">&raquo;</a>
         </div>
     </div>
 

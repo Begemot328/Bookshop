@@ -8,6 +8,7 @@ public class Author extends Entity {
     private int id;
     private String firstName;
     private String lastName;
+    private String photoLink;
 
     Author(String firstName, String lastName) {
         this.firstName = firstName;

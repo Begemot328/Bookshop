@@ -9,6 +9,7 @@ public class Shop extends Entity {
     private String name;
     private String address;
     private String position;
+    private String photoLink;
 
     public Shop(String name, String address, String position) {
         this.name = name;
@@ -72,5 +73,13 @@ public class Shop extends Entity {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, address, position);
+    }
+
+    public String getPhotoLink() {
+        return photoLink;
+    }
+
+    public void setPhotoLink(String photoLink) {
+        this.photoLink = photoLink;
     }
 }

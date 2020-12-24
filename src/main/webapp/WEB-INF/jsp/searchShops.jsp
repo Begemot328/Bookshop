@@ -110,7 +110,7 @@
                             <form class="w3-bar-item" method="POST"
                                   action="${pageContext.request.contextPath}/ControllerURL">
                                 <input type="hidden" name="command" value="LOGOUT_COMMAND">
-                            <button class="w3-button  w3-ripple w3-hover-purple">
+                                <button class="w3-button  w3-ripple w3-hover-purple">
                                     <span><fmt:message key="signout"/></span>
                                 </button>
                             </form>
@@ -152,16 +152,20 @@
                 <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="all"/></button>
             </form>
             <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="book.detectives"/></button>
+                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message
+                        key="book.detectives"/></button>
             </form>
             <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="book.fantastic"/></button>
+                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message
+                        key="book.fantastic"/></button>
             </form>
             <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="book.classic"/></button>
+                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message
+                        key="book.classic"/></button>
             </form>
             <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="book.romance"/></button>
+                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message
+                        key="book.romance"/></button>
             </form>
             <form class="w3-bar-item w3-large w3-hover-purple">
                 <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="book.humor"/></button>
@@ -172,26 +176,31 @@
         <form class="w3-row-padding" method="POST" action="${pageContext.request.contextPath}/ControllerURL">
             <input type="hidden" name="command" value="SEARCH_SHOPS_COMMAND">
             <div class="w3-col" style="width:15%">
-                <input class="w3-input w3-border" type="text" name="shop-name" placeholder="<fmt:message key="shop.name"/>">
+                <label>
+                    <input class="w3-input w3-border" type="text" name="shop-name"
+                           placeholder="<fmt:message key="shop.name"/>">
+                </label>
             </div>
             <div class="w3-col" style="width:15%">
-                <input class="w3-input w3-border" type="text" name="shop-adress" placeholder="<fmt:message key="shop.address"/>">
+                <label>
+                    <input class="w3-input w3-border" type="text" name="shop-address"
+                           placeholder="<fmt:message key="shop.address"/>">
+                </label>
             </div>
             <div class="w3-col" style="width:10%">
-                <input class="w3-btn w3-deep-purple w3-ripple w3-hover-purple" type="submit" value="<fmt:message key="find"/>">
+                <input class="w3-btn w3-deep-purple w3-ripple w3-hover-purple" type="submit"
+                       value="<fmt:message key="find"/>">
             </div>
         </form>
         <div class="w3-row-padding">
             <c:forEach var="shop" items="${sessionScope.shops}">
-                <h3>shop</h3>
                 <form class="w3-col l2 m6 s12  w3-center"
-                      method="GET" action="${pageContext.request.contextPath}/ControllerURL">
-                    <input type="hidden" name="command" value="VIEW_SHOP_COMMAND">
-                    <input type="hidden" name="shop-id" value="${shop.id}">
-
+                      method="POST" action="${pageContext.request.contextPath}/ControllerURL">
+                    <input type="hidden" name="command" value="VIEW_BOOK_COMMAND">
+                    <input type="hidden" name="book-id" value="${shop.id}">
                     <button class="w3-button  w3-ripple">
                         <c:choose>
-                            <c:when test = "${not empty shop.photoLink}">
+                            <c:when test="${not empty shop.photoLink}">
                                 <img src="${shop.photoLink}"
                                      class="w3-image">
                             </c:when>
@@ -201,10 +210,10 @@
                             </c:otherwise>
                         </c:choose>
                     </button>
-                    <p class="w3-signal-blue w3-medium w3-opacity-min">
+                    <p class="w3-signal-blue w3-large w3-opacity-min">
                         <c:out value="${shop.name}"/>
                         <br/>
-                        <c:out value="${shop.adress}"/>
+                        <c:out value="${shop.address}"/>
                     </p>
                 </form>
             </c:forEach>

@@ -11,4 +11,8 @@ public class SessionParameters {
     public static final String AUTHORS = "authors";
     public static final String SHOPS = "shops";
     public static final String POSITIONS = "positions";
+
+    public static final String CURRENT_PAGE = "current-page";
+    public static final String PAGE_QUANTITY = "page-quantity";
+    public static final String PAGE_ELEMENTS = "page-elements";
 }
