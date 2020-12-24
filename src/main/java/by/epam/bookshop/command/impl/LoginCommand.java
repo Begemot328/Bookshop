@@ -16,15 +16,13 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 public class LoginCommand implements Command {
-    private static final String LOGIN = "login";
-    private static final String PASSWORD = "password";
     private static final String LOGIN_ERROR = "error.login";
     private static final String SERVICE_EXCEPTION = "Service Exception: ";
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        String login = request.getParameter(LOGIN);
-        String password  = request.getParameter(PASSWORD);
+        String login = request.getParameter(RequestParameters.LOGIN);
+        String password  = request.getParameter(RequestParameters.PASSWORD);
         Optional<User> user;
         try {
             user = UserService.getInstance().findBy(new UserFinder().findByLogin(login)).stream().findAny();

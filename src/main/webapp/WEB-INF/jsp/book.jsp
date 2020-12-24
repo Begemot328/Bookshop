@@ -176,29 +176,29 @@
     </div>
     <div class="w3-cell w3-padding-large" style="width:70%">
         <div class="w3-card-4 w3-half w3-center">
-                <div class="w3-panel w3-large w3-purple w3-opacity">
-                    <h3>${sessionScope.book.title}</h3>
-                </div>
-                <form method="POST" action="${pageContext.request.contextPath}/ControllerURL">
-                    <input type="hidden" name="command" value="VIEW_AUTHOR_COMMAND">
-                    <input type="hidden" name="author-id" value="${sessionScope.book.author.id}">
-                    <button class="w3-panel w3-button w3-large w3-purple w3-opacity" type="submit" style="width: 100%">
-                        <h3>${sessionScope.book.author.firstName} ${sessionScope.book.author.lastName}</h3>
-                    </button>
-                </form>
-                <c:choose>
-                    <c:when test="${not empty book.photoLink}">
-                        <img src="${sessionScope.book.photoLink}"
-                             class="w3-image">
-                    </c:when>
-                    <c:otherwise>
-                        <img src="${pageContext.request.contextPath}/resources/images/book_cover.jpg"
-                             class="w3-image">
-                    </c:otherwise>
-                </c:choose>
-                <div class="w3-panel w3-large w3-purple w3-opacity">
-                    <h4>${sessionScope.book.price} BYN</h4>
-                </div>
+            <div class="w3-panel w3-large w3-purple w3-opacity">
+                <h3>${sessionScope.book.title}</h3>
+            </div>
+            <form method="POST" action="${pageContext.request.contextPath}/ControllerURL">
+                <input type="hidden" name="command" value="VIEW_AUTHOR_COMMAND">
+                <input type="hidden" name="author-id" value="${sessionScope.book.author.id}">
+                <button class="w3-panel w3-button w3-large w3-purple w3-opacity" type="submit" style="width: 100%">
+                    <h3>${sessionScope.book.author.firstName} ${sessionScope.book.author.lastName}</h3>
+                </button>
+            </form>
+            <c:choose>
+                <c:when test="${not empty sessionScope.book.photoLink}">
+                    <img src="${sessionScope.book.photoLink}" alt="book picture"
+                         class="w3-image">
+                </c:when>
+                <c:otherwise>
+                    <img src="${pageContext.request.contextPath}/resources/images/book_cover.jpg"
+                    alt="default book picture"  class="w3-image">
+                </c:otherwise>
+            </c:choose>
+            <div class="w3-panel w3-large w3-purple w3-opacity">
+                <h4>${sessionScope.book.price} BYN</h4>
+            </div>
             <div class="w3-row-padding">
             </div>
         </div>

@@ -4,15 +4,19 @@ import by.epam.bookshop.command.impl.*;
 
 public enum CommandEnum {
     EMPTY_COMMAND(new EmptyCommand()),
+
+    SEARCH_SHOPS_COMMAND (new FindShopsCommand()),
     SEARCH_BOOKS_COMMAND(new FindBooksCommand()),
-    LOGIN_COMMAND(new LoginCommand()),
-    SIGNIN_COMMAND(new ForwardCommand(JSPPages.LOGIN_PAGE)),
-    REGISTER_MENU_COMMAND(new ForwardCommand(JSPPages.REGISTER_PAGE)),
-    CHANGE_LOCALE_COMMAND(new ChangeLocaleCommand()),
-    LOGOUT_COMMAND(new LogOutCommand()),
+
     VIEW_BOOK_COMMAND(new ViewBookCommand()),
     VIEW_AUTHOR_COMMAND(new ViewAuthorCommand()),
     //VIEW_SHOP_COMMAND(new ViewShopCommand()),
+
+    CHANGE_LOCALE_COMMAND(new ChangeLocaleCommand()),
+    LOGIN_COMMAND(new LoginCommand()),
+    LOGOUT_COMMAND(new LogOutCommand()),
+    SIGNIN_COMMAND(new ForwardCommand(JSPPages.LOGIN_PAGE)),
+    REGISTER_MENU_COMMAND(new ForwardCommand(JSPPages.REGISTER_PAGE)),
     REGISTER_COMMAND(new LoginCommand());
 
     private Command command;

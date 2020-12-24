@@ -92,7 +92,7 @@ create table books
     author_id   int         not null,
     price       float,
     description text,
-    photo_link varchar(40) not null default 'book photo default link',
+    photo_link varchar(100),
     foreign key (author_id) references authors (id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 

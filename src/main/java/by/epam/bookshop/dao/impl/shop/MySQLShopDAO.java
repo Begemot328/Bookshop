@@ -2,10 +2,7 @@ package by.epam.bookshop.dao.impl.shop;
 
 import by.epam.bookshop.dao.EntityFinder;
 import by.epam.bookshop.dao.MySQLEntityDAO;
-import by.epam.bookshop.entity.Entity;
 import by.epam.bookshop.entity.EntityFactory;
-import by.epam.bookshop.entity.author.Author;
-import by.epam.bookshop.entity.author.AuthorFactory;
 import by.epam.bookshop.entity.shop.Shop;
 import by.epam.bookshop.entity.shop.ShopFactory;
 import by.epam.bookshop.exceptions.DAOException;
@@ -80,7 +77,7 @@ public class MySQLShopDAO extends MySQLEntityDAO<Shop> {
     public Map<String, Object> mapEntity(Shop shop) {
         Map<String, Object> map = new HashMap<>();
         map.put(NAME, shop.getName());
-        map.put(ADRESS, shop.getAdress());
+        map.put(ADRESS, shop.getAddress());
         map.put(POSITION, shop.getPosition());
         return map;
     }

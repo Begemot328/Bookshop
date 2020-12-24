@@ -7,12 +7,12 @@ import java.util.Objects;
 public class Shop extends Entity {
     private int id;
     private String name;
-    private String adress;
+    private String address;
     private String position;
 
-    public Shop(String name, String adress, String position) {
+    public Shop(String name, String address, String position) {
         this.name = name;
-        this.adress = adress;
+        this.address = address;
         this.position = position;
     }
 
@@ -20,8 +20,8 @@ public class Shop extends Entity {
         return name;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
     public String getPosition() {
@@ -32,8 +32,8 @@ public class Shop extends Entity {
         this.name = name;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public void setPosition(String position) {
@@ -53,7 +53,7 @@ public class Shop extends Entity {
         return "Shop{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", adress='" + adress + '\'' +
+                ", adress='" + address + '\'' +
                 ", position='" + position + '\'' +
                 '}';
     }
@@ -65,12 +65,12 @@ public class Shop extends Entity {
         Shop shop = (Shop) o;
         return id == shop.id &&
                 Objects.equals(name, shop.name) &&
-                Objects.equals(adress, shop.adress) &&
+                Objects.equals(address, shop.address) &&
                 Objects.equals(position, shop.position);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, adress, position);
+        return Objects.hash(id, name, address, position);
     }
 }
