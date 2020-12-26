@@ -10,8 +10,10 @@ public enum CommandEnum {
 
     VIEW_BOOK_COMMAND(new ViewBookCommand()),
     VIEW_AUTHOR_COMMAND(new ViewAuthorCommand()),
-    //VIEW_SHOP_COMMAND(new ViewShopCommand()),
+    VIEW_SHOP_COMMAND(new ViewShopCommand()),
 
+
+    CHANGE_PAGE_COMMAND(new ChangePageCommand()),
     CHANGE_LOCALE_COMMAND(new ChangeLocaleCommand()),
     LOGIN_COMMAND(new LoginCommand()),
     LOGOUT_COMMAND(new LogOutCommand()),

@@ -30,10 +30,11 @@ public class PositionService implements EntityService<Position> {
             = "Only admin or seller can manage books";
     private static final String WRONG_INPUT_EXCEPTION
             = "Wrong data input!";
+    private final static PositionService INSTANCE = new PositionService();
 
 
     public static EntityService<Position> getInstance() {
-        return null;
+        return INSTANCE;
     }
 
 

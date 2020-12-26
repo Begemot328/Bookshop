@@ -82,13 +82,13 @@
                 <div class="w3-dropdown-hover">
                     <button class="w3-button w3-purple w3-opacity-min">
                         <i class="material-icons">person</i>
-                        <c:if test="${sessionScope.user != null}">
-                            <span><c:out value="${sessionScope.user.firstName}"/> <c:out
-                                    value="${sessionScope.user.lastName}"/></span>
+                        <c:if test="${sessionScope.currentUser != null}">
+                            <span><c:out value="${sessionScope.currentUser.firstName}"/> <c:out
+                                    value="${sessionScope.currentUser.lastName}"/></span>
                         </c:if>
                     </button>
                     <div class="w3-dropdown-content w3-bar-block w3-deep-purple">
-                        <c:if test="${sessionScope.user == null}">
+                        <c:if test="${sessionScope.currentUser == null}">
                             <form class="w3-bar-item" method="POST"
                                   action="${pageContext.request.contextPath}/ControllerURL">
                                 <input type="hidden" name="command" value="REGISTER_MENU_COMMAND">
@@ -97,7 +97,7 @@
                                 </button>
                             </form>
                         </c:if>
-                        <c:if test="${sessionScope.user == null}">
+                        <c:if test="${sessionScope.currentUser == null}">
                             <form class="w3-bar-item" method="POST"
                                   action="${pageContext.request.contextPath}/ControllerURL">
                                 <input type="hidden" name="command" value="SIGNIN_COMMAND">
@@ -106,7 +106,7 @@
                                 </button>
                             </form>
                         </c:if>
-                        <c:if test="${sessionScope.user != null}">
+                        <c:if test="${sessionScope.currentUser != null}">
                             <form class="w3-bar-item" method="POST"
                                   action="${pageContext.request.contextPath}/ControllerURL">
                                 <input type="hidden" name="command" value="LOGOUT_COMMAND">
@@ -193,7 +193,10 @@
             </div>
         </form>
         <div class="w3-row-padding">
-            <c:forEach var="shop" items="${sessionScope.shops}">
+            <c:forEach var="shop"
+                       begin="${sessionScope.firstElement}"
+                       end="${sessionScope.lastElement}"
+                       items="${sessionScope.shops}">
                 <form class="w3-col l2 m6 s12  w3-center"
                       method="POST" action="${pageContext.request.contextPath}/ControllerURL">
                     <input type="hidden" name="command" value="VIEW_BOOK_COMMAND">
@@ -218,14 +221,19 @@
                 </form>
             </c:forEach>
         </div>
-        <div class="w3-bar w3-purple w3-opacity-min w3-center">
-            <a href="#" class="w3-button">&laquo;</a>
-            <a href="#" class="w3-button w3-indigo">1</a>
-            <a href="#" class="w3-button">2</a>
-            <a href="#" class="w3-button">3</a>
-            <a href="#" class="w3-button">4</a>
-            <a href="#" class="w3-button">5</a>
-            <a href="#" class="w3-button">&raquo;</a>
+        <div class="w3-bar w3-purple w3-opacity-min w3-center w3-stretch">
+            <c:forEach begin="1" end="${sessionScope.pageQuantity}" var="p">
+                <c:choose>
+                    <c:when test="${sessionScope.currentPage == p}">
+                        <a class="w3-button w3-indigo"
+                           href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a class="w3-button w3-purple"
+                           href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
         </div>
     </div>
 

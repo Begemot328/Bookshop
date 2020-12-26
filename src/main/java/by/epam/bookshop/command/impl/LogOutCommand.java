@@ -10,7 +10,7 @@ public class LogOutCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
 
-        request.getSession().setAttribute(SessionParameters.USER, null);
+        request.getSession().setAttribute(SessionParameters.CURRENT_USER, null);
 
         return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
     }

@@ -2,6 +2,8 @@ package by.epam.bookshop.command.impl;
 
 public class RequestParameters {
     public static final String USER = "user";
+    public static final String PAGE = "page";
+    public static final String POSITION_ID = "position-id";
     static final String LOGIN = "login";
     static final String PASSWORD = "password";
 
@@ -9,6 +11,10 @@ public class RequestParameters {
     static final String AUTHOR_FIRSTNAME = "author-firstname";
     static final String AUTHOR_LASTNAME = "author-lastname";
 
+
+    static final String USER_FIRSTNAME = "user-firstname";
+    static final String USER_LASTNAME = "user-lastname";
+    static final String USER_STATUS = "user-status";
 
     static final String SHOP_ID = "shop-id";
     static final String SHOP_NAME = "shop-name";
