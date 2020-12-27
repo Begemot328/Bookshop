@@ -7,6 +7,7 @@ public enum CommandEnum {
 
     SEARCH_SHOPS_COMMAND (new FindShopsCommand()),
     SEARCH_BOOKS_COMMAND(new FindBooksCommand()),
+    PROCESS_POSITION_COMMAND(new ForwardCommand(JSPPages.POSITION)),
 
     VIEW_BOOK_COMMAND(new ViewBookCommand()),
     VIEW_AUTHOR_COMMAND(new ViewAuthorCommand()),

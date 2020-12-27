@@ -225,7 +225,7 @@ where id = 2;
 
 #root admin, do not change!
 insert users(id, first_name, last_name, login, password, adress, status)
-values (1, 'Yury', 'Zmushko', 'root', 3506402, #change to hash
+values (1, 'Yury', 'Zmushko', 'root', 3506402, #root root
         'unknown', 4);
 
 #populating tables
@@ -284,7 +284,7 @@ values (2, null, 2, '2020_11_10 09:20:11', 0, 1, 1, 1, 54);
 
 insert books(id, title, author_id, price, description, photo_link)
 VALUES (3, 'Clash of kings', 2, 35, null,
-'https://drive.google.com/file/d/10KL--ZudHfEul_uWVBTdm-4GHVsfZzxc/view?usp=sharing');
+'https://drive.google.com/uc?export=view&id=10KL--ZudHfEul_uWVBTdm-4GHVsfZzxc');
 insert positions(id, book_id, shop_id, status, note, quantity)
 values (5, 2, 1, 1, null, 1);
 insert position_actions(initial_position, final_position, buyer_id, seller_id, date_time,

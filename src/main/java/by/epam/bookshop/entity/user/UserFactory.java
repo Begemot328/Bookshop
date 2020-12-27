@@ -31,8 +31,7 @@ public class UserFactory implements EntityFactory<User> {
                 || !(args[3] instanceof Integer)//May be incorrect! (Integer.class.isInstance(args[2])
                 || !(args[4] instanceof String)
                 || ((String) args[4]).isEmpty()
-                || !(args[5] instanceof String)
-                || ((String) args[5]).isEmpty()
+                || !(args[5] == null|| (args[5] instanceof String  && ((String) args[5]).isEmpty()))
                 || !(args[6] instanceof UserStatus)) {
             throw new FactoryException(getWrongDataMessage());
         }

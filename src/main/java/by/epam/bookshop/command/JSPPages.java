@@ -16,4 +16,5 @@ public class JSPPages {
     public static final String VIEW_SHOP_PAGE = "WEB-INF/jsp/shop.jsp";
     public static final String VIEW_POSITION_PAGE = "WEB-INF/jsp/position.jsp";
     public static final String VIEW_USER_PAGE = "WEB-INF/jsp/user.jsp";
+    public static final String POSITION = "WEB-INF/jsp/position.jsp";
 }

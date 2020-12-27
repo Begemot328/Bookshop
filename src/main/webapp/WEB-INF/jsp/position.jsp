@@ -44,7 +44,8 @@
         }
     </style>
 </head>
-<body>
+<>
+<!-- Top panel -->
 <div class="w3-container w3-stretch">
     <div class="w3-cell-row w3-purple w3-opacity-min">
         <div class="w3-cell w3-container" style="width: 65%">
@@ -53,6 +54,7 @@
         </div>
         <div class="w3-cell w3-container w3-cell-middle">
             <div class="w3-cell-row">
+                <!-- Dropdown menus -->
                 <div class="w3-dropdown-hover">
                     <button class="w3-button w3-purple w3-opacity-min">
                         <i class="material-icons">search</i>
@@ -172,71 +174,55 @@
             </form>
         </div>
     </div>
-    <div class="w3-cell w3-padding-large" style="width:70%">
-        <form class="w3-row-padding" method="POST" action="${pageContext.request.contextPath}/ControllerURL">
-            <input type="hidden" name="command" value="SEARCH_SHOPS_COMMAND">
-            <div class="w3-col" style="width:15%">
-                <label>
-                    <input class="w3-input w3-border" type="text" name="shop-name"
-                           placeholder="<fmt:message key="shop.name"/>">
-                </label>
+    <div class="w3-cell w3-padding-large w3-center" style="width:70%">
+        <div class="w3-card-4 w3-half w3-center">
+            <div class="w3-panel w3-large w3-purple w3-opacity">
+                <h3>${sessionScope.book.title}</h3>
             </div>
-            <div class="w3-col" style="width:15%">
-                <label>
-                    <input class="w3-input w3-border" type="text" name="shop-address"
-                           placeholder="<fmt:message key="shop.address"/>">
-                </label>
+            <form method="POST" action="${pageContext.request.contextPath}/ControllerURL">
+                <input type="hidden" name="command" value="VIEW_AUTHOR_COMMAND">
+                <input type="hidden" name="author-id" value="${sessionScope.position.book.author.id}">
+                <button class="w3-panel w3-button w3-large w3-purple w3-opacity" type="submit" style="width: 100%">
+                    <h3>${sessionScope.position.book.author.firstName} ${sessionScope.position.book.author.lastName}</h3>
+                </button>
+            </form>
+            <c:choose>
+                <c:when test="${not empty sessionScope.book.photoLink}">
+                    <img src="${sessionScope.book.photoLink}" alt="book picture"
+                         class="w3-image">
+                </c:when>
+                <c:otherwise>
+                    <img src="${pageContext.request.contextPath}/resources/images/book_cover.jpg"
+                    alt="default book picture"  class="w3-image">
+                </c:otherwise>
+            </c:choose>
+            <div class="w3-panel w3-large w3-purple w3-opacity">
+                <h3>${sessionScope.position.book.price} BYN</h3>
             </div>
-            <div class="w3-col" style="width:10%">
-                <input class="w3-btn w3-deep-purple w3-ripple w3-hover-purple" type="submit"
-                       value="<fmt:message key="find"/>">
+            <div class="w3-panel w3-large w3-purple w3-opacity">
+                <h3>${sessionScope.position.quantity}</h3>
             </div>
-        </form>
-        <div class="w3-row-padding">
-            <c:forEach var="shop"
-                       begin="${sessionScope.firstElement}"
-                       end="${sessionScope.lastElement}"
-                       items="${sessionScope.shops}">
-                <form class="w3-col l2 m6 s12  w3-center"
-                      method="POST" action="${pageContext.request.contextPath}/ControllerURL">
-                    <input type="hidden" name="command" value="VIEW_SHOP_COMMAND">
-                    <input type="hidden" name="shop-id" value="${shop.id}">
-                    <button class="w3-button  w3-ripple">
+        </div>
+
+        <div class="w3-bar w3-purple w3-opacity-min w3-center w3-stretch">
+            <c:choose>
+                <c:when test="${sessionScope.pageQuantity} > 1">
+                    <c:forEach begin="1" end="${sessionScope.pageQuantity}" var="p">
                         <c:choose>
-                            <c:when test="${not empty shop.photoLink}">
-                                <img src="${shop.photoLink}"
-                                     class="w3-image">
+                            <c:when test="${sessionScope.currentPage == p}">
+                                <a class="w3-button w3-indigo"
+                                   href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
                             </c:when>
                             <c:otherwise>
-                                <img src="${pageContext.request.contextPath}/resources/images/shop.jpg"
-                                     class="w3-image">
+                                <a class="w3-button w3-purple"
+                                   href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
                             </c:otherwise>
                         </c:choose>
-                    </button>
-                    <p class="w3-signal-blue w3-large w3-opacity-min">
-                        <c:out value="${shop.name}"/>
-                        <br/>
-                        <c:out value="${shop.address}"/>
-                    </p>
-                </form>
-            </c:forEach>
-        </div>
-        <div class="w3-bar w3-purple w3-opacity-min w3-center w3-stretch">
-            <c:forEach begin="1" end="${sessionScope.pageQuantity}" var="p">
-                <c:choose>
-                    <c:when test="${sessionScope.currentPage == p}">
-                        <a class="w3-button w3-indigo"
-                           href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
-                    </c:when>
-                    <c:otherwise>
-                        <a class="w3-button w3-purple"
-                           href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
+                    </c:forEach>
+                </c:when>
+            </c:choose>
         </div>
     </div>
-
     <div class="w3-cell w3-deep-purple w3-opacity-min w3-cell" style="width:15%">
         <div class="w3-bar-block">
             <form class="w3-bar-item w3-large w3-hover-purple">

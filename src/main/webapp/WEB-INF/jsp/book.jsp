@@ -174,7 +174,7 @@
             </form>
         </div>
     </div>
-    <div class="w3-cell w3-padding-large" style="width:70%">
+    <div class="w3-cell w3-padding-large w3-center" style="width:70%">
         <div class="w3-card-4 w3-half w3-center">
             <div class="w3-panel w3-large w3-purple w3-opacity">
                 <h3>${sessionScope.book.title}</h3>
@@ -201,35 +201,62 @@
             </div>
         </div>
         <table class="w3-table-all w3-purple w3-opacity-min">
-            <tr>
+            <tr class="w3-deep-purple">
                 <th><fmt:message key="shop"/></th>
                 <th><fmt:message key="shop.address"/></th>
                 <th><fmt:message key="quantity"/></th>
+                <c:choose>
+                    <c:when test="${sessionScope.currentUser.status.id == 2}">
+                        <th></th>
+                    </c:when>
+                    <c:when test="${sessionScope.currentUser.status.id == 3 || sessionScope.currentUser.status.id == 4}">
+                        <th></th>
+                    </c:when>
+                </c:choose>
             </tr>
             <c:forEach var="position"
                        begin="${sessionScope.firstElement}"
                        end="${sessionScope.lastElement}"
                        items="${sessionScope.positions}">
-                <tr>
-                    <td><c:out value="${position.shop.name}"/></td>
+                <tr class="w3-deep-purple">
+                    <td><a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_SHOP_COMMAND&shop-id=${position.shop.id}">
+                        <c:out value="${position.shop.name}"/></a></td>
                     <td><c:out value="${position.shop.address}"/></td>
                     <td><c:out value="${position.quantity}"/></td>
+
+                        <c:choose>
+                            <c:when test="${sessionScope.currentUser.status.id == 2}">
+                                <td><a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shop-id=${position.shop.id}"
+                                       class="w3-button"><fmt:message key="position.book"/></a></td>
+
+                            </c:when>
+                            <c:when test="${sessionScope.currentUser.status.id == 3 || sessionScope.currentUser.status.id == 4}">
+                                <td><a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shop-id=${position.shop.id}"
+                                       class="w3-button"><fmt:message key="position.process"/></a></td>
+                            </c:when>
+                        </c:choose>
+
                 </tr>
             </c:forEach>
         </table>
         <div class="w3-bar w3-purple w3-opacity-min w3-center w3-stretch">
-            <c:forEach begin="1" end="${sessionScope.pageQuantity}" var="p">
-                <c:choose>
-                    <c:when test="${sessionScope.currentPage == p}">
-                        <a class="w3-button w3-indigo"
-                           href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
-                    </c:when>
-                    <c:otherwise>
-                        <a class="w3-button w3-purple"
-                           href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
+            <c:choose>
+                <c:when test="${sessionScope.pageQuantity} > 1">
+                    <c:forEach begin="1" end="${sessionScope.pageQuantity}" var="p">
+                        <c:choose>
+                            <c:when test="${sessionScope.currentPage == p}">
+                                <a class="w3-button w3-indigo"
+                                   href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a class="w3-button w3-purple"
+                                   href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </c:when>
+            </c:choose>
+
         </div>
     </div>
     <div class="w3-cell w3-deep-purple w3-opacity-min w3-cell" style="width:15%">
