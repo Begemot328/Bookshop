@@ -34,6 +34,7 @@ public class ViewBookCommand implements Command {
             Paginator.paginate(request, positions, 1);
             request.getSession().setAttribute(SessionParameters.POSITIONS, positions);
         } catch (ServiceException e) {
+            request.getSession().setAttribute(SessionParameters.ERROR_MESSAGE, e.getMessage() + e.getStackTrace());
             return new Router(JSPPages.ERROR_PAGE);
         }
 

@@ -9,12 +9,12 @@ public class PositionFactory implements EntityFactory<Position> {
 
     @Override
     public Position create(Object... args) throws FactoryException {
-        if (args.length < 4
+        if (args.length < 5
                 || !(args[0] instanceof Book)
                 || !(args[1] instanceof Shop)
                 || !(args[2] instanceof PositionStatus)
-                || !(args[3] instanceof String)
-                || !(Integer.class.isInstance(args[4]))) {
+                || !(args[3] instanceof String || args[3] == null)
+                || !((args[4]) instanceof Integer)) {
             throw new FactoryException(getWrongDataMessage());
         }
         return new Position((Book) args[0],

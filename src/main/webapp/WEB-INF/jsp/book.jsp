@@ -200,8 +200,8 @@
                 <h4>${sessionScope.book.price} BYN</h4>
             </div>
         </div>
-        <table class="w3-table w3-striped w3-border ">
-            <tr class="w3-purple w3-opacity-min">
+        <table class="w3-table-all w3-purple w3-opacity-min">
+            <tr>
                 <th><fmt:message key="shop"/></th>
                 <th><fmt:message key="shop.address"/></th>
                 <th><fmt:message key="quantity"/></th>

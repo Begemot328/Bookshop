@@ -68,11 +68,12 @@ public class FindBooksCommand implements Command {
                 finder = finder.findByAuthors(AuthorService.getInstance().findBy(authorFinder));
             }
 
-            Position[] books = BookService.getInstance().findBy(finder).toArray(Position[]::new);
+            Book[] books = BookService.getInstance().findBy(finder).toArray(Book[]::new);
 
             request.getSession().setAttribute(SessionParameters.BOOKS, books);
             Paginator.paginate(request, books, 1);
         } catch (ServiceException e) {
+            request.getSession().setAttribute(SessionParameters.ERROR_MESSAGE, e.getMessage() + e.getStackTrace());
             return new Router(JSPPages.ERROR_PAGE);
         }
         return new Router(JSPPages.SEARCH_BOOKS_PAGE);

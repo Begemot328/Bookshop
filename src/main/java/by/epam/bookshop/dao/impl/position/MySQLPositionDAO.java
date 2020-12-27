@@ -14,6 +14,7 @@ import by.epam.bookshop.entity.position.PositionFactory;
 import by.epam.bookshop.entity.position.PositionStatus;
 import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.FactoryException;
+import by.epam.bookshop.exceptions.UnknownEntityException;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -28,7 +29,7 @@ public class MySQLPositionDAO extends MySQLEntityDAO<Position> {
     private static final String ID = "ID";
     private static final String BOOK_ID = "BOOK_ID";
     private static final String SHOP_ID = "SHOP_ID";
-    private static final String POSITION_STATUS = "POSITION_STATUS";
+    private static final String POSITION_STATUS = "STATUS";
     private static final String NOTE = "NOTE";
     private static final String QUANTITY = "QUANTITY";
 
@@ -103,7 +104,7 @@ public class MySQLPositionDAO extends MySQLEntityDAO<Position> {
                 result.add(factory.createWithID(resultSet.getInt(ID),
                         new MySQLBookDAO(connection).read(resultSet.getInt(BOOK_ID)),
                         new MySQLShopDAO(connection).read(resultSet.getInt(SHOP_ID)),
-                        PositionStatus.valueOf(Integer.toString(resultSet.getInt(POSITION_STATUS))),
+                        PositionStatus.resolveById(resultSet.getInt(POSITION_STATUS)),
                         resultSet.getString(NOTE),
                         Integer.valueOf(resultSet.getInt(QUANTITY))));
             }
@@ -112,6 +113,8 @@ public class MySQLPositionDAO extends MySQLEntityDAO<Position> {
             throw new DAOException(SQL_EXCEPTION + e.getLocalizedMessage());
         } catch (FactoryException e) {
             throw new DAOException(FACTORY_EXCEPTION, e);
+        } catch (UnknownEntityException e) {
+            throw new DAOException(UNKNOWN_ENTITY_EXCEPTION, e);
         }
     }
 

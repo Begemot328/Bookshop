@@ -8,6 +8,7 @@ public class SessionParameters {
     public static final String POSITION = "position";
     public static final String ARRAY = "array";
     public static final String USERS = "USERS";
+    public static final String ERROR_MESSAGE = "errorMessage";
     final static String CURRENT_USER = "currentUser";
     final static String LANGUAGE = "language";
     public final static String LAST_PAGE = "lastPage";
