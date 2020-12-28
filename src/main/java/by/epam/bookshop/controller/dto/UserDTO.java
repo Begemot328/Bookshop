@@ -11,6 +11,7 @@ public class UserDTO extends User {
         super(user.getFirstName(), user.getLastName(),
                 user.getLogin(), 0, user.getAdress(),
                 user.getPhotoLink(), user.getStatus());
+        this.setId(user.getId());
 
     }
 

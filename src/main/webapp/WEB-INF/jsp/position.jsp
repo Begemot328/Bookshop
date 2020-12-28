@@ -216,7 +216,7 @@
                 </div>
             </c:if>
             <div class="w3-panel w3-large w3-purple w3-opacity">
-                <h4><fmt:message key="${sessionScope.position.status}"></h4>
+                <h4><fmt:message key="${sessionScope.position.status}"/></h4>
             </div>
 
         </div>

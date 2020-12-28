@@ -208,9 +208,22 @@
         <div class="w3-card-4 w3-half w3-center w3-opacity-min w3-purple w3-padding">
             <form>
                 <br/>
-                <input type="hidden" class="w3-radio" id="book" name="command" value="BOOK_BOOK_COMMAND">
+                <input type="hidden" name="command" value="BOOK_BOOK_COMMAND">
+                <label for="quantity"><fmt:message key="quantity"/> :
+                    <span id="quantityOut"></span></label>
+                <input type="range" id="quantity" name="quantity" min="1" max="${sessionScope.position.quantity}"
+                       value="1" step="1" class="slider">
+                <br/>
                 <button class="w3-button w3-purple w3-ripple w3-opacity" type="submit">
                     <fmt:message key="position.book" ></fmt:message></button>
+                <script>
+                    let slider = document.getElementById("quantity");
+                    let output = document.getElementById("quantityOut");
+                    output.innerHTML = slider.value;
+                    slider.oninput = function () {
+                        output.innerHTML = this.value;
+                    }
+                </script>
             </form>
         </div>
         <div class="w3-bar w3-purple w3-opacity-min w3-center w3-stretch">

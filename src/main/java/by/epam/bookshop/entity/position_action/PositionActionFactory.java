@@ -18,13 +18,13 @@ public class PositionActionFactory implements EntityFactory<PositionAction> {
                 || !(args[0] instanceof Position)
                 || !(args[1] instanceof Position)
                 || !(args[2] instanceof User)
-                || !(args[3] instanceof User)
+                || !(args[3] instanceof User || args[3] == null)
                 || !(args[4] instanceof LocalDateTime)
                 || !(Integer.class.isInstance(args[5]))
                 || !(args[6] instanceof PositionStatus)
                 || !(args[7] instanceof PositionStatus)
                 || !(args[8] instanceof Shop)
-                ||  !(args[9] instanceof Double)) {
+                ||  !(args[9] instanceof Float)) {
             throw new FactoryException(getWrongDataMessage());
         }
         return new PositionAction((Position) args[0],

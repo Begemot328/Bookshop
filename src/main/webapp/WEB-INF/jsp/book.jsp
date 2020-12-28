@@ -42,6 +42,30 @@
         body, h1, h2, h3, h4, h5, h6 {
             font-family: Arial, Helvetica, sans-serif;
         }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 80%;
+            height: 25px;
+            background: #9370DB;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+
+        .slider:hover {
+            opacity: 1;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #800080;
+            cursor: pointer;
+        }
     </style>
 </head>
 <>
@@ -226,7 +250,7 @@
 
                         <c:choose>
                             <c:when test="${sessionScope.currentUser.status.id == 2}">
-                                <td><a href="${pageContext.request.contextPath}/ControllerURL?command=BOOK_POSITION_COMMAND&shop-id=${position.shop.id}&position-id=${position.id}"
+                                <td><a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shop-id=${position.shop.id}&position-id=${position.id}"
                                        class="w3-button"><fmt:message key="position.book"/></a></td>
                             </c:when>
                             <c:when test="${sessionScope.currentUser.status.id == 3 || sessionScope.currentUser.status.id == 4}">

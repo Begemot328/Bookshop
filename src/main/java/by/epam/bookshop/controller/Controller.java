@@ -38,11 +38,11 @@ public class Controller  extends HttpServlet {
         try {
             router = command.execute(request);
         } catch (CommandException e) {
+            request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage() + e.getStackTrace());
             router = new Router(JSPPages.ERROR_PAGE);
-            router.setRedirect();
 
         } catch (ServletRuntimeException e) {
-            request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage());
+            request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage() + e.getStackTrace());
             router = new  Router(request.getRequestURL().toString());
         }
 

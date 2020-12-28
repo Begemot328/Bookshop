@@ -25,7 +25,7 @@ public class MySQLPositionActionDAO extends MySQLEntityDAO<PositionAction> {
     private static final String FINAL_POSITION_ID = "FINAL_POSITION_ID";
     private static final String BUYER_ID = "BUYER_ID";
     private static final String SELLER_ID = "SELLER_ID";
-    private static final String SHOP_ID = "SELLER_ID";
+    private static final String SHOP_ID = "SHOP_ID";
     private static final String QUANTITY = "QUANTITY";
     private static final String INITIAL_STATUS = "INITIAL_STATUS";
     private static final String FINAL_STATUS = "FINAL_STATUS";
@@ -37,7 +37,7 @@ public class MySQLPositionActionDAO extends MySQLEntityDAO<PositionAction> {
     private static final String FACTORY_EXCEPTION = "Factory Exception: ";
     private static final String UNKNOWN_ENTITY_EXCEPTION = "Unknown entity Exception: ";
     private static final String SCHEMA = "BOOKSHOP";
-    private static final String TABLE = "BOOK_ACTIONS";
+    private static final String TABLE = "POSITION_ACTIONS";
     
     
     public MySQLPositionActionDAO(Connection connection) {
@@ -89,11 +89,15 @@ public class MySQLPositionActionDAO extends MySQLEntityDAO<PositionAction> {
         Map<String, Object> map = new HashMap<>();
         map.put(INITIAL_POSITION_ID, positionAction.getInitialPosition().getId());
         map.put(FINAL_POSITION_ID, positionAction.getFinalPosition().getId());
-        map.put(BUYER_ID, positionAction.getBuyer().getId());
-        map.put(SELLER_ID, positionAction.getSeller());
+        if (positionAction.getBuyer() != null) {
+            map.put(BUYER_ID, positionAction.getBuyer().getId());
+        }
+        if (positionAction.getSeller() != null) {
+            map.put(SELLER_ID, positionAction.getSeller().getId());
+        }
         map.put(SHOP_ID, positionAction.getShop().getId());
-        map.put(INITIAL_STATUS, positionAction.getInitialStatus());
-        map.put(FINAL_STATUS, positionAction.getFinalStatus());
+        map.put(INITIAL_STATUS, positionAction.getInitialStatus().getId());
+        map.put(FINAL_STATUS, positionAction.getFinalStatus().getId());
         map.put(QUANTITY, positionAction.getQuantity());
         map.put(DATE_TIME, Timestamp.valueOf(positionAction.getDate()));
         map.put(CURRENT_PRICE, positionAction.getCurrentPrice());

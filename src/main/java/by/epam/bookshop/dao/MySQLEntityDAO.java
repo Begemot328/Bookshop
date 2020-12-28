@@ -5,6 +5,7 @@ import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.exceptions.DAOException;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -35,8 +36,6 @@ public abstract class MySQLEntityDAO<T  extends Entity> implements EntityDAO<T> 
 
     public abstract Collection<T> mapToList(ResultSet resultSet) throws DAOException;
 
-    //public abstract T mapToObject(ResultSet resultSet) throws DAOException;
-
     private String getInsertQuery(String schemaName, String tableName, Map<String, Object> map) throws DAOException {
         String result = INSERT_QUERY.replace(SCHEMA, schemaName).replace(TABLE, tableName);
         String values = new String();
@@ -44,10 +43,7 @@ public abstract class MySQLEntityDAO<T  extends Entity> implements EntityDAO<T> 
         Set<String> keySet = map.keySet();
 
         for (String key: keySet) {
-            if (key == null || key.isEmpty() || (map.get(key) != null
-                    && !(map.get(key) instanceof String)
-                    && !(map.get(key) instanceof  Number)
-                    && !(map.get(key) instanceof Date))) {
+            if (key == null || key.isEmpty() || isInvalidInput(map.get(key))) {
                 throw new DAOException(WRONG_INPUT);
             }
             if (map.get(key) == null) {
@@ -63,16 +59,20 @@ public abstract class MySQLEntityDAO<T  extends Entity> implements EntityDAO<T> 
         return result;
     }
 
+    private boolean isInvalidInput(Object object) {
+        return  object != null
+                && !(object instanceof String)
+                && !(object instanceof  Number)
+                && !(object instanceof Timestamp);
+    }
+
     private String getUpdateQuery(String schemaName, String tableName, Map<String, Object> map) throws DAOException {
         String result = UPDATE_QUERY.replace(SCHEMA, schemaName).replace(TABLE, tableName);
         String parameters = new String();
         Set<String> keySet = map.keySet();
 
         for (String key: keySet) {
-            if (key == null || key.isEmpty() || (map.get(key) != null
-                    && !(map.get(key) instanceof String)
-                    && !(map.get(key) instanceof  Number)
-                    && !(map.get(key) instanceof Date))) {
+            if (key == null || key.isEmpty() || isInvalidInput(map.get(key))) {
                 throw new DAOException(WRONG_INPUT);
             }
             if (map.get(key) == null) {

@@ -87,7 +87,7 @@ public class MySQLPositionDAO extends MySQLEntityDAO<Position> {
 
     public Map<String, Object> mapEntity(Position position) {
         Map<String, Object> map = new HashMap<>();
-        map.put(BOOK_ID, position.getBook());
+        map.put(BOOK_ID, position.getBook().getId());
         map.put(SHOP_ID, position.getShop().getId());
         map.put(POSITION_STATUS, position.getStatus().getId());
         map.put(NOTE, position.getNote());

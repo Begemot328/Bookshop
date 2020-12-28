@@ -24,7 +24,7 @@ import java.util.Collection;
 
 public class PositionService implements EntityService<Position> {
     private static final String SQL_CONNECTION_EXCEPTION = "SQL Exception: ";
-    private static final String DAO_EXCEPTION = "User DAO Exception: ";
+    private static final String DAO_EXCEPTION = "DAO Exception: ";
     private static final String FACTORY_EXCEPTION = "User factory Exception: ";
     private static final String NO_RIGHTS_EXCEPTION
             = "Only admin or seller can manage books";
@@ -98,8 +98,10 @@ public class PositionService implements EntityService<Position> {
                 connection.setAutoCommit(true);
                 throw new ServiceException(SQL_CONNECTION_EXCEPTION, e);
             } catch (DAOException e) {
+                connection.rollback();
                 throw new ServiceException(DAO_EXCEPTION, e);
             } catch (FactoryException e) {
+                connection.rollback();
                 throw new ServiceException(FACTORY_EXCEPTION, e);
             } finally {
                 connection.setAutoCommit(true);
