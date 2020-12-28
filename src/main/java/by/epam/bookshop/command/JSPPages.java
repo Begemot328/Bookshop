@@ -14,7 +14,8 @@ public class JSPPages {
     public static final String VIEW_BOOK_PAGE = "WEB-INF/jsp/book.jsp";
     public static final String VIEW_AUTHOR_PAGE = "WEB-INF/jsp/author.jsp";
     public static final String VIEW_SHOP_PAGE = "WEB-INF/jsp/shop.jsp";
-    public static final String VIEW_POSITION_PAGE = "WEB-INF/jsp/position.jsp";
     public static final String VIEW_USER_PAGE = "WEB-INF/jsp/user.jsp";
-    public static final String POSITION = "WEB-INF/jsp/position.jsp";
+    public static final String VIEW_POSITION_PAGE = "WEB-INF/jsp/position.jsp";
+    public static final String PROCESS_POSITION_PAGE = "WEB-INF/jsp/positionProcess.jsp";
+    public static final String BOOK_POSITION_PAGE = "WEB-INF/jsp/positionBook.jsp";
 }

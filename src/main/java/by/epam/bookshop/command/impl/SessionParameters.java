@@ -7,8 +7,11 @@ public class SessionParameters {
     public static final String USER = "USER";
     public static final String POSITION = "position";
     public static final String ARRAY = "array";
-    public static final String USERS = "USERS";
+    public static final String USERS = "users";
+    public static final String BUYERS = "buyers";
+    public static final String BUYER = "buyer";
     public static final String ERROR_MESSAGE = "errorMessage";
+    public static final String SELLER = "seller";
     final static String CURRENT_USER = "currentUser";
     final static String LANGUAGE = "language";
     public final static String LAST_PAGE = "lastPage";

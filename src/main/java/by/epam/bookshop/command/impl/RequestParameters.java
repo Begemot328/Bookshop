@@ -4,6 +4,8 @@ public class RequestParameters {
     public static final String USER = "user";
     public static final String PAGE = "page";
     public static final String POSITION_ID = "position-id";
+    public static final String QUANTITY = "quantity";
+    public static final String USER_ID = "user-id";
     static final String LOGIN = "login";
     static final String PASSWORD = "password";
 

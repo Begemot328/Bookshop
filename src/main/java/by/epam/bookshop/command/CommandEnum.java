@@ -7,13 +7,14 @@ public enum CommandEnum {
 
     SEARCH_SHOPS_COMMAND (new FindShopsCommand()),
     SEARCH_BOOKS_COMMAND(new FindBooksCommand()),
-    PROCESS_POSITION_COMMAND(new ForwardCommand(JSPPages.POSITION)),
+    PROCESS_POSITION_COMMAND(new ProcessPositionCommand()),
+    VIEW_POSITION_COMMAND(new ViewPositionCommand()),
 
     VIEW_BOOK_COMMAND(new ViewBookCommand()),
     VIEW_AUTHOR_COMMAND(new ViewAuthorCommand()),
     VIEW_SHOP_COMMAND(new ViewShopCommand()),
-
-
+    BOOK_BOOK_COMMAND(new BookBookCommand()),
+    SELL_BOOK_COMMAND(new SellBookCommand()),
     CHANGE_PAGE_COMMAND(new ChangePageCommand()),
     CHANGE_LOCALE_COMMAND(new ChangeLocaleCommand()),
     LOGIN_COMMAND(new LoginCommand()),

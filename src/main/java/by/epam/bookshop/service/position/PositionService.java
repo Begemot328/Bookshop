@@ -33,7 +33,7 @@ public class PositionService implements EntityService<Position> {
     private final static PositionService INSTANCE = new PositionService();
 
 
-    public static EntityService<Position> getInstance() {
+    public static PositionService getInstance() {
         return INSTANCE;
     }
 
@@ -101,6 +101,8 @@ public class PositionService implements EntityService<Position> {
                 throw new ServiceException(DAO_EXCEPTION, e);
             } catch (FactoryException e) {
                 throw new ServiceException(FACTORY_EXCEPTION, e);
+            } finally {
+                connection.setAutoCommit(true);
             }
         } catch (SQLException e) {
             throw new ServiceException(SQL_CONNECTION_EXCEPTION, e);

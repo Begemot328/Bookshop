@@ -42,6 +42,7 @@
         body, h1, h2, h3, h4, h5, h6 {
             font-family: Arial, Helvetica, sans-serif;
         }
+
     </style>
 </head>
 <body>
@@ -86,8 +87,8 @@
                     <button class="w3-button w3-purple w3-opacity-min">
                         <i class="material-icons">person</i>
                         <c:if test="${sessionScope.currentUser != null}">
-                            <span><c:out value="${sessionScope.currentUser.firstName}"/>
-                                <c:out value="${sessionScope.currentUser.lastName}"/></span>
+                            <span><c:out value="${sessionScope.currentUser.firstName}"/> <c:out
+                                    value="${sessionScope.currentUser.lastName}"/></span>
                         </c:if>
                     </button>
                     <div class="w3-dropdown-content w3-bar-block w3-deep-purple">
@@ -203,25 +204,15 @@
             <div class="w3-panel w3-large w3-purple w3-opacity">
                 <h4><fmt:message key="quantity"/>: ${sessionScope.position.quantity}</h4>
             </div>
-            <c:if test="${not empty sessionScope.seller}">
-                <div class="w3-panel w3-large w3-purple w3-opacity">
-                    <h4><fmt:message key="seller"/>: ${sessionScope.seller.firstName}
-                            ${sessionScope.seller.lastName}</h4>
-                </div>
-            </c:if>
-            <c:if test="${not empty sessionScope.buyer}">
-                <div class="w3-panel w3-large w3-purple w3-opacity">
-                    <h4><fmt:message key="buyer"/>: ${sessionScope.buyer.firstName}
-                            ${sessionScope.buyer.lastName}</h4>
-                </div>
-            </c:if>
-            <div class="w3-panel w3-large w3-purple w3-opacity">
-                <h4><fmt:message key="${sessionScope.position.status}"></h4>
-            </div>
-
         </div>
-
-
+        <div class="w3-card-4 w3-half w3-center w3-opacity-min w3-purple w3-padding">
+            <form>
+                <br/>
+                <input type="hidden" class="w3-radio" id="book" name="command" value="BOOK_BOOK_COMMAND">
+                <button class="w3-button w3-purple w3-ripple w3-opacity" type="submit">
+                    <fmt:message key="position.book" ></fmt:message></button>
+            </form>
+        </div>
         <div class="w3-bar w3-purple w3-opacity-min w3-center w3-stretch">
             <c:choose>
                 <c:when test="${sessionScope.pageQuantity} > 1">

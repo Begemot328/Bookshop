@@ -226,12 +226,11 @@
 
                         <c:choose>
                             <c:when test="${sessionScope.currentUser.status.id == 2}">
-                                <td><a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shop-id=${position.shop.id}"
+                                <td><a href="${pageContext.request.contextPath}/ControllerURL?command=BOOK_POSITION_COMMAND&shop-id=${position.shop.id}&position-id=${position.id}"
                                        class="w3-button"><fmt:message key="position.book"/></a></td>
-
                             </c:when>
                             <c:when test="${sessionScope.currentUser.status.id == 3 || sessionScope.currentUser.status.id == 4}">
-                                <td><a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shop-id=${position.shop.id}"
+                                <td><a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shop-id=${position.shop.id}&position-id=${position.id}"
                                        class="w3-button"><fmt:message key="position.process"/></a></td>
                             </c:when>
                         </c:choose>
