@@ -241,11 +241,12 @@
                     </c:choose>
                 </c:if>
             </tr>
+
             <c:forEach var="position"
                        begin="${sessionScope.firstElement}"
                        end="${sessionScope.lastElement}"
                        items="${sessionScope.positions}">
-                <c:if test="${position.status == 1
+                <c:if test="${position.status.id == 1
                 || sessionScope.currentUser.status.id == 3
                 || sessionScope.currentUser.status.id == 4}">
                     <tr class="w3-deep-purple">
@@ -262,7 +263,6 @@
                                            class="w3-button"><fmt:message key="position.book"/></a></td>
                                 </c:when>
                                 <c:when test="${sessionScope.currentUser.status.id == 3 || sessionScope.currentUser.status.id == 4}">
-                                    <td><fmt:message key="position.process"/></td>
                                     <td>
                                         <a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shop-id=${position.shop.id}&position-id=${position.id}"
                                            class="w3-button"><fmt:message key="position.process"/></a></td>
