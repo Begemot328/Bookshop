@@ -8,6 +8,15 @@ public class Author extends Entity {
     private int id;
     private String firstName;
     private String lastName;
+
+    public String getPhotoLink() {
+        return photoLink;
+    }
+
+    public void setPhotoLink(String photoLink) {
+        this.photoLink = photoLink;
+    }
+
     private String photoLink;
 
     Author(String firstName, String lastName) {

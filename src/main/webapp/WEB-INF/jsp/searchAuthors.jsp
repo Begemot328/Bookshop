@@ -191,50 +191,53 @@ searchBooks.jspsearchBooks.jsp<%--
             </div>
         </form>
         <div class="w3-row-padding">
-            <c:forEach var="book"
+            <c:forEach var="author"
                        begin="${sessionScope.firstElement}"
                        end="${sessionScope.lastElement}"
-                       items="${sessionScope.books}">
+                       items="${sessionScope.authors}">
                 <form class="w3-col l2 m6 s12  w3-center"
-                      method="POST" action="${pageContext.request.contextPath}/ControllerURL">
-                    <input type="hidden" name="command" value="VIEW_BOOK_COMMAND">
-                    <input type="hidden" name="book-id" value="${book.id}">
+                      method="GET" action="${pageContext.request.contextPath}/ControllerURL">
+                    <input type="hidden" name="command" value="VIEW_AUTHOR_COMMAND">
+                    <input type="hidden" name="author-id" value="${author.id}">
                     <button class="w3-button  w3-ripple">
                         <c:choose>
-                            <c:when test = "${not empty book.photoLink}">
-                                <img src="${book.photoLink}"
+                            <c:when test = "${not empty author.photoLink}">
+                                <img src="${author.photoLink}"
                                      class="w3-image">
                             </c:when>
                             <c:otherwise>
-                                <img src="${pageContext.request.contextPath}/resources/images/book_cover.jpg"
+                                <img src="${pageContext.request.contextPath}/resources/images/author.jpg"
                                      class="w3-image">
                             </c:otherwise>
                         </c:choose>
                     </button>
                     <p class="w3-signal-blue w3-large w3-opacity-min">
-                        <c:out value="${book.title}"/>
+                        <c:out value="${author.firstName}"/>
                         <br/>
-                        <c:out value="${book.author.firstName}"/>
-                        <c:out value="${book.author.lastName}"/>
+                        <c:out value="${author.lastName}"/>
                         <br/>
-                        <c:out value="${book.price}"/> BYN
                     </p>
                 </form>
             </c:forEach>
         </div>
+        <!-- Pagination          -->
         <div class="w3-bar w3-purple w3-opacity-min w3-center w3-stretch">
-            <c:forEach begin="1" end="${sessionScope.pageQuantity}" var="p">
-                <c:choose>
-                    <c:when test="${sessionScope.currentPage == p}">
-                        <a class="w3-button w3-indigo"
-                           href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
-                    </c:when>
-                    <c:otherwise>
-                        <a class="w3-button w3-purple"
-                           href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
+            <c:choose>
+                <c:when test="${sessionScope.pageQuantity} > 1">
+                    <c:forEach begin="1" end="${sessionScope.pageQuantity}" var="p">
+                        <c:choose>
+                            <c:when test="${sessionScope.currentPage == p}">
+                                <a class="w3-button w3-indigo"
+                                   href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a class="w3-button w3-purple"
+                                   href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </c:when>
+            </c:choose>
         </div>
     </div>
 

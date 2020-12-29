@@ -201,13 +201,13 @@
     <div class="w3-cell w3-padding-large w3-center" style="width:70%">
         <div class="w3-card-4 w3-half w3-center">
             <div class="w3-panel w3-large w3-purple w3-opacity">
-                <h3>${sessionScope.book.title}</h3>
+                <h4>${sessionScope.book.title}</h4>
             </div>
             <form method="POST" action="${pageContext.request.contextPath}/ControllerURL">
                 <input type="hidden" name="command" value="VIEW_AUTHOR_COMMAND">
                 <input type="hidden" name="author-id" value="${sessionScope.book.author.id}">
                 <button class="w3-panel w3-button w3-large w3-purple w3-opacity" type="submit" style="width: 100%">
-                    <h3>${sessionScope.book.author.firstName} ${sessionScope.book.author.lastName}</h3>
+                    <h4>${sessionScope.book.author.firstName} ${sessionScope.book.author.lastName}</h4>
                 </button>
             </form>
             <c:choose>
@@ -217,7 +217,7 @@
                 </c:when>
                 <c:otherwise>
                     <img src="${pageContext.request.contextPath}/resources/images/book_cover.jpg"
-                    alt="default book picture"  class="w3-image">
+                         alt="default book picture" class="w3-image">
                 </c:otherwise>
             </c:choose>
             <div class="w3-panel w3-large w3-purple w3-opacity">
@@ -229,37 +229,48 @@
                 <th><fmt:message key="shop"/></th>
                 <th><fmt:message key="shop.address"/></th>
                 <th><fmt:message key="quantity"/></th>
-                <c:choose>
-                    <c:when test="${sessionScope.currentUser.status.id == 2}">
-                        <th></th>
-                    </c:when>
-                    <c:when test="${sessionScope.currentUser.status.id == 3 || sessionScope.currentUser.status.id == 4}">
-                        <th></th>
-                    </c:when>
-                </c:choose>
+                <c:if test="${not empty sessionScope.currentUser}">
+                    <c:choose>
+                        <c:when test="${sessionScope.currentUser.status.id == 2}">
+                            <th></th>
+                        </c:when>
+                        <c:when test="${sessionScope.currentUser.status.id == 3
+                        || sessionScope.currentUser.status.id == 4}">
+                            <th></th>
+                        </c:when>
+                    </c:choose>
+                </c:if>
             </tr>
             <c:forEach var="position"
                        begin="${sessionScope.firstElement}"
                        end="${sessionScope.lastElement}"
                        items="${sessionScope.positions}">
-                <tr class="w3-deep-purple">
-                    <td><a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_SHOP_COMMAND&shop-id=${position.shop.id}">
-                        <c:out value="${position.shop.name}"/></a></td>
-                    <td><c:out value="${position.shop.address}"/></td>
-                    <td><c:out value="${position.quantity}"/></td>
-
-                        <c:choose>
-                            <c:when test="${sessionScope.currentUser.status.id == 2}">
-                                <td><a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shop-id=${position.shop.id}&position-id=${position.id}"
-                                       class="w3-button"><fmt:message key="position.book"/></a></td>
-                            </c:when>
-                            <c:when test="${sessionScope.currentUser.status.id == 3 || sessionScope.currentUser.status.id == 4}">
-                                <td><a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shop-id=${position.shop.id}&position-id=${position.id}"
-                                       class="w3-button"><fmt:message key="position.process"/></a></td>
-                            </c:when>
-                        </c:choose>
-
-                </tr>
+                <c:if test="${position.status == 1
+                || sessionScope.currentUser.status.id == 3
+                || sessionScope.currentUser.status.id == 4}">
+                    <tr class="w3-deep-purple">
+                        <td>
+                            <a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_SHOP_COMMAND&shop-id=${position.shop.id}">
+                                <c:out value="${position.shop.name}"/></a></td>
+                        <td><c:out value="${position.shop.address}"/></td>
+                        <td><c:out value="${position.quantity}"/></td>
+                        <c:if test="${not empty sessionScope.currentUser}">
+                            <c:choose>
+                                <c:when test="${sessionScope.currentUser.status.id == 2}">
+                                    <td>
+                                        <a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shop-id=${position.shop.id}&position-id=${position.id}"
+                                           class="w3-button"><fmt:message key="position.book"/></a></td>
+                                </c:when>
+                                <c:when test="${sessionScope.currentUser.status.id == 3 || sessionScope.currentUser.status.id == 4}">
+                                    <td><fmt:message key="position.process"/></td>
+                                    <td>
+                                        <a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shop-id=${position.shop.id}&position-id=${position.id}"
+                                           class="w3-button"><fmt:message key="position.process"/></a></td>
+                                </c:when>
+                            </c:choose>
+                        </c:if>
+                    </tr>
+                </c:if>
             </c:forEach>
         </table>
         <div class="w3-bar w3-purple w3-opacity-min w3-center w3-stretch">

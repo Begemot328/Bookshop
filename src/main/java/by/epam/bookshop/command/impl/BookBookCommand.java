@@ -13,6 +13,7 @@ import by.epam.bookshop.service.position.PositionService;
 import by.epam.bookshop.service.user.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
 
 public class BookBookCommand implements Command {
 
@@ -20,6 +21,11 @@ public class BookBookCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
+        Enumeration<String> pars = request.getParameterNames();
+        while (pars.hasMoreElements()) {
+            System.out.println(pars.nextElement());
+        }
+
         User user = ((User) request.getSession()
                 .getAttribute(SessionParameters.CURRENT_USER));
         try {
@@ -38,6 +44,7 @@ public class BookBookCommand implements Command {
             if (user.getStatus()
                     == UserStatus.ADMIN || user.getStatus()
                     == UserStatus.SELLER) {
+                System.out.println(request.getParameter(RequestParameters.USER_ID));
                 User buyer = UserService.getInstance().read(
                         Integer.valueOf(request.getParameter(RequestParameters.USER_ID))
                 );

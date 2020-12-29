@@ -232,19 +232,24 @@
                 </form>
             </c:forEach>
         </div>
+        <!-- Pagination          -->
         <div class="w3-bar w3-purple w3-opacity-min w3-center w3-stretch">
-            <c:forEach begin="1" end="${sessionScope.pageQuantity}" var="p">
-                <c:choose>
-                    <c:when test="${sessionScope.currentPage == p}">
-                        <a class="w3-button w3-indigo"
-                           href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
-                    </c:when>
-                    <c:otherwise>
-                        <a class="w3-button w3-purple"
-                           href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
+            <c:choose>
+                <c:when test="${sessionScope.pageQuantity} > 1">
+                    <c:forEach begin="1" end="${sessionScope.pageQuantity}" var="p">
+                        <c:choose>
+                            <c:when test="${sessionScope.currentPage == p}">
+                                <a class="w3-button w3-indigo"
+                                   href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a class="w3-button w3-purple"
+                                   href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </c:when>
+            </c:choose>
         </div>
     </div>
 

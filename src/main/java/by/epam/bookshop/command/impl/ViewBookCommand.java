@@ -30,7 +30,7 @@ public class ViewBookCommand implements Command {
                     new PositionFinder().findByBook(book.getId())).toArray(Position[]::new);
 
              positions = Arrays.stream(positions)
-                    .filter(position -> position.getStatus() == PositionStatus.READY).toArray(Position[]::new);
+                    .filter(position -> position.getStatus() == PositionStatus.READY || position.getStatus() == PositionStatus.RESERVED).toArray(Position[]::new);
             Paginator.paginate(request, positions, 1);
             request.getSession().setAttribute(SessionParameters.POSITIONS, positions);
         } catch (ServiceException e) {

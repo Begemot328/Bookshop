@@ -240,7 +240,7 @@
                 <br/>
                 <br/>
 
-                <select id="users">
+                <select id="users" name="user-id">
                     <c:forEach var="buyer" items="${sessionScope.buyers}">
                         <option value="${buyer.id}">${buyer.firstName} ${buyer.lastName}</option>
                     </c:forEach>

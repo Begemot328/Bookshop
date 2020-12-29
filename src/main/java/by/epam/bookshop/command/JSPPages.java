@@ -8,6 +8,7 @@ public class JSPPages {
     public static final String SEARCH_BOOKS_PAGE = "WEB-INF/jsp/searchBooks.jsp";
     public static final String SEARCH_AUTHORS_PAGE = "WEB-INF/jsp/searchAuthors.jsp";
     public static final String SEARCH_SHOPS_PAGE = "WEB-INF/jsp/searchShops.jsp";
+    public static final String SEARCH_USERS_PAGE = "WEB-INF/jsp/searchUsers.jsp";
 
     public static final String REGISTER_PAGE = "WEB-INF/jsp/register.jsp";
     public static final String LOGIN_PAGE = "WEB-INF/jsp/login.jsp";

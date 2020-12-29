@@ -42,11 +42,34 @@
         body, h1, h2, h3, h4, h5, h6 {
             font-family: Arial, Helvetica, sans-serif;
         }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 80%;
+            height: 25px;
+            background: #9370DB;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+
+        .slider:hover {
+            opacity: 1;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #800080;
+            cursor: pointer;
+        }
     </style>
 </head>
-<body>
+<>
 <!-- Top panel -->
-
 <div class="w3-container w3-stretch">
     <div class="w3-cell-row w3-purple w3-opacity-min">
         <div class="w3-cell w3-container" style="width: 65%">
@@ -86,8 +109,8 @@
                     <button class="w3-button w3-purple w3-opacity-min">
                         <i class="material-icons">person</i>
                         <c:if test="${sessionScope.currentUser != null}">
-                            <span><c:out value="${sessionScope.currentUser.firstName}"/>
-                                <c:out value="${sessionScope.currentUser.lastName}"/></span>
+                            <span><c:out value="${sessionScope.currentUser.firstName}"/> <c:out
+                                    value="${sessionScope.currentUser.lastName}"/></span>
                         </c:if>
                     </button>
                     <div class="w3-dropdown-content w3-bar-block w3-deep-purple">
@@ -175,52 +198,56 @@
             </form>
         </div>
     </div>
+    <!-- Card panel -->
     <div class="w3-cell w3-padding-large w3-center" style="width:70%">
         <div class="w3-card-4 w3-half w3-center">
             <div class="w3-panel w3-large w3-purple w3-opacity">
-                <h4>${sessionScope.book.title}</h4>
+                <h4>${sessionScope.book.author.firstName} ${sessionScope.book.author.lastName}</h4>
             </div>
-            <form method="POST" action="${pageContext.request.contextPath}/ControllerURL">
-                <input type="hidden" name="command" value="VIEW_AUTHOR_COMMAND">
-                <input type="hidden" name="author-id" value="${sessionScope.book.author.id}">
-                <button class="w3-panel w3-button w3-large w3-purple w3-opacity" type="submit" style="width: 100%">
-                    <h4>${sessionScope.position.book.author.firstName} ${sessionScope.position.book.author.lastName}</h4>
-                </button>
-            </form>
+
             <c:choose>
-                <c:when test="${not empty sessionScope.book.photoLink}">
-                    <img src="${sessionScope.book.photoLink}" alt="book picture"
+                <c:when test="${not empty sessionScope.author.photoLink}">
+                    <img src="${sessionScope.author.photoLink}" alt="author picture"
                          class="w3-image">
                 </c:when>
                 <c:otherwise>
-                    <img src="${pageContext.request.contextPath}/resources/images/book_cover.jpg"
-                         alt="default book picture" class="w3-image">
+                    <img src="${pageContext.request.contextPath}/resources/images/author.jpg"
+                    alt="default author picture"  class="w3-image">
                 </c:otherwise>
             </c:choose>
-            <div class="w3-panel w3-large w3-purple w3-opacity">
-                <h4>${sessionScope.position.book.price} BYN</h4>
-            </div>
-            <div class="w3-panel w3-large w3-purple w3-opacity">
-                <h4><fmt:message key="quantity"/>: ${sessionScope.position.quantity}</h4>
-            </div>
-            <c:if test="${not empty sessionScope.seller}">
-                <div class="w3-panel w3-large w3-purple w3-opacity">
-                    <h4><fmt:message key="seller"/>: ${sessionScope.seller.firstName}
-                            ${sessionScope.seller.lastName}</h4>
-                </div>
-            </c:if>
-            <c:if test="${not empty sessionScope.buyer}">
-                <div class="w3-panel w3-large w3-purple w3-opacity">
-                    <h4><fmt:message key="buyer"/>: ${sessionScope.buyer.firstName}
-                            ${sessionScope.buyer.lastName}</h4>
-                </div>
-            </c:if>
-            <div class="w3-panel w3-large w3-purple w3-opacity">
-                <h4><fmt:message key="${sessionScope.position.status}"/></h4>
-            </div>
-
         </div>
-
+        <div class="w3-row-padding">
+            <c:forEach var="book"
+                       begin="${sessionScope.firstElement}"
+                       end="${sessionScope.lastElement}"
+                       items="${sessionScope.books}">
+                <form class="w3-col l2 m6 s12  w3-center"
+                      method="POST" action="${pageContext.request.contextPath}/ControllerURL">
+                    <input type="hidden" name="command" value="VIEW_BOOK_COMMAND">
+                    <input type="hidden" name="book-id" value="${book.id}">
+                    <button class="w3-button  w3-ripple">
+                        <c:choose>
+                            <c:when test="${not empty book.photoLink}">
+                                <img src="${book.photoLink}"
+                                     class="w3-image">
+                            </c:when>
+                            <c:otherwise>
+                                <img src="${pageContext.request.contextPath}/resources/images/book_cover.jpg"
+                                     class="w3-image">
+                            </c:otherwise>
+                        </c:choose>
+                    </button>
+                    <p class="w3-signal-blue w3-large w3-opacity-min">
+                        <c:out value="${book.title}"/>
+                        <br/>
+                        <c:out value="${book.author.firstName}"/>
+                        <c:out value="${book.author.lastName}"/>
+                        <br/>
+                        <c:out value="${book.price}"/> BYN
+                    </p>
+                </form>
+            </c:forEach>
+        </div>
         <!-- Pagination          -->
         <div class="w3-bar w3-purple w3-opacity-min w3-center w3-stretch">
             <c:choose>

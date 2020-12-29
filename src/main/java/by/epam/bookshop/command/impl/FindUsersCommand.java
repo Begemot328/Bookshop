@@ -7,6 +7,7 @@ import by.epam.bookshop.command.Router;
 import by.epam.bookshop.dao.impl.author.AuthorFinder;
 import by.epam.bookshop.dao.impl.book.BookFinder;
 import by.epam.bookshop.dao.impl.user.UserFinder;
+import by.epam.bookshop.entity.user.User;
 import by.epam.bookshop.entity.user.UserStatus;
 import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.exceptions.UnknownEntityException;
@@ -18,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
 
 public class FindUsersCommand implements Command {
-
 
     @Override
     public Router execute(HttpServletRequest request) {
@@ -42,15 +42,15 @@ public class FindUsersCommand implements Command {
         }
 
         try {
-
-            Object[] users = UserService.getInstance().findBy(finder).toArray();
+            User[] users = UserService.getInstance().findBy(finder).toArray(User[]::new);
 
             request.getSession().setAttribute(SessionParameters.USERS, users);
             Paginator.paginate(request, users, 1);
         } catch (ServiceException e) {
+            request.getSession().setAttribute(SessionParameters.ERROR_MESSAGE, e.getMessage() + e.getStackTrace());
             return new Router(JSPPages.ERROR_PAGE);
         }
-        return new Router(JSPPages.SEARCH_BOOKS_PAGE);
+        return new Router(JSPPages.SEARCH_USERS_PAGE);
     }
 
     private boolean isNotEmpty(String string) {

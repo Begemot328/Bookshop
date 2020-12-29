@@ -23,10 +23,13 @@ public class ViewPositionCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         try {
-            Position position = PositionService.getInstance().read(
-                    Integer.parseInt(request.getParameter(RequestParameters.POSITION_ID)));
-            request.getSession().setAttribute(SessionParameters.POSITION, position);
+            if (request.getParameter(RequestParameters.POSITION_ID) != null) {
+                Position position = PositionService.getInstance().read(
+                        Integer.parseInt(request.getParameter(RequestParameters.POSITION_ID)));
+                request.getSession().setAttribute(SessionParameters.POSITION, position);
+            }
         } catch (ServiceException e) {
+            request.getSession().setAttribute(SessionParameters.ERROR_MESSAGE, e.getMessage() + e.getStackTrace());
             return new Router(JSPPages.ERROR_PAGE);
         }
         return new Router(JSPPages.PROCESS_POSITION_PAGE);

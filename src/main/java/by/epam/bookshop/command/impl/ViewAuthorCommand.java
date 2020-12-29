@@ -17,15 +17,16 @@ public class ViewAuthorCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        request.getParameter(RequestParameters.BOOK_ID);
+        request.getParameter(RequestParameters.AUTHOR_ID);
         try {
             Author author = AuthorService.getInstance().read(Integer.parseInt(request.getParameter(RequestParameters.BOOK_ID)));
-            Book[] books = (Book[]) BookService.getInstance().findBy(
-                    new BookFinder().findByAuthor(author.getId())).toArray();
+            Book[] books = BookService.getInstance().findBy(
+                    new BookFinder().findByAuthor(author.getId())).toArray(Book[]::new);
 
             request.getSession().setAttribute(SessionParameters.BOOKS, books);
             request.getSession().setAttribute(SessionParameters.AUTHOR, author);
         } catch (ServiceException e) {
+            request.getSession().setAttribute(SessionParameters.ERROR_MESSAGE, e.getMessage() + e.getStackTrace());
             return new Router(JSPPages.ERROR_PAGE);
         }
 
