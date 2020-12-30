@@ -46,7 +46,6 @@ public class PositionFinder extends EntityFinder<Position> {
                         .replace(VALUE, Integer.toString(statusId)));
     }
 
-
     public PositionFinder findByQuantityMore(int quantity) {
         return (PositionFinder) this.findBy(SQL_QUERY +
                 WHERE_COMPARING.replace(PARAMETER, QUANTITY).replace(COMPARE, MORE)

@@ -43,30 +43,6 @@
             font-family: Arial, Helvetica, sans-serif;
         }
 
-        .slider {
-            -webkit-appearance: none;
-            width: 80%;
-            height: 25px;
-            background: #9370DB;
-            outline: none;
-            opacity: 0.7;
-            -webkit-transition: .2s;
-            transition: opacity .2s;
-        }
-
-        .slider:hover {
-            opacity: 1;
-        }
-
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 25px;
-            height: 25px;
-            background: #800080;
-            cursor: pointer;
-        }
-
     </style>
 </head>
 <body>
@@ -226,45 +202,41 @@
                 <h4>${sessionScope.position.book.price} BYN</h4>
             </div>
             <div class="w3-panel w3-large w3-purple w3-opacity">
-                <h4><fmt:message key="quantity"></fmt:message>: ${sessionScope.position.quantity}</h4>
+                <h4><fmt:message key="quantity"/>: ${sessionScope.position.quantity}</h4>
             </div>
         </div>
         <div class="w3-card-4 w3-half w3-center w3-opacity-min w3-purple w3-padding">
             <form>
                 <br/>
-                <input type="radio" class="w3-radio" id="sell" name="command" value="SELL_BOOK_COMMAND" checked>
-                <label for="sell"><fmt:message key="position.sell"></fmt:message></label>
-                <br/>
-                <input type="radio" class="w3-radio" id="book" name="command" value="BOOK_BOOK_COMMAND">
-                <label for="book"><fmt:message key="position.book"></fmt:message></label>
-                <br/>
-                <br/>
-
-                <select id="users" name="user-id">
-                    <c:forEach var="buyer" items="${sessionScope.buyers}">
-                        <option value="${buyer.id}">${buyer.firstName} ${buyer.lastName}</option>
-                    </c:forEach>
-                </select>
-                <br/><br/>
+                <c:if test="${sessionScope.position.status.id == 1}">
+                <input type="hidden" name="command" value="BOOK_BOOK_COMMAND">
                 <label for="quantity"><fmt:message key="quantity"/> :
                     <span id="quantityOut"></span></label>
                 <input type="range" id="quantity" name="quantity" min="1" max="${sessionScope.position.quantity}"
                        value="1" step="1" class="slider">
                 <br/>
+                <button class="w3-button w3-purple w3-ripple w3-opacity" type="submit">
+                    <fmt:message key="position.book" ></fmt:message></button>
                 <script>
                     let slider = document.getElementById("quantity");
                     let output = document.getElementById("quantityOut");
                     output.innerHTML = slider.value;
-
                     slider.oninput = function () {
                         output.innerHTML = this.value;
                     }
                 </script>
-                <button class="w3-button w3-purple w3-ripple w3-opacity" type="submit">
-                    <fmt:message key="position.process" ></fmt:message></button>
+                </c:if>
+                <c:if test="${sessionScope.position.status.id == 3}">
+                    <br/>
+                    <input type="radio" class="w3-radio" id="cancel-book" name="command" value="CANCEL_BOOK_COMMAND">
+                    <label for="cancel-book"><fmt:message key="position.cancel.book"></fmt:message></label>
+                    <br/>
+                    <br/>
+                    <button class="w3-button w3-purple w3-ripple w3-opacity" type="submit">
+                        <fmt:message key="position.process" ></fmt:message></button>
+                </c:if>
             </form>
         </div>
-
         <div class="w3-bar w3-purple w3-opacity-min w3-center w3-stretch">
             <c:choose>
                 <c:when test="${sessionScope.pageQuantity} > 1">

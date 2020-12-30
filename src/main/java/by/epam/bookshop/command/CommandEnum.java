@@ -12,6 +12,8 @@ public enum CommandEnum {
 
     PROCESS_POSITION_COMMAND(new ProcessPositionCommand()),
     BOOK_BOOK_COMMAND(new BookBookCommand()),
+    CANCEL_BOOK_COMMAND(new CancelBookCommand()),
+    RETURN_BOOK_COMMAND(new ReturnBookCommand()),
     SELL_BOOK_COMMAND(new SellBookCommand()),
 
     VIEW_POSITION_COMMAND(new ViewPositionCommand()),
