@@ -23,7 +23,7 @@ public class RequestParameters {
     static final String SHOP_ADRESS = "shop-address";
 
     static final String BOOK_ID = "book-id";
-    static final String AUTHOR = "author";
+    static final String AUTHOR = "book.author";
     static final String TITLE = "title";
     static final String MAX_PRICE = "max-price";
     static final String MIN_PRICE = "min-price";
