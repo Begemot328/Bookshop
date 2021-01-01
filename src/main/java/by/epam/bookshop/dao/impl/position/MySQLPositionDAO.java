@@ -70,7 +70,7 @@ public class MySQLPositionDAO extends MySQLEntityDAO<Position> {
     }
 
     @Override
-    public Collection findAll() throws DAOException {
+    public Collection<Position> findAll() throws DAOException {
         return findBy(new PositionFinder());
     }
 

@@ -170,21 +170,12 @@ searchBooks.jspsearchBooks.jsp<%--
     </div>
     <div class="w3-cell w3-padding-large" style="width:70%">
         <form class="w3-row-padding" method="POST" action="${pageContext.request.contextPath}/ControllerURL">
-            <input type="hidden" name="command" value="SEARCH_BOOKS_COMMAND">
+            <input type="hidden" name="command" value="SEARCH_USERS_COMMAND">
             <div class="w3-col" style="width:15%">
                 <input class="w3-input w3-border" type="text" name="author-firstname" placeholder="<fmt:message key="author.firstname"/>">
             </div>
             <div class="w3-col" style="width:15%">
                 <input class="w3-input w3-border" type="text" name="author-lastname" placeholder="<fmt:message key="author.lastname"/>">
-            </div>
-            <div class="w3-col" style="width:25%">
-                <input class="w3-input w3-border" type="text" name="title" placeholder="<fmt:message key="book.title"/>">
-            </div>
-            <div class="w3-col" style="width:10%">
-                <input class="w3-input w3-border" type="number" name="min-price" placeholder="<fmt:message key="book.price.min"/>">
-            </div>
-            <div class="w3-col" style="width:10%">
-                <input class="w3-input w3-border" type="number" name="max-price" placeholder="<fmt:message key="book.price.min"/>">
             </div>
             <div class="w3-col" style="width:10%">
                 <input class="w3-btn w3-deep-purple w3-ripple w3-hover-purple" type="submit" value="<fmt:message key="find"/>">
@@ -198,7 +189,7 @@ searchBooks.jspsearchBooks.jsp<%--
                 <form class="w3-col l2 m6 s12  w3-center"
                       method="GET" action="${pageContext.request.contextPath}/ControllerURL">
                     <input type="hidden" name="command" value="VIEW_USER_COMMAND">
-                    <input type="hidden" name="author-id" value="${user.id}">
+                    <input type="hidden" name="user-id" value="${user.id}">
                     <button class="w3-button  w3-ripple">
                         <c:choose>
                             <c:when test = "${not empty user.photoLink}">

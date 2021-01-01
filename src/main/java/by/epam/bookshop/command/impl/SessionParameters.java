@@ -4,7 +4,7 @@ public class SessionParameters {
     public static final String BOOK = "book";
     public static final String AUTHOR = "book.author";
     public static final String SHOP = "shop";
-    public static final String USER = "USER";
+    public static final String USER = "user";
     public static final String POSITION = "position";
     public static final String ARRAY = "array";
     public static final String USERS = "users";

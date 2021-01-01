@@ -198,84 +198,79 @@
             </form>
         </div>
     </div>
+    <!-- Card panel -->
     <div class="w3-cell w3-padding-large w3-center" style="width:70%">
         <div class="w3-card-4 w3-half w3-center">
             <div class="w3-panel w3-large w3-purple w3-opacity">
-                <h4>${sessionScope.book.title}</h4>
+                <h4>${sessionScope.user.firstName} ${sessionScope.user.lastName}</h4>
             </div>
-            <form method="POST" action="${pageContext.request.contextPath}/ControllerURL">
-                <input type="hidden" name="command" value="VIEW_AUTHOR_COMMAND">
-                <input type="hidden" name="author-id" value="${sessionScope.book.author.id}">
-                <button class="w3-panel w3-button w3-large w3-purple w3-opacity" type="submit" style="width: 100%">
-                    <h4>${sessionScope.book.author.firstName} ${sessionScope.book.author.lastName}</h4>
-                </button>
-            </form>
+
             <c:choose>
-                <c:when test="${not empty sessionScope.book.photoLink}">
-                    <img src="${sessionScope.book.photoLink}" alt="book picture"
+                <c:when test="${not empty sessionScope.user.photoLink}">
+                    <img src="${sessionScope.user.photoLink}" alt="user picture"
                          class="w3-image">
                 </c:when>
                 <c:otherwise>
-                    <img src="${pageContext.request.contextPath}/resources/images/book_cover.jpg"
-                         alt="default book picture" class="w3-image">
+                    <img src="${pageContext.request.contextPath}/resources/images/user.png"
+                    alt="default author picture"  class="w3-image">
                 </c:otherwise>
             </c:choose>
-            <div class="w3-panel w3-large w3-purple w3-opacity">
-                <h4>${sessionScope.book.price} BYN</h4>
-            </div>
         </div>
-
         <!-- position table -->
         <table class="w3-table-all w3-purple w3-opacity-min">
             <tr class="w3-deep-purple">
                 <th><fmt:message key="shop"/></th>
-                <th><fmt:message key="shop.address"/></th>
+                <th><fmt:message key="book.author"/></th>
+                <th><fmt:message key="book.title"/></th>
                 <th><fmt:message key="quantity"/></th>
-                <c:if test="${not empty sessionScope.currentUser}">
+                <th><fmt:message key="price"/></th>
+                <th><fmt:message key="date"/></th>
+                <th><fmt:message key="status"/></th>
+                <c:if test="${sessionScope.currentUser.status.id > 2}">
                     <c:choose>
-                        <c:when test="${sessionScope.currentUser.status.id == 2}">
-                            <th></th>
+                        <c:when test="${sessionScope.user.status.id == 2}">
+                            <th><fmt:message key="seller"/></th>
                         </c:when>
-                        <c:when test="${sessionScope.currentUser.status.id == 3
-                        || sessionScope.currentUser.status.id == 4}">
-                            <th></th>
+                        <c:when test="${sessionScope.user.status.id > 2}">
+                            <th><fmt:message key="buyer"/></th>
                         </c:when>
                     </c:choose>
                 </c:if>
             </tr>
 
-            <c:forEach var="position"
+            <c:forEach var="action"
                        begin="${sessionScope.firstElement}"
                        end="${sessionScope.lastElement}"
-                       items="${sessionScope.positions}">
-                <c:if test="${position.status.id == 1
-                || sessionScope.currentUser.status.id == 3
-                || sessionScope.currentUser.status.id == 4}">
+                       items="${sessionScope.actions}">
+
                     <tr class="w3-deep-purple">
-                        <td>
-                            <a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_SHOP_COMMAND&shop-id=${position.shop.id}">
-                                <c:out value="${position.shop.name}"/></a></td>
-                        <td><c:out value="${position.shop.address}"/></td>
-                        <td><c:out value="${position.quantity}"/></td>
-                        <c:if test="${not empty sessionScope.currentUser}">
+                        <td><a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_SHOP_COMMAND&shop-id=${action.shop.id}">
+                                <c:out value="${action.shop.name}"/></a></td>
+                        <td><a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_BOOK_COMMAND&book-id=${action.initialPosition.book.id}">
+                            <c:out value="${action.initialPosition.book.title}"/></a></td>
+                        <td><a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_AUTHOR_COMMAND&author-id=${action.initialPosition.book.author.id}">
+                            <c:out value="${action.initialPosition.book.author.firstName}
+                        ${action.initialPosition.book.author.lastName}"/></a></td>
+                        <td><c:out value="${action.quantity}"/></td>
+                        <td><c:out value="${action.currentPrice}"/></td>
+                        <td><c:out value="${action.date}"/></td>
+                        <td><fmt:message key="${action.initialStatus}.${action.finalStatus}"/></td>
+                        <c:if test="${sessionScope.currentUser.status.id > 2}">
                             <c:choose>
-                                <c:when test="${sessionScope.currentUser.status.id == 2}">
-                                    <td>
-                                        <a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shop-id=${position.shop.id}&position-id=${position.id}"
-                                           class="w3-button"><fmt:message key="position.book"/></a></td>
+                                <c:when test="${sessionScope.user.status.id == 2}">
+                                    <th><c:out value="${action.seller.firstName}
+                                         ${action.seller.lastName}"/></th>
                                 </c:when>
-                                <c:when test="${sessionScope.currentUser.status.id == 3 || sessionScope.currentUser.status.id == 4}">
-                                    <td>
-                                        <a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shop-id=${position.shop.id}&position-id=${position.id}"
-                                           class="w3-button"><fmt:message key="position.process"/></a></td>
+                                <c:when test="${sessionScope.user.status.id > 2}">
+                                    <th><c:out value="${action.buyer.firstName}
+                                     ${action.buyer.lastName}"/></th>
                                 </c:when>
                             </c:choose>
                         </c:if>
                     </tr>
-                </c:if>
             </c:forEach>
         </table>
-
+        <!-- Pagination          -->
         <div class="w3-bar w3-purple w3-opacity-min w3-center w3-stretch">
             <c:choose>
                 <c:when test="${sessionScope.pageQuantity} > 1">
@@ -293,20 +288,33 @@
                     </c:forEach>
                 </c:when>
             </c:choose>
-
         </div>
     </div>
-    <div class="w3-cell w3-deep-purple w3-opacity-min w3-cell" style="width:15%">
+    <!--  right panel bar       -->
+    <div class="w3-cell w3-deep-purple w3-opacity" style="width:15%">
         <div class="w3-bar-block">
             <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="books"/></button>
+                <input type="hidden" name="command" value="SEARCH_BOOKS_COMMAND">
+                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                        key="books"/></button>
             </form>
             <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="shops"/></button>
+                <input type="hidden" name="command" value="SEARCH_SHOPS_COMMAND">
+                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                        key="shops"/></button>
             </form>
             <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="users"/></button>
+                <input type="hidden" name="command" value="SEARCH_AUTHOR_COMMAND">
+                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                        key="authors"/></button>
             </form>
+            <c:if test="${not empty sessionScope.currentUser && sessionScope.currentUser.status.id > 1}">
+                <form class="w3-bar-item w3-large w3-hover-purple">
+                    <input type="hidden" name="command" value="SEARCH_USERS_COMMAND">
+                    <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                            key="users"/></button>
+                </form>
+            </c:if>
         </div>
     </div>
 </div>

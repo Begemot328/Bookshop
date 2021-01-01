@@ -17,10 +17,10 @@ public class PositionActionFactory implements EntityFactory<PositionAction> {
         if (args.length < 10
                 || !(args[0] instanceof Position)
                 || !(args[1] instanceof Position)
-                || !(args[2] instanceof User)
+                || !(args[2] instanceof User || args[2] == null)
                 || !(args[3] instanceof User || args[3] == null)
                 || !(args[4] instanceof LocalDateTime)
-                || !(Integer.class.isInstance(args[5]))
+                || !((args[5]) instanceof Integer)
                 || !(args[6] instanceof PositionStatus)
                 || !(args[7] instanceof PositionStatus)
                 || !(args[8] instanceof Shop)

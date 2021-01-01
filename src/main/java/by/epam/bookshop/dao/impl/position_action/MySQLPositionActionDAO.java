@@ -3,6 +3,7 @@ package by.epam.bookshop.dao.impl.position_action;
 import by.epam.bookshop.dao.EntityFinder;
 import by.epam.bookshop.dao.MySQLEntityDAO;
 import by.epam.bookshop.dao.impl.book.MySQLBookDAO;
+import by.epam.bookshop.dao.impl.position.MySQLPositionDAO;
 import by.epam.bookshop.dao.impl.shop.MySQLShopDAO;
 import by.epam.bookshop.dao.impl.user.MySQLUserDAO;
 import by.epam.bookshop.entity.EntityFactory;
@@ -11,6 +12,7 @@ import by.epam.bookshop.entity.position_action.PositionActionFactory;
 import by.epam.bookshop.entity.position.PositionStatus;
 import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.FactoryException;
+import by.epam.bookshop.exceptions.UnknownEntityException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -111,13 +113,14 @@ public class MySQLPositionActionDAO extends MySQLEntityDAO<PositionAction> {
         try {
             while (resultSet.next()) {
                 result.add(factory.createWithID(resultSet.getInt(ID),
-                        new MySQLBookDAO(connection).read(resultSet.getInt(BOOK_ID)),
+                        new MySQLPositionDAO(connection).read(resultSet.getInt(INITIAL_POSITION_ID)),
+                        new MySQLPositionDAO(connection).read(resultSet.getInt(FINAL_POSITION_ID)),
                         new MySQLUserDAO(connection).read(resultSet.getInt(BUYER_ID)),
                         new MySQLUserDAO(connection).read(resultSet.getInt(SELLER_ID)),
                         resultSet.getTimestamp(DATE_TIME).toLocalDateTime(),
                         resultSet.getInt(QUANTITY),
-                        PositionStatus.valueOf(Integer.toString(resultSet.getInt(INITIAL_STATUS))),
-                        PositionStatus.valueOf(Integer.toString(resultSet.getInt(FINAL_STATUS))),
+                        PositionStatus.resolveById(resultSet.getInt(INITIAL_STATUS)),
+                        PositionStatus.resolveById(resultSet.getInt(FINAL_STATUS)),
                         new MySQLShopDAO(connection).read(resultSet.getInt(SHOP_ID)),
                         resultSet.getFloat(CURRENT_PRICE)));
             }
@@ -126,6 +129,8 @@ public class MySQLPositionActionDAO extends MySQLEntityDAO<PositionAction> {
             throw new DAOException(SQL_EXCEPTION + e.getLocalizedMessage());
         } catch (FactoryException e) {
             throw new DAOException(FACTORY_EXCEPTION, e);
+        } catch (UnknownEntityException e) {
+            throw new DAOException(UNKNOWN_ENTITY_EXCEPTION, e);
         }
     }
 

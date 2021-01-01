@@ -43,32 +43,9 @@
             font-family: Arial, Helvetica, sans-serif;
         }
 
-        .slider {
-            -webkit-appearance: none;
-            width: 80%;
-            height: 25px;
-            background: #9370DB;
-            outline: none;
-            opacity: 0.7;
-            -webkit-transition: .2s;
-            transition: opacity .2s;
-        }
-
-        .slider:hover {
-            opacity: 1;
-        }
-
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 25px;
-            height: 25px;
-            background: #800080;
-            cursor: pointer;
-        }
     </style>
 </head>
-<>
+<body>
 <!-- Top panel -->
 <div class="w3-container w3-stretch">
     <div class="w3-cell-row w3-purple w3-opacity-min">
@@ -207,16 +184,27 @@
             <c:choose>
                 <c:when test="${not empty sessionScope.shop.photoLink}">
                     <img src="${sessionScope.shop.photoLink}"
-                         class="w3-image">
+                         class="w3-image" alt="shop picture">
                 </c:when>
                 <c:otherwise>
                     <img src="${pageContext.request.contextPath}/resources/images/shop.jpg"
-                         class="w3-image">
+                         class="w3-image" alt="default shop picture">
                 </c:otherwise>
             </c:choose>
             <div class="w3-panel w3-large w3-purple w3-opacity">
                 <h4>${sessionScope.shop.address}</h4>
             </div>
+        </div>
+        <div class="w3-card-4 w3-half w3-center">
+            <form>
+                <br/>
+                <c:if test="${sessionScope.currentUser.status.id == 4}">
+                    <input type="hidden" name="command" value="OPTIMIZE_SHOP_COMMAND">
+                    <br/>
+                    <button class="w3-button w3-purple w3-ripple w3-opacity-min" type="submit">
+                        <fmt:message key="shop.optimize"/></button>
+                </c:if>
+            </form>
         </div>
         <table class="w3-table-all w3-purple w3-opacity-min">
             <tr class="w3-deep-purple">
@@ -286,17 +274,31 @@
             </c:choose>
         </div>
     </div>
-    <div class="w3-cell w3-deep-purple w3-opacity-min w3-cell" style="width:15%">
+    <!--  right panel bar       -->
+    <div class="w3-cell w3-deep-purple w3-opacity" style="width:15%">
         <div class="w3-bar-block">
             <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="books"/></button>
+                <input type="hidden" name="command" value="SEARCH_BOOKS_COMMAND">
+                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                        key="books"/></button>
             </form>
             <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="shops"/></button>
+                <input type="hidden" name="command" value="SEARCH_SHOPS_COMMAND">
+                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                        key="shops"/></button>
             </form>
             <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="users"/></button>
+                <input type="hidden" name="command" value="SEARCH_AUTHOR_COMMAND">
+                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                        key="authors"/></button>
             </form>
+            <c:if test="${not empty sessionScope.currentUser && sessionScope.currentUser.status.id > 1}">
+                <form class="w3-bar-item w3-large w3-hover-purple">
+                    <input type="hidden" name="command" value="SEARCH_USERS_COMMAND">
+                    <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                            key="users"/></button>
+                </form>
+            </c:if>
         </div>
     </div>
 </div>

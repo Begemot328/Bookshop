@@ -70,8 +70,7 @@
                                 <span><fmt:message key="find.author"/></span>
                             </button>
                         </form>
-                        <form class="w3-bar-item" method="POST"
-                              action="${pageContext.request.contextPath}/ControllerURL">
+                        <form class="w3-bar-item" action="${pageContext.request.contextPath}/ControllerURL">
                             <input type="hidden" name="command" value="SEARCH_SHOPS_COMMAND">
                             <button class="w3-button  w3-ripple w3-hover-purple">
                                 <span><fmt:message key="find.shop"/></span>
@@ -96,8 +95,6 @@
                                     <span><fmt:message key="register"/></span>
                                 </button>
                             </form>
-                        </c:if>
-                        <c:if test="${sessionScope.currentUser == null}">
                             <form class="w3-bar-item" method="POST"
                                   action="${pageContext.request.contextPath}/ControllerURL">
                                 <input type="hidden" name="command" value="SIGNIN_COMMAND">
@@ -112,6 +109,14 @@
                                 <input type="hidden" name="command" value="LOGOUT_COMMAND">
                                 <button class="w3-button  w3-ripple w3-hover-purple">
                                     <span><fmt:message key="signout"/></span>
+                                </button>
+                            </form>
+                            <form class="w3-bar-item" method="POST"
+                                  action="${pageContext.request.contextPath}/ControllerURL">
+                                <input type="hidden" name="command" value="VIEW_USER_COMMAND">
+                                <input type="hidden" name="user-id" value="${sessionScope.currentUser.id}">
+                                <button class="w3-button  w3-ripple w3-hover-purple">
+                                    <span><fmt:message key="cabinet"/></span>
                                 </button>
                             </form>
                         </c:if>
@@ -144,7 +149,9 @@
         </div>
     </div>
 </div>
+<!--  Columns -->
 <div class="w3-cell-row">
+    <!-- right bar block-->
     <div class="w3-cell  w3-deep-purple w3-opacity" style="width:15%">
         <div class="w3-bar-block">
             <div class="w3-bar-item w3-large"><fmt:message key="book.genres"/></div>
@@ -252,18 +259,31 @@
             </c:choose>
         </div>
     </div>
-
-    <div class="w3-cell w3-deep-purple w3-opacity-min w3-cell" style="width:15%">
+    <!--  right panel bar       -->
+    <div class="w3-cell w3-deep-purple w3-opacity" style="width:15%">
         <div class="w3-bar-block">
             <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="books"/></button>
+                <input type="hidden" name="command" value="SEARCH_BOOKS_COMMAND">
+                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                        key="books"/></button>
             </form>
             <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="shops"/></button>
+                <input type="hidden" name="command" value="SEARCH_SHOPS_COMMAND">
+                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                        key="shops"/></button>
             </form>
             <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="users"/></button>
+                <input type="hidden" name="command" value="SEARCH_AUTHOR_COMMAND">
+                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                        key="authors"/></button>
             </form>
+            <c:if test="${not empty sessionScope.currentUser && sessionScope.currentUser.status.id > 1}">
+                <form class="w3-bar-item w3-large w3-hover-purple">
+                    <input type="hidden" name="command" value="SEARCH_USERS_COMMAND">
+                    <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                            key="users"/></button>
+                </form>
+            </c:if>
         </div>
     </div>
 </div>

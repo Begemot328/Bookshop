@@ -32,7 +32,7 @@ public class ViewUserCommand implements Command {
             User user = UserService.getInstance()
                     .read(Integer.parseInt(request.getParameter(RequestParameters.USER_ID)));
             PositionAction[] actions = null;
-            if (user.getStatus().equals(UserStatus.SELLER)) {
+            if (user.getStatus().equals(UserStatus.BUYER) ) {
                 actions = PositionActionService.getInstance()
                         .findBy(new PositionActionFinder().findByBuyer(user.getId()))
                         .toArray(PositionAction[]::new);
@@ -44,12 +44,27 @@ public class ViewUserCommand implements Command {
 
             request.getSession().setAttribute(SessionParameters.ACTIONS, actions);
             request.getSession().setAttribute(SessionParameters.USER, new UserDTO(user));
+
+            if (request.getSession().getAttribute(SessionParameters.CURRENT_USER) != null) {
+                User currentUser = (User) request.getSession().getAttribute(SessionParameters.CURRENT_USER);
+
+                if (currentUser.getStatus().equals(UserStatus.SELLER)
+                        || currentUser.getStatus().equals(UserStatus.ADMIN)
+                        || (currentUser.getStatus().equals(UserStatus.BUYER)
+                        && currentUser.getId() == user.getId())) {
+                    return new Router(JSPPages.VIEW_USER_PAGE);
+                }
+            } else {
+                Router router = new Router(request.getRequestURL().toString());
+                router.setRedirect();
+                return router;
+            }
+
         } catch (ServiceException e) {
             request.getSession().setAttribute(SessionParameters.ERROR_MESSAGE, e.getMessage()
                     + Arrays.toString(e.getStackTrace()));
             return new Router(JSPPages.ERROR_PAGE);
         }
-
-        return new Router(JSPPages.VIEW_AUTHOR_PAGE);
+        return new Router(JSPPages.VIEW_USER_PAGE);
     }
 }

@@ -5,6 +5,8 @@ import by.epam.bookshop.command.impl.*;
 public enum CommandEnum {
     EMPTY_COMMAND(new EmptyCommand()),
 
+    OPTIMIZE_SHOP_COMMAND(new OptimizeShopCommand()),
+
     SEARCH_AUTHORS_COMMAND(new FindAuthorsCommand()),
     SEARCH_USERS_COMMAND(new FindUsersCommand()),
     SEARCH_SHOPS_COMMAND (new FindShopsCommand()),
@@ -19,6 +21,7 @@ public enum CommandEnum {
     VIEW_POSITION_COMMAND(new ViewPositionCommand()),
     VIEW_BOOK_COMMAND(new ViewBookCommand()),
     VIEW_AUTHOR_COMMAND(new ViewAuthorCommand()),
+    VIEW_USER_COMMAND(new ViewUserCommand()),
     VIEW_SHOP_COMMAND(new ViewShopCommand()),
 
     CHANGE_PAGE_COMMAND(new ChangePageCommand()),

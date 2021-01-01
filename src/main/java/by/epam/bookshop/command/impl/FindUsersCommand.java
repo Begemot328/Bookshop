@@ -9,6 +9,7 @@ import by.epam.bookshop.dao.impl.book.BookFinder;
 import by.epam.bookshop.dao.impl.user.UserFinder;
 import by.epam.bookshop.entity.user.User;
 import by.epam.bookshop.entity.user.UserStatus;
+import by.epam.bookshop.exceptions.CommandException;
 import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.exceptions.UnknownEntityException;
 import by.epam.bookshop.service.author.AuthorService;
@@ -20,8 +21,10 @@ import java.util.Enumeration;
 
 public class FindUsersCommand implements Command {
 
+    private static final String UNKNOWN_ENTITY_EXCEPTION = "Unknown entity exception";
+
     @Override
-    public Router execute(HttpServletRequest request) {
+    public Router execute(HttpServletRequest request) throws CommandException {
         UserFinder finder = new UserFinder();
 
         if (isNotEmpty(request.getParameter(RequestParameters.USER_FIRSTNAME))) {
@@ -35,9 +38,10 @@ public class FindUsersCommand implements Command {
         if (isNotEmpty(request.getParameter(RequestParameters.USER_STATUS))) {
             try {
                 finder = finder.findByStatus(UserStatus.resolveById(
-                        Integer.valueOf(request.getParameter(RequestParameters.USER_LASTNAME))));
+                        Integer.parseInt(request.getParameter(RequestParameters.USER_LASTNAME))));
             } catch (UnknownEntityException e) {
-
+                request.getSession().setAttribute(SessionParameters.ERROR_MESSAGE, e.getMessage() + e.getStackTrace());
+                return new Router(JSPPages.ERROR_PAGE);
             }
         }
 

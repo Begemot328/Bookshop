@@ -15,33 +15,38 @@ import by.epam.bookshop.service.position.PositionService;
 import by.epam.bookshop.service.shop.ShopService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.Collection;
 
-public class ViewShopCommand implements Command {
+public class OptimizeShopCommand implements Command {
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        request.getParameter(RequestParameters.SHOP_ID);
-        try {
-            Shop shop = ShopService.getInstance().read(
-                    Integer.parseInt(request.getParameter(RequestParameters.SHOP_ID)));
-            request.getSession().setAttribute(SessionParameters.SHOP, shop);
-            Object currentUserObj = request.getSession()
-                    .getAttribute(SessionParameters.CURRENT_USER);
+        Shop shop;
+        User admin = (User) request.getSession().getAttribute(SessionParameters.CURRENT_USER);
 
+        try {
+            if (request.getSession().getAttribute(SessionParameters.SHOP) == null) {
+                shop = ShopService.getInstance().read(Integer.parseInt(request.getParameter(RequestParameters.SHOP_ID)));
+            } else {
+                shop = (Shop) request.getSession().getAttribute(SessionParameters.SHOP);
+            }
+
+            Collection<Position> collection =
+            PositionService.getInstance().findBy(new PositionFinder().findByShop(shop.getId()));
+            PositionService.getInstance().optimizePositions(collection, admin);
             Position[] positions = PositionService.getInstance().findBy(
                     new PositionFinder().findByShop(shop.getId())).stream()
                     .filter(position -> position.getStatus() == PositionStatus.READY
-                            || ((position.getStatus() == PositionStatus.RESERVED
+                            || position.getStatus() == PositionStatus.RESERVED
                             || position.getStatus() == PositionStatus.SOLD)
-                            && currentUserObj != null
-                            && ((User) currentUserObj).getStatus()
-                            != UserStatus.BUYER))
                     .toArray(Position[]::new);
-
             request.getSession().setAttribute(SessionParameters.POSITIONS, positions);
         } catch (ServiceException e) {
+            request.getSession().setAttribute(SessionParameters.ERROR_MESSAGE, e.getMessage()
+                    + Arrays.toString(e.getStackTrace()));
             return new Router(JSPPages.ERROR_PAGE);
         }
-
         return new Router(JSPPages.VIEW_SHOP_PAGE);
     }
 }
