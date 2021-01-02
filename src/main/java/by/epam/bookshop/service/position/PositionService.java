@@ -61,7 +61,8 @@ public class PositionService implements EntityService<Position> {
     }
 
     public boolean isSimilar(Position p1, Position p2) {
-        boolean result = p1.getBook() == p2.getBook()
+        boolean result = p1 != null && p2 != null
+                && p1.getBook() == p2.getBook()
                 && p1.getShop() == p2.getShop()
                 && p1.getStatus() == p2.getStatus()
                 && (p1.getNote() == p2.getNote() || p1.getNote() != null && p1.getNote().equals(p2.getNote()));
@@ -96,14 +97,17 @@ public class PositionService implements EntityService<Position> {
                 MySQLPositionActionDAO positionActionDAO = new MySQLPositionActionDAO(connection);
 
                 for (int i = 0; i < newCollection.length; i++) {
+                    if (newCollection[i] == null || ((newCollection[i].getStatus() != PositionStatus.SOLD
+                            && newCollection[i].getStatus() != PositionStatus.READY))) {
+                        continue;
+                    }
                     Position[] temp = new Position[(newCollection.length - 1)];
                     int k = 0;
 
-                    for (int j = 1; j < newCollection.length; j++) {
-                        if (isSimilar(newCollection[i], newCollection[j])
-                                && newCollection[i].getStatus() == PositionStatus.SOLD
-                                && newCollection[i].getStatus() == PositionStatus.READY) {
+                    for (int j = i + 1; j < newCollection.length; j++) {
+                        if (isSimilar(newCollection[i], newCollection[j]))    {
                             temp[k] = newCollection[j];
+                            newCollection[j] = null;
                             k++;
                         }
                     }
