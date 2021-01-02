@@ -29,9 +29,9 @@ public class PositionService implements EntityService<Position> {
     private static final String SQL_CONNECTION_EXCEPTION = "SQL Connection Exception: ";
     private static final String SQL_EXCEPTION = "SQL Connection Exception: ";
     private static final String DAO_EXCEPTION = "DAO Exception: ";
-    private static final String FACTORY_EXCEPTION = "User factory Exception: ";
+    private static final String FACTORY_EXCEPTION = "Position factory Exception: ";
     private static final String NO_RIGHTS_EXCEPTION
-            = "Only admin or seller can manage books";
+            = "Only admin or seller can manage positions";
     private static final String WRONG_INPUT_EXCEPTION
             = "Wrong data input!";
     private final static PositionService INSTANCE = new PositionService();
@@ -62,9 +62,9 @@ public class PositionService implements EntityService<Position> {
 
     public boolean isSimilar(Position p1, Position p2) {
         boolean result = p1 != null && p2 != null
-                && p1.getBook() == p2.getBook()
-                && p1.getShop() == p2.getShop()
-                && p1.getStatus() == p2.getStatus()
+                && p1.getBook().equals(p2.getBook())
+                && p1.getShop().equals(p2.getShop())
+                && p1.getStatus().equals(p2.getStatus())
                 && (p1.getNote() == p2.getNote() || p1.getNote() != null && p1.getNote().equals(p2.getNote()));
         return result;
     }
@@ -226,7 +226,7 @@ public class PositionService implements EntityService<Position> {
                                    String note,
                                    int quantity) throws ServiceException {
         if (user.getStatus() != UserStatus.SELLER
-                || user.getStatus() != UserStatus.ADMIN) {
+                && user.getStatus() != UserStatus.ADMIN) {
             throw new ServiceException(NO_RIGHTS_EXCEPTION);
         }
         try (Connection connection = getConnection()) {
@@ -235,7 +235,7 @@ public class PositionService implements EntityService<Position> {
                 Position position = new PositionFactory().create(
                         book, shop, PositionStatus.READY, note, quantity);
                 PositionAction action = new PositionActionFactory().create(
-                        book, null, user, LocalDateTime.now(), quantity,
+                        null, position, null,  user, LocalDateTime.now(), quantity,
                         PositionStatus.NON_EXISTENT,
                         PositionStatus.READY,
                         shop, book.getPrice());

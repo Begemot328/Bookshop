@@ -15,7 +15,7 @@ public class PositionActionFactory implements EntityFactory<PositionAction> {
     @Override
     public PositionAction create(Object... args) throws FactoryException {
         if (args.length < 10
-                || !(args[0] instanceof Position)
+                || !(args[0] instanceof Position || args[0] == null)
                 || !(args[1] instanceof Position)
                 || !(args[2] instanceof User || args[2] == null)
                 || !(args[3] instanceof User || args[3] == null)

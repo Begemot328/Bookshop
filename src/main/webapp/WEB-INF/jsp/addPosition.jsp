@@ -14,20 +14,19 @@
 <c:if test="${not empty sessionScope.language}">
     <fmt:setLocale value="${sessionScope.language}"/>
 </c:if>
-
 <c:if test="${empty sessionScope.language}">
     <fmt:setLocale value="EN"/>
 </c:if>
-
 <fmt:setBundle basename="locale"/>
 
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-signal.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <html>
 <head>
-    <title>Search books</title>
+    <title><fmt:message key="login_page.title"/></title>
     <style>
         body {
             display: block;
@@ -42,34 +41,10 @@
         body, h1, h2, h3, h4, h5, h6 {
             font-family: Arial, Helvetica, sans-serif;
         }
-
-        .slider {
-            -webkit-appearance: none;
-            width: 80%;
-            height: 25px;
-            background: #9370DB;
-            outline: none;
-            opacity: 0.7;
-            -webkit-transition: .2s;
-            transition: opacity .2s;
-        }
-
-        .slider:hover {
-            opacity: 1;
-        }
-
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 25px;
-            height: 25px;
-            background: #800080;
-            cursor: pointer;
-        }
     </style>
 </head>
-<>
-<!-- Top panel -->
+<body>
+<!-- Top panel-->
 <div class="w3-container w3-stretch">
     <div class="w3-cell-row w3-purple w3-opacity-min">
         <div class="w3-cell w3-container" style="width: 65%">
@@ -78,7 +53,6 @@
         </div>
         <div class="w3-cell w3-container w3-cell-middle">
             <div class="w3-cell-row">
-                <!-- Dropdown menus -->
                 <div class="w3-dropdown-hover">
                     <button class="w3-button w3-purple w3-opacity-min">
                         <i class="material-icons">search</i>
@@ -96,8 +70,7 @@
                                 <span><fmt:message key="find.author"/></span>
                             </button>
                         </form>
-                        <form class="w3-bar-item" method="POST"
-                              action="${pageContext.request.contextPath}/ControllerURL">
+                        <form class="w3-bar-item" action="${pageContext.request.contextPath}/ControllerURL">
                             <input type="hidden" name="command" value="SEARCH_SHOPS_COMMAND">
                             <button class="w3-button  w3-ripple w3-hover-purple">
                                 <span><fmt:message key="find.shop"/></span>
@@ -122,8 +95,6 @@
                                     <span><fmt:message key="register"/></span>
                                 </button>
                             </form>
-                        </c:if>
-                        <c:if test="${sessionScope.currentUser == null}">
                             <form class="w3-bar-item" method="POST"
                                   action="${pageContext.request.contextPath}/ControllerURL">
                                 <input type="hidden" name="command" value="SIGNIN_COMMAND">
@@ -138,6 +109,14 @@
                                 <input type="hidden" name="command" value="LOGOUT_COMMAND">
                                 <button class="w3-button  w3-ripple w3-hover-purple">
                                     <span><fmt:message key="signout"/></span>
+                                </button>
+                            </form>
+                            <form class="w3-bar-item" method="POST"
+                                  action="${pageContext.request.contextPath}/ControllerURL">
+                                <input type="hidden" name="command" value="VIEW_USER_COMMAND">
+                                <input type="hidden" name="user-id" value="${sessionScope.currentUser.id}">
+                                <button class="w3-button  w3-ripple w3-hover-purple">
+                                    <span><fmt:message key="cabinet"/></span>
                                 </button>
                             </form>
                         </c:if>
@@ -198,74 +177,51 @@
             </form>
         </div>
     </div>
-    <!-- Card panel -->
+    <!-- middle panel-->
     <div class="w3-cell w3-padding-large w3-center" style="width:70%">
-        <div class="w3-card-4 w3-half w3-center">
-            <div class="w3-panel w3-large w3-purple w3-opacity">
-                <h4>${sessionScope.author.firstName} ${sessionScope.author.lastName}</h4>
-            </div>
-            <c:choose>
-                <c:when test="${not empty sessionScope.author.photoLink}">
-                    <img src="${sessionScope.author.photoLink}" alt="author picture"
-                         class="w3-image">
-                </c:when>
-                <c:otherwise>
-                    <img src="${pageContext.request.contextPath}/resources/images/author.jpg"
-                    alt="default author picture"  class="w3-image">
-                </c:otherwise>
-            </c:choose>
-        </div>
-        <div class="w3-row-padding">
-            <c:forEach var="book"
-                       begin="${sessionScope.firstElement}"
-                       end="${sessionScope.lastElement}"
-                       items="${sessionScope.books}">
-                <form class="w3-col l2 m6 s12  w3-center"
-                      method="POST" action="${pageContext.request.contextPath}/ControllerURL">
-                    <input type="hidden" name="command" value="VIEW_BOOK_COMMAND">
-                    <input type="hidden" name="book-id" value="${book.id}">
-                    <button class="w3-button  w3-ripple">
-                        <c:choose>
-                            <c:when test="${not empty book.photoLink}">
-                                <img src="${book.photoLink}"
-                                     class="w3-image">
-                            </c:when>
-                            <c:otherwise>
-                                <img src="${pageContext.request.contextPath}/resources/images/book_cover.jpg"
-                                     class="w3-image">
-                            </c:otherwise>
-                        </c:choose>
-                    </button>
-                    <p class="w3-signal-blue w3-large w3-opacity-min">
-                        <c:out value="${book.title}"/>
-                        <br/>
-                        <c:out value="${book.author.firstName}"/>
-                        <c:out value="${book.author.lastName}"/>
-                        <br/>
-                        <c:out value="${book.price}"/> BYN
-                    </p>
-                </form>
-            </c:forEach>
-        </div>
-        <!-- Pagination          -->
-        <div class="w3-bar w3-purple w3-opacity-min w3-center w3-stretch">
-            <c:choose>
-                <c:when test="${sessionScope.pageQuantity} > 1">
-                    <c:forEach begin="1" end="${sessionScope.pageQuantity}" var="p">
-                        <c:choose>
-                            <c:when test="${sessionScope.currentPage == p}">
-                                <a class="w3-button w3-indigo"
-                                   href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
-                            </c:when>
-                            <c:otherwise>
-                                <a class="w3-button w3-purple"
-                                   href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
-                            </c:otherwise>
-                        </c:choose>
+        <br/>
+        <form class="w3-card-4 w3-row-padding" method="POST" action="${pageContext.request.contextPath}/ControllerURL">
+            <input type="hidden" name="command" value="ADD_POSITION_COMMAND">
+
+            <div class="w3-container" style="width:35%">
+                <select id="shop" name="shop-id">
+                    <c:forEach var="shop" items="${sessionScope.shops}">
+                        <option value="${shop.id}">${shop.name} ${shop.address}</option>
                     </c:forEach>
-                </c:when>
-            </c:choose>
-        </div>
+                </select>
+            </div>
+            <br/>
+            <br/>
+            <div class="w3-container" style="width:35%">
+                <select id="books" name="book-id">
+                    <c:forEach var="book" items="${sessionScope.books}">
+                        <option value="${book.id}">${book.title} by ${book.author.firstName} ${book.author.lastName}</option>
+                    </c:forEach>
+                </select>
+            </div>
+            <br/>
+
+            <div class="w3-container" style="width:35%">
+                <input class="w3-input w3-border" type="number"  min="1" name="quantity" required
+                       placeholder="<fmt:message key="quantity"/>">
+            </div>
+            <br/>
+            <div class="w3-container" style="width:35%">
+                <input class="w3-input w3-border" type="text" name="note"
+                       placeholder="<fmt:message key="description"/>">
+            </div>
+            <br/>
+            <br/>
+            <c:if test="${errorMessage != null}">
+                <div class="w3-container" style="width:50%">
+                    <p class="w3-large w3-text-red w3-animate-opacity"><fmt:message key="${errorMessage}"/></p>
+                </div>
+            </c:if>
+            <div class="w3-btn" style="width:10%">
+                <input class="w3-btn w3-deep-purple w3-ripple w3-hover-purple" type="submit"
+                       value="<fmt:message key="create"/>!">
+            </div>
+        </form>
     </div>
     <!--  right panel bar       -->
     <div class="w3-cell w3-deep-purple w3-opacity" style="width:15%">

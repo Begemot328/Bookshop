@@ -102,7 +102,7 @@ public class ConnectionPool implements Closeable {
         capacity = DEFAULT_POOL_SIZE;
         Stream.generate(() -> {
             try {
-                Class.forName("com.mysql.jdbc.Driver").newInstance();
+                Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
                 ConnectionProxy connectionProxy
                         = new ConnectionProxy(DriverManager.getConnection(
                         //  "jdbc:mysql://localhost:3306/bookshop?useUnicode=true&serverTimezone=UTC",

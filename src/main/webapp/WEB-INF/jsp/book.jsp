@@ -236,8 +236,8 @@
                         <c:when test="${sessionScope.currentUser.status.id == 2}">
                             <th></th>
                         </c:when>
-                        <c:when test="${sessionScope.currentUser.status.id == 3
-                        || sessionScope.currentUser.status.id == 4}">
+                        <c:when test="${sessionScope.currentUser.status.id >2}">
+                            <th><fmt:message key="status"/></th>
                             <th></th>
                         </c:when>
                     </c:choose>
@@ -264,7 +264,8 @@
                                         <a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shop-id=${position.shop.id}&position-id=${position.id}"
                                            class="w3-button"><fmt:message key="position.book"/></a></td>
                                 </c:when>
-                                <c:when test="${sessionScope.currentUser.status.id == 3 || sessionScope.currentUser.status.id == 4}">
+                                <c:when test="${sessionScope.currentUser.status.id > 2}">
+                                    <td><fmt:message key="${position.status}"/></td>
                                     <td>
                                         <a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shop-id=${position.shop.id}&position-id=${position.id}"
                                            class="w3-button"><fmt:message key="position.process"/></a></td>
@@ -296,17 +297,31 @@
 
         </div>
     </div>
-    <div class="w3-cell w3-deep-purple w3-opacity-min w3-cell" style="width:15%">
+    <!--  right panel bar       -->
+    <div class="w3-cell w3-deep-purple w3-opacity" style="width:15%">
         <div class="w3-bar-block">
             <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="books"/></button>
+                <input type="hidden" name="command" value="SEARCH_BOOKS_COMMAND">
+                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                        key="books"/></button>
             </form>
             <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="shops"/></button>
+                <input type="hidden" name="command" value="SEARCH_SHOPS_COMMAND">
+                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                        key="shops"/></button>
             </form>
             <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="users"/></button>
+                <input type="hidden" name="command" value="SEARCH_AUTHORS_COMMAND">
+                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                        key="authors"/></button>
             </form>
+            <c:if test="${not empty sessionScope.currentUser && sessionScope.currentUser.status.id > 1}">
+                <form class="w3-bar-item w3-large w3-hover-purple">
+                    <input type="hidden" name="command" value="SEARCH_USERS_COMMAND">
+                    <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                            key="users"/></button>
+                </form>
+            </c:if>
         </div>
     </div>
 </div>

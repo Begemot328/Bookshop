@@ -216,8 +216,8 @@
                         <c:when test="${sessionScope.currentUser.status.id == 2}">
                             <th></th>
                         </c:when>
-                        <c:when test="${sessionScope.currentUser.status.id == 3
-                        || sessionScope.currentUser.status.id == 4}">
+                        <c:when test="${sessionScope.currentUser.status.id >2}">
+                            <th><fmt:message key="status"/></th>
                             <th></th>
                         </c:when>
                     </c:choose>
@@ -244,7 +244,8 @@
                                         <a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shop-id=${position.shop.id}&position-id=${position.id}"
                                            class="w3-button"><fmt:message key="position.book"/></a></td>
                                 </c:when>
-                                <c:when test="${sessionScope.currentUser.status.id == 3 || sessionScope.currentUser.status.id == 4}">
+                                <c:when test="${sessionScope.currentUser.status.id > 2}">
+                                    <td><fmt:message key="${position.status}"/></td>
                                     <td>
                                         <a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shop-id=${position.shop.id}&position-id=${position.id}"
                                            class="w3-button"><fmt:message key="position.process"/></a></td>

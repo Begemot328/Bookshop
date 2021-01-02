@@ -2,6 +2,7 @@ package by.epam.bookshop.command.impl;
 
 import by.epam.bookshop.command.Command;
 import by.epam.bookshop.command.JSPPages;
+import by.epam.bookshop.command.Paginator;
 import by.epam.bookshop.command.Router;
 import by.epam.bookshop.dao.impl.position.PositionFinder;
 import by.epam.bookshop.entity.position.Position;
@@ -38,6 +39,7 @@ public class ViewShopCommand implements Command {
                     .toArray(Position[]::new);
 
             request.getSession().setAttribute(SessionParameters.POSITIONS, positions);
+            Paginator.paginate(request, positions, 1);
         } catch (ServiceException e) {
             return new Router(JSPPages.ERROR_PAGE);
         }

@@ -44,6 +44,7 @@
     </style>
 </head>
 <body>
+<!-- Top panel-->
 <div class="w3-container w3-stretch">
     <div class="w3-cell-row w3-purple w3-opacity-min">
         <div class="w3-cell w3-container" style="width: 65%">
@@ -57,17 +58,20 @@
                         <i class="material-icons">search</i>
                     </button>
                     <div class="w3-dropdown-content w3-bar-block w3-deep-purple">
-                        <form class="w3-bar-item">
+                        <form class="w3-bar-item" action="${pageContext.request.contextPath}/ControllerURL">
+                            <input type="hidden" name="command" value="SEARCH_BOOKS_COMMAND">
                             <button class="w3-button  w3-ripple w3-hover-purple">
                                 <span><fmt:message key="find.book"/></span>
                             </button>
                         </form>
-                        <form class="w3-bar-item">
+                        <form class="w3-bar-item" action="${pageContext.request.contextPath}/ControllerURL">
+                            <input type="hidden" name="command" value="SEARCH_AUTHORS_COMMAND">
                             <button class="w3-button  w3-ripple w3-hover-purple">
                                 <span><fmt:message key="find.author"/></span>
                             </button>
                         </form>
-                        <form class="w3-bar-item">
+                        <form class="w3-bar-item" action="${pageContext.request.contextPath}/ControllerURL">
+                            <input type="hidden" name="command" value="SEARCH_SHOPS_COMMAND">
                             <button class="w3-button  w3-ripple w3-hover-purple">
                                 <span><fmt:message key="find.shop"/></span>
                             </button>
@@ -77,20 +81,20 @@
                 <div class="w3-dropdown-hover">
                     <button class="w3-button w3-purple w3-opacity-min">
                         <i class="material-icons">person</i>
-                        <c:if test="${sessionScope.user != null}">
-                            <span><c:out value="${sessionScope.user.firstName}"/> <c:out
-                                    value="${sessionScope.user.lastName}"/></span>
+                        <c:if test="${sessionScope.currentUser != null}">
+                            <span><c:out value="${sessionScope.currentUser.firstName}"/> <c:out
+                                    value="${sessionScope.currentUser.lastName}"/></span>
                         </c:if>
                     </button>
                     <div class="w3-dropdown-content w3-bar-block w3-deep-purple">
-                        <c:if test="${sessionScope.user == null}">
-                            <form class="w3-bar-item">
+                        <c:if test="${sessionScope.currentUser == null}">
+                            <form class="w3-bar-item" method="POST"
+                                  action="${pageContext.request.contextPath}/ControllerURL">
+                                <input type="hidden" name="command" value="REGISTER_MENU_COMMAND">
                                 <button class="w3-button  w3-ripple w3-hover-purple">
                                     <span><fmt:message key="register"/></span>
                                 </button>
                             </form>
-                        </c:if>
-                        <c:if test="${sessionScope.user == null}">
                             <form class="w3-bar-item" method="POST"
                                   action="${pageContext.request.contextPath}/ControllerURL">
                                 <input type="hidden" name="command" value="SIGNIN_COMMAND">
@@ -99,10 +103,20 @@
                                 </button>
                             </form>
                         </c:if>
-                        <c:if test="${sessionScope.user != null}">
-                            <form class="w3-bar-item">
+                        <c:if test="${sessionScope.currentUser != null}">
+                            <form class="w3-bar-item" method="POST"
+                                  action="${pageContext.request.contextPath}/ControllerURL">
+                                <input type="hidden" name="command" value="LOGOUT_COMMAND">
                                 <button class="w3-button  w3-ripple w3-hover-purple">
                                     <span><fmt:message key="signout"/></span>
+                                </button>
+                            </form>
+                            <form class="w3-bar-item" method="POST"
+                                  action="${pageContext.request.contextPath}/ControllerURL">
+                                <input type="hidden" name="command" value="VIEW_USER_COMMAND">
+                                <input type="hidden" name="user-id" value="${sessionScope.currentUser.id}">
+                                <button class="w3-button  w3-ripple w3-hover-purple">
+                                    <span><fmt:message key="cabinet"/></span>
                                 </button>
                             </form>
                         </c:if>
@@ -163,14 +177,18 @@
             </form>
         </div>
     </div>
+    <!-- middle panel-->
     <div class="w3-cell w3-padding-large" style="width:70%">
+        <br/>
         <form class="w3-row-padding" method="POST" action="${pageContext.request.contextPath}/ControllerURL">
             <input type="hidden" name="command" value="LOGIN_COMMAND">
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="text" name="login" placeholder="<fmt:message key="login"/>">
+                <input class="w3-input w3-border" type="text" name="login" required
+                       placeholder="<fmt:message key="login"/>">
             </div>
+            <br/>
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="password" name="password"
+                <input class="w3-input w3-border" type="password" name="password" required
                        placeholder="<fmt:message key="password"/>">
             </div>
             <c:if test="${errorMessage != null}">
@@ -178,6 +196,7 @@
                     <p class="w3-large w3-text-red w3-animate-opacity"><fmt:message key="${errorMessage}"/></p>
                 </div>
             </c:if>
+            <br/>
             <div class="w3-btn" style="width:10%">
                 <input class="w3-btn w3-deep-purple w3-ripple w3-hover-purple" type="submit"
                        value="<fmt:message key="signin"/>!">
@@ -185,18 +204,31 @@
 
         </form>
     </div>
-
-    <div class="w3-cell w3-deep-purple w3-opacity-min w3-cell" style="width:15%">
+    <!--  right panel bar       -->
+    <div class="w3-cell w3-deep-purple w3-opacity" style="width:15%">
         <div class="w3-bar-block">
             <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="books"/></button>
+                <input type="hidden" name="command" value="SEARCH_BOOKS_COMMAND">
+                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                        key="books"/></button>
             </form>
             <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="shops"/></button>
+                <input type="hidden" name="command" value="SEARCH_SHOPS_COMMAND">
+                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                        key="shops"/></button>
             </form>
             <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="users"/></button>
+                <input type="hidden" name="command" value="SEARCH_AUTHORS_COMMAND">
+                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                        key="authors"/></button>
             </form>
+            <c:if test="${not empty sessionScope.currentUser && sessionScope.currentUser.status.id > 1}">
+                <form class="w3-bar-item w3-large w3-hover-purple">
+                    <input type="hidden" name="command" value="SEARCH_USERS_COMMAND">
+                    <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                            key="users"/></button>
+                </form>
+            </c:if>
         </div>
     </div>
 </div>

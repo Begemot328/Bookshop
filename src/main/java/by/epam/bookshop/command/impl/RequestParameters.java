@@ -6,6 +6,9 @@ public class RequestParameters {
     public static final String POSITION_ID = "position-id";
     public static final String QUANTITY = "quantity";
     public static final String USER_ID = "user-id";
+    public static final String PRICE = "price";
+    public static final String DESCRIPTION = "description";
+    public static final String NOTE = "note";
     static final String LOGIN = "login";
     static final String PASSWORD = "password";
 
@@ -16,6 +19,9 @@ public class RequestParameters {
 
     static final String USER_FIRSTNAME = "user-firstname";
     static final String USER_LASTNAME = "user-lastname";
+    static final String PHOTOLINK = "photolink";
+    static final String ADDRESS = "address";
+    static final String USER_PHOTO = "user-photo";
     static final String USER_STATUS = "user-status";
 
     static final String SHOP_ID = "shop-id";

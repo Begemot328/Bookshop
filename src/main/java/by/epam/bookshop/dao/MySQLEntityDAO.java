@@ -38,8 +38,8 @@ public abstract class MySQLEntityDAO<T  extends Entity> implements EntityDAO<T> 
 
     private String getInsertQuery(String schemaName, String tableName, Map<String, Object> map) throws DAOException {
         String result = INSERT_QUERY.replace(SCHEMA, schemaName).replace(TABLE, tableName);
-        String values = new String();
-        String parameters = new String();
+        StringBuilder values = new StringBuilder();
+        StringBuilder parameters = new StringBuilder();
         Set<String> keySet = map.keySet();
 
         for (String key: keySet) {
@@ -49,12 +49,12 @@ public abstract class MySQLEntityDAO<T  extends Entity> implements EntityDAO<T> 
             if (map.get(key) == null) {
                 continue;
             }
-            parameters += key + DELIMETER;
-            values +="?" + DELIMETER;
+            parameters.append(key).append(DELIMETER);
+            values.append("?" + DELIMETER);
         }
-        parameters = parameters.substring(0, parameters.length() - 2);
-        values = values.substring(0, values.length() - 2);
-        result = result.replace(PARAMETERS, parameters).replace(VALUES, values);
+        parameters = new StringBuilder(parameters.substring(0, parameters.length() - 2));
+        values = new StringBuilder(values.substring(0, values.length() - 2));
+        result = result.replace(PARAMETERS, parameters.toString()).replace(VALUES, values.toString());
 
         return result;
     }
@@ -68,7 +68,7 @@ public abstract class MySQLEntityDAO<T  extends Entity> implements EntityDAO<T> 
 
     private String getUpdateQuery(String schemaName, String tableName, Map<String, Object> map) throws DAOException {
         String result = UPDATE_QUERY.replace(SCHEMA, schemaName).replace(TABLE, tableName);
-        String parameters = new String();
+        StringBuilder parameters = new StringBuilder();
         Set<String> keySet = map.keySet();
 
         for (String key: keySet) {
@@ -78,10 +78,10 @@ public abstract class MySQLEntityDAO<T  extends Entity> implements EntityDAO<T> 
             if (map.get(key) == null) {
                 continue;
             }
-            parameters += key + " = ?" + DELIMETER;
+            parameters.append(key).append(" = ?").append(DELIMETER);
         }
-        parameters = parameters.substring(0, parameters.length() - 2);
-        result = result.replace(PARAMETERS, parameters);
+        parameters = new StringBuilder(parameters.substring(0, parameters.length() - 2));
+        result = result.replace(PARAMETERS, parameters.toString());
         return result;
     }
 

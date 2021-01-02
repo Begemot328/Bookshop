@@ -25,7 +25,7 @@ public class MySQLUserDAO extends MySQLEntityDAO<User> {
     private static final String LAST_NAME = "LAST_NAME";
     private static final String LOGIN = "LOGIN";
     private static final String PASSWORD = "PASSWORD";
-    private static final String ADRESS = "ADRESS";
+    private static final String ADDRESS = "ADDRESS";
     private static final String PHOTO_LINK = "PHOTO_LINK";
     private static final String STATUS = "STATUS";
 
@@ -87,9 +87,9 @@ public class MySQLUserDAO extends MySQLEntityDAO<User> {
         map.put(LAST_NAME, user.getLastName());
         map.put(LOGIN, user.getLogin());
         map.put(PASSWORD, user.getPassword());
-        map.put(ADRESS, user.getAdress());
+        map.put(ADDRESS, user.getAdress());
         map.put(PHOTO_LINK, user.getPhotoLink());
-        map.put(STATUS, user.getStatus());
+        map.put(STATUS, user.getStatus().getId());
         return map;
     }
 
@@ -104,7 +104,7 @@ public class MySQLUserDAO extends MySQLEntityDAO<User> {
                         resultSet.getString(LAST_NAME),
                         resultSet.getString(LOGIN),
                         resultSet.getInt(PASSWORD),
-                        resultSet.getString(ADRESS),
+                        resultSet.getString(ADDRESS),
                         resultSet.getString(PHOTO_LINK),
                         UserStatus.resolveById(resultSet.getInt(STATUS))));
             }

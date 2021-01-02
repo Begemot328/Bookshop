@@ -13,6 +13,6 @@
 </head>
 <body>
 Error !!!
-<c:out value="${sessionScope.errorMessage}"/>
+<c:out value="${errorMessage}"/>
 </body>
 </html>

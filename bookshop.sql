@@ -48,7 +48,7 @@ create table users
     last_name  varchar(40) not null,
     login      varchar(10) not null,
     password   int(10)     not null,
-    adress     varchar(40) not null,
+    address     varchar(40) not null,
     photo_link varchar(100),
     status     tinyint
 );
@@ -79,8 +79,8 @@ create table authors
 (
     id         int primary key auto_increment,
     first_name varchar(40) not null,
-    last_name  varchar(40) not null
-
+    last_name  varchar(40) not null,
+    photo_link varchar(100)
 );
 
 create index id_index on authors (id);
@@ -105,7 +105,7 @@ create table shops
 (
     id       int primary key auto_increment not null,
     name     varchar(40)                    not null,
-    adress   varchar(100),
+    address   varchar(100),
     position varchar(40)
 );
 
@@ -224,30 +224,30 @@ from (
 where id = 2;
 
 #root admin, do not change!
-insert users(id, first_name, last_name, login, password, adress, status)
+insert users(id, first_name, last_name, login, password, address, status)
 values (1, 'Yury', 'Zmushko', 'root', 3506402, #root root
         'unknown', 4);
 
 #populating tables
-insert users(id, first_name, last_name, login, password, adress, status)
+insert users(id, first_name, last_name, login, password, address, status)
 values (2, 'Ivan', 'Ivanoy', 'IIvanoy', -946852072, #change to hash
         'Dom Ivanovyh', 3);
 insert user_actions(id_admin, id_user, date_time, initial_status, final_status)
 VALUES (1, 2, '2020_10_27 09:20:11', 0, 3);
 
-insert users(id, first_name, last_name, login, password, adress, status)
+insert users(id, first_name, last_name, login, password, address, status)
 values (3, 'Petr', 'Petroy', 'PPetroy', -946852072, #change to hash
         'Dom Petrovyh', 3);
 insert user_actions(id_admin, id_user, date_time, initial_status, final_status)
 VALUES (1, 3, '2020_10_27 09:20:11', 0, 3);
 
-insert users(id, first_name, last_name, login, password, adress, status)
+insert users(id, first_name, last_name, login, password, address, status)
 values (4, 'Sidor ', 'Sidorov', 'SSidorov', -946852072, #change to hash
         'Dom Sidorovyh', 2);
 insert user_actions(id_admin, id_user, date_time, initial_status, final_status)
 VALUES (1, 4, '2020_10_27 09:20:11', 0, 2);
 
-insert users(id, first_name, last_name, login, password, adress, status)
+insert users(id, first_name, last_name, login, password, address, status)
 values (5, 'Morozov ', 'Igor', 'IMorozov', -946852072, #change to hash
         'Dom Morozovyh', 2);
 insert user_actions(id_admin, id_user, date_time, initial_status, final_status)
@@ -260,10 +260,10 @@ VALUES (1, ' ', 'The Church');
 insert authors (id, first_name, last_name)
 VALUES (3, 'George', 'Orwell');
 
-insert shops(id, name, adress, position)
+insert shops(id, name, address, position)
 values (1, 'Na Grushevke', 'Dzerzhynskogo prospekt, 15', '');
 
-insert shops(id, name, adress, position)
+insert shops(id, name, address, position)
 values (2, 'Na Malinovke', 'Dzerzhynskogo prospekt, 130', '');
 
 insert books(id, title, author_id, price, description)

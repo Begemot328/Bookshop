@@ -25,8 +25,7 @@ public class MySQLAuthorDAO extends MySQLEntityDAO<Author> {
     private static final String FACTORY_EXCEPTION = "Factory Exception: ";
     private static final String SCHEMA = "BOOKSHOP";
     private static final String TABLE = "AUTHORS";
-
-
+    private static final String PHOTO_LINK = "PHOTO_LINK";
 
     public MySQLAuthorDAO(Connection connection) {
         super(connection);
@@ -36,8 +35,6 @@ public class MySQLAuthorDAO extends MySQLEntityDAO<Author> {
     public boolean create(Author author) throws DAOException {
         return create(author, SCHEMA, TABLE, mapEntity(author));
     }
-
-
 
     @Override
     public Author read(int id) throws DAOException {
@@ -81,9 +78,10 @@ public class MySQLAuthorDAO extends MySQLEntityDAO<Author> {
         ArrayList<Author> result = new ArrayList<>();
         try {
             while (resultSet.next()) {
-                result.add(factory.createWithID( resultSet.getInt(ID),
+                result.add(factory.createWithID(resultSet.getInt(ID),
                         resultSet.getString(FIRSTNAME),
-                        resultSet.getString(LASTNAME)));
+                        resultSet.getString(LASTNAME),
+                        resultSet.getString(PHOTO_LINK)));
             }
             return result;
         } catch (SQLException e) {
@@ -97,6 +95,9 @@ public class MySQLAuthorDAO extends MySQLEntityDAO<Author> {
         Map<String, Object> map = new HashMap<>();
         map.put(FIRSTNAME, author.getFirstName());
         map.put(LASTNAME, author.getLastName());
+        if (author.getPhotoLink() != null) {
+            map.put(PHOTO_LINK, author.getPhotoLink());
+        }
         return map;
     }
 }

@@ -19,9 +19,10 @@ public class Author extends Entity {
 
     private String photoLink;
 
-    Author(String firstName, String lastName) {
+    Author(String firstName, String lastName, String photoLink) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.photoLink = photoLink;
     }
 
     @Override

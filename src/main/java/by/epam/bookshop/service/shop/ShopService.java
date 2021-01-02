@@ -83,7 +83,7 @@ public class ShopService implements EntityService<Shop> {
     @Override
     public Collection<Shop> findBy(EntityFinder<Shop> finder) throws ServiceException {
         try  (Connection connection = getConnection()) {
-            return new MySQLShopDAO(connection).findAll();
+            return new MySQLShopDAO(connection).findBy(finder);
         } catch (DAOException e) {
             throw new ServiceException(DAO_EXCEPTION,e);
         } catch (SQLException e) {
@@ -93,6 +93,12 @@ public class ShopService implements EntityService<Shop> {
 
     @Override
     public Collection<Shop> findAll() throws DAOException, ServiceException {
-        return null;
+        try  (Connection connection = getConnection()) {
+            return new MySQLShopDAO(connection).findAll();
+        } catch (DAOException e) {
+            throw new ServiceException(DAO_EXCEPTION,e);
+        } catch (SQLException e) {
+            throw new ServiceException(SQL_CONNECTION_EXCEPTION,e);
+        }
     }
 }

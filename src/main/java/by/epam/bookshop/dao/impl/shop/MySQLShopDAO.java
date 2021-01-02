@@ -20,7 +20,7 @@ import java.util.Map;
 public class MySQLShopDAO extends MySQLEntityDAO<Shop> {
     private static final String ID = "ID";
     private static final String NAME = "NAME";
-    private static final String ADRESS = "ADRESS";
+    private static final String ADDRESS = "ADDRESS";
     private static final String POSITION = "POSITION";
 
     private static final String SQL_EXCEPTION = "SQL Exception: ";
@@ -77,7 +77,7 @@ public class MySQLShopDAO extends MySQLEntityDAO<Shop> {
     public Map<String, Object> mapEntity(Shop shop) {
         Map<String, Object> map = new HashMap<>();
         map.put(NAME, shop.getName());
-        map.put(ADRESS, shop.getAddress());
+        map.put(ADDRESS, shop.getAddress());
         map.put(POSITION, shop.getPosition());
         return map;
     }
@@ -90,7 +90,7 @@ public class MySQLShopDAO extends MySQLEntityDAO<Shop> {
             while (resultSet.next()) {
                 result.add(factory.createWithID(resultSet.getInt(ID),
                         resultSet.getString(NAME),
-                        resultSet.getString(ADRESS),
+                        resultSet.getString(ADDRESS),
                         resultSet.getString(POSITION)));
             }
             return result;

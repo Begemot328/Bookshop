@@ -14,7 +14,7 @@ public class BookFactory implements EntityFactory<Book> {
                 || !(args[2] instanceof String
                 || args[2] == null)
                 || !(args[3] instanceof Float)
-         //       || !(args[4] instanceof String)
+                || !(args[4] instanceof String || args[4] == null)
                 || ((String) args[0]).isEmpty()) {
         //      || ((String) args[2]).isEmpty()) {
 

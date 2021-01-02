@@ -6,7 +6,12 @@ public enum CommandEnum {
     EMPTY_COMMAND(new EmptyCommand()),
 
     OPTIMIZE_SHOP_COMMAND(new OptimizeShopCommand()),
-
+    ADD_BOOK_COMMAND(new AddBookCommand()),
+    ADD_BOOK_MENU_COMMAND(new AddBookMenuCommand()),
+    ADD_POSITION_COMMAND(new AddPositionCommand()),
+    ADD_POSITION_MENU_COMMAND(new AddPositionMenuCommand()),
+    ADD_AUTHOR_COMMAND(new AddAuthorCommand()),
+    ADD_AUTHOR_MENU_COMMAND(new ForwardCommand(JSPPages.ADD_AUTHOR_PAGE)),
     SEARCH_AUTHORS_COMMAND(new FindAuthorsCommand()),
     SEARCH_USERS_COMMAND(new FindUsersCommand()),
     SEARCH_SHOPS_COMMAND (new FindShopsCommand()),
@@ -31,7 +36,7 @@ public enum CommandEnum {
     LOGOUT_COMMAND(new LogOutCommand()),
     SIGNIN_COMMAND(new ForwardCommand(JSPPages.LOGIN_PAGE)),
     REGISTER_MENU_COMMAND(new ForwardCommand(JSPPages.REGISTER_PAGE)),
-    REGISTER_COMMAND(new LoginCommand());
+    REGISTER_COMMAND(new RegisterCommand());
 
     private Command command;
 

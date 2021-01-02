@@ -11,10 +11,11 @@ public class AuthorFactory implements EntityFactory<Author> {
         if (args.length < 2
                 || !(args[0] instanceof String)
                 || !(args[1] instanceof String)
+                || !((args[2] instanceof String) || args[2] == null)
                 || ((String) args[0]).isEmpty()
                 || ((String) args[1]).isEmpty()) {
             throw new FactoryException(getWrongDataMessage());
         }
-        return new Author((String) args[0], (String) args[1]);
+        return new Author((String) args[0], (String) args[1], (String) args[2]);
     }
 }

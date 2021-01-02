@@ -89,7 +89,9 @@ public class MySQLPositionActionDAO extends MySQLEntityDAO<PositionAction> {
 
     public Map<String, Object> mapEntity(PositionAction positionAction) {
         Map<String, Object> map = new HashMap<>();
-        map.put(INITIAL_POSITION_ID, positionAction.getInitialPosition().getId());
+        if (positionAction.getInitialPosition() != null) {
+            map.put(INITIAL_POSITION_ID, positionAction.getInitialPosition().getId());
+        }
         map.put(FINAL_POSITION_ID, positionAction.getFinalPosition().getId());
         if (positionAction.getBuyer() != null) {
             map.put(BUYER_ID, positionAction.getBuyer().getId());
