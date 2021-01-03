@@ -1,5 +1,6 @@
 package by.epam.bookshop.pool;
 
+import by.epam.bookshop.controller.Controller;
 import by.epam.bookshop.exceptions.ConnectionPoolException;
 import by.epam.bookshop.exceptions.ConnectionPoolRuntimeException;
 import by.epam.bookshop.resource.DbResourceManager;
@@ -115,12 +116,13 @@ public class ConnectionPool implements Closeable {
                 throw new ConnectionPoolRuntimeException(e);
             }
         })
-                .limit(10).forEach(e1 -> {
+                .limit(DEFAULT_POOL_SIZE).forEach(e1 -> {
             try {
                 freeConnections.put(e1);
             } catch (InterruptedException e) {
                 throw new ConnectionPoolRuntimeException(e);
             }
+            Controller.getLoggerInstance().debug("Pool initiated");
         });
     }
 
@@ -161,6 +163,7 @@ public class ConnectionPool implements Closeable {
     public void close() throws IOException {
         workingConnections.clear();
         freeConnections.clear();
+        Controller.getLoggerInstance().debug("Pool destroyed");
     }
 
     public void releaseConnection(ConnectionProxy connection) throws ConnectionPoolException {

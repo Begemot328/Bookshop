@@ -1,7 +1,9 @@
 package by.epam.bookshop.command.impl;
 
 import by.epam.bookshop.command.Command;
+import by.epam.bookshop.command.RequestParameters;
 import by.epam.bookshop.command.Router;
+import by.epam.bookshop.command.SessionParameters;
 import by.epam.bookshop.controller.dto.UserDTO;
 import by.epam.bookshop.dao.impl.user.UserFinder;
 import by.epam.bookshop.entity.user.User;

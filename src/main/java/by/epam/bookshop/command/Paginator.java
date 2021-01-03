@@ -1,7 +1,5 @@
 package by.epam.bookshop.command;
 
-import by.epam.bookshop.command.impl.SessionParameters;
-
 import javax.servlet.http.HttpServletRequest;
 
 public class Paginator {

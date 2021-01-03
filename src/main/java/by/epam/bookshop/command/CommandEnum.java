@@ -46,10 +46,12 @@ public enum CommandEnum {
 
     public static Command getCommand(String commandName) {
         Command command = null;
+
         if (commandName == null || commandName.isEmpty()) {
             return new FindBooksCommand();
         }
         CommandEnum commandEnum;
+
         try {
             commandEnum = valueOf(commandName);
             command = commandEnum.getCommand();

@@ -1,4 +1,4 @@
-package by.epam.bookshop.command.impl;
+package by.epam.bookshop.command;
 
 public class SessionParameters {
     public static final String BOOK = "book";
@@ -13,8 +13,8 @@ public class SessionParameters {
     public static final String ERROR_MESSAGE = "errorMessage";
     public static final String SELLER = "seller";
     public static final String ACTIONS = "actions";
-    final static String CURRENT_USER = "currentUser";
-    final static String LANGUAGE = "language";
+    public final static String CURRENT_USER = "currentUser";
+    public final static String LANGUAGE = "language";
     public final static String LAST_PAGE = "lastPage";
 
     public static final String ERROR = "error";

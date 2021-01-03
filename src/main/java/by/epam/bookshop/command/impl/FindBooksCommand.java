@@ -1,23 +1,16 @@
 package by.epam.bookshop.command.impl;
 
-import by.epam.bookshop.command.Command;
-import by.epam.bookshop.command.JSPPages;
-import by.epam.bookshop.command.Paginator;
-import by.epam.bookshop.command.Router;
+import by.epam.bookshop.command.*;
 import by.epam.bookshop.dao.impl.author.AuthorFinder;
 import by.epam.bookshop.dao.impl.book.BookFinder;
 import by.epam.bookshop.entity.book.Book;
-import by.epam.bookshop.entity.position.Position;
 import by.epam.bookshop.exceptions.CommandException;
 import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.service.author.AuthorService;
 import by.epam.bookshop.service.book.BookService;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
-import java.util.stream.Stream;
 
 public class FindBooksCommand implements Command {
 
@@ -26,11 +19,6 @@ public class FindBooksCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
         BookFinder finder = new BookFinder();
         Enumeration<String> stringEnum = request.getParameterNames();
-
-        while (stringEnum.hasMoreElements()) {
-            String par = stringEnum.nextElement();
-            System.out.println(par + " '" + request.getParameter(par) + "'");
-        }
 
         if (isNotEmpty(request.getParameter(RequestParameters.TITLE))) {
             finder = finder.findByTitle(request.getParameter(RequestParameters.TITLE));

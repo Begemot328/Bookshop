@@ -1,8 +1,6 @@
 package by.epam.bookshop.command.impl;
 
-import by.epam.bookshop.command.Command;
-import by.epam.bookshop.command.JSPPages;
-import by.epam.bookshop.command.Router;
+import by.epam.bookshop.command.*;
 import by.epam.bookshop.dao.impl.user.UserFinder;
 import by.epam.bookshop.entity.position.Position;
 import by.epam.bookshop.entity.user.User;

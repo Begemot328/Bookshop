@@ -1,8 +1,6 @@
 package by.epam.bookshop.command.impl;
 
-import by.epam.bookshop.command.Command;
-import by.epam.bookshop.command.JSPPages;
-import by.epam.bookshop.command.Router;
+import by.epam.bookshop.command.*;
 import by.epam.bookshop.entity.position.Position;
 import by.epam.bookshop.entity.position.PositionStatus;
 import by.epam.bookshop.entity.user.User;
@@ -21,11 +19,6 @@ public class BookBookCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        Enumeration<String> pars = request.getParameterNames();
-        while (pars.hasMoreElements()) {
-            System.out.println(pars.nextElement());
-        }
-
         User user = ((User) request.getSession()
                 .getAttribute(SessionParameters.CURRENT_USER));
         try {
