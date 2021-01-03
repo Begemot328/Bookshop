@@ -122,8 +122,8 @@ public class ConnectionPool implements Closeable {
             } catch (InterruptedException e) {
                 throw new ConnectionPoolRuntimeException(e);
             }
-            Controller.getLoggerInstance().debug("Pool initiated");
         });
+        Controller.getLoggerInstance().debug("Pool initiated");
     }
 
     public static ConnectionPool getInstance() throws ConnectionPoolException {
