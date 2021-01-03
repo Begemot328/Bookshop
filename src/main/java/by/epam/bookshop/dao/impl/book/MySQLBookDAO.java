@@ -25,16 +25,11 @@ import java.util.Map;
 
 public class MySQLBookDAO extends MySQLEntityDAO<Book> {
     private static final String ID = "ID";
-
     private static final String TITLE = "TITLE";
     private static final String AUTHOR_ID = "AUTHOR_ID";
     private static final String PRICE = "PRICE";
     private static final String DESCRIPTION = "DESCRIPTION";
     private static final String PHOTO_LINK = "PHOTO_LINK";
-
-    private static final String SQL_EXCEPTION = "SQL Exception: ";
-    private static final String FACTORY_EXCEPTION = "Factory Exception: ";
-    private static final String UNKNOWN_ENTITY_EXCEPTION = "Unknown entity Exception: ";
     private static final String SCHEMA = "BOOKSHOP";
     private static final String TABLE = "BOOKS";
     
@@ -80,7 +75,7 @@ public class MySQLBookDAO extends MySQLEntityDAO<Book> {
                 return mapToList(resultSet);
             }
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION + e.getLocalizedMessage());
+            throw new DAOException(e);
         }
     }
 
@@ -109,10 +104,8 @@ public class MySQLBookDAO extends MySQLEntityDAO<Book> {
                 resultSet.getString(PHOTO_LINK)));
             }
             return result;
-        } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION + e.getLocalizedMessage());
-        } catch (FactoryException e) {
-            throw new DAOException(FACTORY_EXCEPTION, e);
+        } catch (SQLException | FactoryException e) {
+            throw new DAOException(e);
         }
     }
 

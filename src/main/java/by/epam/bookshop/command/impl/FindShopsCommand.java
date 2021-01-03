@@ -6,6 +6,7 @@ import by.epam.bookshop.command.Router;
 import by.epam.bookshop.dao.impl.author.AuthorFinder;
 import by.epam.bookshop.dao.impl.book.BookFinder;
 import by.epam.bookshop.dao.impl.shop.ShopFinder;
+import by.epam.bookshop.exceptions.CommandException;
 import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.service.author.AuthorService;
 import by.epam.bookshop.service.book.BookService;
@@ -17,7 +18,7 @@ import java.util.Enumeration;
 public class FindShopsCommand implements Command {
 
     @Override
-    public Router execute(HttpServletRequest request) {
+    public Router execute(HttpServletRequest request) throws CommandException {
         ShopFinder finder = new ShopFinder();
 
         if (isNotEmpty(request.getParameter(RequestParameters.SHOP_NAME))) {
@@ -32,7 +33,7 @@ public class FindShopsCommand implements Command {
                     SessionParameters.SHOPS,
                     ShopService.getInstance().findBy(finder).toArray());
         } catch (ServiceException e) {
-            return new Router(JSPPages.ERROR_PAGE);
+            throw new CommandException(e);
         }
         return new Router(JSPPages.SEARCH_SHOPS_PAGE);
     }

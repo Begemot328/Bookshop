@@ -38,12 +38,8 @@ public class AuthorService implements EntityService<Author> {
             Author author = new AuthorFactory().create(args);
             new MySQLAuthorDAO(connection).create(author);
             return author;
-        } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION, e);
-        } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION, e);
-        } catch (FactoryException e) {
-            throw new ServiceException(FACTORY_EXCEPTION, e);
+        } catch (SQLException | FactoryException | DAOException e) {
+            throw new ServiceException(e);
         }
     }
 
@@ -51,10 +47,8 @@ public class AuthorService implements EntityService<Author> {
     public Author read(int id) throws ServiceException {
         try (Connection connection = getConnection()) {
             return new MySQLAuthorDAO(connection).read(id);
-        } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION, e);
-        } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION, e);
+        } catch (DAOException | SQLException e) {
+            throw new ServiceException(e);
         }
     }
 
@@ -62,10 +56,8 @@ public class AuthorService implements EntityService<Author> {
     public void update(Author author) throws ServiceException {
         try (Connection connection = getConnection()) {
             new MySQLAuthorDAO(connection).update(author);
-        } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION, e);
-        } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION, e);
+        } catch (DAOException | SQLException e) {
+            throw new ServiceException(e);
         }
     }
 
@@ -73,10 +65,8 @@ public class AuthorService implements EntityService<Author> {
     public void delete(Author author) throws ServiceException {
         try (Connection connection = getConnection()) {
             new MySQLAuthorDAO(connection).delete(author.getId());
-        } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION, e);
-        } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION, e);
+        } catch (DAOException | SQLException e) {
+            throw new ServiceException(e);
         }
     }
 
@@ -84,10 +74,8 @@ public class AuthorService implements EntityService<Author> {
     public Collection<Author> findBy(EntityFinder<Author> finder) throws ServiceException {
         try (Connection connection = getConnection()) {
             return new MySQLAuthorDAO(connection).findBy(finder);
-        } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION, e);
-        } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION, e);
+        } catch (DAOException | SQLException e) {
+            throw new ServiceException(e);
         }
     }
 
@@ -95,10 +83,8 @@ public class AuthorService implements EntityService<Author> {
     public Collection<Author> findAll() throws DAOException, ServiceException {
         try (Connection connection = getConnection()) {
             return new MySQLAuthorDAO(connection).findAll();
-        } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION, e);
-        } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION, e);
+        } catch (DAOException | SQLException e) {
+            throw new ServiceException(e);
         }
     }
 }

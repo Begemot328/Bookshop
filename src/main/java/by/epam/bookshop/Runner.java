@@ -15,15 +15,13 @@ import by.epam.bookshop.entity.shop.ShopFactory;
 import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.FactoryException;
 import by.epam.bookshop.pool.ConnectionPool;
-import by.epam.bookshop.pool.ConnectionPoolException;
+import by.epam.bookshop.exceptions.ConnectionPoolException;
 import by.epam.bookshop.pool.ConnectionProxy;
 import by.epam.bookshop.util.PasswordCoder;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.concurrent.TimeUnit;
 
 public class Runner {
     public static void main(String[] args) throws FactoryException {

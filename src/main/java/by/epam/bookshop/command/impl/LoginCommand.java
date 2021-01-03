@@ -30,10 +30,9 @@ public class LoginCommand implements Command {
 
                 Router router = new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
                 return router;
-               // throw new ServletRuntimeException(LOGIN_ERROR);
             }
         } catch (ServiceException e) {
-            throw new CommandException(SERVICE_EXCEPTION, e);
+            throw new CommandException(e);
         }
 
         request.getSession().setAttribute(SessionParameters.CURRENT_USER, new UserDTO(user.get()));

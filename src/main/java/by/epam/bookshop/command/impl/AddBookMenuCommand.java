@@ -26,11 +26,11 @@ public class AddBookMenuCommand implements Command {
         } catch (ServiceException e) {
             request.getSession().setAttribute(SessionParameters.ERROR_MESSAGE, e.getMessage()
                     + Arrays.toString(e.getStackTrace()));
-            throw new CommandException(SERVICE_EXCEPTION, e);
+            throw new CommandException(e);
         } catch (DAOException e) {
             request.getSession().setAttribute(SessionParameters.ERROR_MESSAGE, e.getMessage()
                     + Arrays.toString(e.getStackTrace()));
-            throw new CommandException(DAO_EXCEPTION, e);
+            throw new CommandException(e);
         }
         return new Router(JSPPages.ADD_BOOK_PAGE);
     }

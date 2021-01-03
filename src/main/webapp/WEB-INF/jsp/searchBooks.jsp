@@ -55,6 +55,7 @@
         <div class="w3-cell w3-container w3-cell-middle">
             <div class="w3-cell-row">
                 <div class="w3-dropdown-hover">
+                    <!-- Search dropdown menu-->
                     <button class="w3-button w3-purple w3-opacity-min">
                         <i class="material-icons">search</i>
                     </button>
@@ -80,6 +81,7 @@
                     </div>
                 </div>
                 <div class="w3-dropdown-hover">
+                    <!-- User dropdown menu-->
                     <button class="w3-button w3-purple w3-opacity-min">
                         <i class="material-icons">person</i>
                         <c:if test="${sessionScope.currentUser != null}">
@@ -124,6 +126,7 @@
                     </div>
                 </div>
                 <div class="w3-dropdown-hover">
+                    <!-- Locale dropdown menu-->
                     <button class="w3-button w3-purple w3-opacity-min">
                         <i class="fa fa-globe"></i>
                     </button>
@@ -153,7 +156,7 @@
 
 <!--  Columns -->
 <div class="w3-cell-row">
-    <!-- right bar block-->
+    <!-- Left bar block-->
     <div class="w3-cell  w3-deep-purple w3-opacity" style="width:15%">
         <div class="w3-bar-block">
             <div class="w3-bar-item w3-large"><fmt:message key="book.genres"/></div>
@@ -301,7 +304,6 @@
                             key="position.add"/></button>
                 </form>
             </c:if>
-
         </div>
     </div>
 </div>

@@ -40,11 +40,11 @@ public class UserService implements EntityService<User> {
             new MySQLUserDAO(connection).create(user);
             return user;
         } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION,e);
+            throw new ServiceException(e);
         } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION,e);
+            throw new ServiceException(e);
         } catch (FactoryException e) {
-            throw new ServiceException(FACTORY_EXCEPTION,e);
+            throw new ServiceException(e);
         }
     }
 
@@ -53,9 +53,9 @@ public class UserService implements EntityService<User> {
         try  (Connection connection = getConnection()) {
             return new MySQLUserDAO(connection).read(id);
         } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION,e);
+            throw new ServiceException(e);
         } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION,e);
+            throw new ServiceException(e);
         }
     }
 
@@ -64,9 +64,9 @@ public class UserService implements EntityService<User> {
         try  (Connection connection = getConnection()) {
             new MySQLUserDAO(connection).update(user);
         } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION,e);
+            throw new ServiceException(e);
         } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION,e);
+            throw new ServiceException(e);
         }
     }
 
@@ -75,9 +75,9 @@ public class UserService implements EntityService<User> {
         try  (Connection connection = getConnection()) {
             new MySQLUserDAO(connection).delete(user.getId());
         } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION,e);
+            throw new ServiceException(e);
         } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION,e);
+            throw new ServiceException(e);
         }
     }
 
@@ -86,9 +86,9 @@ public class UserService implements EntityService<User> {
         try  (Connection connection = getConnection()) {
             return new MySQLUserDAO(connection).findBy(finder);
         } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION,e);
+            throw new ServiceException(e);
         } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION,e);
+            throw new ServiceException(e);
         }
     }
 
@@ -96,10 +96,8 @@ public class UserService implements EntityService<User> {
     public Collection<User> findAll() throws ServiceException {
         try  (Connection connection = getConnection()) {
             return new MySQLUserDAO(connection).findAll();
-        } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION,e);
-        } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION,e);
+        } catch (DAOException | SQLException e) {
+            throw new ServiceException(e);
         }
     }
 
@@ -140,7 +138,7 @@ public class UserService implements EntityService<User> {
             User user = new UserFactory().create(
                     firstName, lastName, login, password, adress, photoLink, status);
         } catch (FactoryException e) {
-            throw new ServiceException(FACTORY_EXCEPTION,e);
+            throw new ServiceException(e);
         }
         return create(firstName, lastName, login, password, adress, photoLink, status);
     }

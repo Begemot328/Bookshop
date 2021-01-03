@@ -8,6 +8,7 @@ import by.epam.bookshop.dao.impl.author.AuthorFinder;
 import by.epam.bookshop.dao.impl.book.BookFinder;
 import by.epam.bookshop.entity.book.Book;
 import by.epam.bookshop.entity.position.Position;
+import by.epam.bookshop.exceptions.CommandException;
 import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.service.author.AuthorService;
 import by.epam.bookshop.service.book.BookService;
@@ -22,7 +23,7 @@ public class FindBooksCommand implements Command {
 
 
     @Override
-    public Router execute(HttpServletRequest request) {
+    public Router execute(HttpServletRequest request) throws CommandException {
         BookFinder finder = new BookFinder();
         Enumeration<String> stringEnum = request.getParameterNames();
 
@@ -73,8 +74,7 @@ public class FindBooksCommand implements Command {
             request.getSession().setAttribute(SessionParameters.BOOKS, books);
             Paginator.paginate(request, books, 1);
         } catch (ServiceException e) {
-            request.getSession().setAttribute(SessionParameters.ERROR_MESSAGE, e.getMessage() + e.getStackTrace());
-            return new Router(JSPPages.ERROR_PAGE);
+            throw new CommandException(e);
         }
         return new Router(JSPPages.SEARCH_BOOKS_PAGE);
     }

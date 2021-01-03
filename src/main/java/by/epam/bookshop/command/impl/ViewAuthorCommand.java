@@ -27,8 +27,7 @@ public class ViewAuthorCommand implements Command {
             request.getSession().setAttribute(SessionParameters.BOOKS, books);
             request.getSession().setAttribute(SessionParameters.AUTHOR, author);
         } catch (ServiceException e) {
-            request.getSession().setAttribute(SessionParameters.ERROR_MESSAGE, e.getMessage() + e.getStackTrace());
-            return new Router(JSPPages.ERROR_PAGE);
+            throw new CommandException(e);
         }
 
         return new Router(JSPPages.VIEW_AUTHOR_PAGE);

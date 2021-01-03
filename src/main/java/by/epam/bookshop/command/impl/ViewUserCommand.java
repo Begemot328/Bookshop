@@ -59,11 +59,8 @@ public class ViewUserCommand implements Command {
                 router.setRedirect();
                 return router;
             }
-
         } catch (ServiceException e) {
-            request.getSession().setAttribute(SessionParameters.ERROR_MESSAGE, e.getMessage()
-                    + Arrays.toString(e.getStackTrace()));
-            return new Router(JSPPages.ERROR_PAGE);
+            throw new CommandException(e);
         }
         return new Router(JSPPages.VIEW_USER_PAGE);
     }

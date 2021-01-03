@@ -38,12 +38,8 @@ public class ShopService implements EntityService<Shop> {
             Shop shop = new ShopFactory().create(args);
             new MySQLShopDAO(connection).create(shop);
             return shop;
-        } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION,e);
-        } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION,e);
-        } catch (FactoryException e) {
-            throw new ServiceException(FACTORY_EXCEPTION,e);
+        } catch (SQLException | FactoryException | DAOException e) {
+            throw new ServiceException(e);
         }
     }
 
@@ -51,10 +47,8 @@ public class ShopService implements EntityService<Shop> {
     public Shop read(int id) throws ServiceException {
         try  (Connection connection = getConnection()) {
             return new MySQLShopDAO(connection).read(id);
-        } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION,e);
-        } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION,e);
+        } catch (DAOException | SQLException e) {
+            throw new ServiceException(e);
         }
     }
 
@@ -62,10 +56,8 @@ public class ShopService implements EntityService<Shop> {
     public void update(Shop shop) throws ServiceException {
         try  (Connection connection = getConnection()) {
             new MySQLShopDAO(connection).update(shop);
-        } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION,e);
-        } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION,e);
+        } catch (DAOException | SQLException e) {
+            throw new ServiceException(e);
         }
     }
 
@@ -73,10 +65,8 @@ public class ShopService implements EntityService<Shop> {
     public void delete(Shop shop) throws ServiceException {
         try  (Connection connection = getConnection()) {
             new MySQLShopDAO(connection).delete(shop.getId());
-        } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION,e);
-        } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION,e);
+        } catch (DAOException | SQLException e) {
+            throw new ServiceException(e);
         }
     }
 
@@ -84,10 +74,8 @@ public class ShopService implements EntityService<Shop> {
     public Collection<Shop> findBy(EntityFinder<Shop> finder) throws ServiceException {
         try  (Connection connection = getConnection()) {
             return new MySQLShopDAO(connection).findBy(finder);
-        } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION,e);
-        } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION,e);
+        } catch (DAOException | SQLException e) {
+            throw new ServiceException(e);
         }
     }
 
@@ -95,10 +83,8 @@ public class ShopService implements EntityService<Shop> {
     public Collection<Shop> findAll() throws DAOException, ServiceException {
         try  (Connection connection = getConnection()) {
             return new MySQLShopDAO(connection).findAll();
-        } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION,e);
-        } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION,e);
+        } catch (DAOException | SQLException e) {
+            throw new ServiceException(e);
         }
     }
 }

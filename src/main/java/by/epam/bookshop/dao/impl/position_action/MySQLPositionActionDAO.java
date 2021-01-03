@@ -127,12 +127,8 @@ public class MySQLPositionActionDAO extends MySQLEntityDAO<PositionAction> {
                         resultSet.getFloat(CURRENT_PRICE)));
             }
             return result;
-        } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION + e.getLocalizedMessage());
-        } catch (FactoryException e) {
-            throw new DAOException(FACTORY_EXCEPTION, e);
-        } catch (UnknownEntityException e) {
-            throw new DAOException(UNKNOWN_ENTITY_EXCEPTION, e);
+        } catch (SQLException | FactoryException | UnknownEntityException e) {
+            throw new DAOException(e);
         }
     }
 

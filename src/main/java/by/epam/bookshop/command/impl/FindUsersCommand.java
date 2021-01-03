@@ -40,8 +40,7 @@ public class FindUsersCommand implements Command {
                 finder = finder.findByStatus(UserStatus.resolveById(
                         Integer.parseInt(request.getParameter(RequestParameters.USER_LASTNAME))));
             } catch (UnknownEntityException e) {
-                request.getSession().setAttribute(SessionParameters.ERROR_MESSAGE, e.getMessage() + e.getStackTrace());
-                return new Router(JSPPages.ERROR_PAGE);
+                throw new CommandException(e);
             }
         }
 
@@ -51,8 +50,7 @@ public class FindUsersCommand implements Command {
             request.getSession().setAttribute(SessionParameters.USERS, users);
             Paginator.paginate(request, users, 1);
         } catch (ServiceException e) {
-            request.getSession().setAttribute(SessionParameters.ERROR_MESSAGE, e.getMessage() + e.getStackTrace());
-            return new Router(JSPPages.ERROR_PAGE);
+            throw new CommandException(e);
         }
         return new Router(JSPPages.SEARCH_USERS_PAGE);
     }

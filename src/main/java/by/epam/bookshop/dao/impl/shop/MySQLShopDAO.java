@@ -95,9 +95,9 @@ public class MySQLShopDAO extends MySQLEntityDAO<Shop> {
             }
             return result;
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION + e.getLocalizedMessage());
+            throw new DAOException(e);
         } catch (FactoryException e) {
-            throw new DAOException(FACTORY_EXCEPTION, e);
+            throw new DAOException(e);
         }
     }
 

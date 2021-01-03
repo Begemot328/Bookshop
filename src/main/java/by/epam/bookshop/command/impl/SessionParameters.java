@@ -17,6 +17,7 @@ public class SessionParameters {
     final static String LANGUAGE = "language";
     public final static String LAST_PAGE = "lastPage";
 
+    public static final String ERROR = "error";
     public static final String BOOKS = "books";
     public static final String AUTHORS = "authors";
     public static final String SHOPS = "shops";

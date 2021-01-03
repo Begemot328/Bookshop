@@ -304,7 +304,7 @@
                         key="shops"/></button>
             </form>
             <form class="w3-bar-item w3-large w3-hover-purple">
-                <input type="hidden" name="command" value="SEARCH_AUTHOR_COMMAND">
+                <input type="hidden" name="command" value="SEARCH_AUTHORS_COMMAND">
                 <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
                         key="authors"/></button>
             </form>
@@ -313,6 +313,21 @@
                     <input type="hidden" name="command" value="SEARCH_USERS_COMMAND">
                     <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
                             key="users"/></button>
+                </form>
+                <form class="w3-bar-item w3-large w3-hover-purple">
+                    <input type="hidden" name="command" value="ADD_BOOK_MENU_COMMAND">
+                    <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                            key="book.add"/></button>
+                </form>
+                <form class="w3-bar-item w3-large w3-hover-purple">
+                    <input type="hidden" name="command" value="ADD_AUTHOR_MENU_COMMAND">
+                    <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                            key="author.add"/></button>
+                </form>
+                <form class="w3-bar-item w3-large w3-hover-purple">
+                    <input type="hidden" name="command" value="ADD_POSITION_MENU_COMMAND">
+                    <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                            key="position.add"/></button>
                 </form>
             </c:if>
         </div>

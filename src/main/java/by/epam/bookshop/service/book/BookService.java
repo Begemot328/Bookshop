@@ -35,11 +35,11 @@ public class BookService implements EntityService<Book> {
             new MySQLBookDAO(connection).create(book);
             return book;
         } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION, e);
+            throw new ServiceException(e);
         } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION, e);
+            throw new ServiceException(e);
         } catch (FactoryException e) {
-            throw new ServiceException(FACTORY_EXCEPTION, e);
+            throw new ServiceException(e);
         }
     }
 
@@ -48,9 +48,9 @@ public class BookService implements EntityService<Book> {
         try (Connection connection = getConnection()) {
             return new MySQLBookDAO(connection).read(id);
         } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION, e);
+            throw new ServiceException(e);
         } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION, e);
+            throw new ServiceException(e);
         }
     }
 
@@ -59,9 +59,9 @@ public class BookService implements EntityService<Book> {
         try (Connection connection = getConnection()) {
             new MySQLBookDAO(connection).update(book);
         } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION, e);
+            throw new ServiceException(e);
         } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION, e);
+            throw new ServiceException(e);
         }
     }
 
@@ -70,9 +70,9 @@ public class BookService implements EntityService<Book> {
         try (Connection connection = getConnection()) {
             new MySQLBookDAO(connection).delete(book.getId());
         } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION, e);
+            throw new ServiceException(e);
         } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION, e);
+            throw new ServiceException(e);
         }
     }
 
@@ -81,9 +81,9 @@ public class BookService implements EntityService<Book> {
         try (Connection connection = getConnection()) {
             return new MySQLBookDAO(connection).findBy(finder);
         } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION, e);
+            throw new ServiceException(e);
         } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION, e);
+            throw new ServiceException(e);
         }
     }
 
@@ -92,9 +92,9 @@ public class BookService implements EntityService<Book> {
         try (Connection connection = getConnection()) {
             return new MySQLBookDAO(connection).findAll();
         } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION, e);
+            throw new ServiceException(e);
         } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION, e);
+            throw new ServiceException(e);
         }
     }
 }

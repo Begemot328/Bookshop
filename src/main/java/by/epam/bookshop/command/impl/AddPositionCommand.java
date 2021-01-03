@@ -76,7 +76,7 @@ public class AddPositionCommand implements Command {
             }
 
         } catch (ServiceException e) {
-            throw new CommandException(SERVICE_EXCEPTION, e);
+            throw new CommandException(e);
         }
     }
 }

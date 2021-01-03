@@ -9,6 +9,7 @@ import by.epam.bookshop.dao.impl.user.UserFinder;
 import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.entity.user.User;
 import by.epam.bookshop.entity.user.UserStatus;
+import by.epam.bookshop.exceptions.CommandException;
 import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.exceptions.UnknownEntityException;
 import by.epam.bookshop.service.author.AuthorService;
@@ -20,7 +21,7 @@ public class FindAuthorsCommand implements Command {
 
 
     @Override
-    public Router execute(HttpServletRequest request) {
+    public Router execute(HttpServletRequest request) throws CommandException {
         AuthorFinder finder = new AuthorFinder();
 
         if (isNotEmpty(request.getParameter(RequestParameters.AUTHOR_FIRSTNAME))) {
@@ -36,7 +37,7 @@ public class FindAuthorsCommand implements Command {
             request.getSession().setAttribute(SessionParameters.AUTHORS, authors);
             Paginator.paginate(request, authors, 1);
         } catch (ServiceException e) {
-            return new Router(JSPPages.ERROR_PAGE);
+            throw new CommandException(e);
         }
         return new Router(JSPPages.SEARCH_AUTHORS_PAGE);
     }

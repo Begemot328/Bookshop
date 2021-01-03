@@ -109,12 +109,8 @@ public class MySQLUserDAO extends MySQLEntityDAO<User> {
                         UserStatus.resolveById(resultSet.getInt(STATUS))));
             }
             return result;
-        } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION + e.getLocalizedMessage());
-        } catch (FactoryException e) {
-            throw new DAOException(FACTORY_EXCEPTION, e);
-        } catch (UnknownEntityException e) {
-            throw new DAOException(UNKNOWN_ENTITY_EXCEPTION, e);
+        } catch (SQLException | UnknownEntityException | FactoryException e) {
+            throw new DAOException(e);
         }
     }
 

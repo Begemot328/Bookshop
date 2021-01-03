@@ -38,7 +38,7 @@ public class AddAuthorCommand implements Command {
         } catch (ServiceException e) {
             request.getSession().setAttribute(SessionParameters.ERROR_MESSAGE, e.getMessage()
                     + Arrays.toString(e.getStackTrace()));
-            throw new CommandException(SERVICE_EXCEPTION, e);
+            throw new CommandException(e);
         }
     }
 }

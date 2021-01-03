@@ -111,7 +111,7 @@ public abstract class MySQLEntityDAO<T  extends Entity> implements EntityDAO<T> 
                 return false;
             }
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION, e);
+            throw new DAOException(e);
         }
     }
 
@@ -129,7 +129,7 @@ public abstract class MySQLEntityDAO<T  extends Entity> implements EntityDAO<T> 
             statement.setInt(++i, t.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION, e);
+            throw new DAOException(e);
         }
     }
 

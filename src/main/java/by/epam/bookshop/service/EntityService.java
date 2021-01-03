@@ -6,7 +6,7 @@ import by.epam.bookshop.entity.Entity;
 import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.pool.ConnectionPool;
-import by.epam.bookshop.pool.ConnectionPoolException;
+import by.epam.bookshop.exceptions.ConnectionPoolException;
 
 import java.sql.Connection;
 import java.util.Collection;
@@ -17,7 +17,7 @@ public interface EntityService<T extends Entity> {
         try {
             return ConnectionPool.getInstance().getConnection();
         } catch (ConnectionPoolException e) {
-            throw new ServiceException(e.getClass().getSimpleName(), e);
+            throw new ServiceException(e);
         }
     }
 

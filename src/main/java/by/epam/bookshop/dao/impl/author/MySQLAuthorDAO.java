@@ -39,10 +39,10 @@ public class MySQLAuthorDAO extends MySQLEntityDAO<Author> {
     @Override
     public Author read(int id) throws DAOException {
         Collection<Author> result = findBy((new AuthorFinder()).findByID(id));
-        if (result == null || result.isEmpty() || result.size() > 1) {
+        if (result == null || result.size() != 1) {
             return null;
         } else {
-            return result.stream().toArray(Author[]::new)[0];
+            return result.toArray(Author[]::new)[0];
         }
     }
 
@@ -57,7 +57,7 @@ public class MySQLAuthorDAO extends MySQLEntityDAO<Author> {
     }
 
     @Override
-    public Collection findAll() throws DAOException {
+    public Collection<Author> findAll() throws DAOException {
         return findBy(new AuthorFinder());
     }
 
@@ -68,7 +68,7 @@ public class MySQLAuthorDAO extends MySQLEntityDAO<Author> {
                 return mapToList(resultSet);
             }
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION + e.getLocalizedMessage());
+            throw new DAOException(e);
         }
     }
 
@@ -84,10 +84,8 @@ public class MySQLAuthorDAO extends MySQLEntityDAO<Author> {
                         resultSet.getString(PHOTO_LINK)));
             }
             return result;
-        } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION + e.getLocalizedMessage());
-        } catch (FactoryException e) {
-            throw new DAOException(FACTORY_EXCEPTION, e);
+        } catch (SQLException | FactoryException e) {
+            throw new DAOException(e);
         }
     }
 

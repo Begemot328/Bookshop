@@ -39,10 +39,12 @@ public class Controller  extends HttpServlet {
             router = command.execute(request);
         } catch (CommandException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage() + e.getStackTrace());
+            request.getSession().setAttribute(SessionParameters.ERROR, e);
             router = new Router(JSPPages.ERROR_PAGE);
 
         } catch (ServletRuntimeException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage() + e.getStackTrace());
+            request.getSession().setAttribute(SessionParameters.ERROR, e);
             router = new  Router(request.getRequestURL().toString());
         }
 

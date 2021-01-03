@@ -256,17 +256,46 @@
             </c:choose>
         </div>
     </div>
-    <div class="w3-cell w3-deep-purple w3-opacity-min w3-cell" style="width:15%">
+    <!--  right panel bar       -->
+    <div class="w3-cell w3-deep-purple w3-opacity" style="width:15%">
         <div class="w3-bar-block">
             <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="books"/></button>
+                <input type="hidden" name="command" value="SEARCH_BOOKS_COMMAND">
+                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                        key="books"/></button>
             </form>
             <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="shops"/></button>
+                <input type="hidden" name="command" value="SEARCH_SHOPS_COMMAND">
+                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                        key="shops"/></button>
             </form>
             <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="users"/></button>
+                <input type="hidden" name="command" value="SEARCH_AUTHORS_COMMAND">
+                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                        key="authors"/></button>
             </form>
+            <c:if test="${not empty sessionScope.currentUser && sessionScope.currentUser.status.id > 1}">
+                <form class="w3-bar-item w3-large w3-hover-purple">
+                    <input type="hidden" name="command" value="SEARCH_USERS_COMMAND">
+                    <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                            key="users"/></button>
+                </form>
+                <form class="w3-bar-item w3-large w3-hover-purple">
+                    <input type="hidden" name="command" value="ADD_BOOK_MENU_COMMAND">
+                    <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                            key="book.add"/></button>
+                </form>
+                <form class="w3-bar-item w3-large w3-hover-purple">
+                    <input type="hidden" name="command" value="ADD_AUTHOR_MENU_COMMAND">
+                    <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                            key="author.add"/></button>
+                </form>
+                <form class="w3-bar-item w3-large w3-hover-purple">
+                    <input type="hidden" name="command" value="ADD_POSITION_MENU_COMMAND">
+                    <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                            key="position.add"/></button>
+                </form>
+            </c:if>
         </div>
     </div>
 </div>

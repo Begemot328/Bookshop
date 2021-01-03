@@ -59,7 +59,7 @@ public class BookBookCommand implements Command {
                 return new Router(JSPPages.VIEW_POSITION_PAGE);
             }
         } catch (ServiceException e) {
-            throw new CommandException(SERVICE_EXCEPTION, e);
+            throw new CommandException(e);
         }
 
         return new Router(JSPPages.LOGIN_PAGE);

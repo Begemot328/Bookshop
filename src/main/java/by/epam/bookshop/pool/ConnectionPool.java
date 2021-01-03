@@ -1,5 +1,7 @@
 package by.epam.bookshop.pool;
 
+import by.epam.bookshop.exceptions.ConnectionPoolException;
+import by.epam.bookshop.exceptions.ConnectionPoolRuntimeException;
 import by.epam.bookshop.resource.DbResourceManager;
 
 import java.io.Closeable;
@@ -110,14 +112,14 @@ public class ConnectionPool implements Closeable {
                         DB_USER, DB_PASSWORD));
                 return connectionProxy;
             } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-                throw new ConnectionPoolRuntimeException(SQL_EXCEPTION, e);
+                throw new ConnectionPoolRuntimeException(e);
             }
         })
                 .limit(10).forEach(e1 -> {
             try {
                 freeConnections.put(e1);
             } catch (InterruptedException e) {
-                throw new ConnectionPoolRuntimeException(SQL_EXCEPTION, e);
+                throw new ConnectionPoolRuntimeException(e);
             }
         });
     }
@@ -128,7 +130,7 @@ public class ConnectionPool implements Closeable {
             try {
                 INSTANCE.init();
             } catch (SQLException e) {
-                throw new ConnectionPoolException(SQL_EXCEPTION, e);
+                throw new ConnectionPoolException(e);
             }
         }
         return INSTANCE;
@@ -150,7 +152,7 @@ public class ConnectionPool implements Closeable {
             workingConnections.add(connection);
             return connection;
         } catch (InterruptedException e) {
-            throw new ConnectionPoolException(INTERRUPTED_EXCEPTION, e);
+            throw new ConnectionPoolException(e);
         }
     }
 
@@ -166,7 +168,7 @@ public class ConnectionPool implements Closeable {
             workingConnections.remove(connection);
             freeConnections.put(connection);
         } catch (InterruptedException e) {
-            throw new ConnectionPoolException(INTERRUPTED_EXCEPTION, e);
+            throw new ConnectionPoolException(e);
         }
     }
 }

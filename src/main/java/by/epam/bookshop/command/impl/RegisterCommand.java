@@ -49,7 +49,7 @@ public class RegisterCommand implements Command {
         } catch (ServiceException e) {
             request.getSession().setAttribute(SessionParameters.ERROR_MESSAGE, e.getMessage()
                     + Arrays.toString(e.getStackTrace()));
-            throw new CommandException(SERVICE_EXCEPTION, e);
+            throw new CommandException(e);
         }
         request.getSession().setAttribute(SessionParameters.CURRENT_USER, new UserDTO(user));
         Router router = new Router();

@@ -152,18 +152,18 @@ public class PositionService implements EntityService<Position> {
                 connection.commit();
             } catch (SQLException e) {
                 connection.rollback();
-                throw new ServiceException(SQL_EXCEPTION, e);
+                throw new ServiceException(e);
             } catch (DAOException e) {
                 connection.rollback();
-                throw new ServiceException(DAO_EXCEPTION, e);
+                throw new ServiceException(e);
             } catch (FactoryException e) {
                 connection.rollback();
-                throw new ServiceException(FACTORY_EXCEPTION, e);
+                throw new ServiceException(e);
             } finally {
                 connection.setAutoCommit(true);
             }
         } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION, e);
+            throw new ServiceException(e);
         }
         return Arrays.asList(newCollection);
     }
@@ -206,18 +206,18 @@ public class PositionService implements EntityService<Position> {
                 return newPosition;
             } catch (SQLException e) {
                 connection.rollback();
-                throw new ServiceException(SQL_CONNECTION_EXCEPTION, e);
+                throw new ServiceException(e);
             } catch (DAOException e) {
                 connection.rollback();
-                throw new ServiceException(DAO_EXCEPTION, e);
+                throw new ServiceException(e);
             } catch (FactoryException e) {
                 connection.rollback();
-                throw new ServiceException(FACTORY_EXCEPTION, e);
+                throw new ServiceException(e);
             } finally {
                 connection.setAutoCommit(true);
             }
         } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION, e);
+            throw new ServiceException(e);
         }
     }
 
@@ -248,14 +248,14 @@ public class PositionService implements EntityService<Position> {
             } catch (SQLException e) {
                 connection.rollback();
                 connection.setAutoCommit(true);
-                throw new ServiceException(SQL_CONNECTION_EXCEPTION, e);
+                throw new ServiceException(e);
             } catch (DAOException e) {
-                throw new ServiceException(DAO_EXCEPTION, e);
+                throw new ServiceException(e);
             } catch (FactoryException e) {
-                throw new ServiceException(FACTORY_EXCEPTION, e);
+                throw new ServiceException(e);
             }
         } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION, e);
+            throw new ServiceException(e);
         }
     }
 
@@ -264,9 +264,9 @@ public class PositionService implements EntityService<Position> {
         try (Connection connection = getConnection()) {
             return new MySQLPositionDAO(connection).read(id);
         } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION, e);
+            throw new ServiceException(e);
         } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION, e);
+            throw new ServiceException(e);
         }
     }
 
@@ -275,9 +275,9 @@ public class PositionService implements EntityService<Position> {
         try (Connection connection = getConnection()) {
             new MySQLPositionDAO(connection).update(position);
         } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION, e);
+            throw new ServiceException(e);
         } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION, e);
+            throw new ServiceException(e);
         }
     }
 
@@ -286,9 +286,9 @@ public class PositionService implements EntityService<Position> {
         try (Connection connection = getConnection()) {
             new MySQLPositionDAO(connection).delete(position.getId());
         } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION, e);
+            throw new ServiceException(e);
         } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION, e);
+            throw new ServiceException(e);
         }
     }
 
@@ -297,9 +297,9 @@ public class PositionService implements EntityService<Position> {
         try (Connection connection = getConnection()) {
             return new MySQLPositionDAO(connection).findBy(finder);
         } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION, e);
+            throw new ServiceException(e);
         } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION, e);
+            throw new ServiceException(e);
         }
     }
 
@@ -308,9 +308,9 @@ public class PositionService implements EntityService<Position> {
         try (Connection connection = getConnection()) {
             return new MySQLPositionDAO(connection).findAll();
         } catch (DAOException e) {
-            throw new ServiceException(DAO_EXCEPTION, e);
+            throw new ServiceException(e);
         } catch (SQLException e) {
-            throw new ServiceException(SQL_CONNECTION_EXCEPTION, e);
+            throw new ServiceException(e);
         }
     }
 }

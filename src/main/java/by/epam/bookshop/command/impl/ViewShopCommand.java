@@ -41,7 +41,7 @@ public class ViewShopCommand implements Command {
             request.getSession().setAttribute(SessionParameters.POSITIONS, positions);
             Paginator.paginate(request, positions, 1);
         } catch (ServiceException e) {
-            return new Router(JSPPages.ERROR_PAGE);
+            throw new CommandException(e);
         }
 
         return new Router(JSPPages.VIEW_SHOP_PAGE);

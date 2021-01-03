@@ -35,7 +35,7 @@ public class ProcessPositionCommand implements Command {
             return new Router(JSPPages.BOOK_POSITION_PAGE);
 
         } catch (ServiceException e) {
-            return new Router(JSPPages.ERROR_PAGE);
+            throw new CommandException(e);
         }
     }
 }

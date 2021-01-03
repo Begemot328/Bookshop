@@ -1,5 +1,8 @@
 package by.epam.bookshop.pool;
 
+import by.epam.bookshop.exceptions.ConnectionPoolException;
+import by.epam.bookshop.exceptions.ConnectionPoolRuntimeException;
+
 import java.sql.*;
 import java.util.Map;
 import java.util.Properties;
