@@ -20,10 +20,11 @@
 </c:if>
 
 <fmt:setBundle basename="locale"/>
-
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-signal.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--
+<link rel="stylesheet" href="../../resources/css/w3.css"> -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/w3.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/w3-colors-signal.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <html>
 <head>
@@ -224,6 +225,21 @@
                 <h4>${sessionScope.book.price} BYN</h4>
             </div>
         </div>
+        <c:if test="${not empty sessionScope.currentUser}">
+            <c:if test="${sessionScope.currentUser.status.id > 1}">
+
+                <div class="w3-card-4 w3-half w3-center w3-button w3-opacity-min w3-purple w3-padding">
+                    <br/>
+                    <form>
+                        <input type="hidden" name="command" value="EDIT_BOOK_MENU_COMMAND">
+                        <button class="w3-button w3-purple w3-ripple w3-large w3-opacity" type="submit">
+                            <fmt:message key="change"></fmt:message>
+                        </button>
+                    </form>
+                </div>
+            </c:if>
+        </c:if>
+
 
         <!-- position table -->
         <table class="w3-table-all w3-purple w3-opacity-min">
@@ -236,7 +252,7 @@
                         <c:when test="${sessionScope.currentUser.status.id == 2}">
                             <th></th>
                         </c:when>
-                        <c:when test="${sessionScope.currentUser.status.id >2}">
+                        <c:when test="${sessionScope.currentUser.status.id >2 }">
                             <th><fmt:message key="status"/></th>
                             <th></th>
                         </c:when>

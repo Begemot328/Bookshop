@@ -7,7 +7,9 @@ public enum CommandEnum {
 
     OPTIMIZE_SHOP_COMMAND(new OptimizeShopCommand()),
     ADD_BOOK_COMMAND(new AddBookCommand()),
+    EDIT_BOOK_COMMAND(new EditBookCommand()),
     ADD_BOOK_MENU_COMMAND(new AddBookMenuCommand()),
+    EDIT_BOOK_MENU_COMMAND(new EditBookMenuCommand()),
     ADD_POSITION_COMMAND(new AddPositionCommand()),
     ADD_POSITION_MENU_COMMAND(new AddPositionMenuCommand()),
     ADD_AUTHOR_COMMAND(new AddAuthorCommand()),

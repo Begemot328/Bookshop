@@ -11,6 +11,7 @@ public class JSPPages {
 
     public static final String ADD_POSITION_PAGE = "WEB-INF/jsp/addPosition.jsp";
     public static final String ADD_BOOK_PAGE = "WEB-INF/jsp/addBook.jsp";
+    public static final String EDIT_BOOK_PAGE = "WEB-INF/jsp/editBook.jsp";
     public static final String ADD_AUTHOR_PAGE = "WEB-INF/jsp/addAuthor.jsp";
     public static final String REGISTER_PAGE = "WEB-INF/jsp/register.jsp";
     public static final String LOGIN_PAGE = "WEB-INF/jsp/login.jsp";

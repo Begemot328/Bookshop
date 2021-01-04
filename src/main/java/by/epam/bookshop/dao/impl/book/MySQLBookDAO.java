@@ -85,7 +85,9 @@ public class MySQLBookDAO extends MySQLEntityDAO<Book> {
         map.put(AUTHOR_ID, book.getAuthor().getId());
         map.put(PRICE, book.getPrice());
         map.put(DESCRIPTION, book.getDescription());
-        map.put(PHOTO_LINK, book.getPhotoLink());
+        if (book.getPhotoLink() != null) {
+            map.put(PHOTO_LINK, book.getPhotoLink());
+        }
         return map;
     }
 
