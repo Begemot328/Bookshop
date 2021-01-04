@@ -7,7 +7,7 @@ public class Paginator {
     private static final int ELEMENTS_PER_PAGE = 30;
 
     public static void paginate(HttpServletRequest request, int currentPage) {
-        paginate(request, (Object[]) request.getSession().getAttribute(SessionParameters.ARRAY),currentPage);
+        paginate(request, (Object[]) request.getSession().getAttribute(SessionParameters.ARRAY), currentPage);
     }
 
     public static void paginate(HttpServletRequest request, Object[] array, int currentPage) {

@@ -1,11 +1,10 @@
-package by.epam.bookshop.service.position;
+package by.epam.bookshop.validator;
 
-import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.entity.book.Book;
 import by.epam.bookshop.entity.position.Position;
 import by.epam.bookshop.entity.position.PositionStatus;
 import by.epam.bookshop.entity.shop.Shop;
-import by.epam.bookshop.service.EntityValidator;
+import by.epam.bookshop.validator.EntityValidator;
 
 public class PositionValidator implements EntityValidator<Position> {
     @Override

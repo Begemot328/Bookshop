@@ -8,7 +8,7 @@ import by.epam.bookshop.exceptions.CommandException;
 import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.service.author.AuthorService;
 import by.epam.bookshop.service.book.BookService;
-import by.epam.bookshop.service.book.BookValidator;
+import by.epam.bookshop.validator.BookValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;

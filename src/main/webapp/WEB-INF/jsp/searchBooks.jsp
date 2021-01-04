@@ -185,7 +185,7 @@
         </div>
     </div>
     <div class="w3-cell w3-padding-large" style="width:70%">
-        <form class="w3-row-padding" method="POST" action="${pageContext.request.contextPath}/ControllerURL">
+        <form class="w3-row-padding" method="GET" action="${pageContext.request.contextPath}/ControllerURL">
             <input type="hidden" name="command" value="SEARCH_BOOKS_COMMAND">
             <div class="w3-col" style="width:15%">
                 <input class="w3-input w3-border" type="text" name="author-firstname"
@@ -216,7 +216,7 @@
             <c:forEach var="book"
                        begin="${sessionScope.firstElement}"
                        end="${sessionScope.lastElement}"
-                       items="${sessionScope.books}">
+                       items="${sessionScope.array}">
                 <form class="w3-col l2 m6 s12  w3-center"
                       method="POST" action="${pageContext.request.contextPath}/ControllerURL">
                     <input type="hidden" name="command" value="VIEW_BOOK_COMMAND">

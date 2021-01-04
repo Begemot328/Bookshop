@@ -2,7 +2,7 @@ package by.epam.bookshop.service.user;
 
 import by.epam.bookshop.entity.user.User;
 import by.epam.bookshop.entity.user.UserStatus;
-import by.epam.bookshop.service.EntityValidator;
+import by.epam.bookshop.validator.EntityValidator;
 import by.epam.bookshop.util.ValidationUtil;
 
 public class UserValidator implements EntityValidator<User> {

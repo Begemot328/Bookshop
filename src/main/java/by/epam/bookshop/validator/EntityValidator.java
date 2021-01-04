@@ -1,4 +1,4 @@
-package by.epam.bookshop.service;
+package by.epam.bookshop.validator;
 
 import by.epam.bookshop.entity.Entity;
 import by.epam.bookshop.exceptions.ServiceException;

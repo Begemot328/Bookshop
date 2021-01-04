@@ -1,7 +1,7 @@
-package by.epam.bookshop.service.author;
+package by.epam.bookshop.validator;
 
 import by.epam.bookshop.entity.author.Author;
-import by.epam.bookshop.service.EntityValidator;
+import by.epam.bookshop.validator.EntityValidator;
 import by.epam.bookshop.util.ValidationUtil;
 
 public class AuthorValidator implements EntityValidator<Author> {

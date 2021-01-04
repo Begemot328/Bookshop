@@ -1,11 +1,9 @@
-package by.epam.bookshop.service.book;
+package by.epam.bookshop.validator;
 
 import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.entity.book.Book;
-import by.epam.bookshop.service.EntityValidator;
+import by.epam.bookshop.validator.EntityValidator;
 import by.epam.bookshop.util.ValidationUtil;
-
-import javax.xml.validation.Validator;
 
 public class BookValidator implements EntityValidator<Book> {
     @Override
