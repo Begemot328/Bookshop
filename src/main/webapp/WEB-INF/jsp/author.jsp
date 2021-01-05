@@ -43,29 +43,6 @@
             font-family: Arial, Helvetica, sans-serif;
         }
 
-        .slider {
-            -webkit-appearance: none;
-            width: 80%;
-            height: 25px;
-            background: #9370DB;
-            outline: none;
-            opacity: 0.7;
-            -webkit-transition: .2s;
-            transition: opacity .2s;
-        }
-
-        .slider:hover {
-            opacity: 1;
-        }
-
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 25px;
-            height: 25px;
-            background: #800080;
-            cursor: pointer;
-        }
     </style>
 </head>
 <>
