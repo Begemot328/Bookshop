@@ -188,23 +188,23 @@
         <form class="w3-row-padding" method="GET" action="${pageContext.request.contextPath}/ControllerURL">
             <input type="hidden" name="command" value="SEARCH_BOOKS_COMMAND">
             <div class="w3-col" style="width:15%">
-                <input class="w3-input w3-border" type="text" name="author-firstname"
+                <input class="w3-input w3-border" type="text" name="authorFirstname" value="${authorFirstname}"
                        placeholder="<fmt:message key="author.firstname"/>">
             </div>
             <div class="w3-col" style="width:15%">
-                <input class="w3-input w3-border" type="text" name="author-lastname"
+                <input class="w3-input w3-border" type="text" name="authorLastname" value="${authorLastname}"
                        placeholder="<fmt:message key="author.lastname"/>">
             </div>
             <div class="w3-col" style="width:25%">
-                <input class="w3-input w3-border" type="text" name="title"
+                <input class="w3-input w3-border" type="text" name="title" value="${title}"
                        placeholder="<fmt:message key="book.title"/>">
             </div>
             <div class="w3-col" style="width:10%">
-                <input class="w3-input w3-border" type="number" name="min-price"
+                <input class="w3-input w3-border" type="number" min="0" name="minPrice" value="${minPrice}"
                        placeholder="<fmt:message key="book.price.min"/>">
             </div>
             <div class="w3-col" style="width:10%">
-                <input class="w3-input w3-border" type="number" name="max-price"
+                <input class="w3-input w3-border" type="number" min="0" name="maxPrice" value="${maxPrice}"
                        placeholder="<fmt:message key="book.price.min"/>">
             </div>
             <div class="w3-col" style="width:10%">

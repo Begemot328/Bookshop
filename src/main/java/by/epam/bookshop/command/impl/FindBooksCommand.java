@@ -22,18 +22,22 @@ public class FindBooksCommand implements Command {
 
         if (isNotEmpty(request.getParameter(RequestParameters.TITLE))) {
             finder = finder.findByTitle(request.getParameter(RequestParameters.TITLE));
+            request.setAttribute(RequestParameters.TITLE, request.getParameter(RequestParameters.TITLE));
         }
 
         if (isNotEmpty(request.getParameter(RequestParameters.AUTHOR))) {
             finder = finder.findByAuthor(Integer.parseInt(request.getParameter(RequestParameters.AUTHOR)));
+            request.setAttribute(RequestParameters.AUTHOR, request.getParameter(RequestParameters.AUTHOR));
         }
 
         if (isNotEmpty(request.getParameter(RequestParameters.MAX_PRICE))) {
             finder = finder.findByPriceLess(Float.parseFloat(request.getParameter(RequestParameters.MAX_PRICE)));
+            request.setAttribute(RequestParameters.MAX_PRICE, request.getParameter(RequestParameters.MAX_PRICE));
         }
 
         if (isNotEmpty(request.getParameter(RequestParameters.MIN_PRICE))) {
             finder = finder.findByPriceMore(Float.parseFloat(request.getParameter(RequestParameters.MIN_PRICE)));
+            request.setAttribute(RequestParameters.MIN_PRICE, request.getParameter(RequestParameters.MIN_PRICE));
         }
 
         try {
@@ -45,12 +49,19 @@ public class FindBooksCommand implements Command {
                 if (isNotEmpty(request.getParameter(RequestParameters.AUTHOR_FIRSTNAME))) {
                     authorFinder = authorFinder.findByFirstName(
                             request.getParameter(RequestParameters.AUTHOR_FIRSTNAME));
+
+                    request.setAttribute(RequestParameters.AUTHOR_FIRSTNAME,
+                            request.getParameter(RequestParameters.AUTHOR_FIRSTNAME));
                     if (isNotEmpty(request.getParameter(RequestParameters.AUTHOR_LASTNAME))) {
                         authorFinder = authorFinder.findByLastName(
+                                request.getParameter(RequestParameters.AUTHOR_LASTNAME));
+                        request.setAttribute(RequestParameters.AUTHOR_LASTNAME,
                                 request.getParameter(RequestParameters.AUTHOR_LASTNAME));
                     }
                 } else {
                     authorFinder = authorFinder.findByLastName(
+                            request.getParameter(RequestParameters.AUTHOR_LASTNAME));
+                    request.setAttribute(RequestParameters.AUTHOR_LASTNAME,
                             request.getParameter(RequestParameters.AUTHOR_LASTNAME));
                 }
 
@@ -70,6 +81,5 @@ public class FindBooksCommand implements Command {
     private boolean isNotEmpty(String string) {
         return string != null && !string.isEmpty();
     }
-
 
 }

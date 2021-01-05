@@ -13,8 +13,8 @@ public class RequestParameters {
     public static final String PASSWORD = "password";
 
     public static final String AUTHOR_ID = "author-id";
-    public static final String AUTHOR_FIRSTNAME = "author-firstname";
-    public static final String AUTHOR_LASTNAME = "author-lastname";
+    public static final String AUTHOR_FIRSTNAME = "authorFirstname";
+    public static final String AUTHOR_LASTNAME = "authorLastname";
 
 
     public static final String USER_FIRSTNAME = "user-firstname";
@@ -31,8 +31,8 @@ public class RequestParameters {
     public static final String BOOK_ID = "book-id";
     public static final String AUTHOR = "book.author";
     public static final String TITLE = "title";
-    public static final String MAX_PRICE = "max-price";
-    public static final String MIN_PRICE = "min-price";
+    public static final String MAX_PRICE = "maxPrice";
+    public static final String MIN_PRICE = "minPrice";
 
     public static final String COMMAND = "command";
 
