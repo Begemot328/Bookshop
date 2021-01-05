@@ -1,20 +1,26 @@
 package by.epam.bookshop.command.impl;
 
 import by.epam.bookshop.command.*;
+import by.epam.bookshop.dao.impl.author.AuthorFinder;
 import by.epam.bookshop.entity.author.Author;
+import by.epam.bookshop.entity.book.Book;
 import by.epam.bookshop.exceptions.CommandException;
 import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.service.author.AuthorService;
+import by.epam.bookshop.service.book.BookService;
 import by.epam.bookshop.validator.AuthorValidator;
+import by.epam.bookshop.validator.BookValidator;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
+import java.util.Optional;
 
-public class AddAuthorCommand implements Command {
+public class EditAuthorCommand implements Command {
 
+    private static final String WRONG_AUTHOR_ERROR = "error.author.id";
     private static final String SERVICE_EXCEPTION = "Service Exception: ";
     private static final String INPUT_ERROR = "error.input";
+    private static final String WRONG_ENTITY = "wrong.entity.error";
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
@@ -29,15 +35,23 @@ public class AddAuthorCommand implements Command {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, INPUT_ERROR);
             return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
         }
+
+        if (request.getSession().getAttribute(SessionParameters.AUTHOR) instanceof Author) {
+            newAuthor = (Author) request.getSession().getAttribute(SessionParameters.AUTHOR);
+        } else {
+            throw new CommandException(WRONG_ENTITY);
+        }
+
         try {
-            newAuthor = AuthorService.getInstance().create(firstName, lastName, photoLink);
-            request.getSession().setAttribute(SessionParameters.AUTHOR, newAuthor);
-            request.getSession().removeAttribute(SessionParameters.BOOKS);
-            return new Router(JSPPages.VIEW_AUTHOR_PAGE);
+            newAuthor.setFirstName(firstName);
+            newAuthor.setPhotoLink(photoLink);
+            newAuthor.setLastName(lastName);
+            AuthorService.getInstance().update(newAuthor);
         } catch (ServiceException e) {
-            request.getSession().setAttribute(SessionParameters.ERROR_MESSAGE, e.getMessage()
-                    + Arrays.toString(e.getStackTrace()));
             throw new CommandException(e);
         }
+        request.getSession().setAttribute(SessionParameters.AUTHOR, newAuthor);
+        request.setAttribute(RequestParameters.AUTHOR, newAuthor);
+        return new Router(JSPPages.VIEW_AUTHOR_PAGE);
     }
 }

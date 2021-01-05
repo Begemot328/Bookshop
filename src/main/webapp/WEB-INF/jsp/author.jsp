@@ -43,32 +43,9 @@
             font-family: Arial, Helvetica, sans-serif;
         }
 
-        .slider {
-            -webkit-appearance: none;
-            width: 80%;
-            height: 25px;
-            background: #9370DB;
-            outline: none;
-            opacity: 0.7;
-            -webkit-transition: .2s;
-            transition: opacity .2s;
-        }
-
-        .slider:hover {
-            opacity: 1;
-        }
-
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 25px;
-            height: 25px;
-            background: #800080;
-            cursor: pointer;
-        }
     </style>
 </head>
-<>
+<body>
 <!-- Top panel -->
 <div class="w3-container w3-stretch">
     <div class="w3-cell-row w3-purple w3-opacity-min">
@@ -211,10 +188,24 @@
                 </c:when>
                 <c:otherwise>
                     <img src="${pageContext.request.contextPath}/resources/images/author.jpg"
-                    alt="default author picture"  class="w3-image">
+                         alt="default author picture" class="w3-image">
                 </c:otherwise>
             </c:choose>
-        </div>
+        </div
+        <c:if test="${not empty sessionScope.currentUser}">
+            <c:if test="${sessionScope.currentUser.status.id > 1}">
+                <div class="w3-card-4 w3-half w3-center w3-padding">
+                    <br/>
+                    <br/>
+                    <form>
+                        <input type="hidden" name="command" value="EDIT_AUTHOR_MENU_COMMAND">
+                        <button class="w3-button w3-purple w3-ripple w3-large w3-opacity" type="submit">
+                            <fmt:message key="change"/>
+                        </button>
+                    </form>
+                </div>
+            </c:if>
+        </c:if>
         <div class="w3-row-padding">
             <c:forEach var="book"
                        begin="${sessionScope.firstElement}"

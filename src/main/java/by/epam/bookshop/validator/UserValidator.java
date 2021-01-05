@@ -1,14 +1,18 @@
-package by.epam.bookshop.service.user;
+package by.epam.bookshop.validator;
 
+import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.entity.user.User;
 import by.epam.bookshop.entity.user.UserStatus;
+import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.validator.EntityValidator;
 import by.epam.bookshop.util.ValidationUtil;
 
 public class UserValidator implements EntityValidator<User> {
 
-    public boolean validate(Object ... args) {
-        boolean result = true;
+    private static final String INPUT_ERROR = "error.input";
+
+    @Override
+    public void validate(Object... args) throws ValidationException {
         if (args.length < 7
                 || !(args[0] instanceof String)
                 || ((String) args[0]).isEmpty()
@@ -24,8 +28,7 @@ public class UserValidator implements EntityValidator<User> {
                 && ((String) args[5]).isEmpty() || ValidationUtil.validateURL((String) args[5]))
                 || args[5] == null)
                 || !(args[6] instanceof UserStatus)) {
-            result = false;
+            throw new ValidationException(INPUT_ERROR);
         }
-        return result;
     }
 }

@@ -6,6 +6,7 @@ import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.entity.book.Book;
 import by.epam.bookshop.exceptions.CommandException;
 import by.epam.bookshop.exceptions.ServiceException;
+import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.service.author.AuthorService;
 import by.epam.bookshop.service.book.BookService;
 import by.epam.bookshop.validator.BookValidator;
@@ -48,15 +49,17 @@ public class AddBookCommand implements Command {
                 author = authorOptional.get();
             }
 
-            if (new BookValidator().validate(title, author, description, price, photoLink)) {
-                newBook = BookService.getInstance().create(title, author, description, price, photoLink);
-                request.getSession().setAttribute(SessionParameters.BOOK, newBook);
-                return new Router(JSPPages.VIEW_BOOK_PAGE);
-            } else {
+            try {
+                new BookValidator().validate(title, author, description, price, photoLink);
+
+            } catch (ValidationException e){
                 request.setAttribute(RequestParameters.ERROR_MESSAGE, INPUT_ERROR);
                 return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
             }
 
+            newBook = BookService.getInstance().create(title, author, description, price, photoLink);
+            request.getSession().setAttribute(SessionParameters.BOOK, newBook);
+            return new Router(JSPPages.VIEW_BOOK_PAGE);
         } catch (ServiceException e) {
             request.getSession().setAttribute(SessionParameters.ERROR_MESSAGE, e.getMessage()
                     + Arrays.toString(e.getStackTrace()));

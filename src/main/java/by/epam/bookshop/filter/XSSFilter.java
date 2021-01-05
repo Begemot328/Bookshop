@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@WebFilter(urlPatterns = {"/*"})
+@WebFilter(urlPatterns = {"/ControllerURL"})
 public class XSSFilter implements Filter {
     public static final String BLANK = "";
 

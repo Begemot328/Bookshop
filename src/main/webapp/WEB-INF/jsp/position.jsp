@@ -220,25 +220,23 @@
             </div>
         </div>
 
-        <!-- Pagination          -->
-        <div class="w3-bar w3-purple w3-opacity-min w3-center w3-stretch">
-            <c:choose>
-                <c:when test="${sessionScope.pageQuantity} > 1">
-                    <c:forEach begin="1" end="${sessionScope.pageQuantity}" var="p">
-                        <c:choose>
-                            <c:when test="${sessionScope.currentPage == p}">
-                                <a class="w3-button w3-indigo"
-                                   href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
-                            </c:when>
-                            <c:otherwise>
-                                <a class="w3-button w3-purple"
-                                   href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-                </c:when>
-            </c:choose>
-        </div>
+        <c:if test="${not empty sessionScope.currentUser}">
+            <c:if test="${sessionScope.currentUser.status.id > 1}">
+                <div class="w3-card-4 w3-half w3-center w3-padding">
+                    <br/>
+                    <br/>
+                    <form>
+                        <input type="hidden" name="command" value="EDIT_POSITION_MENU_COMMAND">
+                        <button class="w3-button w3-purple w3-ripple w3-large w3-opacity" type="submit">
+                            <fmt:message key="change"></fmt:message>
+                        </button>
+                    </form>
+
+                </div>
+            </c:if>
+        </c:if>
+
+
     </div>
     <!--  right panel bar       -->
     <div class="w3-cell w3-deep-purple w3-opacity" style="width:15%">

@@ -206,6 +206,21 @@
                 </c:if>
             </form>
         </div>
+        <c:if test="${not empty sessionScope.currentUser}">
+            <c:if test="${sessionScope.currentUser.status.id > 1}">
+                <div class="w3-card-4 w3-half w3-center w3-padding">
+                    <br/>
+                    <br/>
+                    <form>
+                        <input type="hidden" name="command" value="EDIT_SHOP_MENU_COMMAND">
+                        <button class="w3-button w3-purple w3-ripple w3-large w3-opacity" type="submit">
+                            <fmt:message key="change"></fmt:message>
+                        </button>
+                    </form>
+
+                </div>
+            </c:if>
+        </c:if>
         <table class="w3-table-all w3-purple w3-opacity-min">
             <tr class="w3-deep-purple">
                 <th><fmt:message key="book.title"/></th>

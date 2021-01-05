@@ -303,6 +303,11 @@
                     <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
                             key="position.add"/></button>
                 </form>
+                <form class="w3-bar-item w3-large w3-hover-purple">
+                    <input type="hidden" name="command" value="ADD_SHOP_MENU_COMMAND">
+                    <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                            key="shop.add"/></button>
+                </form>
             </c:if>
         </div>
     </div>

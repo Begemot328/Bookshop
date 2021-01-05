@@ -4,7 +4,7 @@ import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.util.ValidationUtil;
 
-public class AuthorValidator implements EntityValidator<Author> {
+public class ShopValidator implements EntityValidator<Author> {
 
     private static final String INPUT_ERROR = "error.input";
 

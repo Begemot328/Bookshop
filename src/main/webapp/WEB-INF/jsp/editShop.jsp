@@ -23,6 +23,7 @@
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-signal.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <html>
 <head>
     <title><fmt:message key="login_page.title"/></title>
@@ -180,49 +181,25 @@
     <div class="w3-cell w3-padding-large w3-center" style="width:70%">
         <br/>
         <form class="w3-card-4 w3-row-padding" method="POST" action="${pageContext.request.contextPath}/ControllerURL">
-            <input type="hidden" name="command" value="EDIT_BOOK_COMMAND">
+            <input type="hidden" name="command" value="EDIT_SHOP_COMMAND">
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="text" name="title" value="${sessionScope.book.title}" required placeholder="<fmt:message key="book.title"/>">
+                <input class="w3-input w3-border" type="text" name="shop-name" value="${sessionScope.shop.name}"
+                       required placeholder="<fmt:message key="shop.name"/>">
+            </div>
+            <div class="w3-container" style="width:35%">
+                <input class="w3-input w3-border" type="text" name="address" required value="${sessionScope.shop.address}"
+                       placeholder="<fmt:message key="shop.address"/>">
             </div>
             <br/>
-
-            <div class="w3-container" style="width:35%">
-                <select id="users" name="author-id">
-                    <c:forEach var="author" items="${sessionScope.authors}">
-                        <c:choose>
-                            <c:when test="${sessionScope.book.author.id == author.id}">
-                                <option selected value="${author.id}">
-                                        ${author.firstName} ${author.lastName}</option>
-                            </c:when>
-                            <c:otherwise>
-                                <option value="${author.id}">
-                                        ${author.firstName} ${author.lastName}</option>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-                </select>
-            </div>
-            <br/>
-
-            <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="number" step="0.01" min="0" name="price" required
-                       placeholder="<fmt:message key="price"/>" value="${sessionScope.book.price}">
-            </div>
             <br/>
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="text" name="description"
-                       placeholder="<fmt:message key="description"/>" value="${sessionScope.book.description}">
-            </div>
-            <br/>
-            <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="url" name="photolink"
+                <input class="w3-input w3-border" type="url" name="photolink" value="${sessionScope.shop.photoLink}"
                        placeholder="<fmt:message key="photolink"/>">
             </div>
             <br/>
             <c:if test="${errorMessage != null}">
                 <div class="w3-container" style="width:50%">
-                    <p class="w3-large w3-text-red w3-animate-opacity"
-                       value="${sessionScope.book.photoLink}"><fmt:message key="${errorMessage}"/></p>
+                    <p class="w3-large w3-text-red w3-animate-opacity"><fmt:message key="${errorMessage}"/></p>
                 </div>
             </c:if>
             <div class="w3-btn" style="width:10%">

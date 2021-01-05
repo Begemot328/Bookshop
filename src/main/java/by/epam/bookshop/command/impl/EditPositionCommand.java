@@ -1,6 +1,8 @@
 package by.epam.bookshop.command.impl;
 
 import by.epam.bookshop.command.*;
+import by.epam.bookshop.dao.impl.author.AuthorFinder;
+import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.entity.book.Book;
 import by.epam.bookshop.entity.position.Position;
 import by.epam.bookshop.entity.position.PositionStatus;
@@ -9,16 +11,20 @@ import by.epam.bookshop.entity.user.User;
 import by.epam.bookshop.exceptions.CommandException;
 import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.exceptions.ValidationException;
+import by.epam.bookshop.service.author.AuthorService;
 import by.epam.bookshop.service.book.BookService;
 import by.epam.bookshop.service.position.PositionService;
-import by.epam.bookshop.validator.PositionValidator;
 import by.epam.bookshop.service.shop.ShopService;
+import by.epam.bookshop.validator.BookValidator;
+import by.epam.bookshop.validator.PositionValidator;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
-public class AddPositionCommand implements Command {
+public class EditPositionCommand implements Command {
 
     private static final String WRONG_AUTHOR_ERROR = "error.author.id";
+    private static final String SERVICE_EXCEPTION = "Service Exception: ";
     private static final String INPUT_ERROR = "error.input";
 
     @Override
@@ -63,12 +69,14 @@ public class AddPositionCommand implements Command {
                 request.setAttribute(RequestParameters.ERROR_MESSAGE, INPUT_ERROR);
                 return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
             }
-
-            newPosition = PositionService.getInstance().createPosition(
-                    currentUser, book, shop, note, quantity);
-            request.getSession().setAttribute(SessionParameters.POSITION, newPosition);
-            return new Router(JSPPages.VIEW_POSITION_PAGE);
-
+            newPosition = (Position) request.getSession().getAttribute(SessionParameters.POSITION);
+                newPosition.setQuantity(quantity);
+                newPosition.setShop(shop);
+                newPosition.setBook(book);
+                newPosition.setNote(note);
+                PositionService.getInstance().update(newPosition);
+                request.getSession().setAttribute(SessionParameters.POSITION, newPosition);
+                return new Router(JSPPages.VIEW_POSITION_PAGE);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

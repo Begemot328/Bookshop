@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.IOException;
 import java.util.*;
 
-@WebFilter(urlPatterns = {"/*"})
+@WebFilter(urlPatterns = {"/ControllerURL"})
 public class StatusFilter implements Filter {
 
     static CommandEnum[] SellerOnlyCommands = {

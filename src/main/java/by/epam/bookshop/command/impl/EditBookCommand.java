@@ -6,6 +6,7 @@ import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.entity.book.Book;
 import by.epam.bookshop.exceptions.CommandException;
 import by.epam.bookshop.exceptions.ServiceException;
+import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.service.author.AuthorService;
 import by.epam.bookshop.service.book.BookService;
 import by.epam.bookshop.validator.BookValidator;
@@ -16,8 +17,8 @@ import java.util.Optional;
 public class EditBookCommand implements Command {
 
     private static final String WRONG_AUTHOR_ERROR = "error.author.id";
-    private static final String SERVICE_EXCEPTION = "Service Exception: ";
     private static final String INPUT_ERROR = "error.input";
+    private static final String WRONG_ENTITY = "wrong.entity.error";
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
@@ -48,8 +49,17 @@ public class EditBookCommand implements Command {
                 author = authorOptional.get();
             }
 
-            if (new BookValidator().validate(title, author, description, price, photoLink)) {
+            try {
+                new BookValidator().validate(title, author, description, price, photoLink);
+            } catch (ValidationException e) {
+                request.setAttribute(RequestParameters.ERROR_MESSAGE, INPUT_ERROR);
+                return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+            }
+            if (request.getSession().getAttribute(SessionParameters.BOOK) instanceof Book) {
                 newBook = (Book) request.getSession().getAttribute(SessionParameters.BOOK);
+            } else {
+                throw new CommandException(WRONG_ENTITY);
+            }
                 newBook.setAuthor(author);
                 newBook.setTitle(title);
                 newBook.setPrice(price);
@@ -58,11 +68,6 @@ public class EditBookCommand implements Command {
                 BookService.getInstance().update(newBook);
                 request.getSession().setAttribute(SessionParameters.BOOK, newBook);
                 return new Router(JSPPages.VIEW_BOOK_PAGE);
-            } else {
-                request.setAttribute(RequestParameters.ERROR_MESSAGE, INPUT_ERROR);
-                return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
-            }
-
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

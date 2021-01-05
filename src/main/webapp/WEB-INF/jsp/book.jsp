@@ -227,17 +227,16 @@
         </div>
         <c:if test="${not empty sessionScope.currentUser}">
             <c:if test="${sessionScope.currentUser.status.id > 1}">
-
                 <div class="w3-card-4 w3-half w3-center w3-padding">
-                        <br/>
                     <br/>
-                        <form>
-                            <input type="hidden" name="command" value="EDIT_BOOK_MENU_COMMAND">
-                            <button class="w3-button w3-purple w3-ripple w3-large w3-opacity" type="submit">
-                                <fmt:message key="change"></fmt:message>
-                            </button>
-                        </form>
-
+                    <br/>
+                    <form>
+                        <input type="hidden" name="command" value="EDIT_BOOK_MENU_COMMAND">
+                        <button class="w3-button w3-purple w3-ripple w3-large w3-opacity w3-hover-deep-purple"
+                                type="submit">
+                            <fmt:message key="change"></fmt:message>
+                        </button>
+                    </form>
                 </div>
             </c:if>
         </c:if>
@@ -280,13 +279,14 @@
                                 <c:when test="${sessionScope.currentUser.status.id == 2}">
                                     <td>
                                         <a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shop-id=${position.shop.id}&position-id=${position.id}"
-                                           class="w3-button"><fmt:message key="position.book"/></a></td>
+                                           class="w3-button w3-hover-purple"><fmt:message key="position.book"/></a></td>
                                 </c:when>
                                 <c:when test="${sessionScope.currentUser.status.id > 2}">
                                     <td><fmt:message key="${position.status}"/></td>
                                     <td>
                                         <a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shop-id=${position.shop.id}&position-id=${position.id}"
-                                           class="w3-button"><fmt:message key="position.process"/></a></td>
+                                           class="w3-button w3-hover-purple"><fmt:message key="position.process"/></a>
+                                    </td>
                                 </c:when>
                             </c:choose>
                         </c:if>
