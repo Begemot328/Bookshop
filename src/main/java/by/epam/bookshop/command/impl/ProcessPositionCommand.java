@@ -27,7 +27,7 @@ public class ProcessPositionCommand implements Command {
                     == UserStatus.ADMIN) {
                 User[] buyers = UserService.getInstance()
                         .findBy(new UserFinder().findByStatus(UserStatus.BUYER)).toArray(User[]::new);
-                request.getSession().setAttribute(SessionParameters.BUYERS, buyers);
+                request.setAttribute(RequestParameters.BUYERS, buyers);
                 return new Router(JSPPages.PROCESS_POSITION_PAGE);
             }
             return new Router(JSPPages.BOOK_POSITION_PAGE);

@@ -44,7 +44,7 @@ public class AddBookCommand implements Command {
                     .stream().findAny();
             if (authorOptional.isEmpty()) {
                 request.setAttribute(RequestParameters.ERROR_MESSAGE, WRONG_AUTHOR_ERROR);
-                return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+                return new Router(JSPPages.ADD_BOOK_PAGE);
             } else {
                 author = authorOptional.get();
             }
@@ -61,9 +61,10 @@ public class AddBookCommand implements Command {
             request.getSession().setAttribute(SessionParameters.BOOK, newBook);
             return new Router(JSPPages.VIEW_BOOK_PAGE);
         } catch (ServiceException e) {
-            request.getSession().setAttribute(SessionParameters.ERROR_MESSAGE, e.getMessage()
-                    + Arrays.toString(e.getStackTrace()));
             throw new CommandException(e);
+        } catch (ValidationException e) {
+            request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage());
+            return new Router(JSPPages.ADD_BOOK_PAGE);
         }
     }
 }

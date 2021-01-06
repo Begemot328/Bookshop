@@ -39,7 +39,6 @@ public enum CommandEnum {
     VIEW_USER_COMMAND(new ViewUserCommand()),
     VIEW_SHOP_COMMAND(new ViewShopCommand()),
 
-    CHANGE_PAGE_COMMAND(new ChangePageCommand()),
     CHANGE_LOCALE_COMMAND(new ChangeLocaleCommand()),
 
     LOGIN_COMMAND(new LoginCommand()),

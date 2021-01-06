@@ -8,6 +8,8 @@ import by.epam.bookshop.entity.user.AbstractEntityFactory;
 import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.FactoryException;
 import by.epam.bookshop.exceptions.ServiceException;
+import by.epam.bookshop.exceptions.ValidationException;
+import by.epam.bookshop.validator.EntityValidator;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -19,10 +21,14 @@ public abstract class AbstractEntityService<T extends Entity> implements EntityS
 
     public abstract AbstractEntityFactory<T> getFactory();
 
+
+    public abstract EntityValidator<T> getValidator();
+
     @Override
-    public T create(Object... args) throws ServiceException {
+    public T create(Object... args) throws ServiceException, ValidationException {
         try (Connection connection = getConnection()) {
             T t = getFactory().create(args);
+            getValidator().validate(t);
             getDAO(connection).create(t);
             return t;
         } catch (SQLException | FactoryException | DAOException e) {
@@ -40,7 +46,8 @@ public abstract class AbstractEntityService<T extends Entity> implements EntityS
     }
 
     @Override
-    public void update(T t) throws ServiceException {
+    public void update(T t) throws ServiceException, ValidationException {
+        getValidator().validate(t);
         try (Connection connection = getConnection()) {
             getDAO(connection).update(t);
         } catch (DAOException | SQLException e) {

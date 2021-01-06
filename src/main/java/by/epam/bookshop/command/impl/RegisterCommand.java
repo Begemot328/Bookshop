@@ -1,9 +1,6 @@
 package by.epam.bookshop.command.impl;
 
-import by.epam.bookshop.command.Command;
-import by.epam.bookshop.command.RequestParameters;
-import by.epam.bookshop.command.Router;
-import by.epam.bookshop.command.SessionParameters;
+import by.epam.bookshop.command.*;
 import by.epam.bookshop.controller.dto.UserDTO;
 import by.epam.bookshop.dao.impl.user.UserFinder;
 import by.epam.bookshop.entity.user.User;
@@ -52,9 +49,10 @@ public class RegisterCommand implements Command {
             }
 
         } catch (ServiceException e) {
-            request.getSession().setAttribute(SessionParameters.ERROR_MESSAGE, e.getMessage()
-                    + Arrays.toString(e.getStackTrace()));
             throw new CommandException(e);
+        } catch (ValidationException e) {
+            request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage());
+            return new Router(JSPPages.REGISTER_PAGE);
         }
         request.getSession().setAttribute(SessionParameters.CURRENT_USER, new UserDTO(user));
         Router router = new Router();

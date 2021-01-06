@@ -32,12 +32,12 @@ public class AddAuthorCommand implements Command {
         try {
             newAuthor = AuthorService.getInstance().create(firstName, lastName, photoLink);
             request.getSession().setAttribute(SessionParameters.AUTHOR, newAuthor);
-            request.getSession().removeAttribute(SessionParameters.BOOKS);
             return new Router(JSPPages.VIEW_AUTHOR_PAGE);
         } catch (ServiceException e) {
-            request.getSession().setAttribute(SessionParameters.ERROR_MESSAGE, e.getMessage()
-                    + Arrays.toString(e.getStackTrace()));
             throw new CommandException(e);
+        } catch (ValidationException e) {
+            request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage());
+            return new Router(JSPPages.ADD_AUTHOR_PAGE);
         }
     }
 }

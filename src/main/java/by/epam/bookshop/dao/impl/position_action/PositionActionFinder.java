@@ -31,13 +31,6 @@ public class PositionActionFinder extends EntityFinder<PositionAction> {
         super(VIEW_NAME);
     }
 
-    public PositionActionFinder findByID(int id) {
-        PositionActionFinder finder  = (PositionActionFinder) this.findBy(SQL_QUERY +
-                WHERE.replace(PARAMETER, ID)
-                        .replace(VALUE, Integer.toString(id)));
-        return finder;
-    }
-
     public PositionActionFinder findByBuyer(int id) {
         return (PositionActionFinder) this.findBy(SQL_QUERY +
                 WHERE_LIKE.replace(PARAMETER, BUYER_ID)

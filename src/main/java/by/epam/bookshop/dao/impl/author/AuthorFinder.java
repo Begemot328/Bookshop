@@ -27,11 +27,4 @@ public class AuthorFinder extends EntityFinder<Author> {
                 WHERE_LIKE.replace(PARAMETER, LASTNAME)
                         .replace(VALUE, lastname));
     }
-
-    public AuthorFinder findByID(int id) {
-        AuthorFinder finder  = (AuthorFinder) this.findBy(SQL_QUERY +
-                WHERE.replace(PARAMETER, ID)
-                        .replace(VALUE, Integer.toString(id)));
-        return finder;
-    }
 }

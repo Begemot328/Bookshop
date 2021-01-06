@@ -19,11 +19,10 @@
 </c:if>
 <fmt:setBundle basename="locale"/>
 
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-signal.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/w3.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/w3-colors-signal.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/materialIcons.css">
 <html>
 <head>
     <title><fmt:message key="login_page.title"/></title>
@@ -114,7 +113,7 @@
                             <form class="w3-bar-item" method="POST"
                                   action="${pageContext.request.contextPath}/ControllerURL">
                                 <input type="hidden" name="command" value="VIEW_USER_COMMAND">
-                                <input type="hidden" name="user-id" value="${sessionScope.currentUser.id}">
+                                <input type="hidden" name="userId" value="${sessionScope.currentUser.id}">
                                 <button class="w3-button  w3-ripple w3-hover-purple">
                                     <span><fmt:message key="cabinet"/></span>
                                 </button>
@@ -183,15 +182,18 @@
         <form class="w3-card-4 w3-row-padding" method="POST" action="${pageContext.request.contextPath}/ControllerURL">
             <input type="hidden" name="command" value="ADD_AUTHOR_COMMAND">
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="text" name="author-firstname" required placeholder="<fmt:message key="author.firstname"/>">
+                <input class="w3-input w3-border" type="text" name="authorFirstname" required
+                       placeholder="<fmt:message key="author.firstname"/>" value="authorFirstname">
             </div>
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="text" name="author-lastname" required placeholder="<fmt:message key="author.lastname"/>">
+                <input class="w3-input w3-border" type="text" name="authorLastname" required
+                       placeholder="<fmt:message key="author.lastname"/>" value="authorLastname">
+
             </div>
             <br/>
             <br/>
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="url" name="photolink"
+                <input class="w3-input w3-border" type="url" name="photolink" value="photolink"
                        placeholder="<fmt:message key="photolink"/>">
             </div>
             <br/>
@@ -244,6 +246,11 @@
                     <input type="hidden" name="command" value="ADD_POSITION_MENU_COMMAND">
                     <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
                             key="position.add"/></button>
+                </form>
+                <form class="w3-bar-item w3-large w3-hover-purple">
+                    <input type="hidden" name="command" value="ADD_SHOP_MENU_COMMAND">
+                    <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                            key="shop.add"/></button>
                 </form>
             </c:if>
         </div>

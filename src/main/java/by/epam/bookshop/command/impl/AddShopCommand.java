@@ -34,11 +34,14 @@ public class AddShopCommand implements Command {
             return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
         }
         try {
-        newShop = ShopService.getInstance().create(name, address, photoLink);
-                request.getSession().setAttribute(SessionParameters.SHOP, newShop);
-                return new Router(JSPPages.VIEW_SHOP_PAGE);
+            newShop = ShopService.getInstance().create(name, address, photoLink);
+            request.getSession().setAttribute(SessionParameters.SHOP, newShop);
+            return new Router(JSPPages.VIEW_SHOP_PAGE);
         } catch (ServiceException e) {
             throw new CommandException(e);
+        } catch (ValidationException e) {
+            request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage());
+            return new Router(JSPPages.ADD_SHOP_PAGE);
         }
     }
 }

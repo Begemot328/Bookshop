@@ -13,8 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
 public class EditBookMenuCommand implements Command {
-    private static final String SERVICE_EXCEPTION = "Service Exception: ";
-    private static final String DAO_EXCEPTION = "DAO Exception: ";
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
@@ -26,15 +24,11 @@ public class EditBookMenuCommand implements Command {
                 request.getSession().setAttribute(SessionParameters.BOOK, book);
             }
             Author[] authors = AuthorService.getInstance().findAll().toArray(Author[]::new);
-            request.getSession().setAttribute(SessionParameters.AUTHORS, authors);
+            request.setAttribute(RequestParameters.AUTHORS, authors);
             Paginator.paginate(request, authors, 1);
         } catch (ServiceException e) {
-            request.getSession().setAttribute(SessionParameters.ERROR_MESSAGE, e.getMessage()
-                    + Arrays.toString(e.getStackTrace()));
             throw new CommandException(e);
         } catch (DAOException e) {
-            request.getSession().setAttribute(SessionParameters.ERROR_MESSAGE, e.getMessage()
-                    + Arrays.toString(e.getStackTrace()));
             throw new CommandException(e);
         }
         return new Router(JSPPages.EDIT_BOOK_PAGE);

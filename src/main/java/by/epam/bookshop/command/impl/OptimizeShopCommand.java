@@ -37,7 +37,7 @@ public class OptimizeShopCommand implements Command {
                             || position.getStatus() == PositionStatus.RESERVED
                             || position.getStatus() == PositionStatus.SOLD)
                     .toArray(Position[]::new);
-            request.getSession().setAttribute(SessionParameters.POSITIONS, positions);
+            request.setAttribute(RequestParameters.POSITIONS, positions);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

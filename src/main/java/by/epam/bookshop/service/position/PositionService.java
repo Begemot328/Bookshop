@@ -4,6 +4,7 @@ import by.epam.bookshop.dao.EntityFinder;
 import by.epam.bookshop.dao.impl.book.MySQLBookDAO;
 import by.epam.bookshop.dao.impl.position_action.MySQLPositionActionDAO;
 import by.epam.bookshop.dao.impl.position.MySQLPositionDAO;
+import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.entity.book.Book;
 import by.epam.bookshop.entity.book.BookFactory;
 import by.epam.bookshop.entity.position_action.PositionAction;
@@ -17,8 +18,13 @@ import by.epam.bookshop.entity.user.UserStatus;
 import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.FactoryException;
 import by.epam.bookshop.exceptions.ServiceException;
+import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.service.AbstractEntityService;
 import by.epam.bookshop.service.EntityService;
+import by.epam.bookshop.validator.AuthorValidator;
+import by.epam.bookshop.validator.EntityValidator;
+import by.epam.bookshop.validator.PositionActionValidator;
+import by.epam.bookshop.validator.PositionValidator;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -50,6 +56,11 @@ public class PositionService extends AbstractEntityService<Position> {
 
     public PositionFactory getFactory() {
         return new PositionFactory();
+    }
+
+    @Override
+    public EntityValidator<Position> getValidator() {
+        return new PositionValidator();
     }
 
     public boolean isSimilar(Position p1, Position p2) {
@@ -161,7 +172,7 @@ public class PositionService extends AbstractEntityService<Position> {
     }
 
     public Position transferPosition(Position position, Shop destination)
-            throws ServiceException {
+            throws ServiceException, ValidationException {
         position.setShop(destination);
         update(position);
         return position;
@@ -169,7 +180,7 @@ public class PositionService extends AbstractEntityService<Position> {
 
     public Position splitPosition(Position position, Integer quantity,
                                   User user, User librarian, String note, PositionStatus status)
-            throws ServiceException {
+            throws ServiceException, ValidationException {
         if (quantity > position.getQuantity()) {
             throw new ServiceException(WRONG_INPUT_EXCEPTION);
         }
@@ -184,7 +195,7 @@ public class PositionService extends AbstractEntityService<Position> {
                         note,
                         quantity);
                 position.setQuantity(position.getQuantity() - quantity);
-
+                new PositionValidator().validate(newPosition);
                 connection.setAutoCommit(false);
                 MySQLPositionDAO positionDAO = new MySQLPositionDAO(connection);
                 positionDAO.create(newPosition);
@@ -216,7 +227,7 @@ public class PositionService extends AbstractEntityService<Position> {
     public Position createPosition(User user, Book book,
                                    Shop shop,
                                    String note,
-                                   int quantity) throws ServiceException {
+                                   int quantity) throws ServiceException, ValidationException {
         if (user.getStatus() != UserStatus.SELLER
                 && user.getStatus() != UserStatus.ADMIN) {
             throw new ServiceException(NO_RIGHTS_EXCEPTION);
@@ -226,11 +237,13 @@ public class PositionService extends AbstractEntityService<Position> {
 
                 Position position = new PositionFactory().create(
                         book, shop, PositionStatus.READY, note, quantity);
+                new PositionValidator().validate(position);
                 PositionAction action = new PositionActionFactory().create(
                         null, position, null,  user, LocalDateTime.now(), quantity,
                         PositionStatus.NON_EXISTENT,
                         PositionStatus.READY,
                         shop, book.getPrice());
+                new PositionActionValidator().validate(action);
                 connection.setAutoCommit(false);
                 new MySQLPositionDAO(connection).create(position);
                 new MySQLPositionActionDAO(connection).create(action);

@@ -21,13 +21,6 @@ public class PositionFinder extends EntityFinder<Position> {
         super(VIEW_NAME);
     }
 
-    public PositionFinder findByID(int id) {
-        PositionFinder finder  = (PositionFinder) this.findBy(SQL_QUERY +
-                WHERE.replace(PARAMETER, ID)
-                        .replace(VALUE, Integer.toString(id)));
-        return finder;
-    }
-
     public PositionFinder findByBook(int bookId) {
         return (PositionFinder) this.findBy(SQL_QUERY +
                 WHERE.replace(PARAMETER, BOOK_ID)

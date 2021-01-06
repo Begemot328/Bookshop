@@ -28,12 +28,4 @@ public class ShopFinder extends EntityFinder<Shop> {
                 WHERE_LIKE.replace(PARAMETER, ADRESS)
                         .replace(VALUE, adress));
     }
-
-
-    public ShopFinder findByID(int id) {
-        ShopFinder finder  = (ShopFinder) this.findBy(SQL_QUERY +
-                WHERE.replace(PARAMETER, ID)
-                        .replace(VALUE, Integer.toString(id)));
-        return finder;
-    }
 }

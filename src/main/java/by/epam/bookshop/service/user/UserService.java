@@ -5,14 +5,19 @@ import by.epam.bookshop.dao.impl.book.MySQLBookDAO;
 import by.epam.bookshop.dao.impl.user.MySQLUserDAO;
 import by.epam.bookshop.dao.impl.user.UserFinder;
 import by.epam.bookshop.entity.book.BookFactory;
+import by.epam.bookshop.entity.shop.Shop;
 import by.epam.bookshop.entity.user.User;
 import by.epam.bookshop.entity.user.UserFactory;
 import by.epam.bookshop.entity.user.UserStatus;
 import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.FactoryException;
 import by.epam.bookshop.exceptions.ServiceException;
+import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.service.AbstractEntityService;
 import by.epam.bookshop.service.EntityService;
+import by.epam.bookshop.validator.EntityValidator;
+import by.epam.bookshop.validator.ShopValidator;
+import by.epam.bookshop.validator.UserValidator;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -31,6 +36,10 @@ public class UserService extends AbstractEntityService<User> {
 
     private UserService() {};
 
+    @Override
+    public EntityValidator<User> getValidator() {
+        return new UserValidator();
+    }
 
     public static EntityService<User> getInstance() {
         return INSTANCE;
@@ -44,7 +53,7 @@ public class UserService extends AbstractEntityService<User> {
         return new UserFactory();
     }
 
-    public User createUser(UserStatus status, Object... args) throws ServiceException {
+    public User createUser(UserStatus status, Object... args) throws ServiceException, ValidationException {
         if (args.length == 5) {
             args = Arrays.copyOf(args,6);
             args[6] = status;
@@ -71,7 +80,7 @@ public class UserService extends AbstractEntityService<User> {
                          String login,
                          int password,
                          String adress,
-                         String photoLink, UserStatus status) throws ServiceException {
+                         String photoLink, UserStatus status) throws ServiceException, ValidationException {
         if (!findBy(new UserFinder().findByLogin(login)).isEmpty()) {
             throw new ServiceException(WRONG_INPUT_EXCEPTION);
         }
@@ -90,7 +99,7 @@ public class UserService extends AbstractEntityService<User> {
                             String login,
                             int password,
                             String adress,
-                            String photoLink) throws ServiceException {
+                            String photoLink) throws ServiceException, ValidationException {
         return register(firstName, lastName, login, password, adress, photoLink, UserStatus.BUYER);
     }
 
@@ -99,7 +108,7 @@ public class UserService extends AbstractEntityService<User> {
                                String login,
                                int password,
                                String adress,
-                               String photoLink, UserStatus status) throws ServiceException {
+                               String photoLink, UserStatus status) throws ServiceException, ValidationException {
         if ((status != UserStatus.SELLER && (status != UserStatus.COURIER))
                 || user.getStatus() != UserStatus.ADMIN) {
             return null;

@@ -46,6 +46,9 @@ public class EditShopCommand implements Command {
             return new Router(JSPPages.VIEW_SHOP_PAGE);
         } catch (ServiceException e) {
             throw new CommandException(e);
+        } catch (ValidationException e) {
+            request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage());
+            return new Router(JSPPages.EDIT_SHOP_PAGE);
         }
     }
 }

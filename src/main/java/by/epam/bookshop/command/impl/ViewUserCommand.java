@@ -8,12 +8,14 @@ import by.epam.bookshop.entity.user.User;
 import by.epam.bookshop.entity.user.UserStatus;
 import by.epam.bookshop.exceptions.CommandException;
 import by.epam.bookshop.exceptions.ServiceException;
+import by.epam.bookshop.service.position.PositionService;
 import by.epam.bookshop.service.position_action.PositionActionService;
 import by.epam.bookshop.service.user.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class ViewUserCommand implements Command {
+    private static final int ELEMENTS_PER_PAGE = 30;
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
@@ -21,17 +23,25 @@ public class ViewUserCommand implements Command {
             User user = UserService.getInstance()
                     .read(Integer.parseInt(request.getParameter(RequestParameters.USER_ID)));
             PositionAction[] actions = null;
+            PositionActionFinder finder;
             if (user.getStatus().equals(UserStatus.BUYER) ) {
+                finder = new PositionActionFinder().findByBuyer(user.getId());
                 actions = PositionActionService.getInstance()
-                        .findBy(new PositionActionFinder().findByBuyer(user.getId()))
+                        .findBy(finder)
                         .toArray(PositionAction[]::new);
             } else {
+                finder = new PositionActionFinder().findBySeller(user.getId());
                 actions = PositionActionService.getInstance()
-                        .findBy(new PositionActionFinder().findBySeller(user.getId()))
+                        .findBy(finder)
                         .toArray(PositionAction[]::new);
             }
+            int pageQuantity = PositionActionService.getInstance().countBy(finder)
+                    / ELEMENTS_PER_PAGE + 1;
+            if (pageQuantity <= 0) {
+                pageQuantity = 1;
+            }
 
-            request.getSession().setAttribute(SessionParameters.ACTIONS, actions);
+            request.setAttribute(RequestParameters.ACTIONS, actions);
             request.getSession().setAttribute(SessionParameters.USER, new UserDTO(user));
 
             if (request.getSession().getAttribute(SessionParameters.CURRENT_USER) != null) {

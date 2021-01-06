@@ -13,16 +13,37 @@ import javax.servlet.http.HttpServletRequest;
 
 public class ViewAuthorCommand implements Command {
 
+    private static final int ELEMENTS_PER_PAGE = 30;
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         request.getParameter(RequestParameters.AUTHOR_ID);
+        int page;
         try {
+            page = Integer.parseInt(request.getParameter(RequestParameters.PAGE));
+            if (page <= 0) {
+                page = 1;
+            }
+        } catch (NumberFormatException e) {
+            page = 1;
+        }
+
+        try {
+
             Author author = AuthorService.getInstance()
                     .read(Integer.parseInt(request.getParameter(RequestParameters.AUTHOR_ID)));
+
             Book[] books = BookService.getInstance().findBy(
                     new BookFinder().findByAuthor(author.getId())).toArray(Book[]::new);
 
-            request.getSession().setAttribute(SessionParameters.BOOKS, books);
+            int pageQuantity = BookService.getInstance().countBy(new BookFinder().findByAuthor(author.getId()))
+                    / ELEMENTS_PER_PAGE + 1;
+            if (pageQuantity <= 0) {
+                pageQuantity = 1;
+            }
+            request.setAttribute(RequestParameters.BOOKS, books);
+            request.setAttribute(RequestParameters.PAGE_QUANTITY, pageQuantity);
+            request.setAttribute(RequestParameters.CURRENT_PAGE, page);
             request.getSession().setAttribute(SessionParameters.AUTHOR, author);
         } catch (ServiceException e) {
             throw new CommandException(e);

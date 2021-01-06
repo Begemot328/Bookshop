@@ -40,9 +40,8 @@ public class BookFinder extends EntityFinder<Book> {
         String authorsQuery = new String();
 
         if(authors.isEmpty()) {
-            return new BookFinder().findByID(-1);
+            return (BookFinder) (new BookFinder().findByID(-1));
         }
-
                 boolean first = true;
 
         for (Author author:authors) {
@@ -74,12 +73,5 @@ public class BookFinder extends EntityFinder<Book> {
         return (BookFinder) this.findBy(SQL_QUERY +
                 WHERE.replace(PARAMETER, PRICE)
                         .replace(VALUE, Float.toString(price)));
-    }
-
-    public BookFinder findByID(int id) {
-        BookFinder finder  = (BookFinder) this.findBy(SQL_QUERY +
-                WHERE.replace(PARAMETER, ID)
-                        .replace(VALUE, Integer.toString(id)));
-        return finder;
     }
 }

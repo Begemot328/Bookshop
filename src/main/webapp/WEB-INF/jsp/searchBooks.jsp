@@ -24,7 +24,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/w3.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/w3-colors-signal.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/materialIcons.css">
 <html>
 <head>
     <title>Search books</title>

@@ -59,19 +59,12 @@ public class FindBooksCommand implements Command {
                 if (isNotEmpty(request.getParameter(RequestParameters.AUTHOR_FIRSTNAME))) {
                     authorFinder = authorFinder.findByFirstName(
                             request.getParameter(RequestParameters.AUTHOR_FIRSTNAME));
-
-                    request.setAttribute(RequestParameters.AUTHOR_FIRSTNAME,
-                            request.getParameter(RequestParameters.AUTHOR_FIRSTNAME));
                     if (isNotEmpty(request.getParameter(RequestParameters.AUTHOR_LASTNAME))) {
                         authorFinder = authorFinder.findByLastName(
-                                request.getParameter(RequestParameters.AUTHOR_LASTNAME));
-                        request.setAttribute(RequestParameters.AUTHOR_LASTNAME,
                                 request.getParameter(RequestParameters.AUTHOR_LASTNAME));
                     }
                 } else {
                     authorFinder = authorFinder.findByLastName(
-                            request.getParameter(RequestParameters.AUTHOR_LASTNAME));
-                    request.setAttribute(RequestParameters.AUTHOR_LASTNAME,
                             request.getParameter(RequestParameters.AUTHOR_LASTNAME));
                 }
 

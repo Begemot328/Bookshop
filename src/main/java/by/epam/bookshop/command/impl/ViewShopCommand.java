@@ -15,8 +15,20 @@ import by.epam.bookshop.service.shop.ShopService;
 import javax.servlet.http.HttpServletRequest;
 
 public class ViewShopCommand implements Command {
+
+    private static final int ELEMENTS_PER_PAGE = 30;
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
+        int page;
+        try {
+            page = Integer.parseInt(request.getParameter(RequestParameters.PAGE));
+            if (page <= 0) {
+                page = 1;
+            }
+        } catch (NumberFormatException e) {
+            page = 1;
+        }
         request.getParameter(RequestParameters.SHOP_ID);
         try {
             Shop shop = ShopService.getInstance().read(
@@ -25,8 +37,16 @@ public class ViewShopCommand implements Command {
             Object currentUserObj = request.getSession()
                     .getAttribute(SessionParameters.CURRENT_USER);
 
-            Position[] positions = PositionService.getInstance().findBy(
-                    new PositionFinder().findByShop(shop.getId())).stream()
+            PositionFinder finder =
+                    new PositionFinder().findByShop(shop.getId());
+            int pageQuantity = PositionService.getInstance().countBy(finder)
+                    / ELEMENTS_PER_PAGE + 1;
+            if (pageQuantity <= 0) {
+                pageQuantity = 1;
+            }
+
+
+            Position[] positions = PositionService.getInstance().findBy(finder).stream()
                     .filter(position -> position.getStatus() == PositionStatus.READY
                             || ((position.getStatus() == PositionStatus.RESERVED
                             || position.getStatus() == PositionStatus.SOLD)
@@ -35,8 +55,9 @@ public class ViewShopCommand implements Command {
                             != UserStatus.BUYER))
                     .toArray(Position[]::new);
 
-            request.getSession().setAttribute(SessionParameters.POSITIONS, positions);
-            Paginator.paginate(request, positions, 1);
+            request.setAttribute(RequestParameters.POSITIONS, positions);
+            request.setAttribute(RequestParameters.PAGE_QUANTITY, pageQuantity);
+            request.setAttribute(RequestParameters.CURRENT_PAGE, page);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

@@ -1,12 +1,23 @@
 package by.epam.bookshop.validator;
 
 import by.epam.bookshop.entity.author.Author;
+import by.epam.bookshop.entity.shop.Shop;
+import by.epam.bookshop.entity.user.UserStatus;
 import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.util.ValidationUtil;
 
-public class ShopValidator implements EntityValidator<Author> {
+public class ShopValidator implements EntityValidator<Shop> {
 
     private static final String INPUT_ERROR = "error.input";
+    private static final Class[] types = {
+            String.class,
+            String.class,
+            String.class
+    };
+
+    protected Class[] getTypes() {
+        return types;
+    }
 
     @Override
     public void validate(Object... args) throws ValidationException {
@@ -18,6 +29,14 @@ public class ShopValidator implements EntityValidator<Author> {
                 || args[2] == null)
                 || ((String) args[0]).isEmpty()
                 || ((String) args[1]).isEmpty()) {
+            throw new ValidationException(INPUT_ERROR);
+        }
+    }
+
+    @Override
+    public void validate(Shop shop) throws ValidationException {
+        if (shop.getAddress().isEmpty()
+        || shop.getName().isEmpty()) {
             throw new ValidationException(INPUT_ERROR);
         }
     }

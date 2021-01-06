@@ -5,6 +5,7 @@ import by.epam.bookshop.dao.EntityFinder;
 import by.epam.bookshop.entity.Entity;
 import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.ServiceException;
+import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.pool.ConnectionPool;
 import by.epam.bookshop.exceptions.ConnectionPoolException;
 
@@ -21,11 +22,11 @@ public interface EntityService<T extends Entity> {
         }
     }
 
-    public T create(Object ... args) throws ServiceException;
+    public T create(Object ... args) throws ServiceException, ValidationException;
 
     public T read(int id) throws ServiceException;
 
-    public void update(T t) throws ServiceException;
+    public void update(T t) throws ServiceException, ValidationException;
 
     public void delete(T t) throws ServiceException;
 

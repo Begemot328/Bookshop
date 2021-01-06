@@ -18,15 +18,11 @@ public class AddBookMenuCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
         try {
             Author[] authors = AuthorService.getInstance().findAll().toArray(Author[]::new);
-            request.getSession().setAttribute(SessionParameters.AUTHORS, authors);
+            request.setAttribute(RequestParameters.AUTHORS, authors);
             Paginator.paginate(request, authors, 1);
         } catch (ServiceException e) {
-            request.getSession().setAttribute(SessionParameters.ERROR_MESSAGE, e.getMessage()
-                    + Arrays.toString(e.getStackTrace()));
             throw new CommandException(e);
         } catch (DAOException e) {
-            request.getSession().setAttribute(SessionParameters.ERROR_MESSAGE, e.getMessage()
-                    + Arrays.toString(e.getStackTrace()));
             throw new CommandException(e);
         }
         return new Router(JSPPages.ADD_BOOK_PAGE);

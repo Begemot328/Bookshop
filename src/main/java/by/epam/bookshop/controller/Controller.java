@@ -1,13 +1,8 @@
 package by.epam.bookshop.controller;
 
+import by.epam.bookshop.command.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import by.epam.bookshop.command.Command;
-import by.epam.bookshop.command.CommandEnum;
-import by.epam.bookshop.command.JSPPages;
-import by.epam.bookshop.command.Router;
-import by.epam.bookshop.command.RequestParameters;
-import by.epam.bookshop.command.SessionParameters;
 import by.epam.bookshop.exceptions.CommandException;
 import by.epam.bookshop.exceptions.ServletRuntimeException;
 import javax.servlet.ServletException;
@@ -30,18 +25,20 @@ public class Controller  extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        logger.warn(GET);
+        logger.debug(GET);
         processRequest(request, response);
 
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        logger.warn(POST);
+        logger.debug(POST);
         processRequest(request, response);
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        ControllerUtil.transferParameter(request);
 
         Enumeration<String> pars = request.getParameterNames();
         while (pars.hasMoreElements()) {

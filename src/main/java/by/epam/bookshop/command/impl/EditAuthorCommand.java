@@ -49,6 +49,9 @@ public class EditAuthorCommand implements Command {
             AuthorService.getInstance().update(newAuthor);
         } catch (ServiceException e) {
             throw new CommandException(e);
+        } catch (ValidationException e) {
+            request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage());
+            return new Router(JSPPages.EDIT_AUTHOR_PAGE);
         }
         request.getSession().setAttribute(SessionParameters.AUTHOR, newAuthor);
         request.setAttribute(RequestParameters.AUTHOR, newAuthor);

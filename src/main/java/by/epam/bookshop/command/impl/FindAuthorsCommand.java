@@ -26,7 +26,7 @@ public class FindAuthorsCommand implements Command {
 
         try {
             Author[] authors = AuthorService.getInstance().findBy(finder).toArray(Author[]::new);
-            request.getSession().setAttribute(SessionParameters.AUTHORS, authors);
+            request.setAttribute(RequestParameters.AUTHORS, authors);
             Paginator.paginate(request, authors, 1);
         } catch (ServiceException e) {
             throw new CommandException(e);

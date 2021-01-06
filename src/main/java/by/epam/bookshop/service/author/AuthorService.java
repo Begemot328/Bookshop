@@ -17,6 +17,8 @@ import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.service.AbstractEntityService;
 import by.epam.bookshop.service.EntityService;
 import by.epam.bookshop.service.book.BookService;
+import by.epam.bookshop.validator.AuthorValidator;
+import by.epam.bookshop.validator.EntityValidator;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -41,4 +43,8 @@ public class AuthorService extends AbstractEntityService<Author> {
         return new AuthorFactory();
     }
 
+    @Override
+    public EntityValidator<Author> getValidator() {
+        return new AuthorValidator();
+    }
 }
