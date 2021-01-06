@@ -32,45 +32,20 @@ public class MySQLAuthorDAO extends MySQLEntityDAO<Author> {
     }
 
     @Override
-    public boolean create(Author author) throws DAOException {
-        return create(author, SCHEMA, TABLE, mapEntity(author));
+    public String getTableName() {
+        return TABLE;
     }
 
     @Override
-    public Author read(int id) throws DAOException {
-        Collection<Author> result = findBy((new AuthorFinder()).findByID(id));
-        if (result == null || result.size() != 1) {
-            return null;
-        } else {
-            return result.toArray(Author[]::new)[0];
-        }
+    public String getSchemaName() {
+        return SCHEMA;
     }
 
-    @Override
-    public void update(Author author) throws DAOException {
-        update(author, SCHEMA, TABLE, mapEntity(author));
+    public AuthorFinder getFinder() {
+        return new AuthorFinder();
     }
 
-    @Override
-    public void delete(int id) throws DAOException {
-        delete(id, SCHEMA, TABLE);
-    }
 
-    @Override
-    public Collection<Author> findAll() throws DAOException {
-        return findBy(new AuthorFinder());
-    }
-
-    @Override
-    public Collection<Author> findBy(EntityFinder<Author> finder) throws DAOException {
-        try (Statement statement = connection.createStatement()) {
-            try (ResultSet resultSet = statement.executeQuery(finder.getQuery())) {
-                return mapToList(resultSet);
-            }
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
-    }
 
     @Override
     public Collection<Author> mapToList(ResultSet resultSet) throws DAOException {
@@ -89,6 +64,7 @@ public class MySQLAuthorDAO extends MySQLEntityDAO<Author> {
         }
     }
 
+    @Override
     public Map<String, Object> mapEntity(Author author) {
         Map<String, Object> map = new HashMap<>();
         map.put(FIRSTNAME, author.getFirstName());

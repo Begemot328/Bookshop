@@ -34,8 +34,13 @@ public class MySQLShopDAO extends MySQLEntityDAO<Shop> {
     }
 
     @Override
-    public boolean create(Shop shop) throws DAOException {
-        return create(shop, SCHEMA, TABLE, mapEntity(shop));
+    public String getTableName() {
+        return TABLE;
+    }
+
+    @Override
+    public String getSchemaName() {
+        return SCHEMA;
     }
 
     @Override
@@ -45,32 +50,6 @@ public class MySQLShopDAO extends MySQLEntityDAO<Shop> {
             return null;
         } else {
             return result.stream().toArray(Shop[]::new)[0];
-        }
-    }
-
-    @Override
-    public void update(Shop shop) throws DAOException {
-        update(shop, SCHEMA, TABLE, mapEntity(shop));
-    }
-
-    @Override
-    public void delete(int id) throws DAOException {
-        delete(id, SCHEMA, TABLE);
-    }
-
-    @Override
-    public Collection findAll() throws DAOException {
-        return findBy(new ShopFinder());
-    }
-
-    @Override
-    public Collection<Shop> findBy(EntityFinder<Shop> finder) throws DAOException {
-        try (Statement statement = connection.createStatement()) {
-            try (ResultSet resultSet = statement.executeQuery(finder.getQuery())) {
-                return mapToList(resultSet);
-            }
-        } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION + e.getLocalizedMessage());
         }
     }
 
@@ -100,5 +79,4 @@ public class MySQLShopDAO extends MySQLEntityDAO<Shop> {
             throw new DAOException(e);
         }
     }
-
 }

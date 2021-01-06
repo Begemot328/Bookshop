@@ -41,8 +41,13 @@ public class MySQLUserDAO extends MySQLEntityDAO<User> {
     }
 
     @Override
-    public boolean create(User user) throws DAOException {
-        return create(user, SCHEMA, TABLE, mapEntity(user));
+    public String getTableName() {
+        return TABLE;
+    }
+
+    @Override
+    public String getSchemaName() {
+        return SCHEMA;
     }
 
     @Override
@@ -52,32 +57,6 @@ public class MySQLUserDAO extends MySQLEntityDAO<User> {
             return null;
         } else {
             return result.stream().toArray(User[]::new)[0];
-        }
-    }
-
-    @Override
-    public void update(User user) throws DAOException {
-        update(user, SCHEMA, TABLE, mapEntity(user));
-    }
-
-    @Override
-    public void delete(int id) throws DAOException {
-        delete(id, SCHEMA, TABLE);
-    }
-
-    @Override
-    public Collection findAll() throws DAOException {
-        return findBy(new UserFinder());
-    }
-
-    @Override
-    public Collection<User> findBy(EntityFinder<User> finder) throws DAOException {
-        try (Statement statement = connection.createStatement()) {
-            try (ResultSet resultSet = statement.executeQuery(finder.getQuery())) {
-                return mapToList(resultSet);
-            }
-        } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION + e.getLocalizedMessage());
         }
     }
 

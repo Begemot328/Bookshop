@@ -44,9 +44,15 @@ public class MySQLPositionDAO extends MySQLEntityDAO<Position> {
         super(connection);
     }
 
+
     @Override
-    public boolean create(Position position) throws DAOException {
-        return create(position, SCHEMA, TABLE, mapEntity(position));
+    public String getTableName() {
+        return TABLE;
+    }
+
+    @Override
+    public String getSchemaName() {
+        return SCHEMA;
     }
 
     @Override
@@ -56,32 +62,6 @@ public class MySQLPositionDAO extends MySQLEntityDAO<Position> {
             return null;
         } else {
             return result.stream().toArray(Position[]::new)[0];
-        }
-    }
-
-    @Override
-    public void update(Position position) throws DAOException {
-        update(position, SCHEMA, TABLE, mapEntity(position));
-    }
-
-    @Override
-    public void delete(int id) throws DAOException {
-        delete(id, SCHEMA, TABLE);
-    }
-
-    @Override
-    public Collection<Position> findAll() throws DAOException {
-        return findBy(new PositionFinder());
-    }
-
-    @Override
-    public Collection<Position> findBy(EntityFinder<Position> finder) throws DAOException {
-        try (Statement statement = connection.createStatement()) {
-            try (ResultSet resultSet = statement.executeQuery(finder.getQuery())) {
-                return mapToList(resultSet);
-            }
-        } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION + e.getLocalizedMessage());
         }
     }
 

@@ -33,7 +33,6 @@ public class MySQLPositionActionDAO extends MySQLEntityDAO<PositionAction> {
     private static final String FINAL_STATUS = "FINAL_STATUS";
     private static final String DATE_TIME = "DATE_TIME";
     private static final String CURRENT_PRICE = "CURRENT_PRICE";
-
     private static final String TIMESTAMP_FORMAT = "yyyy-mm-dd hh:mm:ss";
     private static final String SQL_EXCEPTION = "SQL Exception: ";
     private static final String FACTORY_EXCEPTION = "Factory Exception: ";
@@ -47,8 +46,13 @@ public class MySQLPositionActionDAO extends MySQLEntityDAO<PositionAction> {
     }
 
     @Override
-    public boolean create(PositionAction positionAction) throws DAOException {
-        return create(positionAction, SCHEMA, TABLE, mapEntity(positionAction));
+    public String getTableName() {
+        return TABLE;
+    }
+
+    @Override
+    public String getSchemaName() {
+        return SCHEMA;
     }
 
     @Override
@@ -58,32 +62,6 @@ public class MySQLPositionActionDAO extends MySQLEntityDAO<PositionAction> {
             return null;
         } else {
             return result.stream().toArray(PositionAction[]::new)[0];
-        }
-    }
-
-    @Override
-    public void update(PositionAction positionAction) throws DAOException {
-        update(positionAction, SCHEMA, TABLE, mapEntity(positionAction));
-    }
-
-    @Override
-    public void delete(int id) throws DAOException {
-        delete(id, SCHEMA, TABLE);
-    }
-
-    @Override
-    public Collection findAll() throws DAOException {
-        return findBy(new PositionActionFinder());
-    }
-
-    @Override
-    public Collection<PositionAction> findBy(EntityFinder<PositionAction> finder) throws DAOException {
-        try (Statement statement = connection.createStatement()) {
-            try (ResultSet resultSet = statement.executeQuery(finder.getQuery())) {
-                return mapToList(resultSet);
-            }
-        } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION + e.getLocalizedMessage());
         }
     }
 

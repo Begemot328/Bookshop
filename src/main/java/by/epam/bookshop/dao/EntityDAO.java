@@ -19,5 +19,18 @@ public interface EntityDAO<T extends Entity> {
 
     Collection<T> findAll() throws DAOException;
 
+    Collection<T> findAll(int page, int quantity) throws DAOException;
+
     Collection<T> findBy(EntityFinder<T> finder) throws DAOException;
+
+    Collection<T> findBy(EntityFinder<T> finder, int page, int quantity) throws DAOException;
+
+    int countAll() throws DAOException;
+
+    int countBy(EntityFinder<T> finder) throws DAOException;
+
+    String getTableName();
+
+    String getSchemaName();
+
 }

@@ -205,7 +205,7 @@
             </div>
             <div class="w3-col" style="width:10%">
                 <input class="w3-input w3-border" type="number" min="0" name="maxPrice" value="${maxPrice}"
-                       placeholder="<fmt:message key="book.price.min"/>">
+                       placeholder="<fmt:message key="book.price.max"/>">
             </div>
             <div class="w3-col" style="width:10%">
                 <input class="w3-btn w3-deep-purple w3-ripple w3-hover-purple" type="submit"
@@ -216,9 +216,9 @@
             <c:forEach var="book"
                        begin="${sessionScope.firstElement}"
                        end="${sessionScope.lastElement}"
-                       items="${sessionScope.array}">
+                       items="${books}">
                 <form class="w3-col l2 m6 s12  w3-center"
-                      method="POST" action="${pageContext.request.contextPath}/ControllerURL">
+                      method="GET" action="${pageContext.request.contextPath}/ControllerURL">
                     <input type="hidden" name="command" value="VIEW_BOOK_COMMAND">
                     <input type="hidden" name="book-id" value="${book.id}">
                     <button class="w3-button  w3-ripple">

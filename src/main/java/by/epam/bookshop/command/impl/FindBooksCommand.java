@@ -14,11 +14,17 @@ import java.util.Enumeration;
 
 public class FindBooksCommand implements Command {
 
+    private static final int ELEMENTS_PER_PAGE = 30;
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         BookFinder finder = new BookFinder();
         Enumeration<String> stringEnum = request.getParameterNames();
+
+        int page = Integer.parseInt(request.getParameter(RequestParameters.PAGE));
+        if (page <= 0) {
+            page = 1;
+        }
 
         if (isNotEmpty(request.getParameter(RequestParameters.TITLE))) {
             finder = finder.findByTitle(request.getParameter(RequestParameters.TITLE));
@@ -70,7 +76,7 @@ public class FindBooksCommand implements Command {
 
             Book[] books = BookService.getInstance().findBy(finder).toArray(Book[]::new);
 
-            request.getSession().setAttribute(SessionParameters.BOOKS, books);
+            request.setAttribute(RequestParameters.BOOKS, books);
             Paginator.paginate(request, books, 1);
         } catch (ServiceException e) {
             throw new CommandException(e);

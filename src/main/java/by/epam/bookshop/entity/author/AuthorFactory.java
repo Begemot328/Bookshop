@@ -1,9 +1,10 @@
 package by.epam.bookshop.entity.author;
 
 import by.epam.bookshop.entity.EntityFactory;
+import by.epam.bookshop.entity.user.AbstractEntityFactory;
 import by.epam.bookshop.exceptions.FactoryException;
 
-public class AuthorFactory implements EntityFactory<Author> {
+public class AuthorFactory extends AbstractEntityFactory<Author> {
 
 
     @Override

@@ -32,4 +32,12 @@ public interface EntityService<T extends Entity> {
     Collection<T> findBy(EntityFinder<T> finder) throws ServiceException;
 
     Collection<T> findAll() throws DAOException, ServiceException;
+
+    int countBy(EntityFinder<T> finder) throws ServiceException;
+
+    int countAll() throws DAOException, ServiceException;
+
+    Collection<T> findBy(EntityFinder<T> finder, int first, int last) throws ServiceException;
+
+    Collection<T> findAll(int first, int last) throws DAOException, ServiceException;
 }

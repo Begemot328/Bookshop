@@ -41,4 +41,5 @@ public class RequestParameters {
     public static final String LANGUAGE = "language";
 
 
+    public static final String BOOKS = "books";
 }

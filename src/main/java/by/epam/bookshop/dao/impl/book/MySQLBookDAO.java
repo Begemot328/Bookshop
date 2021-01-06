@@ -39,8 +39,13 @@ public class MySQLBookDAO extends MySQLEntityDAO<Book> {
     }
 
     @Override
-    public boolean create(Book book) throws DAOException {
-        return create(book, SCHEMA, TABLE, mapEntity(book));
+    public String getTableName() {
+        return TABLE;
+    }
+
+    @Override
+    public String getSchemaName() {
+        return SCHEMA;
     }
 
     @Override
@@ -54,31 +59,6 @@ public class MySQLBookDAO extends MySQLEntityDAO<Book> {
     }
 
     @Override
-    public void update(Book book) throws DAOException {
-        update(book, SCHEMA, TABLE, mapEntity(book));
-    }
-
-    @Override
-    public void delete(int id) throws DAOException {
-        delete(id, SCHEMA, TABLE);
-    }
-
-    @Override
-    public Collection findAll() throws DAOException {
-        return findBy(new BookFinder());
-    }
-
-    @Override
-    public Collection<Book> findBy(EntityFinder<Book> finder) throws DAOException {
-        try (Statement statement = connection.createStatement()) {
-            try (ResultSet resultSet = statement.executeQuery(finder.getQuery())) {
-                return mapToList(resultSet);
-            }
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
-    }
-
     public Map<String, Object> mapEntity(Book book) {
         Map<String, Object> map = new HashMap<>();
         map.put(TITLE, book.getTitle());
