@@ -41,5 +41,7 @@ public class RequestParameters {
     public static final String LANGUAGE = "language";
 
 
+    public static final String CURRENT_PAGE = "currentPage";
     public static final String BOOKS = "books";
+    public static final String PAGE_QUANTITY = "pageQuantity";
 }

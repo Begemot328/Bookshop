@@ -3,9 +3,10 @@ package by.epam.bookshop.entity.position;
 import by.epam.bookshop.entity.EntityFactory;
 import by.epam.bookshop.entity.book.Book;
 import by.epam.bookshop.entity.shop.Shop;
+import by.epam.bookshop.entity.user.AbstractEntityFactory;
 import by.epam.bookshop.exceptions.FactoryException;
 
-public class PositionFactory implements EntityFactory<Position> {
+public class PositionFactory extends AbstractEntityFactory<Position> {
 
     @Override
     public Position create(Object... args) throws FactoryException {

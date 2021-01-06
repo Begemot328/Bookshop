@@ -11,6 +11,7 @@ import by.epam.bookshop.entity.position_action.PositionActionFactory;
 import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.FactoryException;
 import by.epam.bookshop.exceptions.ServiceException;
+import by.epam.bookshop.service.AbstractEntityService;
 import by.epam.bookshop.service.EntityService;
 import by.epam.bookshop.service.position.PositionService;
 
@@ -18,7 +19,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
 
-public class PositionActionService implements EntityService<PositionAction> {
+public class PositionActionService extends AbstractEntityService<PositionAction> {
 
     private static final String SQL_CONNECTION_EXCEPTION = "SQL Exception: ";
     private static final String DAO_EXCEPTION = "DAO Exception: ";
@@ -33,65 +34,11 @@ public class PositionActionService implements EntityService<PositionAction> {
         return INSTANCE;
     }
 
-    @Override
-    public PositionAction create(Object... args) throws ServiceException {
-        try (Connection connection = getConnection()) {
-            PositionAction positionAction = new PositionActionFactory().create(args);
-            new MySQLPositionActionDAO(connection).create(positionAction);
-            return positionAction;
-        } catch (SQLException | FactoryException | DAOException e) {
-            throw new ServiceException(e);
-        }
+    public MySQLPositionActionDAO getDAO(Connection connection) {
+        return new MySQLPositionActionDAO(connection);
     }
 
-    @Override
-    public PositionAction read(int id) throws ServiceException {
-        try (Connection connection = getConnection()) {
-            return new MySQLPositionActionDAO(connection).read(id);
-        } catch (DAOException | SQLException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public void update(PositionAction positionAction) throws ServiceException {
-        try (Connection connection = getConnection()) {
-            new MySQLPositionActionDAO(connection).update(positionAction);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        } catch (SQLException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public void delete(PositionAction positionAction) throws ServiceException {
-        try (Connection connection = getConnection()) {
-            new MySQLPositionActionDAO(connection).delete(positionAction.getId());
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        } catch (SQLException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public Collection<PositionAction> findBy(EntityFinder<PositionAction> finder) throws ServiceException {
-        try (Connection connection = getConnection()) {
-            return new MySQLPositionActionDAO(connection).findBy(finder);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        } catch (SQLException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public Collection<PositionAction> findAll() throws DAOException, ServiceException {
-        try (Connection connection = getConnection()) {
-            return new MySQLPositionActionDAO(connection).findAll();
-        } catch (DAOException | SQLException e) {
-            throw new ServiceException(e);
-        }
+    public PositionActionFactory getFactory() {
+        return new PositionActionFactory();
     }
 }

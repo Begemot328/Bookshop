@@ -184,9 +184,10 @@
             </form>
         </div>
     </div>
+    <c:set var="commandName" value="SEARCH_BOOKS_COMMAND"/>
     <div class="w3-cell w3-padding-large" style="width:70%">
         <form class="w3-row-padding" method="GET" action="${pageContext.request.contextPath}/ControllerURL">
-            <input type="hidden" name="command" value="SEARCH_BOOKS_COMMAND">
+            <input type="hidden" name="command" value="${commandName}">
             <div class="w3-col" style="width:15%">
                 <input class="w3-input w3-border" type="text" name="authorFirstname" value="${authorFirstname}"
                        placeholder="<fmt:message key="author.firstname"/>">
@@ -214,8 +215,6 @@
         </form>
         <div class="w3-row-padding">
             <c:forEach var="book"
-                       begin="${sessionScope.firstElement}"
-                       end="${sessionScope.lastElement}"
                        items="${books}">
                 <form class="w3-col l2 m6 s12  w3-center"
                       method="GET" action="${pageContext.request.contextPath}/ControllerURL">
@@ -247,16 +246,16 @@
         <!-- Pagination          -->
         <div class="w3-bar w3-purple w3-opacity-min w3-center w3-stretch">
             <c:choose>
-                <c:when test="${sessionScope.pageQuantity} > 1">
-                    <c:forEach begin="1" end="${sessionScope.pageQuantity}" var="p">
+                <c:when test="${pageQuantity} > 1">
+                    <c:forEach begin="1" end="${pageQuantity}" var="p">
                         <c:choose>
                             <c:when test="${sessionScope.currentPage == p}">
                                 <a class="w3-button w3-indigo"
-                                   href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
+                                   href="${pageContext.request.contextPath}/ControllerURL?command=${commandName}&page=${p}">${p}</a>
                             </c:when>
                             <c:otherwise>
                                 <a class="w3-button w3-purple"
-                                   href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
+                                   href="${pageContext.request.contextPath}/ControllerURL?command=${commandName}&page=${p}">${p}</a>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>

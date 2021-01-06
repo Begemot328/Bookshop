@@ -1,9 +1,11 @@
 package by.epam.bookshop.service.position;
 
 import by.epam.bookshop.dao.EntityFinder;
+import by.epam.bookshop.dao.impl.book.MySQLBookDAO;
 import by.epam.bookshop.dao.impl.position_action.MySQLPositionActionDAO;
 import by.epam.bookshop.dao.impl.position.MySQLPositionDAO;
 import by.epam.bookshop.entity.book.Book;
+import by.epam.bookshop.entity.book.BookFactory;
 import by.epam.bookshop.entity.position_action.PositionAction;
 import by.epam.bookshop.entity.position_action.PositionActionFactory;
 import by.epam.bookshop.entity.position.Position;
@@ -15,6 +17,7 @@ import by.epam.bookshop.entity.user.UserStatus;
 import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.FactoryException;
 import by.epam.bookshop.exceptions.ServiceException;
+import by.epam.bookshop.service.AbstractEntityService;
 import by.epam.bookshop.service.EntityService;
 
 import java.sql.Connection;
@@ -25,7 +28,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
 
-public class PositionService implements EntityService<Position> {
+public class PositionService extends AbstractEntityService<Position> {
     private static final String SQL_CONNECTION_EXCEPTION = "SQL Connection Exception: ";
     private static final String SQL_EXCEPTION = "SQL Connection Exception: ";
     private static final String DAO_EXCEPTION = "DAO Exception: ";
@@ -41,23 +44,12 @@ public class PositionService implements EntityService<Position> {
         return INSTANCE;
     }
 
+    public MySQLPositionDAO getDAO(Connection connection) {
+        return new MySQLPositionDAO(connection);
+    }
 
-    public Position create(Object... args) throws ServiceException {
-        if (args[0] instanceof User
-                && args[1] instanceof Book
-                && args[2] instanceof Shop
-                && args[3] instanceof String
-                && args[4] instanceof Integer
-                && ((Integer) args[4]) > 0) {
-            return createPosition(
-                    (User) args[0],
-                    (Book) args[1],
-                    (Shop) args[2],
-                    (String) args[3],
-                    (Integer) args[4]);
-        } else {
-            throw new ServiceException(WRONG_INPUT_EXCEPTION);
-        }
+    public PositionFactory getFactory() {
+        return new PositionFactory();
     }
 
     public boolean isSimilar(Position p1, Position p2) {
@@ -254,61 +246,6 @@ public class PositionService implements EntityService<Position> {
             } catch (FactoryException e) {
                 throw new ServiceException(e);
             }
-        } catch (SQLException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public Position read(int id) throws ServiceException {
-        try (Connection connection = getConnection()) {
-            return new MySQLPositionDAO(connection).read(id);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        } catch (SQLException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public void update(Position position) throws ServiceException {
-        try (Connection connection = getConnection()) {
-            new MySQLPositionDAO(connection).update(position);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        } catch (SQLException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public void delete(Position position) throws ServiceException {
-        try (Connection connection = getConnection()) {
-            new MySQLPositionDAO(connection).delete(position.getId());
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        } catch (SQLException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public Collection<Position> findBy(EntityFinder<Position> finder) throws ServiceException {
-        try (Connection connection = getConnection()) {
-            return new MySQLPositionDAO(connection).findBy(finder);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        } catch (SQLException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public Collection<Position> findAll() throws ServiceException {
-        try (Connection connection = getConnection()) {
-            return new MySQLPositionDAO(connection).findAll();
-        } catch (DAOException e) {
-            throw new ServiceException(e);
         } catch (SQLException e) {
             throw new ServiceException(e);
         }

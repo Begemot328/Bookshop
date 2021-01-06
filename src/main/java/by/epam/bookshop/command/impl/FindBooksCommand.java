@@ -10,7 +10,7 @@ import by.epam.bookshop.service.author.AuthorService;
 import by.epam.bookshop.service.book.BookService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
+import java.util.*;
 
 public class FindBooksCommand implements Command {
 
@@ -20,9 +20,13 @@ public class FindBooksCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
         BookFinder finder = new BookFinder();
         Enumeration<String> stringEnum = request.getParameterNames();
-
-        int page = Integer.parseInt(request.getParameter(RequestParameters.PAGE));
-        if (page <= 0) {
+        int page;
+        try {
+            page = Integer.parseInt(request.getParameter(RequestParameters.PAGE));
+            if (page <= 0) {
+                page = 1;
+            }
+        } catch (NumberFormatException e) {
             page = 1;
         }
 
@@ -73,11 +77,17 @@ public class FindBooksCommand implements Command {
 
                 finder = finder.findByAuthors(AuthorService.getInstance().findBy(authorFinder));
             }
-
-            Book[] books = BookService.getInstance().findBy(finder).toArray(Book[]::new);
+            int pageQuantity = BookService.getInstance().countBy(finder) / ELEMENTS_PER_PAGE + 1;
+            if (pageQuantity <= 0) {
+                pageQuantity = 1;
+            }
+            Book[] books = BookService.getInstance().findBy(
+                    finder, (page - 1) * ELEMENTS_PER_PAGE, ELEMENTS_PER_PAGE)
+                    .toArray(Book[]::new);
 
             request.setAttribute(RequestParameters.BOOKS, books);
-            Paginator.paginate(request, books, 1);
+            request.setAttribute(RequestParameters.PAGE_QUANTITY, pageQuantity);
+            request.setAttribute(RequestParameters.CURRENT_PAGE, page);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

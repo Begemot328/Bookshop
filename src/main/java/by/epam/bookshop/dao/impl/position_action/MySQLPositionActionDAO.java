@@ -4,6 +4,7 @@ import by.epam.bookshop.dao.EntityFinder;
 import by.epam.bookshop.dao.MySQLEntityDAO;
 import by.epam.bookshop.dao.impl.book.MySQLBookDAO;
 import by.epam.bookshop.dao.impl.position.MySQLPositionDAO;
+import by.epam.bookshop.dao.impl.position.PositionFinder;
 import by.epam.bookshop.dao.impl.shop.MySQLShopDAO;
 import by.epam.bookshop.dao.impl.user.MySQLUserDAO;
 import by.epam.bookshop.entity.EntityFactory;
@@ -53,6 +54,11 @@ public class MySQLPositionActionDAO extends MySQLEntityDAO<PositionAction> {
     @Override
     public String getSchemaName() {
         return SCHEMA;
+    }
+
+    @Override
+    public PositionActionFinder getFinder() {
+        return new PositionActionFinder();
     }
 
     @Override

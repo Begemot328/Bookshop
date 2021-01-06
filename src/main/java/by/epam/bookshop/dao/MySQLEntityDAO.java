@@ -1,5 +1,6 @@
 package by.epam.bookshop.dao;
 
+import by.epam.bookshop.controller.Controller;
 import by.epam.bookshop.dao.impl.author.AuthorFinder;
 import by.epam.bookshop.entity.Entity;
 import by.epam.bookshop.entity.author.Author;
@@ -169,7 +170,8 @@ public abstract class MySQLEntityDAO<T extends Entity> implements EntityDAO<T> {
     public int countBy(EntityFinder<T> finder) throws DAOException {
         try (Statement statement = connection.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(finder.getQuery().replace("*", COUNT))) {
-                return resultSet.getInt(0);
+                resultSet.next();
+                return resultSet.getInt(1);
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -219,6 +221,10 @@ public abstract class MySQLEntityDAO<T extends Entity> implements EntityDAO<T> {
                     finder.getQuery().concat(LIMIT
                             .replace(FIRST, Integer.toString(first))
                             .replace(LAST, Integer.toString(last))))) {
+                Controller.getLoggerInstance().debug(
+                        finder.getQuery().concat(LIMIT
+                                .replace(FIRST, Integer.toString(first))
+                                .replace(LAST, Integer.toString(last))));
                 return mapToList(resultSet);
             }
         } catch (SQLException e) {

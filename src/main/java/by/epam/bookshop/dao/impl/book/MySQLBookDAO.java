@@ -48,15 +48,10 @@ public class MySQLBookDAO extends MySQLEntityDAO<Book> {
         return SCHEMA;
     }
 
-    @Override
-    public Book read(int id) throws DAOException {
-        Collection<Book> result = findBy((new BookFinder()).findByID(id));
-        if (result == null || result.isEmpty() || result.size() > 1) {
-            return null;
-        } else {
-            return result.stream().toArray(Book[]::new)[0];
-        }
+    public BookFinder getFinder() {
+        return new BookFinder();
     }
+
 
     @Override
     public Map<String, Object> mapEntity(Book book) {

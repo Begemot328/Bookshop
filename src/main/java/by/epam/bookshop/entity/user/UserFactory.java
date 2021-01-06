@@ -7,10 +7,10 @@ import by.epam.bookshop.entity.position.PositionStatus;
 import by.epam.bookshop.entity.shop.Shop;
 import by.epam.bookshop.exceptions.FactoryException;
 
-public class UserFactory implements EntityFactory<User> {
+public class UserFactory extends AbstractEntityFactory<User> {
 
     /*
-        private int id;
+    private int id;
     private String firstName;
     private String lastName;
     private String login;

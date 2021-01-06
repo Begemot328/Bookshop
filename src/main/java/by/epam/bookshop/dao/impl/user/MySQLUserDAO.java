@@ -2,6 +2,7 @@ package by.epam.bookshop.dao.impl.user;
 
 import by.epam.bookshop.dao.EntityFinder;
 import by.epam.bookshop.dao.MySQLEntityDAO;
+import by.epam.bookshop.dao.impl.position_action.PositionActionFinder;
 import by.epam.bookshop.entity.EntityFactory;
 import by.epam.bookshop.entity.user.User;
 import by.epam.bookshop.entity.user.UserFactory;
@@ -48,6 +49,12 @@ public class MySQLUserDAO extends MySQLEntityDAO<User> {
     @Override
     public String getSchemaName() {
         return SCHEMA;
+    }
+
+
+    @Override
+    public UserFinder getFinder() {
+        return new UserFinder();
     }
 
     @Override

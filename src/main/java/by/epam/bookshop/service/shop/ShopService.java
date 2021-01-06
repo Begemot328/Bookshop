@@ -1,8 +1,10 @@
 package by.epam.bookshop.service.shop;
 
 import by.epam.bookshop.dao.EntityFinder;
+import by.epam.bookshop.dao.impl.book.MySQLBookDAO;
 import by.epam.bookshop.dao.impl.shop.MySQLShopDAO;
 import by.epam.bookshop.dao.impl.user.MySQLUserDAO;
+import by.epam.bookshop.entity.book.BookFactory;
 import by.epam.bookshop.entity.shop.Shop;
 import by.epam.bookshop.entity.shop.ShopFactory;
 import by.epam.bookshop.entity.user.User;
@@ -10,6 +12,7 @@ import by.epam.bookshop.entity.user.UserFactory;
 import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.FactoryException;
 import by.epam.bookshop.exceptions.ServiceException;
+import by.epam.bookshop.service.AbstractEntityService;
 import by.epam.bookshop.service.EntityService;
 import by.epam.bookshop.service.user.UserService;
 
@@ -17,7 +20,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
 
-public class ShopService implements EntityService<Shop> {
+public class ShopService extends AbstractEntityService<Shop> {
     private static final String SQL_CONNECTION_EXCEPTION = "SQL Exception: ";
     private static final String DAO_EXCEPTION = "User DAO Exception: ";
     private static final String FACTORY_EXCEPTION = "User factory Exception: ";
@@ -32,59 +35,11 @@ public class ShopService implements EntityService<Shop> {
         return INSTANCE;
     }
 
-    @Override
-    public Shop create(Object... args) throws ServiceException {
-        try  (Connection connection = getConnection()) {
-            Shop shop = new ShopFactory().create(args);
-            new MySQLShopDAO(connection).create(shop);
-            return shop;
-        } catch (SQLException | FactoryException | DAOException e) {
-            throw new ServiceException(e);
-        }
+    public MySQLShopDAO getDAO(Connection connection) {
+        return new MySQLShopDAO(connection);
     }
 
-    @Override
-    public Shop read(int id) throws ServiceException {
-        try  (Connection connection = getConnection()) {
-            return new MySQLShopDAO(connection).read(id);
-        } catch (DAOException | SQLException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public void update(Shop shop) throws ServiceException {
-        try  (Connection connection = getConnection()) {
-            new MySQLShopDAO(connection).update(shop);
-        } catch (DAOException | SQLException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public void delete(Shop shop) throws ServiceException {
-        try  (Connection connection = getConnection()) {
-            new MySQLShopDAO(connection).delete(shop.getId());
-        } catch (DAOException | SQLException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public Collection<Shop> findBy(EntityFinder<Shop> finder) throws ServiceException {
-        try  (Connection connection = getConnection()) {
-            return new MySQLShopDAO(connection).findBy(finder);
-        } catch (DAOException | SQLException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public Collection<Shop> findAll() throws DAOException, ServiceException {
-        try  (Connection connection = getConnection()) {
-            return new MySQLShopDAO(connection).findAll();
-        } catch (DAOException | SQLException e) {
-            throw new ServiceException(e);
-        }
+    public ShopFactory getFactory() {
+        return new ShopFactory();
     }
 }

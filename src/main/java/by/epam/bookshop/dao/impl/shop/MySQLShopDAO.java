@@ -2,6 +2,7 @@ package by.epam.bookshop.dao.impl.shop;
 
 import by.epam.bookshop.dao.EntityFinder;
 import by.epam.bookshop.dao.MySQLEntityDAO;
+import by.epam.bookshop.dao.impl.position_action.PositionActionFinder;
 import by.epam.bookshop.entity.EntityFactory;
 import by.epam.bookshop.entity.shop.Shop;
 import by.epam.bookshop.entity.shop.ShopFactory;
@@ -41,6 +42,11 @@ public class MySQLShopDAO extends MySQLEntityDAO<Shop> {
     @Override
     public String getSchemaName() {
         return SCHEMA;
+    }
+
+    @Override
+    public ShopFinder getFinder() {
+        return new ShopFinder();
     }
 
     @Override

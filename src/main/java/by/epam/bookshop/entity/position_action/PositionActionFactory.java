@@ -3,6 +3,7 @@ package by.epam.bookshop.entity.position_action;
 import by.epam.bookshop.entity.position.Position;
 import by.epam.bookshop.entity.position.PositionStatus;
 import by.epam.bookshop.entity.shop.Shop;
+import by.epam.bookshop.entity.user.AbstractEntityFactory;
 import by.epam.bookshop.entity.user.User;
 import by.epam.bookshop.entity.book.Book;
 import by.epam.bookshop.entity.EntityFactory;
@@ -10,7 +11,7 @@ import by.epam.bookshop.exceptions.FactoryException;
 
 import java.time.LocalDateTime;
 
-public class PositionActionFactory implements EntityFactory<PositionAction> {
+public class PositionActionFactory extends AbstractEntityFactory<PositionAction> {
 
     @Override
     public PositionAction create(Object... args) throws FactoryException {

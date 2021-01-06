@@ -1,14 +1,17 @@
 package by.epam.bookshop.service.user;
 
 import by.epam.bookshop.dao.EntityFinder;
+import by.epam.bookshop.dao.impl.book.MySQLBookDAO;
 import by.epam.bookshop.dao.impl.user.MySQLUserDAO;
 import by.epam.bookshop.dao.impl.user.UserFinder;
+import by.epam.bookshop.entity.book.BookFactory;
 import by.epam.bookshop.entity.user.User;
 import by.epam.bookshop.entity.user.UserFactory;
 import by.epam.bookshop.entity.user.UserStatus;
 import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.FactoryException;
 import by.epam.bookshop.exceptions.ServiceException;
+import by.epam.bookshop.service.AbstractEntityService;
 import by.epam.bookshop.service.EntityService;
 
 import java.sql.Connection;
@@ -17,7 +20,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.function.Supplier;
 
-public class UserService implements EntityService<User> {
+public class UserService extends AbstractEntityService<User> {
     private static final String SQL_CONNECTION_EXCEPTION = "SQL Exception: ";
     private static final String DAO_EXCEPTION = "User DAO Exception: ";
     private static final String FACTORY_EXCEPTION = "User factory Exception: ";
@@ -33,74 +36,13 @@ public class UserService implements EntityService<User> {
         return INSTANCE;
     }
 
-    @Override
-    public User create(Object... args) throws ServiceException {
-        try  (Connection connection = getConnection()) {
-            User user = new UserFactory().create(args);
-            new MySQLUserDAO(connection).create(user);
-            return user;
-        } catch (SQLException e) {
-            throw new ServiceException(e);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        } catch (FactoryException e) {
-            throw new ServiceException(e);
-        }
+    public MySQLUserDAO getDAO(Connection connection) {
+        return new MySQLUserDAO(connection);
     }
 
-    @Override
-    public User read(int id) throws ServiceException {
-        try  (Connection connection = getConnection()) {
-            return new MySQLUserDAO(connection).read(id);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        } catch (SQLException e) {
-            throw new ServiceException(e);
-        }
+    public UserFactory getFactory() {
+        return new UserFactory();
     }
-
-    @Override
-    public void update(User user) throws ServiceException {
-        try  (Connection connection = getConnection()) {
-            new MySQLUserDAO(connection).update(user);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        } catch (SQLException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public void delete(User user) throws ServiceException {
-        try  (Connection connection = getConnection()) {
-            new MySQLUserDAO(connection).delete(user.getId());
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        } catch (SQLException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public Collection<User> findBy(EntityFinder<User> finder) throws ServiceException {
-        try  (Connection connection = getConnection()) {
-            return new MySQLUserDAO(connection).findBy(finder);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        } catch (SQLException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public Collection<User> findAll() throws ServiceException {
-        try  (Connection connection = getConnection()) {
-            return new MySQLUserDAO(connection).findAll();
-        } catch (DAOException | SQLException e) {
-            throw new ServiceException(e);
-        }
-    }
-
 
     public User createUser(UserStatus status, Object... args) throws ServiceException {
         if (args.length == 5) {
