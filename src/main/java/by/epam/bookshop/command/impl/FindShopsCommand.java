@@ -34,10 +34,9 @@ public class FindShopsCommand implements Command {
             finder = finder.findByAdress(request.getParameter(RequestParameters.SHOP_ADRESS));
         }
         try {
-            int pageQuantity = ShopService.getInstance().countBy(finder) / ELEMENTS_PER_PAGE + 1;
-            if (pageQuantity <= 0) {
-                pageQuantity = 1;
-            }
+            int pageQuantity = ControllerUtil.pageQuantity(ShopService.getInstance().countBy(finder),
+                    ELEMENTS_PER_PAGE);
+
             request.setAttribute(
                     RequestParameters.SHOPS,
                     ShopService.getInstance().findBy(finder).toArray(Shop[]::new));

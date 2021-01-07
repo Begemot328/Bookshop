@@ -55,7 +55,7 @@
             <div class="w3-cell-row">
                 <div class="w3-dropdown-hover">
                     <button class="w3-button w3-purple w3-opacity-min">
-                        <i class="material-icons">search</i>
+                        <i class="material-icons w3-xxlarge">search</i>
                     </button>
                     <div class="w3-dropdown-content w3-bar-block w3-deep-purple">
                         <form class="w3-bar-item" action="${pageContext.request.contextPath}/ControllerURL">
@@ -81,7 +81,7 @@
                 </div>
                 <div class="w3-dropdown-hover">
                     <button class="w3-button w3-purple w3-opacity-min">
-                        <i class="material-icons">person</i>
+                        <i class="material-icons w3-xxlarge">person</i>
                         <c:if test="${sessionScope.currentUser != null}">
                             <span><c:out value="${sessionScope.currentUser.firstName}"/> <c:out
                                     value="${sessionScope.currentUser.lastName}"/></span>
@@ -119,7 +119,9 @@
                 </div>
                 <div class="w3-dropdown-hover">
                     <button class="w3-button w3-purple w3-opacity-min">
-                        <i class="fa fa-globe"></i>
+                         <svg style="width:32px;height:32px" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M17.9,17.39C17.64,16.59 16.89,16 16,16H15V13A1,1 0 0,0 14,12H8V10H10A1,1 0 0,0 11,9V7H13A2,2 0 0,0 15,5V4.59C17.93,5.77 20,8.64 20,12C20,14.08 19.2,15.97 17.9,17.39M11,19.93C7.05,19.44 4,16.08 4,12C4,11.38 4.08,10.78 4.21,10.21L9,15V16A2,2 0 0,0 11,18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                        </svg>
                     </button>
                     <div class="w3-dropdown-content w3-bar-block w3-deep-purple">
                         <form class="w3-bar-item" method="GET"
@@ -172,6 +174,7 @@
             </form>
         </div>
     </div>
+    <c:set var="commandName" value="SEARCH_SHOPS_COMMAND"/>
     <div class="w3-cell w3-padding-large" style="width:70%">
         <form class="w3-row-padding" method="POST" action="${pageContext.request.contextPath}/ControllerURL">
             <input type="hidden" name="command" value="SEARCH_SHOPS_COMMAND">
@@ -194,13 +197,11 @@
         </form>
         <div class="w3-row-padding">
             <c:forEach var="shop"
-                       begin="${sessionScope.firstElement}"
-                       end="${sessionScope.lastElement}"
-                       items="${sessionScope.shops}">
+                       items="${requestScope.shops}">
                 <form class="w3-col l2 m6 s12  w3-center"
-                      method="POST" action="${pageContext.request.contextPath}/ControllerURL">
+                      method="POST" action="${pageContext.request.contextPath}/ControllerURL" id="searchForm">
                     <input type="hidden" name="command" value="VIEW_SHOP_COMMAND">
-                    <input type="hidden" name="shop-id" value="${shop.id}">
+                    <input type="hidden" name="shopId" value="${shop.id}">
                     <button class="w3-button  w3-ripple">
                         <c:choose>
                             <c:when test="${not empty shop.photoLink}">
@@ -221,18 +222,17 @@
                 </form>
             </c:forEach>
         </div>
+        <!-- Pagination          -->
         <div class="w3-bar w3-purple w3-opacity-min w3-center w3-stretch">
             <c:choose>
-                <c:when test="${sessionScope.pageQuantity} > 1">
-                    <c:forEach begin="1" end="${sessionScope.pageQuantity}" var="p">
+                <c:when test="${requestScope.pageQuantity > 1}">
+                    <c:forEach begin="1" end="${requestScope.pageQuantity}" var="p">
                         <c:choose>
-                            <c:when test="${sessionScope.currentPage == p}">
-                                <a class="w3-button w3-indigo"
-                                   href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
+                            <c:when test="${requestScope.currentPage == p}">
+                                <button class="w3-button w3-indigo" form="searchForm" type="submit" name="page" value="${p}">${p}</button>
                             </c:when>
                             <c:otherwise>
-                                <a class="w3-button w3-purple"
-                                   href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
+                                <button class="w3-button w3-purple" form="searchForm" type="submit" name="page" value="${p}">${p}</button>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>

@@ -25,7 +25,6 @@ public class EditBookMenuCommand implements Command {
             }
             Author[] authors = AuthorService.getInstance().findAll().toArray(Author[]::new);
             request.setAttribute(RequestParameters.AUTHORS, authors);
-            Paginator.paginate(request, authors, 1);
         } catch (ServiceException e) {
             throw new CommandException(e);
         } catch (DAOException e) {

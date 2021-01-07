@@ -35,11 +35,10 @@ public class ViewUserCommand implements Command {
                         .findBy(finder)
                         .toArray(PositionAction[]::new);
             }
-            int pageQuantity = PositionActionService.getInstance().countBy(finder)
-                    / ELEMENTS_PER_PAGE + 1;
-            if (pageQuantity <= 0) {
-                pageQuantity = 1;
-            }
+
+
+            int pageQuantity = ControllerUtil.pageQuantity(PositionActionService.getInstance().countBy(finder),
+                    ELEMENTS_PER_PAGE);
 
             request.setAttribute(RequestParameters.ACTIONS, actions);
             request.getSession().setAttribute(SessionParameters.USER, new UserDTO(user));

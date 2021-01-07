@@ -122,7 +122,7 @@ public abstract class MySQLEntityDAO<T extends Entity> implements EntityDAO<T> {
 
         try (PreparedStatement statement = connection.prepareStatement(
                 getInsertQuery(schemaName, tableName, map),
-                PreparedStatement.RETURN_GENERATED_KEYS);) {
+                PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             Set<String> keySet = map.keySet();
             int i = 0;
@@ -169,7 +169,8 @@ public abstract class MySQLEntityDAO<T extends Entity> implements EntityDAO<T> {
     @Override
     public int countBy(EntityFinder<T> finder) throws DAOException {
         try (Statement statement = connection.createStatement()) {
-            try (ResultSet resultSet = statement.executeQuery(finder.getQuery().replace("*", COUNT))) {
+            Controller.getLoggerInstance().debug(finder.getQuery().replaceFirst("\\*", COUNT));
+            try (ResultSet resultSet = statement.executeQuery(finder.getQuery().replaceFirst("\\*", COUNT))) {
                 resultSet.next();
                 return resultSet.getInt(1);
             }
@@ -206,6 +207,8 @@ public abstract class MySQLEntityDAO<T extends Entity> implements EntityDAO<T> {
     @Override
     public Collection<T> findBy(EntityFinder<T> finder) throws DAOException {
         try (Statement statement = connection.createStatement()) {
+
+            Controller.getLoggerInstance().debug(finder.getQuery());
             try (ResultSet resultSet = statement.executeQuery(finder.getQuery())) {
                 return mapToList(resultSet);
             }

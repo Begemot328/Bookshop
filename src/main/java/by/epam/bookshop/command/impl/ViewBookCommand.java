@@ -29,7 +29,6 @@ public class ViewBookCommand implements Command {
             page = 1;
         }
 
-        request.getParameter(RequestParameters.BOOK_ID);
         try {
             Book book = BookService.getInstance().read(
                     Integer.parseInt(request.getParameter(RequestParameters.BOOK_ID)));
@@ -39,12 +38,8 @@ public class ViewBookCommand implements Command {
             Position[] positions = PositionService.getInstance().findBy(finder)
                     .toArray(Position[]::new);
 
-            int pageQuantity = PositionService.getInstance().countBy(
-                    new PositionFinder().findByBook(book.getId()))
-                    / ELEMENTS_PER_PAGE + 1;
-            if (pageQuantity <= 0) {
-                pageQuantity = 1;
-            }
+            int pageQuantity = ControllerUtil.pageQuantity(PositionService.getInstance().countBy(finder),
+                    ELEMENTS_PER_PAGE);
 
              positions = Arrays.stream(positions)
                     .filter(position -> position.getStatus() == PositionStatus.READY

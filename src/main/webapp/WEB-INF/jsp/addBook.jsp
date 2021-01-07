@@ -19,11 +19,10 @@
 </c:if>
 <fmt:setBundle basename="locale"/>
 
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-signal.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/w3.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/w3-colors-signal.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/materialIcons.css">
 <html>
 <head>
     <title><fmt:message key="login_page.title"/></title>
@@ -55,7 +54,7 @@
             <div class="w3-cell-row">
                 <div class="w3-dropdown-hover">
                     <button class="w3-button w3-purple w3-opacity-min">
-                        <i class="material-icons">search</i>
+                        <i class="material-icons w3-xxlarge">search</i>
                     </button>
                     <div class="w3-dropdown-content w3-bar-block w3-deep-purple">
                         <form class="w3-bar-item" action="${pageContext.request.contextPath}/ControllerURL">
@@ -80,7 +79,7 @@
                 </div>
                 <div class="w3-dropdown-hover">
                     <button class="w3-button w3-purple w3-opacity-min">
-                        <i class="material-icons">person</i>
+                        <i class="material-icons w3-xxlarge">person</i>
                         <c:if test="${sessionScope.currentUser != null}">
                             <span><c:out value="${sessionScope.currentUser.firstName}"/> <c:out
                                     value="${sessionScope.currentUser.lastName}"/></span>
@@ -114,7 +113,7 @@
                             <form class="w3-bar-item" method="POST"
                                   action="${pageContext.request.contextPath}/ControllerURL">
                                 <input type="hidden" name="command" value="VIEW_USER_COMMAND">
-                                <input type="hidden" name="user-id" value="${sessionScope.currentUser.id}">
+                                <input type="hidden" name="userId" value="${sessionScope.currentUser.id}">
                                 <button class="w3-button  w3-ripple w3-hover-purple">
                                     <span><fmt:message key="cabinet"/></span>
                                 </button>
@@ -124,7 +123,9 @@
                 </div>
                 <div class="w3-dropdown-hover">
                     <button class="w3-button w3-purple w3-opacity-min">
-                        <i class="fa fa-globe"></i>
+                         <svg style="width:32px;height:32px" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M17.9,17.39C17.64,16.59 16.89,16 16,16H15V13A1,1 0 0,0 14,12H8V10H10A1,1 0 0,0 11,9V7H13A2,2 0 0,0 15,5V4.59C17.93,5.77 20,8.64 20,12C20,14.08 19.2,15.97 17.9,17.39M11,19.93C7.05,19.44 4,16.08 4,12C4,11.38 4.08,10.78 4.21,10.21L9,15V16A2,2 0 0,0 11,18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                        </svg>
                     </button>
                     <div class="w3-dropdown-content w3-bar-block w3-deep-purple">
                         <form class="w3-bar-item" method="GET"
@@ -183,12 +184,13 @@
         <form class="w3-card-4 w3-row-padding" method="POST" action="${pageContext.request.contextPath}/ControllerURL">
             <input type="hidden" name="command" value="ADD_BOOK_COMMAND">
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="text" name="title" required placeholder="<fmt:message key="book.title"/>">
+                <input class="w3-input w3-border" type="text" name="title" required value="${title}"
+                       placeholder="<fmt:message key="book.title"/>">
             </div>
             <br/>
 
             <div class="w3-container" style="width:35%">
-                <select id="users" name="author-id">
+                <select id="users" name="authorId">
                     <c:forEach var="author" items="${sessionScope.authors}">
                         <option value="${author.id}">${author.firstName} ${author.lastName}</option>
                     </c:forEach>
@@ -197,7 +199,7 @@
             <br/>
 
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="number" step="0.01" min="0" name="price" required
+                <input class="w3-input w3-border" type="number" step="0.01" min="0" name="price" required value="${price}"
                        placeholder="<fmt:message key="price"/>">
             </div>
             <br/>
@@ -207,7 +209,7 @@
             </div>
             <br/>
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="url" name="photolink"
+                <input class="w3-input w3-border" type="url" name="photolink" value="${photolink}"
                        placeholder="<fmt:message key="photolink"/>">
             </div>
             <br/>
@@ -260,6 +262,11 @@
                     <input type="hidden" name="command" value="ADD_POSITION_MENU_COMMAND">
                     <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
                             key="position.add"/></button>
+                </form>
+                <form class="w3-bar-item w3-large w3-hover-purple">
+                    <input type="hidden" name="command" value="ADD_SHOP_MENU_COMMAND">
+                    <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit"><fmt:message
+                            key="shop.add"/></button>
                 </form>
             </c:if>
         </div>

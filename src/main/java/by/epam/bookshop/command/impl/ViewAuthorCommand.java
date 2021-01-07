@@ -33,14 +33,12 @@ public class ViewAuthorCommand implements Command {
             Author author = AuthorService.getInstance()
                     .read(Integer.parseInt(request.getParameter(RequestParameters.AUTHOR_ID)));
 
-            Book[] books = BookService.getInstance().findBy(
-                    new BookFinder().findByAuthor(author.getId())).toArray(Book[]::new);
+            BookFinder finder = new BookFinder().findByAuthor(author.getId());
 
-            int pageQuantity = BookService.getInstance().countBy(new BookFinder().findByAuthor(author.getId()))
-                    / ELEMENTS_PER_PAGE + 1;
-            if (pageQuantity <= 0) {
-                pageQuantity = 1;
-            }
+            Book[] books = BookService.getInstance().findBy(finder).toArray(Book[]::new);
+
+            int pageQuantity = ControllerUtil.pageQuantity(BookService.getInstance().countBy(finder), ELEMENTS_PER_PAGE);
+
             request.setAttribute(RequestParameters.BOOKS, books);
             request.setAttribute(RequestParameters.PAGE_QUANTITY, pageQuantity);
             request.setAttribute(RequestParameters.CURRENT_PAGE, page);

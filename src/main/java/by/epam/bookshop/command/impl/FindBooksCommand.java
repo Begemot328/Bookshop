@@ -14,12 +14,11 @@ import java.util.*;
 
 public class FindBooksCommand implements Command {
 
-    private static final int ELEMENTS_PER_PAGE = 30;
+    private static final int ELEMENTS_PER_PAGE = 2;
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         BookFinder finder = new BookFinder();
-        Enumeration<String> stringEnum = request.getParameterNames();
         int page;
         try {
             page = Integer.parseInt(request.getParameter(RequestParameters.PAGE));
@@ -70,10 +69,9 @@ public class FindBooksCommand implements Command {
 
                 finder = finder.findByAuthors(AuthorService.getInstance().findBy(authorFinder));
             }
-            int pageQuantity = BookService.getInstance().countBy(finder) / ELEMENTS_PER_PAGE + 1;
-            if (pageQuantity <= 0) {
-                pageQuantity = 1;
-            }
+
+            int pageQuantity = ControllerUtil.pageQuantity(BookService.getInstance().countBy(finder), ELEMENTS_PER_PAGE);
+
             Book[] books = BookService.getInstance().findBy(
                     finder, (page - 1) * ELEMENTS_PER_PAGE, ELEMENTS_PER_PAGE)
                     .toArray(Book[]::new);

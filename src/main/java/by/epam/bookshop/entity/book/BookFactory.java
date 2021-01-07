@@ -4,23 +4,18 @@ import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.entity.EntityFactory;
 import by.epam.bookshop.entity.user.AbstractEntityFactory;
 import by.epam.bookshop.exceptions.FactoryException;
+import by.epam.bookshop.validator.AuthorValidator;
+import by.epam.bookshop.validator.BookValidator;
 
 public class BookFactory extends AbstractEntityFactory<Book> {
 
-    @Override
-    public Book create(Object... args) throws FactoryException {
-        if (args.length < 5
-                || !(args[0] instanceof String)
-                || !(args[1] instanceof Author)
-                || !(args[2] instanceof String
-                || args[2] == null)
-                || !(args[3] instanceof Float)
-                || !(args[4] instanceof String || args[4] == null)
-                || ((String) args[0]).isEmpty()) {
-        //      || ((String) args[2]).isEmpty()) {
+    public BookValidator getValidator() {
+        return new BookValidator();
+    }
 
-            throw new FactoryException(getWrongDataMessage());
-        }
+    @Override
+    protected Book createEntity(Object... args) {
+
         return new Book((String) args[0],
                 (Author) args[1],
                 (String) args[2],

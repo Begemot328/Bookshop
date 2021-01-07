@@ -58,7 +58,7 @@
                 <!-- Dropdown menus -->
                 <div class="w3-dropdown-hover">
                     <button class="w3-button w3-purple w3-opacity-min">
-                        <i class="material-icons">search</i>
+                        <i class="material-icons w3-xxlarge">search</i>
                     </button>
                     <div class="w3-dropdown-content w3-bar-block w3-deep-purple">
                         <form class="w3-bar-item" action="${pageContext.request.contextPath}/ControllerURL">
@@ -84,7 +84,7 @@
                 </div>
                 <div class="w3-dropdown-hover">
                     <button class="w3-button w3-purple w3-opacity-min">
-                        <i class="material-icons">person</i>
+                        <i class="material-icons w3-xxlarge">person</i>
                         <c:if test="${sessionScope.currentUser != null}">
                             <span><c:out value="${sessionScope.currentUser.firstName}"/> <c:out
                                     value="${sessionScope.currentUser.lastName}"/></span>
@@ -122,7 +122,9 @@
                 </div>
                 <div class="w3-dropdown-hover">
                     <button class="w3-button w3-purple w3-opacity-min">
-                        <i class="fa fa-globe"></i>
+                         <svg style="width:32px;height:32px" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M17.9,17.39C17.64,16.59 16.89,16 16,16H15V13A1,1 0 0,0 14,12H8V10H10A1,1 0 0,0 11,9V7H13A2,2 0 0,0 15,5V4.59C17.93,5.77 20,8.64 20,12C20,14.08 19.2,15.97 17.9,17.39M11,19.93C7.05,19.44 4,16.08 4,12C4,11.38 4.08,10.78 4.21,10.21L9,15V16A2,2 0 0,0 11,18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                        </svg>
                     </button>
                     <div class="w3-dropdown-content w3-bar-block w3-deep-purple">
                         <form class="w3-bar-item" method="GET"
@@ -175,6 +177,7 @@
             </form>
         </div>
     </div>
+    <c:set var="commandName" value="VIEW_SHOP_COMMAND"/>
     <div class="w3-cell w3-padding-large w3-center" style="width:70%">
         <div class="w3-card-4 w3-half w3-center">
             <div class="w3-panel w3-large w3-purple w3-opacity">
@@ -240,15 +243,13 @@
             </tr>
 
             <c:forEach var="position"
-                       begin="${sessionScope.firstElement}"
-                       end="${sessionScope.lastElement}"
-                       items="${sessionScope.positions}">
+                       items="${requestScope.positions}">
                 <c:if test="${position.status.id == 1
                 || sessionScope.currentUser.status.id == 3
                 || sessionScope.currentUser.status.id == 4}">
                     <tr class="w3-deep-purple">
                         <td>
-                            <a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_SHOP_COMMAND&shop-id=${position.shop.id}">
+                            <a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_SHOP_COMMAND&shopId=${position.shop.id}">
                                 <c:out value="${position.book.title}"/></a></td>
                         <td><c:out value="${position.book.author.firstName} ${position.book.author.lastName}"/></td>
                         <td><c:out value="${position.quantity}"/></td>
@@ -256,13 +257,13 @@
                             <c:choose>
                                 <c:when test="${sessionScope.currentUser.status.id == 2}">
                                     <td>
-                                        <a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shop-id=${position.shop.id}&position-id=${position.id}"
+                                        <a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shopId=${position.shop.id}&positionId=${position.id}"
                                            class="w3-button"><fmt:message key="position.book"/></a></td>
                                 </c:when>
                                 <c:when test="${sessionScope.currentUser.status.id > 2}">
                                     <td><fmt:message key="${position.status}"/></td>
                                     <td>
-                                        <a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shop-id=${position.shop.id}&position-id=${position.id}"
+                                        <a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shopId=${position.shop.id}&positionId=${position.id}"
                                            class="w3-button"><fmt:message key="position.process"/></a></td>
                                 </c:when>
                             </c:choose>
@@ -271,18 +272,19 @@
                 </c:if>
             </c:forEach>
         </table>
+        <!-- Pagination          -->
         <div class="w3-bar w3-purple w3-opacity-min w3-center w3-stretch">
             <c:choose>
-                <c:when test="${sessionScope.pageQuantity} > 1">
-                    <c:forEach begin="1" end="${sessionScope.pageQuantity}" var="p">
+                <c:when test="${requestScope.pageQuantity} > 1">
+                    <c:forEach begin="1" end="${requestScope.pageQuantity}" var="p">
                         <c:choose>
-                            <c:when test="${sessionScope.currentPage == p}">
+                            <c:when test="${requestScope.currentPage == p}">
                                 <a class="w3-button w3-indigo"
-                                   href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
+                                   href="${pageContext.request.contextPath}/ControllerURL?command=${commandName}&page=${p}">${p}</a>
                             </c:when>
                             <c:otherwise>
                                 <a class="w3-button w3-purple"
-                                   href="${pageContext.request.contextPath}/ControllerURL?command=CHANGE_PAGE_COMMAND&page=${p}">${p}</a>
+                                   href="${pageContext.request.contextPath}/ControllerURL?command=${commandName}&page=${p}">${p}</a>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>

@@ -55,7 +55,7 @@
             <div class="w3-cell-row">
                 <div class="w3-dropdown-hover">
                     <button class="w3-button w3-purple w3-opacity-min">
-                        <i class="material-icons">search</i>
+                        <i class="material-icons w3-xxlarge">search</i>
                     </button>
                     <div class="w3-dropdown-content w3-bar-block w3-deep-purple">
                         <form class="w3-bar-item" action="${pageContext.request.contextPath}/ControllerURL">
@@ -80,7 +80,7 @@
                 </div>
                 <div class="w3-dropdown-hover">
                     <button class="w3-button w3-purple w3-opacity-min">
-                        <i class="material-icons">person</i>
+                        <i class="material-icons w3-xxlarge">person</i>
                         <c:if test="${sessionScope.currentUser != null}">
                             <span><c:out value="${sessionScope.currentUser.firstName}"/> <c:out
                                     value="${sessionScope.currentUser.lastName}"/></span>
@@ -114,7 +114,7 @@
                             <form class="w3-bar-item" method="POST"
                                   action="${pageContext.request.contextPath}/ControllerURL">
                                 <input type="hidden" name="command" value="VIEW_USER_COMMAND">
-                                <input type="hidden" name="user-id" value="${sessionScope.currentUser.id}">
+                                <input type="hidden" name="userId" value="${sessionScope.currentUser.id}">
                                 <button class="w3-button  w3-ripple w3-hover-purple">
                                     <span><fmt:message key="cabinet"/></span>
                                 </button>
@@ -124,7 +124,9 @@
                 </div>
                 <div class="w3-dropdown-hover">
                     <button class="w3-button w3-purple w3-opacity-min">
-                        <i class="fa fa-globe"></i>
+                         <svg style="width:32px;height:32px" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M17.9,17.39C17.64,16.59 16.89,16 16,16H15V13A1,1 0 0,0 14,12H8V10H10A1,1 0 0,0 11,9V7H13A2,2 0 0,0 15,5V4.59C17.93,5.77 20,8.64 20,12C20,14.08 19.2,15.97 17.9,17.39M11,19.93C7.05,19.44 4,16.08 4,12C4,11.38 4.08,10.78 4.21,10.21L9,15V16A2,2 0 0,0 11,18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                        </svg>
                     </button>
                     <div class="w3-dropdown-content w3-bar-block w3-deep-purple">
                         <form class="w3-bar-item" method="GET"
@@ -184,7 +186,7 @@
             <input type="hidden" name="command" value="EDIT_POSITION_COMMAND">
 
             <div class="w3-container" style="width:35%">
-                <select id="shop" name="shop-id">
+                <select id="shop" name="shopId">
                     <c:forEach var="shop" items="${shops}">
                         <c:choose>
                             <c:when test="${sessionScope.position.shop.id == shop.id}">
@@ -200,7 +202,7 @@
             <br/>
             <br/>
             <div class="w3-container" style="width:35%">
-                <select id="books" name="book-id">
+                <select id="books" name="bookId">
                     <c:forEach var="book" items="${books}">
                         <c:choose>
                             <c:when test="${sessionScope.position.book.id == book.id}">

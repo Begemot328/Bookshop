@@ -7,6 +7,7 @@ import by.epam.bookshop.entity.user.User;
 import by.epam.bookshop.entity.user.UserStatus;
 import by.epam.bookshop.exceptions.CommandException;
 import by.epam.bookshop.exceptions.ServiceException;
+import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.service.position.PositionService;
 import by.epam.bookshop.service.user.UserService;
 
@@ -37,6 +38,9 @@ public class SellBookCommand implements Command {
             }
         } catch (ServiceException e) {
             throw new CommandException(e);
+        } catch (ValidationException e) {
+            request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage());
+            return new Router(JSPPages.PROCESS_POSITION_PAGE);
         }
 
         return new Router(JSPPages.LOGIN_PAGE);
