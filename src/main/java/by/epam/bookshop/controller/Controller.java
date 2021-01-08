@@ -53,6 +53,9 @@ public class Controller  extends HttpServlet {
         } catch (CommandException | ServletRuntimeException e) {
             request.getSession().setAttribute(SessionParameters.ERROR, e);
             router = new Router(JSPPages.ERROR_PAGE);
+        } catch (Exception e) {
+            request.getSession().setAttribute(SessionParameters.ERROR, e);
+            router = new Router(JSPPages.ERROR_PAGE);
         }
 
         if (router.getType() == Router.Type.FORWARD) {

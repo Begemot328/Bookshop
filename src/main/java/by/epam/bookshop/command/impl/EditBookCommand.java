@@ -12,6 +12,8 @@ import by.epam.bookshop.service.book.BookService;
 import by.epam.bookshop.validator.BookValidator;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Optional;
 
 public class EditBookCommand implements Command {
@@ -19,6 +21,7 @@ public class EditBookCommand implements Command {
     private static final String WRONG_AUTHOR_ERROR = "error.author.id";
     private static final String INPUT_ERROR = "error.input";
     private static final String WRONG_ENTITY = "wrong.entity.error";
+    private static final String URL_INPUT_ERROR = "error.url.input";
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
@@ -26,6 +29,7 @@ public class EditBookCommand implements Command {
         String title = request.getParameter(RequestParameters.TITLE);
         String description = request.getParameter(RequestParameters.DESCRIPTION);
         String photoLink = request.getParameter(RequestParameters.PHOTOLINK);
+        URL link;
         int authorId = 0;
         float price;
         Author author;
@@ -33,8 +37,16 @@ public class EditBookCommand implements Command {
         try {
             authorId  = Integer.parseInt(request.getParameter(RequestParameters.AUTHOR_ID));
             price  = Float.parseFloat(request.getParameter(RequestParameters.PRICE));
+            if (photoLink == null || photoLink.isEmpty()) {
+                link = null;
+            } else {
+                link = new URL(photoLink);
+            }
         } catch (NumberFormatException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, INPUT_ERROR);
+            return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+        } catch (MalformedURLException e) {
+            request.setAttribute(RequestParameters.ERROR_MESSAGE, URL_INPUT_ERROR);
             return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
         }
 
@@ -50,7 +62,7 @@ public class EditBookCommand implements Command {
             }
 
             try {
-                new BookValidator().validate(title, author, description, price, photoLink);
+                new BookValidator().validate(title, author, description, price, link);
             } catch (ValidationException e) {
                 request.setAttribute(RequestParameters.ERROR_MESSAGE, INPUT_ERROR);
                 return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
@@ -64,7 +76,7 @@ public class EditBookCommand implements Command {
                 newBook.setTitle(title);
                 newBook.setPrice(price);
                 newBook.setDescription(description);
-                newBook.setPhotoLink(photoLink);
+                newBook.setPhotoLink(link);
                 BookService.getInstance().update(newBook);
                 request.getSession().setAttribute(SessionParameters.BOOK, newBook);
                 return new Router(JSPPages.VIEW_BOOK_PAGE);

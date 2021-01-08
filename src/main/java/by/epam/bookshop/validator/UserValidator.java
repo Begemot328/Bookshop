@@ -4,8 +4,11 @@ import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.entity.user.User;
 import by.epam.bookshop.entity.user.UserStatus;
 import by.epam.bookshop.exceptions.ValidationException;
+import by.epam.bookshop.util.AddressObject;
 import by.epam.bookshop.validator.EntityValidator;
 import by.epam.bookshop.util.ValidationUtil;
+
+import java.net.URL;
 
 public class UserValidator extends AbstractEntityValidator<User> {
 
@@ -16,8 +19,8 @@ public class UserValidator extends AbstractEntityValidator<User> {
             String.class,
             String.class,
             Integer.class,
-            String.class,
-            String.class,
+            AddressObject.class,
+            URL.class,
             UserStatus.class
     };
 
@@ -27,17 +30,17 @@ public class UserValidator extends AbstractEntityValidator<User> {
 
     @Override
     public void validate(User user) throws ValidationException {
-        if (user.getLastName().isEmpty()
-        || user.getFirstName().isEmpty()
-                || user.getAdress().isEmpty()) {
+        if (user.getLastName() == null
+                || user.getFirstName() == null
+                || user.getLogin() == null
+                || user.getAddress() == null
+                || user.getLastName().isEmpty()
+                || user.getFirstName().isEmpty()
+                || user.getAddress().getFormattedAddress().isEmpty()) {
             throw new ValidationException(INPUT_ERROR);
         }
         if (user.getLogin().isEmpty()
-        || user.getPassword() == 0) {
-            throw new ValidationException(INPUT_ERROR);
-        }
-        if (!user.getPhotoLink().isEmpty()
-                && !ValidationUtil.validateURL(user.getPhotoLink())) {
+                || user.getPassword() == 0) {
             throw new ValidationException(INPUT_ERROR);
         }
     }

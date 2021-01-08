@@ -7,6 +7,8 @@ import by.epam.bookshop.exceptions.FactoryException;
 import by.epam.bookshop.validator.AuthorValidator;
 import by.epam.bookshop.validator.BookValidator;
 
+import java.net.URL;
+
 public class BookFactory extends AbstractEntityFactory<Book> {
 
     public BookValidator getValidator() {
@@ -20,6 +22,6 @@ public class BookFactory extends AbstractEntityFactory<Book> {
                 (Author) args[1],
                 (String) args[2],
                 Float.parseFloat(args[3].toString()),
-                (String) args[4]);
+                (URL) args[4]);
     }
 }

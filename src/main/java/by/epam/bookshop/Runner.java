@@ -12,22 +12,40 @@ import by.epam.bookshop.entity.book.Book;
 import by.epam.bookshop.entity.book.BookFactory;
 import by.epam.bookshop.entity.shop.Shop;
 import by.epam.bookshop.entity.shop.ShopFactory;
+import by.epam.bookshop.exceptions.AddressException;
 import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.FactoryException;
 import by.epam.bookshop.pool.ConnectionPool;
 import by.epam.bookshop.exceptions.ConnectionPoolException;
 import by.epam.bookshop.pool.ConnectionProxy;
+import by.epam.bookshop.util.AddressObject;
 import by.epam.bookshop.util.PasswordCoder;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 public class Runner {
     public static void main(String[] args) throws FactoryException {
-        System.out.println(PasswordCoder.code("root"));
+        try {
+            new URL("");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        /*System.out.println(PasswordCoder.code("root"));
         System.out.println(PasswordCoder.code("qwerty"));
-      /*  System.out.println("AuthorDAO");
+        try {
+            AddressObject obj = new AddressObject("Минск");
+            System.out.println(obj.isStatus());
+            System.out.println(obj.getFormattedAddress());
+            System.out.println(obj.getLatitude());
+            System.out.println(obj.getLongitude());
+        } catch (AddressException e) {
+            e.printStackTrace();
+        }
+        System.out.println("AuthorDAO");
         try (Connection connection = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/bookshop?useUnicode=true&serverTimezone=UTC", "root", "1234567890");) {
 
@@ -50,7 +68,7 @@ public class Runner {
 
 
         System.out.println("MySQLAuthorDAO");
-*/        try (Connection connection = ConnectionPool.getInstance().getConnection()) {
+        try (Connection connection = ConnectionPool.getInstance().getConnection()) {
 
            EntityDAO<Author> authorDao =  new MySQLAuthorDAO(connection);
             System.out.println("all");
@@ -103,8 +121,8 @@ public class Runner {
 
 
             EntityFactory<Author> authorFactory= new AuthorFactory();
-           /* Author */ author = authorFactory.create("Alexander", "Pushkin");
-            authorDao.create(author);
+            Author  author = authorFactory.create("Alexander", "Pushkin");
+             authorDao.create(author);
 
             EntityDAO<Book> bookDAO =  new MySQLBookDAO(connection);
 
@@ -125,7 +143,7 @@ public class Runner {
             authorDao.delete(author.getId());
             System.out.println(bookDAO.findAll());
 
-
+*?
         } catch (SQLException | ConnectionPoolException | DAOException throwables) {
             throwables.printStackTrace();
         }

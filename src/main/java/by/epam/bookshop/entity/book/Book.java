@@ -3,6 +3,7 @@ package by.epam.bookshop.entity.book;
 import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.entity.Entity;
 
+import java.net.URL;
 import java.util.Objects;
 
 public class Book extends Entity {
@@ -11,9 +12,9 @@ public class Book extends Entity {
     private Author author;
     private String description;
     private float price;
-    private String photoLink;
+    private URL photoLink;
 
-    public Book(String title, Author author, String description, float price, String photoLink) {
+    public Book(String title, Author author, String description, float price, URL photoLink) {
         this.title = title;
         this.author = author;
         this.description = description;
@@ -53,11 +54,11 @@ public class Book extends Entity {
         this.author = author;
     }
 
-    public String getPhotoLink() {
+    public URL getPhotoLink() {
         return photoLink;
     }
 
-    public void setPhotoLink(String photoLink) {
+    public void setPhotoLink(URL photoLink) {
         this.photoLink = photoLink;
     }
 

@@ -1,44 +1,37 @@
 package by.epam.bookshop.entity.shop;
 
 import by.epam.bookshop.entity.Entity;
+import by.epam.bookshop.util.AddressObject;
 
+import java.net.URL;
 import java.util.Objects;
 
 public class Shop extends Entity {
     private int id;
     private String name;
-    private String address;
-    private String position;
-    private String photoLink;
+    private AddressObject address;
+    private URL photoLink;
 
-    public Shop(String name, String address, String position) {
+    public Shop(String name, AddressObject address, URL photoLink) {
         this.name = name;
         this.address = address;
-        this.position = position;
+        this.photoLink = photoLink;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getAddress() {
+    public AddressObject getAddress() {
         return address;
-    }
-
-    public String getPosition() {
-        return position;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(AddressObject address) {
         this.address = address;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
     }
 
     public int getId() {
@@ -55,7 +48,6 @@ public class Shop extends Entity {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", adress='" + address + '\'' +
-                ", position='" + position + '\'' +
                 '}';
     }
 
@@ -66,20 +58,19 @@ public class Shop extends Entity {
         Shop shop = (Shop) o;
         return id == shop.id &&
                 Objects.equals(name, shop.name) &&
-                Objects.equals(address, shop.address) &&
-                Objects.equals(position, shop.position);
+                Objects.equals(address, shop.address);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, address, position);
+        return Objects.hash(id, name, address);
     }
 
-    public String getPhotoLink() {
+    public URL getPhotoLink() {
         return photoLink;
     }
 
-    public void setPhotoLink(String photoLink) {
+    public void setPhotoLink(URL photoLink) {
         this.photoLink = photoLink;
     }
 }

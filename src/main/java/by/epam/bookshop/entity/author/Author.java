@@ -2,24 +2,25 @@ package by.epam.bookshop.entity.author;
 
 import by.epam.bookshop.entity.Entity;
 
+import java.net.URL;
 import java.util.Objects;
 
 public class Author extends Entity {
     private int id;
     private String firstName;
     private String lastName;
+    private URL photoLink;
 
-    public String getPhotoLink() {
+    public URL getPhotoLink() {
         return photoLink;
     }
 
-    public void setPhotoLink(String photoLink) {
+    public void setPhotoLink(URL photoLink) {
         this.photoLink = photoLink;
     }
 
-    private String photoLink;
 
-    Author(String firstName, String lastName, String photoLink) {
+    Author(String firstName, String lastName, URL photoLink) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.photoLink = photoLink;

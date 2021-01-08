@@ -14,6 +14,8 @@ import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.FactoryException;
 import by.epam.bookshop.exceptions.UnknownEntityException;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -61,7 +63,7 @@ public class MySQLBookDAO extends MySQLEntityDAO<Book> {
         map.put(PRICE, book.getPrice());
         map.put(DESCRIPTION, book.getDescription());
         if (book.getPhotoLink() != null) {
-            map.put(PHOTO_LINK, book.getPhotoLink());
+            map.put(PHOTO_LINK, book.getPhotoLink().toString());
         }
         return map;
     }
@@ -70,18 +72,21 @@ public class MySQLBookDAO extends MySQLEntityDAO<Book> {
     public Collection<Book> mapToList(ResultSet resultSet) throws DAOException {
         EntityFactory<Book> factory = new BookFactory();
         ArrayList<Book> result = new ArrayList<>();
+
         try {
             while (resultSet.next()) {
+                URL link = (resultSet.getString(PHOTO_LINK) == null || resultSet.getString(PHOTO_LINK).isEmpty()
+                        ? null : new URL(resultSet.getString(PHOTO_LINK)));
                 result.add(factory.createWithID(resultSet.getInt(ID),
                         resultSet.getString(TITLE),
                         new MySQLAuthorDAO(connection)
                                 .read(resultSet.getInt(AUTHOR_ID)),
                         resultSet.getString(DESCRIPTION),
                         resultSet.getFloat(PRICE),
-                resultSet.getString(PHOTO_LINK)));
+                link));
             }
             return result;
-        } catch (SQLException | FactoryException e) {
+        } catch (SQLException | FactoryException | MalformedURLException e) {
             throw new DAOException(e);
         }
     }

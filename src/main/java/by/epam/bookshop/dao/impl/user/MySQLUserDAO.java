@@ -7,10 +7,14 @@ import by.epam.bookshop.entity.EntityFactory;
 import by.epam.bookshop.entity.user.User;
 import by.epam.bookshop.entity.user.UserFactory;
 import by.epam.bookshop.entity.user.UserStatus;
+import by.epam.bookshop.exceptions.AddressException;
 import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.FactoryException;
 import by.epam.bookshop.exceptions.UnknownEntityException;
+import by.epam.bookshop.util.AddressObject;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -73,8 +77,8 @@ public class MySQLUserDAO extends MySQLEntityDAO<User> {
         map.put(LAST_NAME, user.getLastName());
         map.put(LOGIN, user.getLogin());
         map.put(PASSWORD, user.getPassword());
-        map.put(ADDRESS, user.getAdress());
-        map.put(PHOTO_LINK, user.getPhotoLink());
+        map.put(ADDRESS, user.getAddress());
+        map.put(PHOTO_LINK, user.getPhotoLink().toString());
         map.put(STATUS, user.getStatus().getId());
         return map;
     }
@@ -85,17 +89,19 @@ public class MySQLUserDAO extends MySQLEntityDAO<User> {
         ArrayList<User> result = new ArrayList<>();
         try {
             while (resultSet.next()) {
+                URL link = (resultSet.getString(PHOTO_LINK) == null || resultSet.getString(PHOTO_LINK).isEmpty()
+                        ? null : new URL(resultSet.getString(PHOTO_LINK)));
                 result.add(factory.createWithID(resultSet.getInt(ID),
                         resultSet.getString(FIRST_NAME),
                         resultSet.getString(LAST_NAME),
                         resultSet.getString(LOGIN),
                         resultSet.getInt(PASSWORD),
-                        resultSet.getString(ADDRESS),
-                        resultSet.getString(PHOTO_LINK),
+                        new AddressObject(resultSet.getString(ADDRESS)),
+                        link,
                         UserStatus.resolveById(resultSet.getInt(STATUS))));
             }
             return result;
-        } catch (SQLException | UnknownEntityException | FactoryException e) {
+        } catch (SQLException | UnknownEntityException | FactoryException | MalformedURLException | AddressException e) {
             throw new DAOException(e);
         }
     }

@@ -7,6 +7,8 @@ import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.validator.AuthorValidator;
 import by.epam.bookshop.validator.EntityValidator;
 
+import java.net.URL;
+
 public class AuthorFactory extends AbstractEntityFactory<Author> {
 
     public AuthorValidator getValidator() {
@@ -16,6 +18,6 @@ public class AuthorFactory extends AbstractEntityFactory<Author> {
     @Override
     protected Author createEntity(Object... args) {
 
-        return new Author((String) args[0], (String) args[1], (String) args[2]);
+        return new Author((String) args[0], (String) args[1], (URL) args[2]);
     }
 }

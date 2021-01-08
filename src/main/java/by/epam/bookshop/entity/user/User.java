@@ -1,6 +1,9 @@
 package by.epam.bookshop.entity.user;
 
 import by.epam.bookshop.entity.Entity;
+import by.epam.bookshop.util.AddressObject;
+
+import java.net.URL;
 
 public class User extends Entity {
     private int id;
@@ -8,19 +11,19 @@ public class User extends Entity {
     private String lastName;
     private String login;
     private int password;
-    private String adress;
-    private String photoLink;
+    private AddressObject address;
+    private URL photoLink;
     private UserStatus status;
 
     public User(String firstName, String lastName,
                 String login, int password,
-                String adress, String photoLink,
+                AddressObject address, URL photoLink,
                 UserStatus status) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;
         this.password = password;
-        this.adress = adress;
+        this.address = address;
         this.photoLink = photoLink;
         this.status = status;
     }
@@ -49,19 +52,19 @@ public class User extends Entity {
         this.password = password;
     }
 
-    public String getAdress() {
-        return adress;
+    public AddressObject getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(AddressObject address) {
+        this.address = address;
     }
 
-    public String getPhotoLink() {
+    public URL getPhotoLink() {
         return photoLink;
     }
 
-    public void setPhotoLink(String photoLink) {
+    public void setPhotoLink(URL photoLink) {
         this.photoLink = photoLink;
     }
 

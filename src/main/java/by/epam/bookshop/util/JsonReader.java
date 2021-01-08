@@ -30,13 +30,5 @@ public class JsonReader {
         }
     }
 
-    private static String getURL(String baseURL, final Map<String, String> params) {
-        StringBuilder builder = new StringBuilder(baseURL);
-        builder.append("?");
-        for (String key :params.keySet()) {
-            builder.append(key).append("=").append(params.get(key)).append("&");
-        }
-        builder.deleteCharAt(builder.length() - 1);
-        return builder.toString();
-    }
+
 }

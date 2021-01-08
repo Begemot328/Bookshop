@@ -8,6 +8,8 @@ import by.epam.bookshop.entity.author.AuthorFactory;
 import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.FactoryException;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -53,13 +55,15 @@ public class MySQLAuthorDAO extends MySQLEntityDAO<Author> {
         ArrayList<Author> result = new ArrayList<>();
         try {
             while (resultSet.next()) {
+                URL link = (resultSet.getString(PHOTO_LINK) == null || resultSet.getString(PHOTO_LINK).isEmpty()
+                        ? null : new URL(resultSet.getString(PHOTO_LINK)));
                 result.add(factory.createWithID(resultSet.getInt(ID),
                         resultSet.getString(FIRSTNAME),
                         resultSet.getString(LASTNAME),
-                        resultSet.getString(PHOTO_LINK)));
+                        link));
             }
             return result;
-        } catch (SQLException | FactoryException e) {
+        } catch (SQLException | FactoryException | MalformedURLException e) {
             throw new DAOException(e);
         }
     }
@@ -70,7 +74,7 @@ public class MySQLAuthorDAO extends MySQLEntityDAO<Author> {
         map.put(FIRSTNAME, author.getFirstName());
         map.put(LASTNAME, author.getLastName());
         if (author.getPhotoLink() != null) {
-            map.put(PHOTO_LINK, author.getPhotoLink());
+            map.put(PHOTO_LINK, author.getPhotoLink().toString());
         }
         return map;
     }

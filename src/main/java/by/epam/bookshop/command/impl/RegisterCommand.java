@@ -5,10 +5,12 @@ import by.epam.bookshop.controller.dto.UserDTO;
 import by.epam.bookshop.dao.impl.user.UserFinder;
 import by.epam.bookshop.entity.user.User;
 import by.epam.bookshop.entity.user.UserStatus;
+import by.epam.bookshop.exceptions.AddressException;
 import by.epam.bookshop.exceptions.CommandException;
 import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.service.user.UserService;
+import by.epam.bookshop.util.AddressObject;
 import by.epam.bookshop.validator.UserValidator;
 import by.epam.bookshop.util.PasswordCoder;
 
@@ -19,6 +21,7 @@ public class RegisterCommand implements Command {
     private static final String REGISTER_ERROR = "error.register";
     private static final String SERVICE_EXCEPTION = "Service Exception: ";
     private static final String OCCUPIED_LOGIN_ERROR = "error.login.occupied";
+    private static final String ADDRESS_INPUT_ERROR = "error.address.input";
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
@@ -27,6 +30,14 @@ public class RegisterCommand implements Command {
         String firstName = request.getParameter(RequestParameters.USER_FIRSTNAME);
         String lastName = request.getParameter(RequestParameters.USER_LASTNAME);
         String address = request.getParameter(RequestParameters.ADDRESS);
+        try {
+            if (address != null && !address.isEmpty()) {
+                address = new AddressObject(address).getFormattedAddress();
+            }
+        } catch (AddressException e) {
+            request.setAttribute(RequestParameters.ERROR_MESSAGE, ADDRESS_INPUT_ERROR);
+            return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+        }
         String photoLink = request.getParameter(RequestParameters.PHOTOLINK);
         User user;
 

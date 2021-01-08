@@ -68,8 +68,58 @@
             cursor: pointer;
         }
     </style>
+    <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwIrGRwhU9pynlNeOMDXPqQYZmwroni4Q&callback=initMap&libraries=&v=weekly"
+            defer
+    ></script>
+    <style type="text/css">
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 400px;
+            /* The height is 400 pixels */
+            width: 100%;
+            /* The width is the width of the web page */
+        }
+    </style>
+    <script>
+        // Initialize and add the map
+        function initMap() {
+            // The location of Uluru
+            const minsk = { lat: 25.344, lng: 21.036 };
+            // The map, centered at Uluru
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 4,
+                center: minsk,
+            });
+            // The marker, positioned at Uluru
+            const marker = new google.maps.Marker({
+                position: minsk,
+                map: map,
+            });
+            <c:forEach var="position" items="${requestScope.positions}" varStatus="myIndex">
+            const Shop${myIndex.count} =
+                { lat: <c:out value="${position.shop.address.latitude}"/>,
+                    lng: <c:out value="${position.shop.address.longitude}"/> };
+            const mark${myIndex.count} = new google.maps.Marker({
+                position: Shop<c:out value="${position.shop.id}"/>,
+                map: map,
+            });
+            </c:forEach>
+        }
+    </script>
+    <!--
+            <c:forEach var="position" items="${requestScope.positions}">
+            const Shop<c:out value="${position.shop.id}"/> =
+            { lat: <c:out value="${position.shop.address.latitude}"/>,
+            lng: <c:out value="${position.shop.address.longitude}"/> };
+            constMarker <c:out value="${position.shop.id}"/> = new google.maps.Marker({
+                position: <c:out value="${position.shop.name}"/>,
+                map: map,
+            });
+            </c:forEach>
+-->
 </head>
-<>
+<body>
 <!-- Top panel -->
 <div class="w3-container w3-stretch">
     <div class="w3-cell-row w3-purple w3-opacity-min">
@@ -245,6 +295,8 @@
                 </div>
             </c:if>
         </c:if>
+        <!-- positions map -->
+        <div id="map"></div>
         <!-- position table -->
         <table class="w3-table-all w3-purple w3-opacity-min">
             <tr class="w3-deep-purple">

@@ -1,18 +1,19 @@
 package by.epam.bookshop.dao.impl.shop;
 
-import by.epam.bookshop.dao.EntityFinder;
 import by.epam.bookshop.dao.MySQLEntityDAO;
-import by.epam.bookshop.dao.impl.position_action.PositionActionFinder;
 import by.epam.bookshop.entity.EntityFactory;
 import by.epam.bookshop.entity.shop.Shop;
 import by.epam.bookshop.entity.shop.ShopFactory;
+import by.epam.bookshop.exceptions.AddressException;
 import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.FactoryException;
+import by.epam.bookshop.util.AddressObject;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -24,6 +25,7 @@ public class MySQLShopDAO extends MySQLEntityDAO<Shop> {
     private static final String ADDRESS = "ADDRESS";
     private static final String POSITION = "POSITION";
 
+    private static final String PHOTO_LINK = "PHOTO_LINK";
     private static final String SQL_EXCEPTION = "SQL Exception: ";
     private static final String FACTORY_EXCEPTION = "Factory Exception: ";
     private static final String SCHEMA = "BOOKSHOP";
@@ -62,8 +64,8 @@ public class MySQLShopDAO extends MySQLEntityDAO<Shop> {
     public Map<String, Object> mapEntity(Shop shop) {
         Map<String, Object> map = new HashMap<>();
         map.put(NAME, shop.getName());
-        map.put(ADDRESS, shop.getAddress());
-        map.put(POSITION, shop.getPosition());
+        map.put(ADDRESS, shop.getAddress().getFormattedAddress());
+        map.put(PHOTO_LINK, shop.getPhotoLink().toString());
         return map;
     }
 
@@ -73,15 +75,15 @@ public class MySQLShopDAO extends MySQLEntityDAO<Shop> {
         ArrayList<Shop> result = new ArrayList<>();
         try {
             while (resultSet.next()) {
+                URL link = (resultSet.getString(PHOTO_LINK) == null || resultSet.getString(PHOTO_LINK).isEmpty()
+                        ? null : new URL(resultSet.getString(PHOTO_LINK)));
                 result.add(factory.createWithID(resultSet.getInt(ID),
                         resultSet.getString(NAME),
-                        resultSet.getString(ADDRESS),
-                        resultSet.getString(POSITION)));
+                        new AddressObject(resultSet.getString(ADDRESS)),
+                        link));
             }
             return result;
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        } catch (FactoryException e) {
+        } catch (SQLException | MalformedURLException | AddressException | FactoryException e) {
             throw new DAOException(e);
         }
     }
