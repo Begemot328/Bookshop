@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 public class JsonReader {
@@ -21,7 +22,7 @@ public class JsonReader {
     public static JSONObject read(final String url) throws IOException, JSONException {
         final InputStream is = new URL(url).openStream();
         try {
-            final BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+            final BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             final String jsonText = readAll(rd);
             final JSONObject json = new JSONObject(jsonText);
             return json;

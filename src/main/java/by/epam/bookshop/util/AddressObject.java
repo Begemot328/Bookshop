@@ -1,11 +1,15 @@
 package by.epam.bookshop.util;
 
+import by.epam.bookshop.controller.Controller;
 import by.epam.bookshop.exceptions.AddressException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class AddressObject {
@@ -13,6 +17,7 @@ public class AddressObject {
     Map <String, String> addressToGeo = new HashMap<>();
     private String key = "AIzaSyCwIrGRwhU9pynlNeOMDXPqQYZmwroni4Q";
     private String address;
+    private String language = "language";
     private String formattedAddress;
     private double longitude;
     private double latitude;
@@ -20,13 +25,16 @@ public class AddressObject {
     private String errorMessage;
 
     public AddressObject(String address) throws AddressException {
+        this.address = address;
         processAddress(address);
     }
 
     public void processAddress(String address) throws AddressException {
         final JSONObject response;
-        addressToGeo.put("address",address);
+        addressToGeo.put("address", URLEncoder.encode(address, StandardCharsets.UTF_8));
         addressToGeo.put("key", key);
+        addressToGeo.put(language,"en");
+        addressToGeo.put("charset","utf-8");
         try {
             response = JsonReader.read(getURL(baseURL, addressToGeo));
         } catch (IOException e) {
@@ -53,6 +61,7 @@ public class AddressObject {
         latitude = location.getDouble("lat");// широта
         location = response.getJSONArray("results").getJSONObject(0);
         formattedAddress = location.getString("formatted_address");
+        Controller.getLoggerInstance().debug(formattedAddress);
     }
 
     private static String getURL(String baseURL, final Map<String, String> params) {
@@ -87,5 +96,21 @@ public class AddressObject {
 
     public String getErrorMessage() {
         return errorMessage;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AddressObject that = (AddressObject) o;
+        return Double.compare(that.getLongitude(), getLongitude()) == 0 && Double.compare(that.getLatitude(),
+                getLatitude()) == 0 && isStatus() == that.isStatus() && Objects.equals(address, that.address)
+                && Objects.equals(getFormattedAddress(), that.getFormattedAddress())
+                && Objects.equals(getErrorMessage(), that.getErrorMessage());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(address, getFormattedAddress(), getLongitude(), getLatitude(), isStatus(), getErrorMessage());
     }
 }

@@ -30,21 +30,27 @@ import java.time.LocalDateTime;
 public class Runner {
     public static void main(String[] args) throws FactoryException {
         try {
-            new URL("");
-        } catch (MalformedURLException e) {
+            AddressObject obj = new AddressObject("Минск, Янки Лучины, 11");
+            System.out.println(obj.getFormattedAddress());
+            System.out.println(new AddressObject(obj.getFormattedAddress()).getFormattedAddress());
+
+            AddressObject obj1 = new AddressObject("Минск, газеты Правда , 26");
+            System.out.println(obj1.getFormattedAddress());
+            System.out.println(new AddressObject(obj1.getFormattedAddress()).getFormattedAddress());
+
+            AddressObject obj2 = new AddressObject("Минск, Сурганова , 37");
+            System.out.println(obj2.getFormattedAddress());
+            System.out.println(new AddressObject(obj2.getFormattedAddress()).getFormattedAddress());
+
+            AddressObject obj3 = new AddressObject("Минск, Грушевская , 73");
+            System.out.println(obj3.getFormattedAddress());
+            System.out.println(new AddressObject(obj3.getFormattedAddress()).getFormattedAddress());
+        } catch (AddressException e) {
             e.printStackTrace();
         }
         /*System.out.println(PasswordCoder.code("root"));
         System.out.println(PasswordCoder.code("qwerty"));
-        try {
-            AddressObject obj = new AddressObject("Минск");
-            System.out.println(obj.isStatus());
-            System.out.println(obj.getFormattedAddress());
-            System.out.println(obj.getLatitude());
-            System.out.println(obj.getLongitude());
-        } catch (AddressException e) {
-            e.printStackTrace();
-        }
+
         System.out.println("AuthorDAO");
         try (Connection connection = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/bookshop?useUnicode=true&serverTimezone=UTC", "root", "1234567890");) {

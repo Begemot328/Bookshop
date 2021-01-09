@@ -6,6 +6,7 @@ import by.epam.bookshop.dao.impl.position.PositionFinder;
 import by.epam.bookshop.entity.book.Book;
 import by.epam.bookshop.entity.position.Position;
 import by.epam.bookshop.entity.position.PositionStatus;
+import by.epam.bookshop.entity.shop.Shop;
 import by.epam.bookshop.exceptions.CommandException;
 import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.service.book.BookService;
@@ -45,10 +46,14 @@ public class ViewBookCommand implements Command {
                     .filter(position -> position.getStatus() == PositionStatus.READY
                             || position.getStatus() == PositionStatus.RESERVED)
                      .toArray(Position[]::new);
+            Shop[] shops =  Arrays.stream(positions)
+                    .map(position -> position.getShop())
+                    .distinct().toArray(Shop[]::new);
 
             request.setAttribute(RequestParameters.PAGE_QUANTITY, pageQuantity);
             request.setAttribute(RequestParameters.CURRENT_PAGE, page);
             request.setAttribute(RequestParameters.POSITIONS, positions);
+            request.setAttribute(RequestParameters.SHOPS, shops);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

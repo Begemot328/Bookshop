@@ -39,7 +39,7 @@ public class RequestParameters {
     public static final String AUTHORS = "authors";
     public static final String SHOPS = "shops";
     public static final String POSITIONS = "positions";
-    public static final String USERS = "positions";
+    public static final String USERS = "users";
 
     public static final String COMMAND = "command";
     public static final String ERROR_MESSAGE = "errorMessage";

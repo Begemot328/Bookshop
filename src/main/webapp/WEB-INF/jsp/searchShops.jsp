@@ -43,6 +43,66 @@
             font-family: Arial, Helvetica, sans-serif;
         }
     </style>
+    <!-- map -->
+    <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwIrGRwhU9pynlNeOMDXPqQYZmwroni4Q&callback=initMap&libraries=&v=weekly"
+            defer
+    ></script>
+    <style type="text/css">
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 400px;
+            /* The height is 400 pixels */
+            width: 100%;
+            /* The width is the width of the web page */
+        }
+    </style>
+    <script>
+        // Initialize and add the map
+        function initMap() {
+            // The location of Minsk
+            const minsk = {lat: 25.344, lng: 21.036};
+            // The map, centered at Uluru
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 4,
+                center: minsk,
+            });
+
+            //create empty LatLngBounds object
+            var bounds = new google.maps.LatLngBounds();
+            var infowindow = new google.maps.InfoWindow();
+
+            var locations = [
+                <c:forEach var="shop" items="${requestScope.shops}" varStatus="myIndex">
+                ['${shop.name}', '${shop.address}', '${shop.id}',
+                    ${shop.address.latitude}, ${shop.address.longitude}, ${myIndex.count}],
+                </c:forEach>
+            ];
+
+            for (i = 0; i < locations.length; i++) {
+                var marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(locations[i][3], locations[i][4]),
+                    map: map
+                });
+
+                //extend the bounds to include each marker's position
+                bounds.extend(marker.position);
+
+                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                    return function () {
+                        var html = '<p>' + '<a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_SHOP_COMMAND&shopId='
+                            + locations[i][2] + '">' + locations[i][0] + '</a></p>'
+                            + '<p>' + locations[i][1] + '</p>';
+                        infowindow.setContent(html);
+                        infowindow.open(map, marker);
+                    }
+                })(marker, i));
+            }
+
+            //now fit the map to the newly inclusive bounds
+            map.fitBounds(bounds);
+        }
+    </script>
 </head>
 <body>
 <div class="w3-container w3-stretch">
@@ -195,6 +255,7 @@
                        value="<fmt:message key="find"/>">
             </div>
         </form>
+        <div id="map"></div>
         <div class="w3-row-padding">
             <c:forEach var="shop"
                        items="${requestScope.shops}">

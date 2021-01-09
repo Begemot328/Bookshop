@@ -77,7 +77,7 @@ public class MySQLUserDAO extends MySQLEntityDAO<User> {
         map.put(LAST_NAME, user.getLastName());
         map.put(LOGIN, user.getLogin());
         map.put(PASSWORD, user.getPassword());
-        map.put(ADDRESS, user.getAddress());
+        map.put(ADDRESS, user.getAddress().getFormattedAddress());
         map.put(PHOTO_LINK, user.getPhotoLink().toString());
         map.put(STATUS, user.getStatus().getId());
         return map;

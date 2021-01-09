@@ -1,4 +1,4 @@
-searchBooks.jspsearchBooks.jsp<%--
+<%--
   Created by IntelliJ IDEA.
   User: WorkPC
   Date: 12.12.2020
@@ -43,6 +43,74 @@ searchBooks.jspsearchBooks.jsp<%--
             font-family: Arial, Helvetica, sans-serif;
         }
     </style>
+
+
+    <!-- map -->
+    <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwIrGRwhU9pynlNeOMDXPqQYZmwroni4Q&callback=initMap&libraries=&v=weekly"
+            defer
+    ></script>
+    <style type="text/css">
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 400px;
+            /* The height is 400 pixels */
+            width: 100%;
+            /* The width is the width of the web page */
+        }
+    </style>
+    <script>
+        // Initialize and add the map
+        function initMap() {
+            // The location of Minsk
+            const minsk = {lat: 25.344, lng: 21.036};
+            // The map, centered at Uluru
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 4,
+                center: minsk,
+            });
+
+            //create empty LatLngBounds object
+            var bounds = new google.maps.LatLngBounds();
+            var infowindow = new google.maps.InfoWindow();
+
+            var locations = [
+                <c:forEach var="user" items="${requestScope.users}" varStatus="myIndex">
+                ['${user.firstName} ${user.lastName}', '${user.address}', '${user.id}',
+                    ${user.address.latitude}, ${user.address.longitude}, ${myIndex.count}],
+                </c:forEach>
+            ];
+
+            for (i = 0; i < locations.length; i++) {
+                var marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(locations[i][3], locations[i][4]),
+                    map: map
+                });
+
+                //extend the bounds to include each marker's position
+                bounds.extend(marker.position);
+
+                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                    return function () {
+                        var html = '<p>' + '<a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_USER_COMMAND&userId='
+                            + locations[i][2] + '">' + locations[i][0] + '</a></p>'
+                            + '<p>' + locations[i][1] + '</p>';
+                        infowindow.setContent(html);
+                        infowindow.open(map, marker);
+                    }
+                })(marker, i));
+            }
+
+            //now fit the map to the newly inclusive bounds
+            map.fitBounds(bounds);
+/*
+            //(optional) restore the zoom level after the map is done scaling
+            var listener = google.maps.event.addListener(map, "idle", function () {
+                map.setZoom(20);
+                google.maps.event.removeListener(listener);
+            }); */
+        }
+    </script>
 </head>
 <body>
 <div class="w3-container w3-stretch">
@@ -170,15 +238,15 @@ searchBooks.jspsearchBooks.jsp<%--
             </form>
         </div>
     </div>
-    <c:set var="commandName" value="SEARCH_USERS_COMMAND"/>
+    <c:set var="commandName" value="VIEW_USER_COMMAND"/>
     <div class="w3-cell w3-padding-large" style="width:70%">
         <form class="w3-row-padding" method="POST" action="${pageContext.request.contextPath}/ControllerURL">
             <input type="hidden" name="command" value="${commandName}">
             <div class="w3-col" style="width:15%">
-                <input class="w3-input w3-border" type="text" name="author-firstname" placeholder="<fmt:message key="author.firstname"/>">
+                <input class="w3-input w3-border" type="text" name="userFirstname" placeholder="<fmt:message key="firstname"/>">
             </div>
             <div class="w3-col" style="width:15%">
-                <input class="w3-input w3-border" type="text" name="author-lastname" placeholder="<fmt:message key="author.lastname"/>">
+                <input class="w3-input w3-border" type="text" name="userLastname" placeholder="<fmt:message key="lastname"/>">
             </div>
             <div class="w3-col" style="width:10%">
                 <input class="w3-btn w3-deep-purple w3-ripple w3-hover-purple" type="submit" value="<fmt:message key="find"/>">
@@ -212,6 +280,8 @@ searchBooks.jspsearchBooks.jsp<%--
                 </form>
             </c:forEach>
         </div>
+        <!-- users map -->
+        <div id="map"></div>
         <!-- Pagination          -->
         <div class="w3-bar w3-purple w3-opacity-min w3-center w3-stretch">
             <c:choose>
@@ -230,7 +300,6 @@ searchBooks.jspsearchBooks.jsp<%--
             </c:choose>
         </div>
     </div>
-
     <!--  right panel bar       -->
     <div class="w3-cell w3-deep-purple w3-opacity" style="width:15%">
         <div class="w3-bar-block">

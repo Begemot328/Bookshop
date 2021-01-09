@@ -67,8 +67,50 @@
             cursor: pointer;
         }
     </style>
+
+    <!-- map -->
+    <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwIrGRwhU9pynlNeOMDXPqQYZmwroni4Q&callback=initMap&libraries=&v=weekly"
+            defer
+    ></script>
+    <style type="text/css">
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 400px;
+            /* The height is 400 pixels */
+            width: 100%;
+            /* The width is the width of the web page */
+        }
+    </style>
+    <script>
+        // Initialize and add the map
+        function initMap() {
+            // The location of Minsk
+            const address = {lat: ${sessionScope.user.address.latitude}, lng: ${sessionScope.user.address.longitude}};
+            // The map, centered at Uluru
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 8,
+                center: address,
+            });
+
+            var marker = new google.maps.Marker({
+                position: address,
+                map: map,
+            });
+
+            var infowindow = new google.maps.InfoWindow();
+
+            google.maps.event.addListener(marker, 'click', (function (marker) {
+                return function () {
+                    var html = '<p>${sessionScope.user.address}</p>';
+                    infowindow.setContent(html);
+                    infowindow.open(map, marker);
+                };
+            })(marker));
+        }
+    </script>
 </head>
-<>
+<body>
 <!-- Top panel -->
 <div class="w3-container w3-stretch">
     <div class="w3-cell-row w3-purple w3-opacity-min">
@@ -218,6 +260,10 @@
                     alt="default author picture"  class="w3-image">
                 </c:otherwise>
             </c:choose>
+        </div>
+        <div class="w3-card-4 w3-half w3-center">
+            <!-- positions map -->
+            <div id="map"></div>
         </div>
         <!-- position table -->
         <table class="w3-table-all w3-purple w3-opacity-min">

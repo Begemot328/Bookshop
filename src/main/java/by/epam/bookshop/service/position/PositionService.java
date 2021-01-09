@@ -153,13 +153,7 @@ public class PositionService extends AbstractEntityService<Position> {
                     }
                 }
                 connection.commit();
-            } catch (SQLException e) {
-                connection.rollback();
-                throw new ServiceException(e);
-            } catch (DAOException e) {
-                connection.rollback();
-                throw new ServiceException(e);
-            } catch (FactoryException e) {
+            } catch (SQLException | FactoryException | DAOException e) {
                 connection.rollback();
                 throw new ServiceException(e);
             } finally {
@@ -207,13 +201,7 @@ public class PositionService extends AbstractEntityService<Position> {
                         newPosition.getShop(), newPosition.getBook().getPrice()));
                 connection.commit();
                 return newPosition;
-            } catch (SQLException e) {
-                connection.rollback();
-                throw new ServiceException(e);
-            } catch (DAOException e) {
-                connection.rollback();
-                throw new ServiceException(e);
-            } catch (FactoryException e) {
+            } catch (SQLException | DAOException | FactoryException e) {
                 connection.rollback();
                 throw new ServiceException(e);
             } finally {

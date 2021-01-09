@@ -20,8 +20,7 @@
 </c:if>
 
 <fmt:setBundle basename="locale"/>
-<!--
-<link rel="stylesheet" href="../../resources/css/w3.css"> -->
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/w3.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/w3-colors-signal.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome.css">
@@ -68,6 +67,7 @@
             cursor: pointer;
         }
     </style>
+    <!-- map -->
     <script
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwIrGRwhU9pynlNeOMDXPqQYZmwroni4Q&callback=initMap&libraries=&v=weekly"
             defer
@@ -84,40 +84,49 @@
     <script>
         // Initialize and add the map
         function initMap() {
-            // The location of Uluru
-            const minsk = { lat: 25.344, lng: 21.036 };
+            // The location of Minsk
+            const minsk = {lat: 25.344, lng: 21.036};
             // The map, centered at Uluru
             const map = new google.maps.Map(document.getElementById("map"), {
                 zoom: 4,
                 center: minsk,
             });
-            // The marker, positioned at Uluru
-            const marker = new google.maps.Marker({
-                position: minsk,
-                map: map,
-            });
-            <c:forEach var="position" items="${requestScope.positions}" varStatus="myIndex">
-            const Shop${myIndex.count} =
-                { lat: <c:out value="${position.shop.address.latitude}"/>,
-                    lng: <c:out value="${position.shop.address.longitude}"/> };
-            const mark${myIndex.count} = new google.maps.Marker({
-                position: Shop<c:out value="${position.shop.id}"/>,
-                map: map,
-            });
-            </c:forEach>
+
+            //create empty LatLngBounds object
+            var bounds = new google.maps.LatLngBounds();
+            var infowindow = new google.maps.InfoWindow();
+
+            var locations = [
+                <c:forEach var="shop" items="${requestScope.shops}" varStatus="myIndex">
+                ['${shop.name}', '${shop.address}', '${shop.id}',
+                    ${shop.address.latitude}, ${shop.address.longitude}, ${myIndex.count}],
+                </c:forEach>
+            ];
+
+            for (i = 0; i < locations.length; i++) {
+                var marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(locations[i][3], locations[i][4]),
+                    map: map
+                });
+
+                //extend the bounds to include each marker's position
+                bounds.extend(marker.position);
+
+                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                    return function () {
+                        var html = '<p>' + '<a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_SHOP_COMMAND&shopId='
+                            + locations[i][2] + '">' + locations[i][0] + '</a></p>'
+                            + '<p>' + locations[i][1] + '</p>';
+                        infowindow.setContent(html);
+                        infowindow.open(map, marker);
+                    }
+                })(marker, i));
+            }
+
+            //now fit the map to the newly inclusive bounds
+            map.fitBounds(bounds);
         }
     </script>
-    <!--
-            <c:forEach var="position" items="${requestScope.positions}">
-            const Shop<c:out value="${position.shop.id}"/> =
-            { lat: <c:out value="${position.shop.address.latitude}"/>,
-            lng: <c:out value="${position.shop.address.longitude}"/> };
-            constMarker <c:out value="${position.shop.id}"/> = new google.maps.Marker({
-                position: <c:out value="${position.shop.name}"/>,
-                map: map,
-            });
-            </c:forEach>
--->
 </head>
 <body>
 <!-- Top panel -->
@@ -196,8 +205,9 @@
                 </div>
                 <div class="w3-dropdown-hover">
                     <button class="w3-button w3-purple w3-opacity-min">
-                         <svg style="width:32px;height:32px" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M17.9,17.39C17.64,16.59 16.89,16 16,16H15V13A1,1 0 0,0 14,12H8V10H10A1,1 0 0,0 11,9V7H13A2,2 0 0,0 15,5V4.59C17.93,5.77 20,8.64 20,12C20,14.08 19.2,15.97 17.9,17.39M11,19.93C7.05,19.44 4,16.08 4,12C4,11.38 4.08,10.78 4.21,10.21L9,15V16A2,2 0 0,0 11,18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                        <svg style="width:32px;height:32px" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                  d="M17.9,17.39C17.64,16.59 16.89,16 16,16H15V13A1,1 0 0,0 14,12H8V10H10A1,1 0 0,0 11,9V7H13A2,2 0 0,0 15,5V4.59C17.93,5.77 20,8.64 20,12C20,14.08 19.2,15.97 17.9,17.39M11,19.93C7.05,19.44 4,16.08 4,12C4,11.38 4.08,10.78 4.21,10.21L9,15V16A2,2 0 0,0 11,18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
                         </svg>
                     </button>
                     <div class="w3-dropdown-content w3-bar-block w3-deep-purple">

@@ -44,6 +44,50 @@
         }
 
     </style>
+
+    <!-- map -->
+    <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwIrGRwhU9pynlNeOMDXPqQYZmwroni4Q&callback=initMap&libraries=&v=weekly"
+            defer
+    ></script>
+    <style type="text/css">
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 400px;
+            /* The height is 400 pixels */
+            width: 100%;
+            /* The width is the width of the web page */
+        }
+    </style>
+    <script>
+        // Initialize and add the map
+        function initMap() {
+            // The location of address
+            const address = {lat: ${sessionScope.shop.address.latitude}, lng: ${sessionScope.shop.address.longitude}};
+            // The map, centered at address
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 8,
+                center: address,
+            });
+
+            var infowindow = new google.maps.InfoWindow();
+
+            var marker = new google.maps.Marker({
+                position: address,
+                map: map,
+            });
+
+
+
+            google.maps.event.addListener(marker, 'click', (function (marker) {
+                return function () {
+                    var html = '<p>${sessionScope.shop.address}</p>';
+                    infowindow.setContent(html);
+                    infowindow.open(map, marker);
+                };
+            })(marker));
+        }
+    </script>
 </head>
 <body>
 <!-- Top panel -->
@@ -200,6 +244,8 @@
         </div>
         <div class="w3-card-4 w3-half w3-center">
             <form>
+                <!-- positions map -->
+                <div id="map"></div>
                 <br/>
                 <c:if test="${sessionScope.currentUser.status.id == 4}">
                     <input type="hidden" name="command" value="OPTIMIZE_SHOP_COMMAND">

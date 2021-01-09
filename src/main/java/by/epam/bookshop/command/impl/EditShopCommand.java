@@ -49,7 +49,7 @@ public class EditShopCommand implements Command {
         }
 
         try {
-            new ShopValidator().validate(name, address, link);
+            new ShopValidator().validate(name, addressObject, link);
         } catch (ValidationException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, INPUT_ERROR);
             return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));

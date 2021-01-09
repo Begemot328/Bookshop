@@ -195,9 +195,7 @@
         </form>
         <div class="w3-row-padding">
             <c:forEach var="author"
-                       begin="${sessionScope.firstElement}"
-                       end="${sessionScope.lastElement}"
-                       items="${sessionScope.authors}">
+                       items="${requestScope.authors}">
                 <form class="w3-col l2 m6 s12  w3-center"
                       method="GET" action="${pageContext.request.contextPath}/ControllerURL">
                     <input type="hidden" name="command" value="VIEW_AUTHOR_COMMAND">
