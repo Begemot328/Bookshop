@@ -33,6 +33,8 @@ public class RequestParameters {
     public static final String MAX_PRICE = "maxPrice";
     public static final String MIN_PRICE = "minPrice";
 
+    public static final String FILE = "file";
+
     public static final String ACTIONS = "actions";
     public static final String BUYERS = "buyers";
     public static final String BOOKS = "books";

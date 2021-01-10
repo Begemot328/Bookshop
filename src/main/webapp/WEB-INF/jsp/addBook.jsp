@@ -41,6 +41,15 @@
             font-family: Arial, Helvetica, sans-serif;
         }
     </style>
+
+    <script>
+        $('#i_file').change( function(event) {
+            var tmppath = URL.createObjectURL(event.target.files[0]);
+            $("img").fadeIn("fast").attr('src',URL.createObjectURL(event.target.files[0]));
+
+            $("#disp_tmp_path").html("Temporary Path(Copy it and try pasting it in browser address bar) --> <strong>["+tmppath+"]</strong>");
+        });
+    </script>
 </head>
 <body>
 <!-- Top panel-->
@@ -181,9 +190,11 @@
     <!-- middle panel-->
     <div class="w3-cell w3-padding-large w3-center" style="width:70%">
         <br/>
-        <form class="w3-card-4 w3-row-padding" method="POST" action="${pageContext.request.contextPath}/ControllerURL">
+        <form class="w3-card-4 w3-row-padding" method="POST"
+              action="${pageContext.request.contextPath}/ControllerURL?command=ADD_BOOK_COMMAND"
+              enctype="multipart/form-data">
             <input type="hidden" name="command" value="ADD_BOOK_COMMAND">
-            <div class="w3-container" style="width:35%">
+            <div class="w3-container" style="width:35%" >
                 <input class="w3-input w3-border" type="text" name="title" required value="${title}"
                        placeholder="<fmt:message key="book.title"/>">
             </div>
@@ -191,7 +202,7 @@
 
             <div class="w3-container" style="width:35%">
                 <select id="users" name="authorId">
-                    <c:forEach var="author" items="${sessionScope.authors}">
+                    <c:forEach var="author" items="${authors}">
                         <option value="${author.id}">${author.firstName} ${author.lastName}</option>
                     </c:forEach>
                 </select>
@@ -210,6 +221,10 @@
             <br/>
             <div class="w3-container" style="width:35%">
                 <input class="w3-input w3-border" type="url" name="photolink" value="${photolink}"
+                       placeholder="<fmt:message key="photolink"/>">
+            </div>
+            <div class="w3-container" style="width:35%">
+                <input class="w3-input w3-border" type="file" name="file" id="i_file"
                        placeholder="<fmt:message key="photolink"/>">
             </div>
             <br/>

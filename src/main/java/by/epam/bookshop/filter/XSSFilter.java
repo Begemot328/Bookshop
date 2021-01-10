@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,7 +49,7 @@ public class XSSFilter implements Filter {
         HttpServletRequestSetParameterWrapper request = (new HttpServletRequestSetParameterWrapper(
                 (HttpServletRequest) servletRequest));
 
-        for (String key : servletRequest.getParameterMap().keySet()) {
+        for (String key : (Set<String>) servletRequest.getParameterMap().keySet()) {
             for (Pattern pattern: patterns) {
                 Matcher matcher = pattern.matcher(servletRequest.getParameter(key));
                 if (matcher.matches()) {
@@ -63,5 +64,10 @@ public class XSSFilter implements Filter {
         } else {
             filterChain.doFilter(request, servletResponse);
         }
+    }
+
+    @Override
+    public void destroy() {
+
     }
 }

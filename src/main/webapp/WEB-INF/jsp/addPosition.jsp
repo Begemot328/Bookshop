@@ -187,7 +187,7 @@
 
             <div class="w3-container" style="width:35%">
                 <select id="shop" name="shopId">
-                    <c:forEach var="shop" items="${sessionScope.shops}">
+                    <c:forEach var="shop" items="${shops}">
                         <option value="${shop.id}">${shop.name} ${shop.address}</option>
                     </c:forEach>
                 </select>
@@ -196,7 +196,7 @@
             <br/>
             <div class="w3-container" style="width:35%">
                 <select id="books" name="bookId">
-                    <c:forEach var="book" items="${sessionScope.books}">
+                    <c:forEach var="book" items="${books}">
                         <option value="${book.id}">${book.title} by ${book.author.firstName} ${book.author.lastName}</option>
                     </c:forEach>
                 </select>
