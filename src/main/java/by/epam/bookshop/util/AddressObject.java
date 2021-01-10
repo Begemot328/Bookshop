@@ -61,7 +61,6 @@ public class AddressObject {
         latitude = location.getDouble("lat");// широта
         location = response.getJSONArray("results").getJSONObject(0);
         formattedAddress = location.getString("formatted_address");
-        Controller.getLoggerInstance().debug(formattedAddress);
     }
 
     private static String getURL(String baseURL, final Map<String, String> params) {

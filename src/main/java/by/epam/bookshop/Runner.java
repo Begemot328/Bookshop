@@ -45,6 +45,8 @@ public class Runner {
             AddressObject obj3 = new AddressObject("Минск, Грушевская , 73");
             System.out.println(obj3.getFormattedAddress());
             System.out.println(new AddressObject(obj3.getFormattedAddress()).getFormattedAddress());
+            System.out.println(obj3.getLatitude());
+            System.out.println(obj3.getLongitude());
         } catch (AddressException e) {
             e.printStackTrace();
         }
