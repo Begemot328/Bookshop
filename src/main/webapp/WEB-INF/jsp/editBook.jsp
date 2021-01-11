@@ -190,7 +190,7 @@
 
             <div class="w3-container" style="width:35%">
                 <select id="users" name="authorId">
-                    <c:forEach var="author" items="${sessionScope.authors}">
+                    <c:forEach var="author" items="${authors}">
                         <c:choose>
                             <c:when test="${sessionScope.book.author.id == author.id}">
                                 <option selected value="${author.id}">

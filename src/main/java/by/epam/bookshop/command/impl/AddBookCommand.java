@@ -64,7 +64,7 @@ public class AddBookCommand implements Command {
         factory.setSizeThreshold(maxMemSize);
 
         // Location to save data that is larger than maxMemSize.
-        factory.setRepository(new File("/temp/"));
+        factory.setRepository(new File("c:/temp/"));
 
         // Create a new file upload handler
         ServletFileUpload upload = new ServletFileUpload(factory);

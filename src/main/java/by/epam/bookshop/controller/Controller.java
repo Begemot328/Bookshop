@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import by.epam.bookshop.exceptions.CommandException;
 import by.epam.bookshop.exceptions.ServletRuntimeException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.util.Enumeration;
 
 @WebServlet("/ControllerURL")
+@MultipartConfig
 public class Controller  extends HttpServlet {
     private static final String GET = "GET";
     private static final String POST = "POST";
@@ -33,6 +35,7 @@ public class Controller  extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         logger.debug(POST);
+
         processRequest(request, response);
     }
 

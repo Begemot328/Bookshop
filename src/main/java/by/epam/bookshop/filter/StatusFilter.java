@@ -18,10 +18,10 @@ public class StatusFilter implements Filter {
 
     static CommandEnum[] SellerOnlyCommands = {
             CommandEnum.ADD_AUTHOR_COMMAND,
-            CommandEnum.ADD_BOOK_COMMAND,
+            //CommandEnum.ADD_BOOK_COMMAND,
             CommandEnum.ADD_POSITION_COMMAND,
             CommandEnum.ADD_AUTHOR_MENU_COMMAND,
-            CommandEnum.ADD_BOOK_MENU_COMMAND,
+            //CommandEnum.ADD_BOOK_MENU_COMMAND,
             CommandEnum.ADD_POSITION_MENU_COMMAND,
             CommandEnum.PROCESS_POSITION_COMMAND,
             CommandEnum.RETURN_BOOK_COMMAND,

@@ -43,11 +43,11 @@
     </style>
 
     <script>
-        $('#i_file').change( function(event) {
+        $('#i_file').change(function (event) {
             var tmppath = URL.createObjectURL(event.target.files[0]);
-            $("img").fadeIn("fast").attr('src',URL.createObjectURL(event.target.files[0]));
+            $("img").fadeIn("fast").attr('src', URL.createObjectURL(event.target.files[0]));
 
-            $("#disp_tmp_path").html("Temporary Path(Copy it and try pasting it in browser address bar) --> <strong>["+tmppath+"]</strong>");
+            $("#disp_tmp_path").html("Temporary Path(Copy it and try pasting it in browser address bar) --> <strong>[" + tmppath + "]</strong>");
         });
     </script>
 </head>
@@ -132,8 +132,9 @@
                 </div>
                 <div class="w3-dropdown-hover">
                     <button class="w3-button w3-purple w3-opacity-min">
-                         <svg style="width:32px;height:32px" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M17.9,17.39C17.64,16.59 16.89,16 16,16H15V13A1,1 0 0,0 14,12H8V10H10A1,1 0 0,0 11,9V7H13A2,2 0 0,0 15,5V4.59C17.93,5.77 20,8.64 20,12C20,14.08 19.2,15.97 17.9,17.39M11,19.93C7.05,19.44 4,16.08 4,12C4,11.38 4.08,10.78 4.21,10.21L9,15V16A2,2 0 0,0 11,18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                        <svg style="width:32px;height:32px" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                  d="M17.9,17.39C17.64,16.59 16.89,16 16,16H15V13A1,1 0 0,0 14,12H8V10H10A1,1 0 0,0 11,9V7H13A2,2 0 0,0 15,5V4.59C17.93,5.77 20,8.64 20,12C20,14.08 19.2,15.97 17.9,17.39M11,19.93C7.05,19.44 4,16.08 4,12C4,11.38 4.08,10.78 4.21,10.21L9,15V16A2,2 0 0,0 11,18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
                         </svg>
                     </button>
                     <div class="w3-dropdown-content w3-bar-block w3-deep-purple">
@@ -190,16 +191,15 @@
     <!-- middle panel-->
     <div class="w3-cell w3-padding-large w3-center" style="width:70%">
         <br/>
-        <form class="w3-card-4 w3-row-padding" method="POST"
-              action="${pageContext.request.contextPath}/ControllerURL?command=ADD_BOOK_COMMAND"
-              enctype="multipart/form-data">
+        <form class="w3-row-padding" method="POST" action="${pageContext.request.contextPath}/ControllerURL"
+              id="searchForm" enctype="multipart/form-data">
+            <!--  enctype="multipart/form-data" -->
             <input type="hidden" name="command" value="ADD_BOOK_COMMAND">
-            <div class="w3-container" style="width:35%" >
+            <div class="w3-container" style="width:35%">
                 <input class="w3-input w3-border" type="text" name="title" required value="${title}"
                        placeholder="<fmt:message key="book.title"/>">
             </div>
             <br/>
-
             <div class="w3-container" style="width:35%">
                 <select id="users" name="authorId">
                     <c:forEach var="author" items="${authors}">
@@ -210,7 +210,8 @@
             <br/>
 
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="number" step="0.01" min="0" name="price" required value="${price}"
+                <input class="w3-input w3-border" type="number" step="0.01" min="0" name="price" required
+                       value="${price}"
                        placeholder="<fmt:message key="price"/>">
             </div>
             <br/>
@@ -223,6 +224,7 @@
                 <input class="w3-input w3-border" type="url" name="photolink" value="${photolink}"
                        placeholder="<fmt:message key="photolink"/>">
             </div>
+
             <div class="w3-container" style="width:35%">
                 <input class="w3-input w3-border" type="file" name="file" id="i_file"
                        placeholder="<fmt:message key="photolink"/>">
