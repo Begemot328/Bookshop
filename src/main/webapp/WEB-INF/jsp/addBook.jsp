@@ -216,7 +216,7 @@
             </div>
             <br/>
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="text" name="description"
+                <input class="w3-input w3-border" type="text" name="description" value="${description}"
                        placeholder="<fmt:message key="description"/>">
             </div>
             <br/>
@@ -226,7 +226,7 @@
             </div>
 
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="file" name="file" id="i_file"
+                <input class="w3-input w3-border w3-button w3-purple" type="file" name="file" id="i_file"
                        placeholder="<fmt:message key="photolink"/>">
             </div>
             <br/>

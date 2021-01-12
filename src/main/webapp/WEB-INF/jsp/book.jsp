@@ -306,6 +306,7 @@
             </c:if>
         </c:if>
         <!-- positions map -->
+        <c:if test="${not empty requestScope.positions}">
         <div id="map"></div>
         <!-- position table -->
         <table class="w3-table-all w3-purple w3-opacity-min">
@@ -357,7 +358,7 @@
                 </c:if>
             </c:forEach>
         </table>
-
+        </c:if>
         <!-- Pagination          -->
         <div class="w3-bar w3-purple w3-opacity-min w3-center w3-stretch">
             <c:choose>
