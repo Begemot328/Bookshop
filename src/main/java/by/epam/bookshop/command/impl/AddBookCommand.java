@@ -10,6 +10,7 @@ import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.service.author.AuthorService;
 import by.epam.bookshop.service.book.BookService;
 import by.epam.bookshop.util.GoogleDriveUtil;
+import by.epam.bookshop.util.ImageUtil;
 import by.epam.bookshop.validator.BookValidator;
 
 import org.apache.commons.fileupload.FileItem;
@@ -19,10 +20,11 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
+import javax.servlet.http.Part;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -51,74 +53,34 @@ public class AddBookCommand implements Command {
         Author author;
 
         File file = null;
-         boolean isMultipart;
-         String filePath = new String();
-         int maxFileSize = 1000 * 1024;
-         int maxMemSize = 4 * 1024;
-         File newFile ;
-        isMultipart = ServletFileUpload.isMultipartContent(request);
 
-        DiskFileItemFactory factory = new DiskFileItemFactory();
-
-        // maximum size that will be stored in memory
-        factory.setSizeThreshold(maxMemSize);
-
-        // Location to save data that is larger than maxMemSize.
-        factory.setRepository(new File("c:/temp/"));
-
-        // Create a new file upload handler
-        ServletFileUpload upload = new ServletFileUpload(factory);
-
-        // maximum file size to be uploaded.
-        upload.setSizeMax( maxFileSize );
-        List fileItems = null;
-
+        Part filePart = null; // Retrieves <input type="file" name="file">
         try {
-            // Parse the request to get file items.
-            fileItems = upload.parseRequest(request);
+            filePart = request.getPart("file");
+            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
+            InputStream fileContent = filePart.getInputStream();
 
-            // Process the uploaded file items
-            Iterator i = fileItems.iterator();
+            file = new File("c:/temp/" + fileName);
+            //boolean newFile = file.createNewFile();
+            OutputStream outStream = new FileOutputStream(file);
+            outStream.write(fileContent.readAllBytes());
+            outStream.close();
+            fileContent.close();
 
+            File resizedFile = ImageUtil.resizeImage(file, 150, 200);
 
-            while ( i.hasNext () ) {
-                FileItem fi = (FileItem)i.next();
-                if ( !fi.isFormField () ) {
-                    // Get the uploaded file parameters
-                    String fieldName = fi.getFieldName();
-                    String fileName = fi.getName();
-                    String contentType = fi.getContentType();
-                    boolean isInMemory = fi.isInMemory();
-                    long sizeInBytes = fi.getSize();
-
-                    // Write the file
-                    if( fileName.lastIndexOf("\\") >= 0 ) {
-                        file = new File( filePath + fileName.substring( fileName.lastIndexOf("\\"))) ;
-                    } else {
-                        file = new File( filePath + fileName.substring(fileName.lastIndexOf("\\")+1)) ;
-                    }
-                    fi.write( file ) ;
-                }
-            }
-        } catch(Exception ex) {
-            System.out.println(ex);
-        }
-
-        try {
             if (file.exists()) {
-                fileString = GoogleDriveUtil.transferFile(file, "1ACaioGkteNxu6IHd9J-ReQxJRdqADcXs");
+                fileString = GoogleDriveUtil.transferFile(resizedFile, "1ACaioGkteNxu6IHd9J-ReQxJRdqADcXs");
                 link = new  URL(fileString);
             }
             file.delete();
             authorId  = Integer.parseInt(request.getParameter(RequestParameters.AUTHOR_ID));
             price  = Float.parseFloat(request.getParameter(RequestParameters.PRICE));
-            if (photoLink == null || photoLink.isEmpty()) {
+         /*   if (photoLink == null || photoLink.isEmpty()) {
                 link = null;
             } else {
                 link = new URL(photoLink);
-            }
-
-
+            } */
         } catch (NumberFormatException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, INPUT_ERROR);
             return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
@@ -130,6 +92,8 @@ public class AddBookCommand implements Command {
         } catch (IOException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, FILE_INPUT_ERROR);
             return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+        } catch (ServletException e) {
+            e.printStackTrace();
         }
 
         try {
