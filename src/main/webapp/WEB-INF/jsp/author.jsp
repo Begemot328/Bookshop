@@ -150,7 +150,7 @@
     </div>
 </div>
 <div class="w3-cell-row">
-    <div class="w3-cell  w3-deep-purple w3-opacity" style="width:15%">
+    <div class="w3-cell w3-container  w3-deep-purple w3-opacity" style="width:15%">
         <div class="w3-bar-block">
             <div class="w3-bar-item w3-large"><fmt:message key="book.genres"/></div>
             <form class="w3-bar-item w3-large w3-hover-purple">
@@ -179,7 +179,7 @@
     </div>
     <c:set var="commandName" value="VIEW_AUTHOR_COMMAND"/>
     <!-- Card panel -->
-    <div class="w3-cell w3-padding-large w3-center" style="width:70%">
+    <div class="w3-cell w3-container w3-padding-large w3-center" style="width:70%">
         <div class="w3-card-4 w3-half w3-center">
             <div class="w3-panel w3-large w3-purple w3-opacity">
                 <h4>${sessionScope.author.firstName} ${sessionScope.author.lastName}</h4>

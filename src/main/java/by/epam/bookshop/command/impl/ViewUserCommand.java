@@ -8,7 +8,6 @@ import by.epam.bookshop.entity.user.User;
 import by.epam.bookshop.entity.user.UserStatus;
 import by.epam.bookshop.exceptions.CommandException;
 import by.epam.bookshop.exceptions.ServiceException;
-import by.epam.bookshop.service.position.PositionService;
 import by.epam.bookshop.service.position_action.PositionActionService;
 import by.epam.bookshop.service.user.UserService;
 
@@ -37,7 +36,7 @@ public class ViewUserCommand implements Command {
             }
 
 
-            int pageQuantity = ControllerUtil.pageQuantity(PositionActionService.getInstance().countBy(finder),
+            int pageQuantity = CommandUtil.pageQuantity(PositionActionService.getInstance().countBy(finder),
                     ELEMENTS_PER_PAGE);
 
             request.setAttribute(RequestParameters.ACTIONS, actions);

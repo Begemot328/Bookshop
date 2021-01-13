@@ -5,7 +5,6 @@ import by.epam.bookshop.dao.impl.shop.ShopFinder;
 import by.epam.bookshop.entity.shop.Shop;
 import by.epam.bookshop.exceptions.CommandException;
 import by.epam.bookshop.exceptions.ServiceException;
-import by.epam.bookshop.service.book.BookService;
 import by.epam.bookshop.service.shop.ShopService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +33,7 @@ public class FindShopsCommand implements Command {
             finder = finder.findByAdress(request.getParameter(RequestParameters.SHOP_ADRESS));
         }
         try {
-            int pageQuantity = ControllerUtil.pageQuantity(ShopService.getInstance().countBy(finder),
+            int pageQuantity = CommandUtil.pageQuantity(ShopService.getInstance().countBy(finder),
                     ELEMENTS_PER_PAGE);
 
             request.setAttribute(

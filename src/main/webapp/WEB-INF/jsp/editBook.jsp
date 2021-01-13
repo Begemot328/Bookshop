@@ -181,7 +181,9 @@
     <!-- middle panel-->
     <div class="w3-cell w3-padding-large w3-center" style="width:70%">
         <br/>
-        <form class="w3-card-4 w3-row-padding" method="POST" action="${pageContext.request.contextPath}/ControllerURL">
+        <form class="w3-card-4 w3-row-padding" method="POST"
+              action="${pageContext.request.contextPath}/ControllerURL"
+              enctype="multipart/form-data">
             <input type="hidden" name="command" value="EDIT_BOOK_COMMAND">
             <div class="w3-container" style="width:35%">
                 <input class="w3-input w3-border" type="text" name="title" value="${sessionScope.book.title}" required placeholder="<fmt:message key="book.title"/>">
@@ -217,7 +219,12 @@
             </div>
             <br/>
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="url" name="photolink"
+                <input class="w3-input w3-border" type="url" name="photolink" value="${sessionScope.book.photoLink}"
+                       placeholder="<fmt:message key="photolink"/>">
+            </div>
+
+            <div class="w3-container" style="width:35%">
+                <input class="w3-input w3-border w3-button w3-purple" type="file" name="file"
                        placeholder="<fmt:message key="photolink"/>">
             </div>
             <br/>

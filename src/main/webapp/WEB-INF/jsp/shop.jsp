@@ -250,7 +250,7 @@
                 <c:if test="${sessionScope.currentUser.status.id == 4}">
                     <input type="hidden" name="command" value="OPTIMIZE_SHOP_COMMAND">
                     <br/>
-                    <button class="w3-button w3-purple w3-ripple w3-opacity-min" type="submit">
+                    <button class="w3-button w3-purple w3-large w3-ripple w3-opacity-off" type="submit">
                         <fmt:message key="shop.optimize"/></button>
                 </c:if>
             </form>
@@ -262,7 +262,7 @@
                     <br/>
                     <form>
                         <input type="hidden" name="command" value="EDIT_SHOP_MENU_COMMAND">
-                        <button class="w3-button w3-purple w3-ripple w3-large w3-opacity" type="submit">
+                        <button class="w3-button w3-purple w3-ripple w3-large w3-opacity-off" type="submit">
                             <fmt:message key="change"></fmt:message>
                         </button>
                     </form>
@@ -295,7 +295,7 @@
                 || sessionScope.currentUser.status.id == 4}">
                     <tr class="w3-deep-purple">
                         <td>
-                            <a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_SHOP_COMMAND&shopId=${position.shop.id}">
+                            <a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_BOOK_COMMAND&shopId=${position.shop.id}">
                                 <c:out value="${position.book.title}"/></a></td>
                         <td><c:out value="${position.book.author.firstName} ${position.book.author.lastName}"/></td>
                         <td><c:out value="${position.quantity}"/></td>

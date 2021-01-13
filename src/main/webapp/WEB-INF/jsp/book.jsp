@@ -264,17 +264,22 @@
 
     <c:set var="commandName" value="VIEW_BOOK_COMMAND"/>
     <!-- Center panel -->
-    <div class="w3-cell w3-padding-large w3-center" style="width:70%">
+    <div class="w3-cell w3-container w3-padding-large w3-center" style="width:70%">
         <div class="w3-card-4 w3-half w3-center">
             <div class="w3-panel w3-large w3-purple w3-opacity">
                 <h4>${sessionScope.book.title}</h4>
             </div>
-            <form method="POST" action="${pageContext.request.contextPath}/ControllerURL">
+            <form method="GET" action="${pageContext.request.contextPath}/ControllerURL">
                 <input type="hidden" name="command" value="VIEW_AUTHOR_COMMAND">
                 <input type="hidden" name="authorId" value="${sessionScope.book.author.id}">
                 <button class="w3-panel w3-button w3-large w3-purple w3-opacity" type="submit" style="width: 100%">
                     <h4>${sessionScope.book.author.firstName} ${sessionScope.book.author.lastName}</h4>
                 </button>
+                <c:if test="${not empty sessionScope.book.description}">
+                    <div class="w3-panel w3-medioum w3-purple w3-opacity">
+                        <h5>${sessionScope.book.description}</h5>
+                    </div>
+                </c:if>
             </form>
             <c:choose>
                 <c:when test="${not empty sessionScope.book.photoLink}">
@@ -297,7 +302,7 @@
                     <br/>
                     <form>
                         <input type="hidden" name="command" value="EDIT_BOOK_MENU_COMMAND">
-                        <button class="w3-button w3-purple w3-ripple w3-large w3-opacity w3-hover-deep-purple"
+                        <button class="w3-button w3-purple w3-ripple w3-large w3-opacity-off w3-hover-deep-purple"
                                 type="submit">
                             <fmt:message key="change"></fmt:message>
                         </button>
@@ -306,58 +311,60 @@
             </c:if>
         </c:if>
         <!-- positions map -->
-        <c:if test="${not empty requestScope.positions}">
-        <div id="map"></div>
-        <!-- position table -->
-        <table class="w3-table-all w3-purple w3-opacity-min">
-            <tr class="w3-deep-purple">
-                <th><fmt:message key="shop"/></th>
-                <th><fmt:message key="shop.address"/></th>
-                <th><fmt:message key="quantity"/></th>
-                <c:if test="${not empty sessionScope.currentUser}">
-                    <c:choose>
-                        <c:when test="${sessionScope.currentUser.status.id == 2}">
-                            <th></th>
-                        </c:when>
-                        <c:when test="${sessionScope.currentUser.status.id >2 }">
-                            <th><fmt:message key="status"/></th>
-                            <th></th>
-                        </c:when>
-                    </c:choose>
-                </c:if>
-            </tr>
+        <c:if test="${not empty requestScope.shops}">
+            <div id="map"></div>
+            <!-- position table -->
+            <table class="w3-table-all w3-purple w3-opacity-min">
+                <tr class="w3-deep-purple">
+                    <th><fmt:message key="shop"/></th>
+                    <th><fmt:message key="shop.address"/></th>
+                    <th><fmt:message key="quantity"/></th>
+                    <c:if test="${not empty sessionScope.currentUser}">
+                        <c:choose>
+                            <c:when test="${sessionScope.currentUser.status.id == 2}">
+                                <th></th>
+                            </c:when>
+                            <c:when test="${sessionScope.currentUser.status.id >2 }">
+                                <th><fmt:message key="status"/></th>
+                                <th></th>
+                            </c:when>
+                        </c:choose>
+                    </c:if>
+                </tr>
 
-            <c:forEach var="position"
-                       items="${requestScope.positions}">
-                <c:if test="${position.status.id == 1
+                <c:forEach var="position"
+                           items="${requestScope.positions}">
+                    <c:if test="${position.status.id == 1
                 || sessionScope.currentUser.status.id == 3
                 || sessionScope.currentUser.status.id == 4}">
-                    <tr class="w3-deep-purple">
-                        <td>
-                            <a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_SHOP_COMMAND&shopId=${position.shop.id}">
-                                <c:out value="${position.shop.name}"/></a></td>
-                        <td><c:out value="${position.shop.address}"/></td>
-                        <td><c:out value="${position.quantity}"/></td>
-                        <c:if test="${not empty sessionScope.currentUser}">
-                            <c:choose>
-                                <c:when test="${sessionScope.currentUser.status.id == 2}">
-                                    <td>
-                                        <a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shopId=${position.shop.id}&positionId=${position.id}"
-                                           class="w3-button w3-hover-purple"><fmt:message key="position.book"/></a></td>
-                                </c:when>
-                                <c:when test="${sessionScope.currentUser.status.id > 2}">
-                                    <td><fmt:message key="${position.status}"/></td>
-                                    <td>
-                                        <a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shopId=${position.shop.id}&positionId=${position.id}"
-                                           class="w3-button w3-hover-purple"><fmt:message key="position.process"/></a>
-                                    </td>
-                                </c:when>
-                            </c:choose>
-                        </c:if>
-                    </tr>
-                </c:if>
-            </c:forEach>
-        </table>
+                        <tr class="w3-deep-purple">
+                            <td>
+                                <a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_SHOP_COMMAND&shopId=${position.shop.id}">
+                                    <c:out value="${position.shop.name}"/></a></td>
+                            <td><c:out value="${position.shop.address}"/></td>
+                            <td><c:out value="${position.quantity}"/></td>
+                            <c:if test="${not empty sessionScope.currentUser}">
+                                <c:choose>
+                                    <c:when test="${sessionScope.currentUser.status.id == 2}">
+                                        <td>
+                                            <a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shopId=${position.shop.id}&positionId=${position.id}"
+                                               class="w3-button w3-hover-purple"><fmt:message key="position.book"/></a>
+                                        </td>
+                                    </c:when>
+                                    <c:when test="${sessionScope.currentUser.status.id > 2}">
+                                        <td><fmt:message key="${position.status}"/></td>
+                                        <td>
+                                            <a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shopId=${position.shop.id}&positionId=${position.id}"
+                                               class="w3-button w3-hover-purple"><fmt:message
+                                                    key="position.process"/></a>
+                                        </td>
+                                    </c:when>
+                                </c:choose>
+                            </c:if>
+                        </tr>
+                    </c:if>
+                </c:forEach>
+            </table>
         </c:if>
         <!-- Pagination          -->
         <div class="w3-bar w3-purple w3-opacity-min w3-center w3-stretch">
@@ -380,7 +387,7 @@
         </div>
     </div>
     <!--  right panel bar       -->
-    <div class="w3-cell w3-deep-purple w3-opacity" style="width:15%">
+    <div class="w3-cell w3-container w3-deep-purple w3-opacity" style="width:15%">
         <div class="w3-bar-block">
             <form class="w3-bar-item w3-large w3-hover-purple">
                 <input type="hidden" name="command" value="SEARCH_BOOKS_COMMAND">

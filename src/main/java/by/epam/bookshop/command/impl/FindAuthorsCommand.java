@@ -6,7 +6,6 @@ import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.exceptions.CommandException;
 import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.service.author.AuthorService;
-import by.epam.bookshop.service.book.BookService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -36,7 +35,7 @@ public class FindAuthorsCommand implements Command {
         }
 
         try {
-            int pageQuantity = ControllerUtil.pageQuantity(AuthorService.getInstance().countBy(finder),
+            int pageQuantity = CommandUtil.pageQuantity(AuthorService.getInstance().countBy(finder),
                     ELEMENTS_PER_PAGE);
 
             Author[] authors = AuthorService.getInstance().findBy(finder).toArray(Author[]::new);

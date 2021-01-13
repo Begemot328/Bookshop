@@ -35,7 +35,7 @@ public class RegisterCommand implements Command {
     private static final String FILE_INPUT_ERROR = "error.file.input";
     private static final int PICTURE_HEIGHT = 250;
     private static final int PICTURE_WIDTH = 250;
-    private static final String PATH_ID = "1ACaioGkteNxu6IHd9J-ReQxJRdqADcXs";
+    private static final String PATH_ID = "1SIB7p5krDkontV99kQSwpMvmFZlNStJl";
     private static final String TEMPFILE_PATH = "resources/";
     private static final String GD_LINK = "https://drive.google.com/uc?export=view&id=";
 
@@ -55,6 +55,7 @@ public class RegisterCommand implements Command {
             return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
         }
 
+        AddressObject addressObject = null;
         User user;
         String photoLink = null;
         URL link = null;
@@ -62,33 +63,8 @@ public class RegisterCommand implements Command {
         File file = null;
 
         try {
-            Part filePart = null; // Retrieves <input type="file" name="file">
-            filePart = request.getPart(RequestParameters.FILE);
-            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
-            if (!fileName.isEmpty()) {
-                InputStream fileInputStream = filePart.getInputStream();
-                String filePath = request.getServletContext().getRealPath("/") + TEMPFILE_PATH + fileName;
-                file = new File(filePath);
-                OutputStream outStream = new FileOutputStream(file);
-                outStream.write(fileInputStream.readAllBytes());
-                outStream.close();
-                fileInputStream.close();
-
-                File resizedFile = ImageUtil.resizeImage(file, PICTURE_WIDTH, PICTURE_HEIGHT);
-
-                if (file.exists()) {
-                    fileString = GoogleDriveUtil.transferFile(resizedFile, PATH_ID);
-                    link = new URL(fileString);
-                }
-                file.delete();
-            } else if (request.getPart(RequestParameters.PHOTOLINK) != null) {
-                photoLink = request.getParameter(RequestParameters.PHOTOLINK);
-                if (!photoLink.contains(GD_LINK)) {
-                    photoLink = GoogleDriveUtil.transferFile(photoLink, PATH_ID,
-                            ImageUtil.getFunction(PICTURE_WIDTH, PICTURE_HEIGHT));
-                }
-                link = new URL(photoLink);
-            }
+            link = CommandUtil.getBookLink(request, PICTURE_WIDTH, PICTURE_HEIGHT, PATH_ID);
+            addressObject = new AddressObject(address);
         } catch (MalformedURLException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, URL_INPUT_ERROR);
             return new Router(JSPPages.ADD_AUTHOR_PAGE);
@@ -97,11 +73,14 @@ public class RegisterCommand implements Command {
             return new Router(JSPPages.ADD_AUTHOR_PAGE);
         } catch (GeneralSecurityException | ServletException e) {
             throw new CommandException(e);
+        } catch (AddressException e) {
+            request.setAttribute(RequestParameters.ERROR_MESSAGE, ADDRESS_INPUT_ERROR);
+            return new Router(JSPPages.ADD_AUTHOR_PAGE);
         }
 
         try {
             new UserValidator().validate(firstName, lastName, login,
-                    PasswordCoder.code(password), address, photoLink, UserStatus.BUYER);
+                    PasswordCoder.code(password), addressObject, photoLink, UserStatus.BUYER);
         } catch (ValidationException validationException) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, REGISTER_ERROR);
             Router router = new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));

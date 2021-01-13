@@ -1,7 +1,6 @@
 package by.epam.bookshop.command.impl;
 
 import by.epam.bookshop.command.*;
-import by.epam.bookshop.dao.impl.book.BookFinder;
 import by.epam.bookshop.dao.impl.position.PositionFinder;
 import by.epam.bookshop.entity.book.Book;
 import by.epam.bookshop.entity.position.Position;
@@ -39,7 +38,7 @@ public class ViewBookCommand implements Command {
             Position[] positions = PositionService.getInstance().findBy(finder)
                     .toArray(Position[]::new);
 
-            int pageQuantity = ControllerUtil.pageQuantity(PositionService.getInstance().countBy(finder),
+            int pageQuantity = CommandUtil.pageQuantity(PositionService.getInstance().countBy(finder),
                     ELEMENTS_PER_PAGE);
 
              positions = Arrays.stream(positions)

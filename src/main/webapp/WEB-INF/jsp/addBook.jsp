@@ -217,7 +217,7 @@
             <br/>
             <div class="w3-container" style="width:35%">
                 <input class="w3-input w3-border" type="text" name="description" value="${description}"
-                       placeholder="<fmt:message key="description"/>">
+                       placeholder="<fmt:message key="description"/>" style="height: auto ">
             </div>
             <br/>
             <div class="w3-container" style="width:35%">

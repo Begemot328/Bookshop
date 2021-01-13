@@ -10,7 +10,6 @@ import by.epam.bookshop.service.author.AuthorService;
 import by.epam.bookshop.service.book.BookService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
 
 public class FindBooksCommand implements Command {
 
@@ -70,7 +69,7 @@ public class FindBooksCommand implements Command {
                 finder = finder.findByAuthors(AuthorService.getInstance().findBy(authorFinder));
             }
 
-            int pageQuantity = ControllerUtil.pageQuantity(BookService.getInstance().countBy(finder), ELEMENTS_PER_PAGE);
+            int pageQuantity = CommandUtil.pageQuantity(BookService.getInstance().countBy(finder), ELEMENTS_PER_PAGE);
 
             Book[] books = BookService.getInstance().findBy(
                     finder, (page - 1) * ELEMENTS_PER_PAGE, ELEMENTS_PER_PAGE)

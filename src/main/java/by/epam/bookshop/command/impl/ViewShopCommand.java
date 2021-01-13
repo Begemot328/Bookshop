@@ -11,7 +11,6 @@ import by.epam.bookshop.exceptions.CommandException;
 import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.service.position.PositionService;
 import by.epam.bookshop.service.shop.ShopService;
-import by.epam.bookshop.service.user.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -41,7 +40,7 @@ public class ViewShopCommand implements Command {
             PositionFinder finder =
                     new PositionFinder().findByShop(shop.getId());
 
-            int pageQuantity = ControllerUtil.pageQuantity(PositionService.getInstance().countBy(finder),
+            int pageQuantity = CommandUtil.pageQuantity(PositionService.getInstance().countBy(finder),
                     ELEMENTS_PER_PAGE);
 
             Position[] positions = PositionService.getInstance().findBy(finder).stream()

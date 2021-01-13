@@ -12,57 +12,57 @@ import by.epam.bookshop.service.book.BookService;
 import by.epam.bookshop.validator.AuthorValidator;
 import by.epam.bookshop.validator.BookValidator;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.GeneralSecurityException;
 import java.util.Optional;
 
 public class EditAuthorCommand implements Command {
 
-    private static final String WRONG_AUTHOR_ERROR = "error.author.id";
-    private static final String SERVICE_EXCEPTION = "Service Exception: ";
-    private static final String INPUT_ERROR = "error.input";
-    private static final String WRONG_ENTITY = "wrong.entity.error";
-    private static final String URL_INPUT_ERROR = "error.url.input";
+    private static final int PICTURE_HEIGHT = 250;
+    private static final int PICTURE_WIDTH = 250;
+    private static final String PATH_ID = "1N5hFmFot4-eJx2PKAmEVdPBMysT1nV99";
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         Author newAuthor;
         String firstName = request.getParameter(RequestParameters.AUTHOR_FIRSTNAME);
         String lastName = request.getParameter(RequestParameters.AUTHOR_LASTNAME);
-        String photoLink = request.getParameter(RequestParameters.PHOTOLINK);
-
         URL link;
-
-        try {
-            if (photoLink == null || photoLink.isEmpty()) {
-                link = null;
-            } else {
-                link = new URL(photoLink);
-            }
-            new AuthorValidator().validate(firstName, lastName, photoLink);
-        } catch (ValidationException e) {
-            request.setAttribute(RequestParameters.ERROR_MESSAGE, INPUT_ERROR);
-            return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
-        } catch (MalformedURLException e) {
-            request.setAttribute(RequestParameters.ERROR_MESSAGE, URL_INPUT_ERROR);
-            return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
-        }
 
         if (request.getSession().getAttribute(SessionParameters.AUTHOR) instanceof Author) {
             newAuthor = (Author) request.getSession().getAttribute(SessionParameters.AUTHOR);
         } else {
-            throw new CommandException(WRONG_ENTITY);
+            throw new CommandException(ErrorMessages.WRONG_ENTITY);
+        }
+
+        try {
+            link = CommandUtil.getBookLink(request, PICTURE_WIDTH, PICTURE_HEIGHT, PATH_ID);
+            new AuthorValidator().validate(firstName, lastName, link);
+        } catch (ValidationException e) {
+            request.setAttribute(RequestParameters.ERROR_MESSAGE, ErrorMessages.INPUT_ERROR);
+            return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+        } catch (MalformedURLException e) {
+            request.setAttribute(RequestParameters.ERROR_MESSAGE, ErrorMessages.URL_INPUT_ERROR);
+            return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+        } catch (GeneralSecurityException | ServletException e) {
+            throw new CommandException(e);
+        } catch (IOException e) {
+            request.setAttribute(RequestParameters.ERROR_MESSAGE, ErrorMessages.FILE_INPUT_ERROR);
+            return new Router(JSPPages.EDIT_AUTHOR_PAGE);
         }
 
         try {
             newAuthor.setFirstName(firstName);
-            newAuthor.setPhotoLink(new URL(photoLink));
+            newAuthor.setPhotoLink(link);
             newAuthor.setLastName(lastName);
             AuthorService.getInstance().update(newAuthor);
         } catch (ServiceException e) {
             throw new CommandException(e);
-        } catch (ValidationException | MalformedURLException e) {
+        } catch (ValidationException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage());
             return new Router(JSPPages.EDIT_AUTHOR_PAGE);
         }

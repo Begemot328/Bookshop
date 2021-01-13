@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 public class AddPositionCommand implements Command {
 
     private static final String WRONG_AUTHOR_ERROR = "error.author.id";
-    private static final String INPUT_ERROR = "error.input";
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
@@ -35,7 +34,7 @@ public class AddPositionCommand implements Command {
             bookId = Integer.parseInt(request.getParameter(RequestParameters.BOOK_ID));
             quantity = Integer.parseInt(request.getParameter(RequestParameters.QUANTITY));
         } catch (NumberFormatException e) {
-            request.setAttribute(RequestParameters.ERROR_MESSAGE, INPUT_ERROR);
+            request.setAttribute(RequestParameters.ERROR_MESSAGE, ErrorMessages.INPUT_ERROR);
             return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
         }
 
@@ -60,7 +59,7 @@ public class AddPositionCommand implements Command {
             try {
                 new PositionValidator().validate(book, shop, PositionStatus.READY, note, quantity);
             } catch (ValidationException e){
-                request.setAttribute(RequestParameters.ERROR_MESSAGE, INPUT_ERROR);
+                request.setAttribute(RequestParameters.ERROR_MESSAGE, ErrorMessages.INPUT_ERROR);
                 return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
             }
 

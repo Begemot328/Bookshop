@@ -182,21 +182,27 @@
     <!-- middle panel-->
     <div class="w3-cell w3-padding-large w3-center" style="width:70%">
         <br/>
-        <form class="w3-card-4 w3-row-padding" method="GET" action="${pageContext.request.contextPath}/ControllerURL">
+        <form class="w3-card-4 w3-row-padding" method="POST"
+              action="${pageContext.request.contextPath}/ControllerURL"
+              enctype="multipart/form-data">
             <input type="hidden" name="command" value="EDIT_AUTHOR_COMMAND">
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="text" name="author-firstname" required
+                <input class="w3-input w3-border" type="text" name="authorFirstname" required
                        value="${sessionScope.author.firstName}" placeholder="<fmt:message key="author.firstname"/>">
             </div>
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="text" name="author-lastname" required
+                <input class="w3-input w3-border" type="text" name="authorLastname" required
                        value="${sessionScope.author.lastName}" placeholder="<fmt:message key="author.lastname"/>">
             </div>
             <br/>
             <br/>
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="url" name="photolink"
-                       value="${sessionScope.author.photoLink}"
+                <input class="w3-input w3-border" type="url" name="photolink" value="${sessionScope.book.photoLink}"
+                       placeholder="<fmt:message key="photolink"/>">
+            </div>
+
+            <div class="w3-container" style="width:35%">
+                <input class="w3-input w3-border w3-button w3-purple" type="file" name="file"
                        placeholder="<fmt:message key="photolink"/>">
             </div>
             <br/>
@@ -207,7 +213,7 @@
             </c:if>
             <div class="w3-btn" style="width:10%">
                 <input class="w3-btn w3-deep-purple w3-ripple w3-hover-purple" type="submit"
-                       value="<fmt:message key="create"/>!">
+                       value="<fmt:message key="apply"/>!">
             </div>
         </form>
     </div>

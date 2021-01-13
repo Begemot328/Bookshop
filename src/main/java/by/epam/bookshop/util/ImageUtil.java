@@ -34,6 +34,9 @@ public class ImageUtil {
                 .substring(0, file.getAbsolutePath().lastIndexOf(".") - 1)
                 .concat("_resized.").concat(EXTENSION);
         File newFile = new File(filename);
+        if (newFile.exists()) {
+            newFile.delete();
+        }
         ImageIO.write(resizeImage(image, targetWidth,  targetHeight), EXTENSION, newFile);
         return newFile;
     }

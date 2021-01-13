@@ -24,70 +24,36 @@ import java.util.Arrays;
 
 public class AddShopCommand implements Command {
 
-    private static final String SERVICE_EXCEPTION = "Service Exception: ";
-    private static final String INPUT_ERROR = "error.input";
-    private static final String WRONG_ENTITY = "wrong.entity.error";
-    private static final String ADDRESS_INPUT_ERROR = "error.address.input";
-    private static final String URL_INPUT_ERROR = "error.url.input";
-    private static final String FILE_INPUT_ERROR = "error.file.input";
     private static final int PICTURE_HEIGHT = 500;
     private static final int PICTURE_WIDTH = 500;
-    private static final String PATH_ID = "1ACaioGkteNxu6IHd9J-ReQxJRdqADcXs";
-    private static final String TEMPFILE_PATH = "resources/";
-    private static final String GD_LINK = "https://drive.google.com/uc?export=view&id=";
+    private static final String PATH_ID = "1nfC7esCSgn3fS0MlorqM1pItDRxknOke";
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         Shop newShop;
         String address = request.getParameter(RequestParameters.ADDRESS);
-
         String name = request.getParameter(RequestParameters.SHOP_NAME);
-        String photoLink = request.getParameter(RequestParameters.PHOTOLINK);
+
         AddressObject addressObject = null;
         URL link = null;
-        String fileString = null;
-        File file = null;
 
         try {
-            Part filePart = null; // Retrieves <input type="file" name="file">
-            filePart = request.getPart(RequestParameters.FILE);
-            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
-            if (!fileName.isEmpty()) {
-                InputStream fileInputStream = filePart.getInputStream();
-                String filePath = request.getServletContext().getRealPath("/") + TEMPFILE_PATH + fileName;
-                file = new File(filePath);
-                OutputStream outStream = new FileOutputStream(file);
-                outStream.write(fileInputStream.readAllBytes());
-                outStream.close();
-                fileInputStream.close();
-
-                File resizedFile = ImageUtil.resizeImage(file, PICTURE_WIDTH, PICTURE_HEIGHT);
-
-                if (file.exists()) {
-                    fileString = GoogleDriveUtil.transferFile(resizedFile, PATH_ID);
-                    link = new URL(fileString);
-                }
-                file.delete();
-            } else if (request.getPart(RequestParameters.PHOTOLINK) != null) {
-                photoLink = request.getParameter(RequestParameters.PHOTOLINK);
-                if (!photoLink.contains(GD_LINK)) {
-                    photoLink = GoogleDriveUtil.transferFile(photoLink, PATH_ID,
-                            ImageUtil.getFunction(PICTURE_WIDTH, PICTURE_HEIGHT));
-                }
-                link = new URL(photoLink);
-            }
+            link = CommandUtil.getBookLink(request, PICTURE_WIDTH, PICTURE_HEIGHT, PATH_ID);
+            addressObject = new AddressObject(address);
         } catch (MalformedURLException e) {
-            return tryAgain(request, URL_INPUT_ERROR);
+            return tryAgain(request, ErrorMessages.URL_INPUT_ERROR);
         } catch (IOException e) {
-            return tryAgain(request, FILE_INPUT_ERROR);
+            return tryAgain(request, ErrorMessages.FILE_INPUT_ERROR);
         } catch (GeneralSecurityException | ServletException e) {
             throw new CommandException(e);
+        } catch (AddressException e) {
+            return tryAgain(request, ErrorMessages.ADDRESS_INPUT_ERROR);
         }
 
         try {
             new ShopValidator().validate(name, addressObject, link);
         } catch (ValidationException e) {
-            request.setAttribute(RequestParameters.ERROR_MESSAGE, INPUT_ERROR);
+            request.setAttribute(RequestParameters.ERROR_MESSAGE, ErrorMessages.INPUT_ERROR);
             return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
         }
         try {

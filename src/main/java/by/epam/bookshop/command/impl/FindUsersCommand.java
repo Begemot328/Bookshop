@@ -7,8 +7,6 @@ import by.epam.bookshop.entity.user.UserStatus;
 import by.epam.bookshop.exceptions.CommandException;
 import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.exceptions.UnknownEntityException;
-import by.epam.bookshop.service.book.BookService;
-import by.epam.bookshop.service.shop.ShopService;
 import by.epam.bookshop.service.user.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,7 +48,7 @@ public class FindUsersCommand implements Command {
         }
 
         try {
-        int pageQuantity = ControllerUtil.pageQuantity(UserService.getInstance().countBy(finder),
+        int pageQuantity = CommandUtil.pageQuantity(UserService.getInstance().countBy(finder),
                 ELEMENTS_PER_PAGE);
 
             User[] users = UserService.getInstance().findBy(finder).toArray(User[]::new);

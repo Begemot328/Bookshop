@@ -35,62 +35,26 @@ import java.util.Optional;
 public class AddBookCommand implements Command {
 
     private static final String WRONG_AUTHOR_ERROR = "error.author.id";
-    private static final String INPUT_ERROR = "error.input";
-    private static final String URL_INPUT_ERROR = "error.url.input";
-    private static final String FILE_INPUT_ERROR = "error.file.input";
     private static final int PICTURE_HEIGHT = 200;
     private static final int PICTURE_WIDTH = 150;
     private static final String PATH_ID = "1ACaioGkteNxu6IHd9J-ReQxJRdqADcXs";
-    private static final String TEMPFILE_PATH = "resources/";
-    private static final String GD_LINK = "https://drive.google.com/uc?export=view&id=";
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         Book newBook;
         String title = request.getParameter(RequestParameters.TITLE);
         String description = request.getParameter(RequestParameters.DESCRIPTION);
-        String photoLink;
         int authorId = 0;
         float price = 0;
         Author author;
-
-
         URL link = null;
-        String fileString = null;
-        File file = null;
 
         try {
-            Part filePart = null; // Retrieves <input type="file" name="file">
-            filePart = request.getPart(RequestParameters.FILE);
-            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
-            if (!fileName.isEmpty()) {
-                InputStream fileInputStream = filePart.getInputStream();
-                String filePath = request.getServletContext().getRealPath("/") + TEMPFILE_PATH + fileName;
-                file = new File(filePath);
-                OutputStream outStream = new FileOutputStream(file);
-                outStream.write(fileInputStream.readAllBytes());
-                outStream.close();
-                fileInputStream.close();
-
-                File resizedFile = ImageUtil.resizeImage(file, PICTURE_WIDTH, PICTURE_HEIGHT);
-
-                if (file.exists()) {
-                    fileString = GoogleDriveUtil.transferFile(resizedFile, PATH_ID);
-                    link = new URL(fileString);
-                }
-                file.delete();
-            } else if (request.getPart(RequestParameters.PHOTOLINK) != null) {
-                photoLink = request.getParameter(RequestParameters.PHOTOLINK);
-                if (!photoLink.contains(GD_LINK)) {
-                    photoLink = GoogleDriveUtil.transferFile(photoLink, PATH_ID,
-                            ImageUtil.getFunction(PICTURE_WIDTH, PICTURE_HEIGHT));
-                }
-                link = new URL(photoLink);
-            }
+            link = CommandUtil.getBookLink(request, PICTURE_WIDTH, PICTURE_HEIGHT, PATH_ID);
         } catch (MalformedURLException e) {
-            return tryAgain(request, URL_INPUT_ERROR);
+            return tryAgain(request, ErrorMessages.URL_INPUT_ERROR);
         } catch (IOException e) {
-            return tryAgain(request, FILE_INPUT_ERROR);
+            return tryAgain(request, ErrorMessages.FILE_INPUT_ERROR);
         } catch (GeneralSecurityException | ServletException e) {
             throw new CommandException(e);
         }
@@ -113,7 +77,7 @@ public class AddBookCommand implements Command {
             request.getSession().setAttribute(SessionParameters.BOOK, newBook);
             return new Router(JSPPages.VIEW_BOOK_PAGE);
         } catch (NumberFormatException e) {
-            return tryAgain(request, INPUT_ERROR);
+            return tryAgain(request, ErrorMessages.INPUT_ERROR);
         } catch (ServiceException | DAOException e) {
             throw new CommandException(e);
         } catch (ValidationException e) {
@@ -122,13 +86,7 @@ public class AddBookCommand implements Command {
     }
 
     private Router tryAgain(HttpServletRequest request, Exception e) throws CommandException {
-        request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage());
-        try {
-            request.setAttribute(RequestParameters.AUTHORS, AuthorService.getInstance().findAll());
-        } catch (DAOException | ServiceException exception) {
-            throw new CommandException(exception);
-        }
-        return new Router(JSPPages.ADD_BOOK_PAGE);
+        return tryAgain(request, e.getMessage());
     }
 
     private Router tryAgain(HttpServletRequest request, String error_message) throws CommandException {

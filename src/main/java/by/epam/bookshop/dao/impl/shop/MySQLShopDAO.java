@@ -26,8 +26,6 @@ public class MySQLShopDAO extends MySQLEntityDAO<Shop> {
     private static final String POSITION = "POSITION";
 
     private static final String PHOTO_LINK = "PHOTO_LINK";
-    private static final String SQL_EXCEPTION = "SQL Exception: ";
-    private static final String FACTORY_EXCEPTION = "Factory Exception: ";
     private static final String SCHEMA = "BOOKSHOP";
     private static final String TABLE = "SHOPS";
 
