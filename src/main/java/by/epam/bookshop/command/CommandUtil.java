@@ -13,12 +13,23 @@ import java.nio.file.Paths;
 import java.security.GeneralSecurityException;
 import java.util.Enumeration;
 
+/**
+ * Class of the servlet processing utils
+ *
+ * @author Yury Zmushko
+ * @version 1.0
+ */
 public class CommandUtil {
 
     private static final String TEMPFILE_PATH = "resources/";
     private static final String GD_LINK = "https://drive.google.com/uc?export=view&id=";
 
-
+    /**
+     * Transfers request parameters to request attributes to be able to operate them in JSP servlet.
+     *
+     * @param request {@link HttpServletRequest} to handle
+     * @see HttpServletRequest
+     */
     public static void transferParameter(HttpServletRequest request) {
         Enumeration<String> enumeration = request.getParameterNames();
         while (enumeration.hasMoreElements()) {
@@ -27,6 +38,12 @@ public class CommandUtil {
         }
     }
 
+    /**
+     * Simple method to calculate quantity of pages for pagination
+     *
+     * @param elements quantity of elements
+     * @param elementsPerPage quantity of elements per page
+     */
     public static int pageQuantity(int elements, int elementsPerPage) {
         int pageQuantity =elements / elementsPerPage;
         if (elements % elementsPerPage != 0) {
@@ -37,6 +54,15 @@ public class CommandUtil {
         return pageQuantity;
     }
 
+    /**
+     * Simple method to calculate quantity of pages for pagination
+     *
+     * @param width target image width
+     * @param height target image height
+     * @param pathId ID of target path at DriveGoogle
+     * @param request {@link HttpServletRequest} to handle
+     * @see HttpServletRequest
+     */
     public static URL getBookLink(HttpServletRequest request, int width, int height, String pathId)
             throws GeneralSecurityException, IOException, ServletException {
         String photoLink;

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class FindBooksCommand implements Command {
 
-    private static final int ELEMENTS_PER_PAGE = 2;
+    private static final int ELEMENTS_PER_PAGE = 12;
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {

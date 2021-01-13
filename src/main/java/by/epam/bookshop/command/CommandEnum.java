@@ -2,8 +2,17 @@ package by.epam.bookshop.command;
 
 import by.epam.bookshop.command.impl.*;
 
+/**
+ * Commands enum.
+ *
+ * @author Yury Zmushko
+ * @version 1.0
+ */
 public enum CommandEnum {
-    EMPTY_COMMAND(new EmptyCommand()),
+/**
+ * Commands enum
+ */
+    EMPTY_COMMAND(new FindBooksCommand()),
 
     OPTIMIZE_SHOP_COMMAND(new OptimizeShopCommand()),
     ADD_BOOK_COMMAND(new AddBookCommand()),
@@ -49,10 +58,23 @@ public enum CommandEnum {
 
     private Command command;
 
+    /**
+     * Constructor
+     *
+     * @param command - {@link Command} to add.
+     */
     CommandEnum(Command command) {
         this.command = command;
     }
 
+    /**
+     * {@link Command} retriever
+     *
+     * @param commandName - Name of the command to get. Must be
+     *                    upper-case with under undersore as delimeter. If @null
+     *                    - returns default command - FindBooksCommand()
+     * @return corresponding {@link Command} object
+     */
     public static Command getCommand(String commandName) {
         Command command = null;
 
@@ -72,6 +94,11 @@ public enum CommandEnum {
         return command;
     }
 
+    /**
+     * {@link Command} getter
+     *
+     * @return corresponding {@link Command} object
+     */
     public Command getCommand() {
         return command;
     }
