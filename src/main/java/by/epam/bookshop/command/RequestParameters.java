@@ -1,5 +1,11 @@
 package by.epam.bookshop.command;
 
+/**
+ * Class with request parameter names
+ *
+ * @author Yury Zmushko
+ * @version 1.0
+ */
 public class RequestParameters {
     public static final String USER = "user";
     public static final String PAGE = "page";
@@ -45,6 +51,7 @@ public class RequestParameters {
 
     public static final String COMMAND = "command";
     public static final String ERROR_MESSAGE = "errorMessage";
+    public static final String ERROR = "error";
     public static final String LANGUAGE = "language";
     public static final String CURRENT_PAGE = "currentPage";
     public static final String PAGE_QUANTITY = "pageQuantity";

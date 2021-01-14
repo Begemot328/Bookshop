@@ -19,10 +19,10 @@
 </c:if>
 <fmt:setBundle basename="locale"/>
 
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-signal.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/w3.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/w3-colors-signal.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/materialIcons.css">
 <html>
 <head>
     <title><fmt:message key="login_page.title"/></title>
@@ -41,6 +41,23 @@
             font-family: Arial, Helvetica, sans-serif;
         }
     </style>
+    <!-- Sript for photoLink enabling\disabling-->
+    <script type="text/javascript">
+        function EnableDisable(photoFile) {
+            //Reference the file.
+            var photoLinkText = document.getElementById("photoLinkText");
+
+            //Verify the File value.
+            if (photoFile.files.length == 0) {
+                //Enable the TextBox when File is empty.
+                photoLinkText.disabled = false;
+            } else {
+                //Disable the TextBox when File has file.
+                photoLinkText.disabled = true;
+            }
+        };
+    </script>
+
 </head>
 <body>
 <!-- Top panel-->
@@ -218,20 +235,22 @@
                        placeholder="<fmt:message key="description"/>" value="${sessionScope.book.description}">
             </div>
             <br/>
+            <!-- photo link adding-->
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="url" name="photolink" value="${sessionScope.book.photoLink}"
+                <input class="w3-input w3-border" type="url" name="photolink" value="${photolink}" id="photoLinkText"
                        placeholder="<fmt:message key="photolink"/>">
             </div>
 
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border w3-button w3-purple" type="file" name="file"
-                       placeholder="<fmt:message key="photolink"/>">
+                <input class="w3-input w3-border w3-button w3-purple" type="file" name="file" id="photoFile"
+                       placeholder="<fmt:message key="photolink"/>" onchange="EnableDisable(this)">
             </div>
             <br/>
+
+            <!-- error message box! -->
             <c:if test="${errorMessage != null}">
-                <div class="w3-container" style="width:50%">
-                    <p class="w3-large w3-text-red w3-animate-opacity"
-                       value="${sessionScope.book.photoLink}"><fmt:message key="${errorMessage}"/></p>
+                <div class="w3-container w3-panel w3-red" style="width:50%">
+                    <p class="w3-large w3-animate-opacity"><fmt:message key="${errorMessage}"/></p>
                 </div>
             </c:if>
             <div class="w3-btn" style="width:10%">

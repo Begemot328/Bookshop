@@ -1,5 +1,11 @@
 package by.epam.bookshop.command;
 
+/**
+ * Class with session parameter names
+ *
+ * @author Yury Zmushko
+ * @version 1.0
+ */
 public class SessionParameters {
     public static final String BOOK = "book";
     public static final String AUTHOR = "author";

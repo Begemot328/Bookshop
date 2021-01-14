@@ -11,7 +11,7 @@ import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.service.book.BookService;
 import by.epam.bookshop.service.position.PositionService;
-import by.epam.bookshop.validator.PositionValidator;
+import by.epam.bookshop.validator.impl.PositionValidator;
 import by.epam.bookshop.service.shop.ShopService;
 
 import javax.servlet.http.HttpServletRequest;

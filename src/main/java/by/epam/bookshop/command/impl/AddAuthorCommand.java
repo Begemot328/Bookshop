@@ -23,6 +23,7 @@ public class AddAuthorCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         Author newAuthor;
+        String description = request.getParameter(RequestParameters.DESCRIPTION);
         String firstName = request.getParameter(RequestParameters.AUTHOR_FIRSTNAME);
         String lastName = request.getParameter(RequestParameters.AUTHOR_LASTNAME);
         URL link = null;
@@ -41,7 +42,7 @@ public class AddAuthorCommand implements Command {
         }
 
         try {
-            newAuthor = AuthorService.getInstance().create(firstName, lastName, link);
+            newAuthor = AuthorService.getInstance().create(firstName, lastName, description, link);
             request.getSession().setAttribute(SessionParameters.AUTHOR, newAuthor);
             return new Router(JSPPages.VIEW_AUTHOR_PAGE);
         } catch (ServiceException e) {

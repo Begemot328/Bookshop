@@ -1,21 +1,25 @@
 package by.epam.bookshop.dao;
 
 import by.epam.bookshop.controller.Controller;
-import by.epam.bookshop.dao.impl.author.AuthorFinder;
 import by.epam.bookshop.entity.Entity;
-import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.exceptions.DAOException;
+
 import java.sql.*;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * MySQLEntityDAO abstract class implementing {@link EntityDAO}
+ *
+ * @author Yury Zmushko
+ * @version 1.0
+ */
 public abstract class MySQLEntityDAO<T extends Entity> implements EntityDAO<T> {
     private static final String INSERT_QUERY =
             "INSERT INTO [SCHEMA].[TABLE]([PARAMETERS]) VALUES ([VALUES]);";
     private static final String UPDATE_QUERY =
             "UPDATE [SCHEMA].[TABLE] SET [PARAMETERS] WHERE ID = ?;";
-
     private static final String DELETE_QUERY =
             "DELETE FROM [SCHEMA].[TABLE] where ID = ?;";
 
@@ -24,7 +28,6 @@ public abstract class MySQLEntityDAO<T extends Entity> implements EntityDAO<T> {
     private static final String PARAMETERS = "[PARAMETERS]";
     private static final String VALUES = "[VALUES]";
     private static final String DELIMETER = ", ";
-    private static final String SQL_EXCEPTION = "SQL Exception: ";
     private static final String WRONG_INPUT = "Wrong data, no null or empty " +
             "strings, values are String or Number only!";
     protected static final String COUNT = "COUNT(id)";
@@ -38,17 +41,42 @@ public abstract class MySQLEntityDAO<T extends Entity> implements EntityDAO<T> {
         this.connection = connection;
     }
 
+    /**
+     * Method mapping entities from {@link ResultSet} to {@link java.util.ArrayList}
+     *
+     * @param resultSet {@link ResultSet} to process
+     */
     public abstract Collection<T> mapToList(ResultSet resultSet) throws DAOException;
 
+    /**
+     * Method mapping from entity to {@link Map} where keys are property names,
+     * and values are property values
+     *
+     * @param t Entity to map
+     */
     public abstract Map<String, Object> mapEntity(T t) throws DAOException;
 
+    /**
+     * Get method of corresponding {@link EntityFinder}
+     */
     public abstract EntityFinder<T> getFinder() throws DAOException;
 
+    /**
+     * Create method
+     *
+     * @param t entity to create
+     */
     @Override
     public boolean create(T t) throws DAOException {
         return create(t, getSchemaName(), getTableName(), mapEntity(t));
     }
 
+    /**
+     * Read method
+     *
+     * @param id of the entity
+     * @throws DAOException
+     */
     @Override
     public T read(int id) throws DAOException {
         Collection<T> result = findBy(getFinder().findByID(id));
@@ -59,11 +87,23 @@ public abstract class MySQLEntityDAO<T extends Entity> implements EntityDAO<T> {
         }
     }
 
+    /**
+     * Update method
+     *
+     * @param t entity to create
+     * @throws DAOException
+     */
     @Override
     public void update(T t) throws DAOException {
         update(t, getSchemaName(), getTableName(), mapEntity(t));
     }
 
+    /**
+     * Delete method
+     *
+     * @param id of the entity to delete
+     * @throws DAOException when {@link SQLException spotted}
+     */
     @Override
     public void delete(int id) throws DAOException {
         delete(id, getSchemaName(), getTableName());
@@ -118,7 +158,7 @@ public abstract class MySQLEntityDAO<T extends Entity> implements EntityDAO<T> {
         return result;
     }
 
-    public boolean create(T t, String schemaName, String tableName, Map<String, Object> map) throws DAOException {
+    protected boolean create(T t, String schemaName, String tableName, Map<String, Object> map) throws DAOException {
 
         try (PreparedStatement statement = connection.prepareStatement(
                 getInsertQuery(schemaName, tableName, map),
@@ -148,7 +188,7 @@ public abstract class MySQLEntityDAO<T extends Entity> implements EntityDAO<T> {
         }
     }
 
-    public void update(T t, String schemaName, String tableName, Map<String, Object> map) throws DAOException {
+    protected void update(T t, String schemaName, String tableName, Map<String, Object> map) throws DAOException {
         try (PreparedStatement statement = connection.prepareStatement(
                 getUpdateQuery(schemaName, tableName, map))) {
             Set<String> keySet = map.keySet();
@@ -166,6 +206,12 @@ public abstract class MySQLEntityDAO<T extends Entity> implements EntityDAO<T> {
         }
     }
 
+    /**
+     * Count by criteria method
+     *
+     * @param finder criteria to find
+     * @throws DAOException when {@link SQLException spotted}
+     */
     @Override
     public int countBy(EntityFinder<T> finder) throws DAOException {
         try (Statement statement = connection.createStatement()) {
@@ -187,8 +233,8 @@ public abstract class MySQLEntityDAO<T extends Entity> implements EntityDAO<T> {
         return findBy(new EntityFinder<T>(table));
     }
 
-    protected Collection<T> findAll(String table, int first, int last) throws DAOException {
-        return findBy(new EntityFinder<T>(table), first, last);
+    protected Collection<T> findAll(String table, int offset, int quantity) throws DAOException {
+        return findBy(new EntityFinder<T>(table), offset, quantity);
     }
 
     public int countAll() throws DAOException {
@@ -199,11 +245,16 @@ public abstract class MySQLEntityDAO<T extends Entity> implements EntityDAO<T> {
         return findBy(new EntityFinder<T>(getTableName()));
     }
 
-    public Collection<T> findAll(int first, int last) throws DAOException {
-        return findBy(new EntityFinder<T>(getTableName()), first, last);
+    public Collection<T> findAll(int offset, int quantity) throws DAOException {
+        return findBy(new EntityFinder<T>(getTableName()), offset, quantity);
     }
 
-
+    /**
+     * Find objects by criteria method
+     *
+     * @param finder criteria to find
+     * @throws DAOException when {@link SQLException is spotted}
+     */
     @Override
     public Collection<T> findBy(EntityFinder<T> finder) throws DAOException {
         try (Statement statement = connection.createStatement()) {
@@ -217,17 +268,25 @@ public abstract class MySQLEntityDAO<T extends Entity> implements EntityDAO<T> {
         }
     }
 
+    /**
+     * Find  a quantity of objects from offset by criteria method
+     *
+     * @param offset   quantity of elements to skip
+     * @param quantity quantity of elements to return
+     * @param finder   criteria to find
+     * @throws DAOException when {@link SQLException spotted}
+     */
     @Override
-    public Collection<T> findBy(EntityFinder<T> finder, int first, int last) throws DAOException {
+    public Collection<T> findBy(EntityFinder<T> finder, int offset, int quantity) throws DAOException {
         try (Statement statement = connection.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(
                     finder.getQuery().concat(LIMIT
-                            .replace(FIRST, Integer.toString(first))
-                            .replace(LAST, Integer.toString(last))))) {
+                            .replace(FIRST, Integer.toString(offset))
+                            .replace(LAST, Integer.toString(quantity))))) {
                 Controller.getLoggerInstance().debug(
                         finder.getQuery().concat(LIMIT
-                                .replace(FIRST, Integer.toString(first))
-                                .replace(LAST, Integer.toString(last))));
+                                .replace(FIRST, Integer.toString(offset))
+                                .replace(LAST, Integer.toString(quantity))));
                 return mapToList(resultSet);
             }
         } catch (SQLException e) {
@@ -235,14 +294,14 @@ public abstract class MySQLEntityDAO<T extends Entity> implements EntityDAO<T> {
         }
     }
 
-    public void delete(int id, String schemaName, String tableName) throws DAOException {
+    protected void delete(int id, String schemaName, String tableName) throws DAOException {
         try (PreparedStatement statement = connection.prepareStatement(
                 DELETE_QUERY.replace(SCHEMA, schemaName).replace(TABLE, tableName))) {
 
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION + e.getLocalizedMessage());
+            throw new DAOException(e);
         }
     }
 }

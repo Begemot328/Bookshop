@@ -28,6 +28,7 @@ public class MySQLAuthorDAO extends MySQLEntityDAO<Author> {
     private static final String SCHEMA = "BOOKSHOP";
     private static final String TABLE = "AUTHORS";
     private static final String PHOTO_LINK = "PHOTO_LINK";
+    private static final String DESCRIPTION = "DESCRIPTION";
 
     public MySQLAuthorDAO(Connection connection) {
         super(connection);
@@ -60,6 +61,7 @@ public class MySQLAuthorDAO extends MySQLEntityDAO<Author> {
                 result.add(factory.createWithID(resultSet.getInt(ID),
                         resultSet.getString(FIRSTNAME),
                         resultSet.getString(LASTNAME),
+                        resultSet.getString(DESCRIPTION),
                         link));
             }
             return result;
@@ -75,6 +77,8 @@ public class MySQLAuthorDAO extends MySQLEntityDAO<Author> {
         map.put(LASTNAME, author.getLastName());
         if (author.getPhotoLink() != null) {
             map.put(PHOTO_LINK, author.getPhotoLink().toString());
+        }if (author.getPhotoLink() != null) {
+            map.put(DESCRIPTION, author.getDescription());
         }
         return map;
     }

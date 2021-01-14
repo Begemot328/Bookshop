@@ -1,12 +1,8 @@
 package by.epam.bookshop.service.position;
 
-import by.epam.bookshop.dao.EntityFinder;
-import by.epam.bookshop.dao.impl.book.MySQLBookDAO;
 import by.epam.bookshop.dao.impl.position_action.MySQLPositionActionDAO;
 import by.epam.bookshop.dao.impl.position.MySQLPositionDAO;
-import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.entity.book.Book;
-import by.epam.bookshop.entity.book.BookFactory;
 import by.epam.bookshop.entity.position_action.PositionAction;
 import by.epam.bookshop.entity.position_action.PositionActionFactory;
 import by.epam.bookshop.entity.position.Position;
@@ -20,19 +16,15 @@ import by.epam.bookshop.exceptions.FactoryException;
 import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.service.AbstractEntityService;
-import by.epam.bookshop.service.EntityService;
-import by.epam.bookshop.validator.AuthorValidator;
 import by.epam.bookshop.validator.EntityValidator;
-import by.epam.bookshop.validator.PositionActionValidator;
-import by.epam.bookshop.validator.PositionValidator;
+import by.epam.bookshop.validator.impl.PositionActionValidator;
+import by.epam.bookshop.validator.impl.PositionValidator;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Objects;
 
 public class PositionService extends AbstractEntityService<Position> {
     private static final String SQL_CONNECTION_EXCEPTION = "SQL Connection Exception: ";

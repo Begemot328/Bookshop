@@ -1,7 +1,6 @@
 package by.epam.bookshop.command.impl;
 
 import by.epam.bookshop.command.*;
-import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.entity.shop.Shop;
 import by.epam.bookshop.exceptions.AddressException;
 import by.epam.bookshop.exceptions.CommandException;
@@ -9,7 +8,7 @@ import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.service.shop.ShopService;
 import by.epam.bookshop.util.AddressObject;
-import by.epam.bookshop.validator.ShopValidator;
+import by.epam.bookshop.validator.impl.ShopValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

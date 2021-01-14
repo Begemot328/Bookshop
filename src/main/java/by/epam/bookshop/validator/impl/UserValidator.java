@@ -1,10 +1,11 @@
-package by.epam.bookshop.validator;
+package by.epam.bookshop.validator.impl;
 
 import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.entity.user.User;
 import by.epam.bookshop.entity.user.UserStatus;
 import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.util.AddressObject;
+import by.epam.bookshop.validator.AbstractEntityValidator;
 import by.epam.bookshop.validator.EntityValidator;
 import by.epam.bookshop.util.ValidationUtil;
 

@@ -4,7 +4,6 @@ import by.epam.bookshop.entity.Entity;
 import by.epam.bookshop.entity.EntityFactory;
 import by.epam.bookshop.exceptions.FactoryException;
 import by.epam.bookshop.exceptions.ValidationException;
-import by.epam.bookshop.validator.AuthorValidator;
 import by.epam.bookshop.validator.EntityValidator;
 
 public abstract class AbstractEntityFactory<T extends Entity> implements EntityFactory<T> {

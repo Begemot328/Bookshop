@@ -11,20 +11,15 @@ import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.service.user.UserService;
 import by.epam.bookshop.util.AddressObject;
-import by.epam.bookshop.util.GoogleDriveUtil;
-import by.epam.bookshop.util.ImageUtil;
-import by.epam.bookshop.validator.UserValidator;
+import by.epam.bookshop.validator.impl.UserValidator;
 import by.epam.bookshop.util.PasswordCoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Part;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.file.Paths;
 import java.security.GeneralSecurityException;
-import java.util.Arrays;
 
 public class RegisterCommand implements Command {
     private static final String REGISTER_ERROR = "error.register";

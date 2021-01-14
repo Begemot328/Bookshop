@@ -1,5 +1,11 @@
 package by.epam.bookshop.command;
 
+/**
+ * Class JSP pages names
+ *
+ * @author Yury Zmushko
+ * @version 1.0
+ */
 public class JSPPages {
     public final static String START_PAGE = "WEB-INF/jsp/searchBooks.jsp";
     public final static String ERROR_PAGE = "WEB-INF/jsp/error.jsp";

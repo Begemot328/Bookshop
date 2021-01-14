@@ -14,6 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Enumeration;
 
+/**
+ * Controller class
+ *
+ * @author Yury Zmushko
+ * @version 1.0
+ */
 @WebServlet("/ControllerURL")
 @MultipartConfig
 public class Controller  extends HttpServlet {
@@ -25,6 +31,17 @@ public class Controller  extends HttpServlet {
         return logger;
     }
 
+    /**
+     * GET method to process GET request
+     *
+     * @param request {@link HttpServletRequest} to handle
+     * @param response {@link HttpServletResponse} to handle
+     * @see HttpServletRequest
+     * @see HttpServletResponse
+     * @throws IOException
+     * @throws ServletException
+     *
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         logger.debug(GET);
@@ -32,6 +49,17 @@ public class Controller  extends HttpServlet {
 
     }
 
+    /**
+     * POST method to process GET request
+     *
+     * @param request {@link HttpServletRequest} to handle
+     * @param response {@link HttpServletResponse} to handle
+     * @see HttpServletRequest
+     * @see HttpServletResponse
+     * @throws IOException
+     * @throws ServletException
+     *
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         logger.debug(POST);
@@ -39,7 +67,19 @@ public class Controller  extends HttpServlet {
         processRequest(request, response);
     }
 
-    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    /**
+     * Method to process the request
+     *
+     * @param request {@link HttpServletRequest} to handle
+     * @param response {@link HttpServletResponse} to handle
+     * @see HttpServletRequest
+     * @see HttpServletResponse
+     * @throws IOException
+     * @throws ServletException
+     *
+     */
+    private void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
         CommandUtil.transferParameter(request);
 
@@ -54,10 +94,10 @@ public class Controller  extends HttpServlet {
         try {
             router = command.execute(request);
         } catch (CommandException | ServletRuntimeException e) {
-            request.getSession().setAttribute(SessionParameters.ERROR, e);
+            request.setAttribute(RequestParameters.ERROR, e);
             router = new Router(JSPPages.ERROR_PAGE);
         } catch (Exception e) {
-            request.getSession().setAttribute(SessionParameters.ERROR, e);
+            request.setAttribute(RequestParameters.ERROR, e);
             router = new Router(JSPPages.ERROR_PAGE);
         }
 

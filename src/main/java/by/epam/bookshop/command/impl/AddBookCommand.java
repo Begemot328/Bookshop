@@ -10,26 +10,14 @@ import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.service.author.AuthorService;
 import by.epam.bookshop.service.book.BookService;
-import by.epam.bookshop.util.GoogleDriveUtil;
-import by.epam.bookshop.util.ImageUtil;
-import by.epam.bookshop.validator.BookValidator;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import by.epam.bookshop.validator.impl.BookValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Part;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.file.Paths;
 import java.security.GeneralSecurityException;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Optional;
 
 public class AddBookCommand implements Command {

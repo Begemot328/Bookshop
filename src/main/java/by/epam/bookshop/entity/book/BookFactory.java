@@ -1,11 +1,8 @@
 package by.epam.bookshop.entity.book;
 
 import by.epam.bookshop.entity.author.Author;
-import by.epam.bookshop.entity.EntityFactory;
 import by.epam.bookshop.entity.user.AbstractEntityFactory;
-import by.epam.bookshop.exceptions.FactoryException;
-import by.epam.bookshop.validator.AuthorValidator;
-import by.epam.bookshop.validator.BookValidator;
+import by.epam.bookshop.validator.impl.BookValidator;
 
 import java.net.URL;
 

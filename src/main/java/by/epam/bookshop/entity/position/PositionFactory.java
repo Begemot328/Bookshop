@@ -1,13 +1,9 @@
 package by.epam.bookshop.entity.position;
 
-import by.epam.bookshop.entity.EntityFactory;
-import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.entity.book.Book;
 import by.epam.bookshop.entity.shop.Shop;
 import by.epam.bookshop.entity.user.AbstractEntityFactory;
-import by.epam.bookshop.exceptions.FactoryException;
-import by.epam.bookshop.validator.AuthorValidator;
-import by.epam.bookshop.validator.PositionValidator;
+import by.epam.bookshop.validator.impl.PositionValidator;
 
 public class PositionFactory extends AbstractEntityFactory<Position> {
 

@@ -1,15 +1,12 @@
 package by.epam.bookshop.dao;
 
-import by.epam.bookshop.dao.impl.user.UserFinder;
 import by.epam.bookshop.entity.Entity;
 
 public class EntityFinder<T extends Entity> {
     protected final static String SELECT_FROM_RESULT = "SELECT * FROM ([QUERY]) AS [ALIAS]";
-
     protected final static String SQL_QUERY = "SELECT * FROM [QUERY]";
     protected static final String WHERE = " WHERE [PARAMETER] = '[VALUE]'";
     protected static final String OR = " OR [PARAMETER] = '[VALUE]'";
-
     protected static final String WHERE_COMPARING = " WHERE [PARAMETER] [COMPARE] '[VALUE]'";
     protected static final String COMPARE = "[COMPARE]";
     protected static final String MORE = ">";
@@ -18,14 +15,12 @@ public class EntityFinder<T extends Entity> {
     protected static final String WHERE_LIKE = " WHERE [PARAMETER] LIKE '%[VALUE]%'";
     protected static final String PARAMETER = "[PARAMETER]";
     protected static final String VALUE = "[VALUE]";
-
-    private static final String ID = "ID";
-
     protected final static String RESULT = "([QUERY]) AS [ALIAS]";
     protected final static String SELECT_FROM_TABLE = "SELECT * FROM [QUERY]";
-    public static final String QUERY = "[QUERY]";
-    public static final String ALIAS = "[ALIAS]";
-    public static final String ALIAS_NAME = "ALIAS";
+    protected static final String ID = "ID";
+    protected static final String QUERY = "[QUERY]";
+    protected static final String ALIAS = "[ALIAS]";
+    protected static final String ALIAS_NAME = "ALIAS";
 
 
     private String query;

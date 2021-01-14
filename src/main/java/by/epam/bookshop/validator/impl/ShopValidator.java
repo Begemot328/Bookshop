@@ -1,8 +1,9 @@
-package by.epam.bookshop.validator;
+package by.epam.bookshop.validator.impl;
 
 import by.epam.bookshop.entity.shop.Shop;
 import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.util.AddressObject;
+import by.epam.bookshop.validator.AbstractEntityValidator;
 
 import java.net.URL;
 

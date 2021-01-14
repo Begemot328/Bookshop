@@ -41,6 +41,23 @@
             font-family: Arial, Helvetica, sans-serif;
         }
     </style>
+
+    <!-- Sript for photoLink enabling\disabling-->
+    <script type="text/javascript">
+        function EnableDisable(photoFile) {
+            //Reference the file.
+            var photoLinkText = document.getElementById("photoLinkText");
+
+            //Verify the File value.
+            if (photoFile.files.length == 0) {
+                //Enable the TextBox when File is empty.
+                photoLinkText.disabled = false;
+            } else {
+                //Disable the TextBox when File has file.
+                photoLinkText.disabled = true;
+            }
+        };
+    </script>
 </head>
 <body>
 <!-- Top panel-->
@@ -194,20 +211,27 @@
                        placeholder="<fmt:message key="author.lastname"/>" value="${authorLastname}">
             </div>
             <br/>
-            <br/>
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="url" name="photolink" value="${photolink}"
+                <textarea class="w3-input w3-border" type="text" name="description" value="${description}"
+                          placeholder="<fmt:message key="description"/>" style="height: 100px" ></textarea>
+            </div>
+            <br/>
+            <!-- photo link adding-->
+            <div class="w3-container" style="width:35%">
+                <input class="w3-input w3-border" type="url" name="photolink" value="${photolink}" id="photoLinkText"
                        placeholder="<fmt:message key="photolink"/>">
             </div>
 
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border w3-button w3-purple" type="file" name="file" id="i_file"
-                       placeholder="<fmt:message key="photolink"/>">
+                <input class="w3-input w3-border w3-button w3-purple" type="file" name="file" id="photoFile"
+                       placeholder="<fmt:message key="photolink"/>" onchange="EnableDisable(this)">
             </div>
+
             <br/>
+            <!-- error message box! -->
             <c:if test="${errorMessage != null}">
-                <div class="w3-container" style="width:50%">
-                    <p class="w3-large w3-text-red w3-animate-opacity"><fmt:message key="${errorMessage}"/></p>
+                <div class="w3-container w3-panel w3-red" style="width:50%">
+                    <p class="w3-large w3-animate-opacity"><fmt:message key="${errorMessage}"/></p>
                 </div>
             </c:if>
             <div class="w3-btn" style="width:10%">

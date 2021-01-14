@@ -1,6 +1,5 @@
 package by.epam.bookshop.command;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Router.
  */

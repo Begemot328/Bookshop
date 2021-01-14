@@ -31,3 +31,6 @@ target/**
 
 !pom.xml
 !README.*
+
+!*.SQL
+!SQL/

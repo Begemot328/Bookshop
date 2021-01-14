@@ -265,7 +265,7 @@
     <c:set var="commandName" value="VIEW_BOOK_COMMAND"/>
     <!-- Center panel -->
     <div class="w3-cell w3-container w3-padding-large w3-center" style="width:70%">
-        <div class="w3-card-4 w3-half w3-center">
+        <div class="w3-card-4 w3-w3-twothird w3-center">
             <div class="w3-panel w3-large w3-purple w3-opacity">
                 <h4>${sessionScope.book.title}</h4>
             </div>
@@ -275,11 +275,7 @@
                 <button class="w3-panel w3-button w3-large w3-purple w3-opacity" type="submit" style="width: 100%">
                     <h4>${sessionScope.book.author.firstName} ${sessionScope.book.author.lastName}</h4>
                 </button>
-                <c:if test="${not empty sessionScope.book.description}">
-                    <div class="w3-panel w3-medioum w3-purple w3-opacity">
-                        <h5>${sessionScope.book.description}</h5>
-                    </div>
-                </c:if>
+
             </form>
             <c:choose>
                 <c:when test="${not empty sessionScope.book.photoLink}">
@@ -291,6 +287,11 @@
                          alt="default book picture" class="w3-image">
                 </c:otherwise>
             </c:choose>
+            <c:if test="${not empty sessionScope.book.description}">
+                <div class="w3-panel w3-medium w3-purple w3-opacity">
+                    <h5>${sessionScope.book.description}</h5>
+                </div>
+            </c:if>
             <div class="w3-panel w3-large w3-purple w3-opacity">
                 <h4>${sessionScope.book.price} BYN</h4>
             </div>

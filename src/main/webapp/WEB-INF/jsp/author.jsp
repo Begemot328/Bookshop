@@ -180,7 +180,7 @@
     <c:set var="commandName" value="VIEW_AUTHOR_COMMAND"/>
     <!-- Card panel -->
     <div class="w3-cell w3-container w3-padding-large w3-center" style="width:70%">
-        <div class="w3-card-4 w3-half w3-center">
+        <div class="w3-card-4 w3-twothird w3-center">
             <div class="w3-panel w3-large w3-purple w3-opacity">
                 <h4>${sessionScope.author.firstName} ${sessionScope.author.lastName}</h4>
             </div>
@@ -194,6 +194,11 @@
                     alt="default author picture"  class="w3-image">
                 </c:otherwise>
             </c:choose>
+            <c:if test="${not empty sessionScope.author.description}">
+                <div class="w3-panel w3-medium w3-purple w3-opacity">
+                    <h5>${sessionScope.author.description}</h5>
+                </div>
+            </c:if>
         </div>
         <c:if test="${not empty sessionScope.currentUser}">
             <c:if test="${sessionScope.currentUser.status.id > 1}">

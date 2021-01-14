@@ -6,10 +6,26 @@ import java.net.URL;
 import java.util.Objects;
 
 public class Author extends Entity {
-    private int id;
     private String firstName;
     private String lastName;
     private URL photoLink;
+    private String description;
+
+
+    Author(String firstName, String lastName, String description, URL photoLink) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.photoLink = photoLink;
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public URL getPhotoLink() {
         return photoLink;
@@ -20,21 +36,6 @@ public class Author extends Entity {
     }
 
 
-    Author(String firstName, String lastName, URL photoLink) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.photoLink = photoLink;
-    }
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -58,13 +59,15 @@ public class Author extends Entity {
         if (!(o instanceof Author)) return false;
         Author author = (Author) o;
         return id == author.id &&
-                Objects.equals(firstName, author.firstName) &&
-                Objects.equals(lastName, author.lastName);
+                Objects.equals(firstName, author.firstName)
+                && Objects.equals(lastName, author.lastName)
+                && Objects.equals(photoLink, author.photoLink)
+                && Objects.equals(description, author.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName);
+        return Objects.hash(id, firstName, lastName, description);
     }
 
     @Override

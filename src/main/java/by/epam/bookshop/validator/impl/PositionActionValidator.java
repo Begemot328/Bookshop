@@ -1,4 +1,4 @@
-package by.epam.bookshop.validator;
+package by.epam.bookshop.validator.impl;
 
 import by.epam.bookshop.entity.book.Book;
 import by.epam.bookshop.entity.position.Position;
@@ -7,6 +7,7 @@ import by.epam.bookshop.entity.position_action.PositionAction;
 import by.epam.bookshop.entity.shop.Shop;
 import by.epam.bookshop.entity.user.User;
 import by.epam.bookshop.exceptions.ValidationException;
+import by.epam.bookshop.validator.AbstractEntityValidator;
 
 import java.time.LocalDateTime;
 

@@ -1,26 +1,18 @@
 package by.epam.bookshop.command.impl;
 
 import by.epam.bookshop.command.*;
-import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.entity.shop.Shop;
 import by.epam.bookshop.exceptions.*;
-import by.epam.bookshop.service.author.AuthorService;
 import by.epam.bookshop.service.shop.ShopService;
 import by.epam.bookshop.util.AddressObject;
-import by.epam.bookshop.util.GoogleDriveUtil;
-import by.epam.bookshop.util.ImageUtil;
-import by.epam.bookshop.validator.AuthorValidator;
-import by.epam.bookshop.validator.ShopValidator;
+import by.epam.bookshop.validator.impl.ShopValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Part;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.file.Paths;
 import java.security.GeneralSecurityException;
-import java.util.Arrays;
 
 public class AddShopCommand implements Command {
 

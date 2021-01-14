@@ -6,6 +6,12 @@ import by.epam.bookshop.util.AddressObject;
 
 import java.net.URL;
 
+/**
+ * User DTO class
+ *
+ * @author Yury Zmushko
+ * @version 1.0
+ */
 public class UserDTO extends User {
 
     private User user;
@@ -20,6 +26,6 @@ public class UserDTO extends User {
 
     private UserDTO(String firstName, String lastName, String login, int password,
                     AddressObject address, URL photoLink, UserStatus status) {
-        super(firstName, lastName, login, password, address, photoLink, status);
+        super(firstName, lastName, login, 0, address, photoLink, status);
     }
 }

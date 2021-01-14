@@ -196,7 +196,7 @@
         <div class="w3-card-4 w3-center">
             <div class="w3-panel w3-large w3-red">
                 <h4><fmt:message key="error.spotted"/></h4>
-                <h4><c:out value="${sessionScope.error.localizedMessage}"/></h4>
+                <h4><c:out value="${requestScope.error}"/></h4>
                 <c:forEach var="trace" items="${sessionScope.error.stackTrace}">
                     <p><c:out value="${trace.toString()}"/></p>
                 </c:forEach>

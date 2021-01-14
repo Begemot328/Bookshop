@@ -10,7 +10,7 @@ import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.service.author.AuthorService;
 import by.epam.bookshop.service.book.BookService;
-import by.epam.bookshop.validator.BookValidator;
+import by.epam.bookshop.validator.impl.BookValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

@@ -1,8 +1,6 @@
 package by.epam.bookshop.command.impl;
 
 import by.epam.bookshop.command.*;
-import by.epam.bookshop.dao.impl.author.AuthorFinder;
-import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.entity.book.Book;
 import by.epam.bookshop.entity.position.Position;
 import by.epam.bookshop.entity.position.PositionStatus;
@@ -11,15 +9,12 @@ import by.epam.bookshop.entity.user.User;
 import by.epam.bookshop.exceptions.CommandException;
 import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.exceptions.ValidationException;
-import by.epam.bookshop.service.author.AuthorService;
 import by.epam.bookshop.service.book.BookService;
 import by.epam.bookshop.service.position.PositionService;
 import by.epam.bookshop.service.shop.ShopService;
-import by.epam.bookshop.validator.BookValidator;
-import by.epam.bookshop.validator.PositionValidator;
+import by.epam.bookshop.validator.impl.PositionValidator;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
 
 public class EditPositionCommand implements Command {
 

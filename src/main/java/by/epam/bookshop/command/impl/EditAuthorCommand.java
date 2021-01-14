@@ -1,16 +1,12 @@
 package by.epam.bookshop.command.impl;
 
 import by.epam.bookshop.command.*;
-import by.epam.bookshop.dao.impl.author.AuthorFinder;
 import by.epam.bookshop.entity.author.Author;
-import by.epam.bookshop.entity.book.Book;
 import by.epam.bookshop.exceptions.CommandException;
 import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.service.author.AuthorService;
-import by.epam.bookshop.service.book.BookService;
-import by.epam.bookshop.validator.AuthorValidator;
-import by.epam.bookshop.validator.BookValidator;
+import by.epam.bookshop.validator.impl.AuthorValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +14,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.GeneralSecurityException;
-import java.util.Optional;
 
 public class EditAuthorCommand implements Command {
 
@@ -31,6 +26,7 @@ public class EditAuthorCommand implements Command {
         Author newAuthor;
         String firstName = request.getParameter(RequestParameters.AUTHOR_FIRSTNAME);
         String lastName = request.getParameter(RequestParameters.AUTHOR_LASTNAME);
+        String description = request.getParameter(RequestParameters.DESCRIPTION);
         URL link;
 
         if (request.getSession().getAttribute(SessionParameters.AUTHOR) instanceof Author) {
@@ -41,7 +37,7 @@ public class EditAuthorCommand implements Command {
 
         try {
             link = CommandUtil.getBookLink(request, PICTURE_WIDTH, PICTURE_HEIGHT, PATH_ID);
-            new AuthorValidator().validate(firstName, lastName, link);
+            new AuthorValidator().validate(firstName, lastName, description, link);
         } catch (ValidationException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, ErrorMessages.INPUT_ERROR);
             return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
@@ -59,6 +55,7 @@ public class EditAuthorCommand implements Command {
             newAuthor.setFirstName(firstName);
             newAuthor.setPhotoLink(link);
             newAuthor.setLastName(lastName);
+            newAuthor.setDescription(description);
             AuthorService.getInstance().update(newAuthor);
         } catch (ServiceException e) {
             throw new CommandException(e);
