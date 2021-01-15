@@ -149,49 +149,35 @@
         </div>
     </div>
 </div>
+<!--  Columns -->
 <div class="w3-cell-row">
+    <!-- left panel-->
     <div class="w3-cell  w3-deep-purple w3-opacity" style="width:15%">
         <div class="w3-bar-block">
             <div class="w3-bar-item w3-large"><fmt:message key="book.genres"/></div>
-            <form class="w3-bar-item w3-large w3-hover-purple">
+            <form class="w3-bar-item w3-large w3-hover-purple" method="GET"
+                  action="${pageContext.request.contextPath}/ControllerURL">
+                <input type="hidden" name="command" value="${SEARCH_BOOKS_COMMAND}">
                 <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="all"/></button>
-            </form>
-            <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message
-                        key="book.detectives"/></button>
-            </form>
-            <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message
-                        key="book.fantastic"/></button>
-            </form>
-            <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message
-                        key="book.classic"/></button>
-            </form>
-            <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message
-                        key="book.romance"/></button>
-            </form>
-            <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="book.humor"/></button>
             </form>
         </div>
     </div>
+    <!-- middle panel-->
     <div class="w3-cell w3-padding-large w3-center" style="width:70%">
         <div class="w3-card-4 w3-half w3-center">
             <div class="w3-panel w3-large w3-purple w3-opacity">
-                <h4>${sessionScope.position.book.title}</h4>
+                <h4>${requestScope.position.book.title}</h4>
             </div>
             <form method="POST" action="${pageContext.request.contextPath}/ControllerURL">
                 <input type="hidden" name="command" value="VIEW_AUTHOR_COMMAND">
-                <input type="hidden" name="authorId" value="${sessionScope.book.author.id}">
+                <input type="hidden" name="authorId" value="${requestScope.book.author.id}">
                 <button class="w3-panel w3-button w3-large w3-purple w3-opacity" type="submit" style="width: 100%">
-                    <h4>${sessionScope.position.book.author.firstName} ${sessionScope.position.book.author.lastName}</h4>
+                    <h4>${requestScope.position.book.author.firstName} ${requestScope.position.book.author.lastName}</h4>
                 </button>
             </form>
             <c:choose>
-                <c:when test="${not empty sessionScope.position.book.photoLink}">
-                    <img src="${sessionScope.position.book.photoLink}" alt="book picture"
+                <c:when test="${not empty requestScope.position.book.photoLink}">
+                    <img src="${requestScope.position.book.photoLink}" alt="book picture"
                          class="w3-image">
                 </c:when>
                 <c:otherwise>
@@ -200,29 +186,29 @@
                 </c:otherwise>
             </c:choose>
             <div class="w3-panel w3-large w3-purple w3-opacity">
-                <h4>${sessionScope.position.book.price} BYN</h4>
+                <h4>${requestScope.position.book.price} BYN</h4>
             </div>
             <div class="w3-panel w3-large w3-purple w3-opacity">
-                <h4><fmt:message key="quantity"/>: ${sessionScope.position.quantity}</h4>
+                <h4><fmt:message key="quantity"/>: ${requestScope.position.quantity}</h4>
             </div>
-            <c:if test="${not empty sessionScope.seller}">
+            <c:if test="${not empty requestScope.seller}">
                 <div class="w3-panel w3-large w3-purple w3-opacity">
-                    <h4><fmt:message key="seller"/>: ${sessionScope.seller.firstName}
-                            ${sessionScope.seller.lastName}</h4>
+                    <h4><fmt:message key="seller"/>: ${requestScope.seller.firstName}
+                            ${requestScope.seller.lastName}</h4>
                 </div>
             </c:if>
-            <c:if test="${not empty sessionScope.buyer}">
+            <c:if test="${not empty requestScope.buyer}">
                 <div class="w3-panel w3-large w3-purple w3-opacity">
-                    <h4><fmt:message key="buyer"/>: ${sessionScope.buyer.firstName}
-                            ${sessionScope.buyer.lastName}</h4>
+                    <h4><fmt:message key="buyer"/>: ${requestScope.buyer.firstName}
+                            ${requestScope.buyer.lastName}</h4>
                 </div>
             </c:if>
             <div class="w3-panel w3-large w3-purple w3-opacity">
-                <h4><fmt:message key="${sessionScope.position.status}"/></h4>
+                <h4><fmt:message key="${requestScope.position.status}"/></h4>
             </div>
         </div>
-        <c:if test="${not empty sessionScope.currentUser}">
-            <c:if test="${sessionScope.currentUser.status.id > 1}">
+        <c:if test="${not empty requestScope.currentUser}">
+            <c:if test="${requestScope.currentUser.status.id > 1}">
                 <div class="w3-card-4 w3-half w3-center w3-padding">
                     <br/>
                     <br/>

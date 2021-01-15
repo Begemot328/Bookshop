@@ -12,6 +12,8 @@ import by.epam.bookshop.service.position_action.PositionActionService;
 import by.epam.bookshop.service.user.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class ViewUserCommand implements Command {
     private static final int ELEMENTS_PER_PAGE = 30;
@@ -52,11 +54,10 @@ public class ViewUserCommand implements Command {
                     return new Router(JSPPages.VIEW_USER_PAGE);
                 }
             } else {
-                Router router = new Router(request.getRequestURL().toString());
-                router.setRedirect();
+                Router router = new Router(new URL(request.getRequestURL().toString()));
                 return router;
             }
-        } catch (ServiceException e) {
+        } catch (ServiceException | MalformedURLException e) {
             throw new CommandException(e);
         }
         return new Router(JSPPages.VIEW_USER_PAGE);

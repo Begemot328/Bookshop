@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.GeneralSecurityException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EditShopCommand implements Command {
 
@@ -41,7 +43,7 @@ public class EditShopCommand implements Command {
             return tryAgain(request, ErrorMessages.ADDRESS_INPUT_ERROR);
         } catch (MalformedURLException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, ErrorMessages.URL_INPUT_ERROR);
-            return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+            return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
         } catch (IOException e) {
             return tryAgain(request, ErrorMessages.FILE_INPUT_ERROR);
         } catch (GeneralSecurityException | ServletException e) {
@@ -52,7 +54,7 @@ public class EditShopCommand implements Command {
             new ShopValidator().validate(name, addressObject, link);
         } catch (ValidationException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, ErrorMessages.INPUT_ERROR);
-            return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+            return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
         }
 
         if (request.getSession().getAttribute(SessionParameters.SHOP) instanceof Shop) {
@@ -66,9 +68,12 @@ public class EditShopCommand implements Command {
 
         try {
             ShopService.getInstance().update(newShop);
-            request.getSession().setAttribute(SessionParameters.SHOP, newShop);
-            return new Router(JSPPages.VIEW_SHOP_PAGE);
-        } catch (ServiceException e) {
+            Map<String, String> parameters = new HashMap<>();
+            parameters.put(RequestParameters.COMMAND, CommandEnum.VIEW_SHOP_COMMAND.toString());
+            parameters.put(RequestParameters.SHOP_ID, Integer.toString(newShop.getId()));
+            return new Router(new URL(CommandUtil.getURL(
+                    request.getRequestURL().toString(), parameters)));
+        } catch (ServiceException | MalformedURLException e) {
             throw new CommandException(e);
         } catch (ValidationException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage());

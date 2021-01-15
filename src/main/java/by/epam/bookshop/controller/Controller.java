@@ -25,6 +25,8 @@ import java.util.Enumeration;
 public class Controller  extends HttpServlet {
     private static final String GET = "GET";
     private static final String POST = "POST";
+    private static final String COMMAND = "?command=";
+
     static Logger logger = LoggerFactory.getLogger(Controller.class);
 
     public static Logger getLoggerInstance() {
@@ -103,9 +105,9 @@ public class Controller  extends HttpServlet {
 
         if (router.getType() == Router.Type.FORWARD) {
             request.getSession().setAttribute(SessionParameters.LAST_PAGE, router.getPage());
-            request.getRequestDispatcher(router.getPage()).forward(request, response);
-        } else {
-            response.sendRedirect(router.getPage());
+            request.getRequestDispatcher(router.getPage().getPage()).forward(request, response);
+        } else if (router.getType() == Router.Type.REDIRECT){
+            response.sendRedirect(router.getURL().toString());
         }
     }
 }

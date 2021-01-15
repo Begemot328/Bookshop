@@ -16,6 +16,9 @@ public class RequestParameters {
     public static final String PASSWORD = "password";
     public static final String QUANTITY = "quantity";
 
+    public static final String SELLER = "seller";
+    public static final String POSITION = "position";
+    public static final String BUYER = "buyer";
     public static final String AUTHOR_FIRSTNAME = "authorFirstname";
     public static final String AUTHOR_LASTNAME = "authorLastname";
 

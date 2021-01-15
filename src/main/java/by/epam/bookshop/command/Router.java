@@ -1,5 +1,7 @@
 package by.epam.bookshop.command;
 
+import java.net.URL;
+
 /**
  * The Class Router.
  */
@@ -20,7 +22,10 @@ public class Router {
     private Type type = Type.FORWARD;
 
     /** The page. */
-    private String page;
+    private JSPPages page;
+
+    /** The page. */
+    private URL url;
 
     /**
      * Instantiates a new router.
@@ -33,8 +38,18 @@ public class Router {
      *
      * @param page the page
      */
-    public Router(String page) {
+    public Router(JSPPages page) {
         this.page = page;
+    }
+
+    /**
+     * Instantiates a new router.
+     *
+     * @param url the command
+     */
+    public Router(URL url) {
+        this.url = url;
+        this.setRedirect();
     }
 
     /**
@@ -47,11 +62,11 @@ public class Router {
     /**
      * Sets the redirect.
      *
-     * @param page the new redirect
+     * @param url the new redirect
      */
-    public void setRedirect(String page) {
+    public void setRedirect(URL url) {
         setRedirect();
-        setPage(page);
+        setURL(url);
     }
 
     /**
@@ -66,7 +81,7 @@ public class Router {
      *
      * @param page the new forward
      */
-    public void setForward(String page) {
+    public void setForward(JSPPages page) {
         setForward();
         setPage(page);
     }
@@ -76,8 +91,41 @@ public class Router {
      *
      * @param page the new page
      */
-    public void setPage(String page) {
+    public void setPage(JSPPages page) {
         this.page = page;
+    }
+
+
+
+    /**
+     * Gets the page.
+     *
+     * @return the page
+     */
+    public JSPPages getPage() {
+        return page;
+    }
+
+
+
+    /**
+     * Sets the page.
+     *
+     * @param url the new command
+     */
+    public void setURL(URL url) {
+        this.url = url;
+    }
+
+
+
+    /**
+     * Gets the page.
+     *
+     * @return the page
+     */
+    public URL getURL() {
+        return url;
     }
 
     /**
@@ -87,14 +135,5 @@ public class Router {
      */
     public Type getType() {
         return type;
-    }
-
-    /**
-     * Gets the page.
-     *
-     * @return the page
-     */
-    public String getPage() {
-        return page;
     }
 }

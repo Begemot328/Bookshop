@@ -8,9 +8,9 @@ import by.epam.bookshop.exceptions.CommandException;
 import javax.servlet.http.HttpServletRequest;
 
 public class ForwardCommand implements Command {
-    private String page;
+    private JSPPages page;
 
-    public ForwardCommand(String page) {
+    public ForwardCommand(JSPPages page) {
         this.page = page;
     }
 

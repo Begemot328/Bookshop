@@ -15,6 +15,10 @@ import by.epam.bookshop.validator.impl.PositionValidator;
 import by.epam.bookshop.service.shop.ShopService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddPositionCommand implements Command {
 
@@ -35,19 +39,19 @@ public class AddPositionCommand implements Command {
             quantity = Integer.parseInt(request.getParameter(RequestParameters.QUANTITY));
         } catch (NumberFormatException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, ErrorMessages.INPUT_ERROR);
-            return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+            return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
         }
 
         try {
             Shop shop = ShopService.getInstance().read(shopId);
             if (shop == null) {
                 request.setAttribute(RequestParameters.ERROR_MESSAGE, WRONG_AUTHOR_ERROR);
-                return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+                return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
             }
             Book book = BookService.getInstance().read(bookId);
             if (book == null) {
                 request.setAttribute(RequestParameters.ERROR_MESSAGE, WRONG_AUTHOR_ERROR);
-                return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+                return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
             }
 
             if (request.getSession().getAttribute(SessionParameters.CURRENT_USER) == null) {
@@ -60,15 +64,18 @@ public class AddPositionCommand implements Command {
                 new PositionValidator().validate(book, shop, PositionStatus.READY, note, quantity);
             } catch (ValidationException e){
                 request.setAttribute(RequestParameters.ERROR_MESSAGE, ErrorMessages.INPUT_ERROR);
-                return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+                return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
             }
 
             newPosition = PositionService.getInstance().createPosition(
                     currentUser, book, shop, note, quantity);
-            request.getSession().setAttribute(SessionParameters.POSITION, newPosition);
-            return new Router(JSPPages.VIEW_POSITION_PAGE);
 
-        } catch (ServiceException e) {
+            Map<String, String> parameters = new HashMap<>();
+            parameters.put(RequestParameters.COMMAND, CommandEnum.VIEW_POSITION_COMMAND.toString());
+            parameters.put(RequestParameters.POSITION_ID, Integer.toString(newPosition.getId()));
+            return new Router(new URL(CommandUtil.getURL(
+                    request.getRequestURL().toString(), parameters)));
+        } catch (ServiceException | MalformedURLException e) {
             throw new CommandException(e);
         } catch (ValidationException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage());

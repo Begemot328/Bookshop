@@ -6,30 +6,45 @@ package by.epam.bookshop.command;
  * @author Yury Zmushko
  * @version 1.0
  */
-public class JSPPages {
-    public final static String START_PAGE = "WEB-INF/jsp/searchBooks.jsp";
-    public final static String ERROR_PAGE = "WEB-INF/jsp/error.jsp";
+public enum JSPPages {
+  START_PAGE("WEB-INF/jsp/searchBooks.jsp"),
+  ERROR_PAGE("WEB-INF/jsp/error.jsp"),
 
-    public static final String SEARCH_BOOKS_PAGE = "WEB-INF/jsp/searchBooks.jsp";
-    public static final String SEARCH_AUTHORS_PAGE = "WEB-INF/jsp/searchAuthors.jsp";
-    public static final String SEARCH_SHOPS_PAGE = "WEB-INF/jsp/searchShops.jsp";
-    public static final String SEARCH_USERS_PAGE = "WEB-INF/jsp/searchUsers.jsp";
+  SEARCH_BOOKS_PAGE("WEB-INF/jsp/searchBooks.jsp"),
+  SEARCH_AUTHORS_PAGE("WEB-INF/jsp/searchAuthors.jsp"),
+  SEARCH_SHOPS_PAGE("WEB-INF/jsp/searchShops.jsp"),
+  SEARCH_USERS_PAGE("WEB-INF/jsp/searchUsers.jsp"),
 
-    public static final String ADD_POSITION_PAGE = "WEB-INF/jsp/addPosition.jsp";
-    public static final String ADD_BOOK_PAGE = "WEB-INF/jsp/addBook.jsp";
-    public static final String ADD_SHOP_PAGE = "WEB-INF/jsp/addShop.jsp";
-    public static final String EDIT_POSITION_PAGE = "WEB-INF/jsp/editPosition.jsp";;
-    public static final String EDIT_BOOK_PAGE = "WEB-INF/jsp/editBook.jsp";
-    public static final String EDIT_SHOP_PAGE = "WEB-INF/jsp/editShop.jsp";
-    public static final String ADD_AUTHOR_PAGE = "WEB-INF/jsp/addAuthor.jsp";
-    public static final String EDIT_AUTHOR_PAGE = "WEB-INF/jsp/editAuthor.jsp";
-    public static final String REGISTER_PAGE = "WEB-INF/jsp/register.jsp";
-    public static final String LOGIN_PAGE = "WEB-INF/jsp/login.jsp";
-    public static final String VIEW_BOOK_PAGE = "WEB-INF/jsp/book.jsp";
-    public static final String VIEW_AUTHOR_PAGE = "WEB-INF/jsp/author.jsp";
-    public static final String VIEW_SHOP_PAGE = "WEB-INF/jsp/shop.jsp";
-    public static final String VIEW_USER_PAGE = "WEB-INF/jsp/user.jsp";
-    public static final String VIEW_POSITION_PAGE = "WEB-INF/jsp/position.jsp";
-    public static final String PROCESS_POSITION_PAGE = "WEB-INF/jsp/positionSeller.jsp";
-    public static final String BOOK_POSITION_PAGE = "WEB-INF/jsp/positionBuyer.jsp";
+  ADD_POSITION_PAGE("WEB-INF/jsp/addPosition.jsp"),
+  ADD_BOOK_PAGE("WEB-INF/jsp/addBook.jsp"),
+  ADD_SHOP_PAGE("WEB-INF/jsp/addShop.jsp"),
+  EDIT_POSITION_PAGE("WEB-INF/jsp/editPosition.jsp"),
+  EDIT_BOOK_PAGE("WEB-INF/jsp/editBook.jsp"),
+  EDIT_SHOP_PAGE("WEB-INF/jsp/editShop.jsp"),
+  ADD_AUTHOR_PAGE("WEB-INF/jsp/addAuthor.jsp"),
+  EDIT_AUTHOR_PAGE("WEB-INF/jsp/editAuthor.jsp"),
+  REGISTER_PAGE("WEB-INF/jsp/register.jsp"),
+  LOGIN_PAGE("WEB-INF/jsp/login.jsp"),
+  VIEW_BOOK_PAGE("WEB-INF/jsp/book.jsp"),
+  VIEW_AUTHOR_PAGE("WEB-INF/jsp/author.jsp"),
+  VIEW_SHOP_PAGE("WEB-INF/jsp/shop.jsp"),
+  VIEW_USER_PAGE("WEB-INF/jsp/user.jsp"),
+  VIEW_POSITION_PAGE("WEB-INF/jsp/position.jsp"),
+  PROCESS_POSITION_PAGE("WEB-INF/jsp/positionSeller.jsp"),
+  BOOK_POSITION_PAGE("WEB-INF/jsp/positionBuyer.jsp");
+
+    private String page;
+
+    /**
+     * Constructor
+     *
+     * @param page - {@link Command} to add.
+     */
+    JSPPages (String page) {
+        this.page = page;
+    }
+
+    public String getPage() {
+        return this.page;
+    }
 }

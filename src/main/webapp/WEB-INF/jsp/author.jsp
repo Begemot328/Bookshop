@@ -1,11 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: WorkPC
-  Date: 12.12.2020
-  Time: 18:03
-  To change this template use File | Settings | File Templates.
---%>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -45,7 +37,7 @@
 
     </style>
 </head>
-<>
+<body>
 <!-- Top panel -->
 <div class="w3-container w3-stretch">
     <div class="w3-cell-row w3-purple w3-opacity-min">
@@ -149,36 +141,21 @@
         </div>
     </div>
 </div>
+<!--  Columns -->
 <div class="w3-cell-row">
-    <div class="w3-cell w3-container  w3-deep-purple w3-opacity" style="width:15%">
+    <!-- left panel-->
+    <div class="w3-cell  w3-deep-purple w3-opacity" style="width:15%">
         <div class="w3-bar-block">
             <div class="w3-bar-item w3-large"><fmt:message key="book.genres"/></div>
-            <form class="w3-bar-item w3-large w3-hover-purple">
+            <form class="w3-bar-item w3-large w3-hover-purple" method="GET"
+                  action="${pageContext.request.contextPath}/ControllerURL">
+                <input type="hidden" name="command" value="${SEARCH_BOOKS_COMMAND}">
                 <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="all"/></button>
-            </form>
-            <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message
-                        key="book.detectives"/></button>
-            </form>
-            <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message
-                        key="book.fantastic"/></button>
-            </form>
-            <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message
-                        key="book.classic"/></button>
-            </form>
-            <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message
-                        key="book.romance"/></button>
-            </form>
-            <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="book.humor"/></button>
             </form>
         </div>
     </div>
     <c:set var="commandName" value="VIEW_AUTHOR_COMMAND"/>
-    <!-- Card panel -->
+    <!-- Center panel -->
     <div class="w3-cell w3-container w3-padding-large w3-center" style="width:70%">
         <div class="w3-card-4 w3-twothird w3-center">
             <div class="w3-panel w3-large w3-purple w3-opacity">
@@ -202,7 +179,7 @@
         </div>
         <c:if test="${not empty sessionScope.currentUser}">
             <c:if test="${sessionScope.currentUser.status.id > 1}">
-                <div class="w3-card-4 w3-half w3-center w3-padding">
+                <div class="w3-card-4 w3-third w3-center w3-padding">
                     <br/>
                     <br/>
                     <form>

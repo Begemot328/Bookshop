@@ -21,10 +21,10 @@
 
 <fmt:setBundle basename="locale"/>
 
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-signal.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/w3.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/w3-colors-signal.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/materialIcons.css">
 <html>
 <head>
     <title>Search books</title>
@@ -193,34 +193,20 @@
         </div>
     </div>
 </div>
+<!--  Columns -->
 <div class="w3-cell-row">
+    <!-- left panel-->
     <div class="w3-cell  w3-deep-purple w3-opacity" style="width:15%">
         <div class="w3-bar-block">
             <div class="w3-bar-item w3-large"><fmt:message key="book.genres"/></div>
-            <form class="w3-bar-item w3-large w3-hover-purple">
+            <form class="w3-bar-item w3-large w3-hover-purple" method="GET"
+                  action="${pageContext.request.contextPath}/ControllerURL">
+                <input type="hidden" name="command" value="${SEARCH_BOOKS_COMMAND}">
                 <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="all"/></button>
-            </form>
-            <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message
-                        key="book.detectives"/></button>
-            </form>
-            <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message
-                        key="book.fantastic"/></button>
-            </form>
-            <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message
-                        key="book.classic"/></button>
-            </form>
-            <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message
-                        key="book.romance"/></button>
-            </form>
-            <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="book.humor"/></button>
             </form>
         </div>
     </div>
+    <!-- middle panel-->
     <c:set var="commandName" value="VIEW_SHOP_COMMAND"/>
     <div class="w3-cell w3-padding-large w3-center" style="width:70%">
         <div class="w3-card-4 w3-half w3-center">

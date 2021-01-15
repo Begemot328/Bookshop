@@ -47,7 +47,7 @@ public class RegisterCommand implements Command {
             }
         } catch (AddressException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, ADDRESS_INPUT_ERROR);
-            return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+            return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
         }
 
         AddressObject addressObject = null;
@@ -78,7 +78,7 @@ public class RegisterCommand implements Command {
                     PasswordCoder.code(password), addressObject, photoLink, UserStatus.BUYER);
         } catch (ValidationException validationException) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, REGISTER_ERROR);
-            Router router = new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+            Router router = new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
             return router;
         }
         try {
@@ -87,19 +87,19 @@ public class RegisterCommand implements Command {
                         PasswordCoder.code(password), address, photoLink, UserStatus.BUYER);
             } else {
                 request.setAttribute(RequestParameters.ERROR_MESSAGE, OCCUPIED_LOGIN_ERROR);
-                Router router = new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+                Router router = new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
                 return router;
             }
-
-        } catch (ServiceException e) {
+            request.getSession().setAttribute(SessionParameters.CURRENT_USER, new UserDTO(user));
+            Router router = new Router();
+            router.setRedirect(new URL(request.getRequestURL().toString()));
+            return router;
+        } catch (ServiceException | MalformedURLException e) {
             throw new CommandException(e);
         } catch (ValidationException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage());
             return new Router(JSPPages.REGISTER_PAGE);
         }
-        request.getSession().setAttribute(SessionParameters.CURRENT_USER, new UserDTO(user));
-        Router router = new Router();
-        router.setRedirect(request.getRequestURL().toString());
-        return router;
+
     }
 }

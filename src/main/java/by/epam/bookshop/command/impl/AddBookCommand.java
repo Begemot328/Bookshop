@@ -18,6 +18,8 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.GeneralSecurityException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 public class AddBookCommand implements Command {
@@ -62,11 +64,15 @@ public class AddBookCommand implements Command {
 
             new BookValidator().validate(title, author, description, price, link);
             newBook = BookService.getInstance().create(title, author, description, price, link);
-            request.getSession().setAttribute(SessionParameters.BOOK, newBook);
-            return new Router(JSPPages.VIEW_BOOK_PAGE);
+
+            Map<String, String> parameters = new HashMap<>();
+            parameters.put(RequestParameters.COMMAND, CommandEnum.VIEW_BOOK_COMMAND.toString());
+            parameters.put(RequestParameters.BOOK_ID, Integer.toString(newBook.getId()));
+            return new Router(new URL(CommandUtil.getURL(
+                    request.getRequestURL().toString(), parameters)));
         } catch (NumberFormatException e) {
             return tryAgain(request, ErrorMessages.INPUT_ERROR);
-        } catch (ServiceException | DAOException e) {
+        } catch (ServiceException | DAOException | MalformedURLException e) {
             throw new CommandException(e);
         } catch (ValidationException e) {
             return tryAgain(request, e);

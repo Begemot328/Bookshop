@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.GeneralSecurityException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 public class EditBookCommand implements Command {
@@ -47,10 +49,10 @@ public class EditBookCommand implements Command {
             link = CommandUtil.getBookLink(request, PICTURE_WIDTH, PICTURE_HEIGHT, PATH_ID);
         } catch (NumberFormatException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, INPUT_ERROR);
-            return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+            return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
         } catch (MalformedURLException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, URL_INPUT_ERROR);
-            return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+            return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
         } catch (GeneralSecurityException e) {
             throw new CommandException(e);
         } catch (ServletException e) {
@@ -65,7 +67,7 @@ public class EditBookCommand implements Command {
                     .stream().findAny();
             if (authorOptional.isEmpty()) {
                 request.setAttribute(RequestParameters.ERROR_MESSAGE, WRONG_AUTHOR_ERROR);
-                return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+                return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
             } else {
                 author = authorOptional.get();
             }
@@ -74,7 +76,7 @@ public class EditBookCommand implements Command {
                 new BookValidator().validate(title, author, description, price, link);
             } catch (ValidationException e) {
                 request.setAttribute(RequestParameters.ERROR_MESSAGE, INPUT_ERROR);
-                return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+                return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
             }
             if (request.getSession().getAttribute(SessionParameters.BOOK) instanceof Book) {
                 newBook = (Book) request.getSession().getAttribute(SessionParameters.BOOK);
@@ -87,9 +89,12 @@ public class EditBookCommand implements Command {
                 newBook.setDescription(description);
                 newBook.setPhotoLink(link);
                 BookService.getInstance().update(newBook);
-                request.getSession().setAttribute(SessionParameters.BOOK, newBook);
-                return new Router(JSPPages.VIEW_BOOK_PAGE);
-        } catch (ServiceException e) {
+            Map<String, String> parameters = new HashMap<>();
+            parameters.put(RequestParameters.COMMAND, CommandEnum.VIEW_BOOK_COMMAND.toString());
+            parameters.put(RequestParameters.BOOK_ID, Integer.toString(newBook.getId()));
+            return new Router(new URL(CommandUtil.getURL(
+                    request.getRequestURL().toString(), parameters)));
+        } catch (ServiceException | MalformedURLException e) {
             throw new CommandException(e);
         } catch (ValidationException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage());

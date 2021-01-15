@@ -206,34 +206,20 @@
         </div>
     </div>
 </div>
+<!--  Columns -->
 <div class="w3-cell-row">
+    <!-- left panel-->
     <div class="w3-cell  w3-deep-purple w3-opacity" style="width:15%">
         <div class="w3-bar-block">
             <div class="w3-bar-item w3-large"><fmt:message key="book.genres"/></div>
-            <form class="w3-bar-item w3-large w3-hover-purple">
+            <form class="w3-bar-item w3-large w3-hover-purple" method="GET"
+                  action="${pageContext.request.contextPath}/ControllerURL">
+                <input type="hidden" name="command" value="${SEARCH_BOOKS_COMMAND}">
                 <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="all"/></button>
-            </form>
-            <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message
-                        key="book.detectives"/></button>
-            </form>
-            <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message
-                        key="book.fantastic"/></button>
-            </form>
-            <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message
-                        key="book.classic"/></button>
-            </form>
-            <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message
-                        key="book.romance"/></button>
-            </form>
-            <form class="w3-bar-item w3-large w3-hover-purple">
-                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="book.humor"/></button>
             </form>
         </div>
     </div>
+    <!-- middle panel-->
     <c:set var="commandName" value="SEARCH_SHOPS_COMMAND"/>
     <div class="w3-cell w3-padding-large" style="width:70%">
         <form class="w3-row-padding" method="POST" action="${pageContext.request.contextPath}/ControllerURL">

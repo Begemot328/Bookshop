@@ -13,6 +13,8 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.GeneralSecurityException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddAuthorCommand implements Command {
 
@@ -43,15 +45,17 @@ public class AddAuthorCommand implements Command {
 
         try {
             newAuthor = AuthorService.getInstance().create(firstName, lastName, description, link);
-            request.getSession().setAttribute(SessionParameters.AUTHOR, newAuthor);
-            return new Router(JSPPages.VIEW_AUTHOR_PAGE);
-        } catch (ServiceException e) {
+
+            Map<String, String> parameters = new HashMap<>();
+            parameters.put(RequestParameters.COMMAND, CommandEnum.VIEW_AUTHOR_COMMAND.toString());
+            parameters.put(RequestParameters.AUTHOR_ID, Integer.toString(newAuthor.getId()));
+            return new Router(new URL(CommandUtil.getURL(
+                    request.getRequestURL().toString(), parameters)));
+        } catch (ServiceException | MalformedURLException e) {
             throw new CommandException(e);
         } catch (ValidationException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage());
             return new Router(JSPPages.ADD_AUTHOR_PAGE);
         }
     }
-
-
 }

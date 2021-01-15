@@ -16,6 +16,6 @@ public class LogOutCommand implements Command {
         if (request.getSession().getAttribute(SessionParameters.LAST_PAGE) == null) {
             return new Router(JSPPages.START_PAGE);
         }
-        return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+        return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
     }
 }

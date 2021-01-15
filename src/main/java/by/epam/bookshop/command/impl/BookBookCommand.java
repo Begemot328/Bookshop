@@ -47,16 +47,16 @@ public class BookBookCommand implements Command {
                         Integer.valueOf(request.getParameter(RequestParameters.QUANTITY)),
                         buyer, user, null,
                         PositionStatus.RESERVED);
-                request.getSession().setAttribute(SessionParameters.POSITION, newPosition);
-                request.getSession().setAttribute(SessionParameters.BUYER, buyer);
-                request.getSession().setAttribute(SessionParameters.SELLER, user);
+                request.setAttribute(RequestParameters.POSITION, newPosition);
+                request.setAttribute(RequestParameters.BUYER, buyer);
+                request.setAttribute(RequestParameters.SELLER, user);
                 return new Router(JSPPages.VIEW_POSITION_PAGE);
             }
         } catch (ServiceException e) {
             throw new CommandException(e);
         } catch (ValidationException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage());
-            return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+            return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
         }
 
         return new Router(JSPPages.LOGIN_PAGE);

@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.GeneralSecurityException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EditAuthorCommand implements Command {
 
@@ -40,10 +42,10 @@ public class EditAuthorCommand implements Command {
             new AuthorValidator().validate(firstName, lastName, description, link);
         } catch (ValidationException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, ErrorMessages.INPUT_ERROR);
-            return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+            return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
         } catch (MalformedURLException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, ErrorMessages.URL_INPUT_ERROR);
-            return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+            return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
         } catch (GeneralSecurityException | ServletException e) {
             throw new CommandException(e);
         } catch (IOException e) {
@@ -57,14 +59,17 @@ public class EditAuthorCommand implements Command {
             newAuthor.setLastName(lastName);
             newAuthor.setDescription(description);
             AuthorService.getInstance().update(newAuthor);
-        } catch (ServiceException e) {
+
+            Map<String, String> parameters = new HashMap<>();
+            parameters.put(RequestParameters.COMMAND, CommandEnum.VIEW_AUTHOR_COMMAND.toString());
+            parameters.put(RequestParameters.AUTHOR_ID, Integer.toString(newAuthor.getId()));
+            return new Router(new URL(CommandUtil.getURL(
+                    request.getRequestURL().toString(), parameters)));
+        } catch (ServiceException | MalformedURLException e) {
             throw new CommandException(e);
         } catch (ValidationException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage());
             return new Router(JSPPages.EDIT_AUTHOR_PAGE);
         }
-        request.getSession().setAttribute(SessionParameters.AUTHOR, newAuthor);
-        request.setAttribute(RequestParameters.AUTHOR, newAuthor);
-        return new Router(JSPPages.VIEW_AUTHOR_PAGE);
     }
 }

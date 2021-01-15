@@ -15,6 +15,10 @@ import by.epam.bookshop.service.shop.ShopService;
 import by.epam.bookshop.validator.impl.PositionValidator;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EditPositionCommand implements Command {
 
@@ -37,19 +41,19 @@ public class EditPositionCommand implements Command {
             quantity = Integer.parseInt(request.getParameter(RequestParameters.QUANTITY));
         } catch (NumberFormatException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, INPUT_ERROR);
-            return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+            return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
         }
 
         try {
             Shop shop = ShopService.getInstance().read(shopId);
             if (shop == null) {
                 request.setAttribute(RequestParameters.ERROR_MESSAGE, WRONG_AUTHOR_ERROR);
-                return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+                return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
             }
             Book book = BookService.getInstance().read(bookId);
             if (book == null) {
                 request.setAttribute(RequestParameters.ERROR_MESSAGE, WRONG_AUTHOR_ERROR);
-                return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+                return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
             }
 
             if (request.getSession().getAttribute(SessionParameters.CURRENT_USER) == null) {
@@ -62,7 +66,7 @@ public class EditPositionCommand implements Command {
                 new PositionValidator().validate(book, shop, PositionStatus.READY, note, quantity);
             } catch (ValidationException e){
                 request.setAttribute(RequestParameters.ERROR_MESSAGE, INPUT_ERROR);
-                return new Router((String) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
+                return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
             }
             newPosition = (Position) request.getSession().getAttribute(SessionParameters.POSITION);
                 newPosition.setQuantity(quantity);
@@ -70,9 +74,12 @@ public class EditPositionCommand implements Command {
                 newPosition.setBook(book);
                 newPosition.setNote(note);
                 PositionService.getInstance().update(newPosition);
-                request.getSession().setAttribute(SessionParameters.POSITION, newPosition);
-                return new Router(JSPPages.VIEW_POSITION_PAGE);
-        } catch (ServiceException e) {
+            Map<String, String> parameters = new HashMap<>();
+            parameters.put(RequestParameters.COMMAND, CommandEnum.VIEW_POSITION_COMMAND.toString());
+            parameters.put(RequestParameters.POSITION_ID, Integer.toString(newPosition.getId()));
+            return new Router(new URL(CommandUtil.getURL(
+                    request.getRequestURL().toString(), parameters)));
+        } catch (ServiceException | MalformedURLException e) {
             throw new CommandException(e);
         } catch (ValidationException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage());

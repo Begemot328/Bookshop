@@ -12,6 +12,7 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.security.GeneralSecurityException;
 import java.util.Enumeration;
+import java.util.Map;
 
 /**
  * Class of the servlet processing utils
@@ -99,5 +100,15 @@ public class CommandUtil {
             link = new URL(photoLink);
         }
         return link;
+    }
+
+    public static String getURL(String baseURL, final Map<String, String> params) {
+        StringBuilder builder = new StringBuilder(baseURL);
+        builder.append("?");
+        for (String key :params.keySet()) {
+            builder.append(key).append("=").append(params.get(key).replace(" ", "%20")).append("&");
+        }
+        builder.deleteCharAt(builder.length() - 1);
+        return builder.toString();
     }
 }
