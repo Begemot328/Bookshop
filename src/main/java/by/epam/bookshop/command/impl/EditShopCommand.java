@@ -57,16 +57,13 @@ public class EditShopCommand implements Command {
             return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
         }
 
-        if (request.getSession().getAttribute(SessionParameters.SHOP) instanceof Shop) {
-            newShop = (Shop) request.getSession().getAttribute(SessionParameters.SHOP);
-        } else {
-            throw new CommandException(ErrorMessages.WRONG_ENTITY);
-        }
-        newShop.setAddress(addressObject);
-        newShop.setName(name);
-        newShop.setPhotoLink(link);
+
 
         try {
+            newShop = ShopService.getInstance().read(Integer.parseInt(request.getParameter(RequestParameters.SHOP_ID)));
+            newShop.setAddress(addressObject);
+            newShop.setName(name);
+            newShop.setPhotoLink(link);
             ShopService.getInstance().update(newShop);
             Map<String, String> parameters = new HashMap<>();
             parameters.put(RequestParameters.COMMAND, CommandEnum.VIEW_SHOP_COMMAND.toString());

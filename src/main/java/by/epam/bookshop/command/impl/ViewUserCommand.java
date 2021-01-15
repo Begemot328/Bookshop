@@ -37,12 +37,11 @@ public class ViewUserCommand implements Command {
                         .toArray(PositionAction[]::new);
             }
 
-
             int pageQuantity = CommandUtil.pageQuantity(PositionActionService.getInstance().countBy(finder),
                     ELEMENTS_PER_PAGE);
 
             request.setAttribute(RequestParameters.ACTIONS, actions);
-            request.getSession().setAttribute(SessionParameters.USER, new UserDTO(user));
+            request.setAttribute(RequestParameters.USER, new UserDTO(user));
 
             if (request.getSession().getAttribute(SessionParameters.CURRENT_USER) != null) {
                 User currentUser = (User) request.getSession().getAttribute(SessionParameters.CURRENT_USER);

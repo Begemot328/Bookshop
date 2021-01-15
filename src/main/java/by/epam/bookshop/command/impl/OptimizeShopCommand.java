@@ -22,12 +22,7 @@ public class OptimizeShopCommand implements Command {
         User admin = (User) request.getSession().getAttribute(SessionParameters.CURRENT_USER);
 
         try {
-            if (request.getSession().getAttribute(SessionParameters.SHOP) == null) {
-                shop = ShopService.getInstance().read(Integer.parseInt(request.getParameter(RequestParameters.SHOP_ID)));
-            } else {
-                shop = (Shop) request.getSession().getAttribute(SessionParameters.SHOP);
-            }
-
+            shop = ShopService.getInstance().read(Integer.parseInt(request.getParameter(RequestParameters.SHOP_ID)));
             Collection<Position> collection =
             PositionService.getInstance().findBy(new PositionFinder().findByShop(shop.getId()));
             PositionService.getInstance().optimizePositions(collection, admin);

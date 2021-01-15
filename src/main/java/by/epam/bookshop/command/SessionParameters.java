@@ -7,9 +7,6 @@ package by.epam.bookshop.command;
  * @version 1.0
  */
 public class SessionParameters {
-    public static final String BOOK = "book";
-    public static final String AUTHOR = "author";
-    public static final String SHOP = "shop";
     public static final String USER = "user";
     public static final String SELLER = "seller";
     public static final String POSITION = "position";

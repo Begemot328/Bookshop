@@ -215,8 +215,8 @@
             </div>
 
             <c:choose>
-                <c:when test="${not empty sessionScope.shop.photoLink}">
-                    <img src="${sessionScope.shop.photoLink}"
+                <c:when test="${not empty requestScope.shop.photoLink}">
+                    <img src="${requestScope.shop.photoLink}"
                          class="w3-image" alt="shop picture">
                 </c:when>
                 <c:otherwise>
@@ -225,7 +225,7 @@
                 </c:otherwise>
             </c:choose>
             <div class="w3-panel w3-large w3-purple w3-opacity">
-                <h4>${sessionScope.shop.address}</h4>
+                <h4>${requestScope.shop.address}</h4>
             </div>
         </div>
         <div class="w3-card-4 w3-half w3-center">
@@ -235,6 +235,7 @@
                 <br/>
                 <c:if test="${sessionScope.currentUser.status.id == 4}">
                     <input type="hidden" name="command" value="OPTIMIZE_SHOP_COMMAND">
+                    <input type="hidden" name="shopId" value="${requestScope.shop.id}">
                     <br/>
                     <button class="w3-button w3-purple w3-large w3-ripple w3-opacity-off" type="submit">
                         <fmt:message key="shop.optimize"/></button>
@@ -248,6 +249,7 @@
                     <br/>
                     <form>
                         <input type="hidden" name="command" value="EDIT_SHOP_MENU_COMMAND">
+                        <input type="hidden" name="shopId" value="${requestScope.shop.id}">
                         <button class="w3-button w3-purple w3-ripple w3-large w3-opacity-off" type="submit">
                             <fmt:message key="change"></fmt:message>
                         </button>
@@ -281,7 +283,7 @@
                 || sessionScope.currentUser.status.id == 4}">
                     <tr class="w3-deep-purple">
                         <td>
-                            <a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_BOOK_COMMAND&shopId=${position.shop.id}">
+                            <a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_BOOK_COMMAND&shopId=${position.book.id}">
                                 <c:out value="${position.book.title}"/></a></td>
                         <td><c:out value="${position.book.author.firstName} ${position.book.author.lastName}"/></td>
                         <td><c:out value="${position.quantity}"/></td>

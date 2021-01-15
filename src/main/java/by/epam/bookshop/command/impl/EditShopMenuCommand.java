@@ -16,11 +16,9 @@ public class EditShopMenuCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
 
         try {
-            if (request.getSession().getAttribute(SessionParameters.SHOP) == null) {
-                Shop shop = ShopService.getInstance().read(Integer.parseInt(
-                        request.getParameter(RequestParameters.SHOP_ID)));
-                request.getSession().setAttribute(SessionParameters.SHOP, shop);
-            }
+            Shop shop = ShopService.getInstance().read(Integer.parseInt(
+                    request.getParameter(RequestParameters.SHOP_ID)));
+            request.setAttribute(RequestParameters.SHOP, shop);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

@@ -251,19 +251,19 @@
     <div class="w3-cell w3-container w3-padding-large w3-center" style="width:70%">
         <div class="w3-card-4 w3-twothird w3-center">
             <div class="w3-panel w3-large w3-purple w3-opacity">
-                <h4>${sessionScope.book.title}</h4>
+                <h4>${requestScope.book.title}</h4>
             </div>
             <form method="GET" action="${pageContext.request.contextPath}/ControllerURL">
                 <input type="hidden" name="command" value="VIEW_AUTHOR_COMMAND">
-                <input type="hidden" name="authorId" value="${sessionScope.book.author.id}">
+                <input type="hidden" name="authorId" value="${requestScope.book.author.id}">
                 <button class="w3-panel w3-button w3-large w3-purple w3-opacity" type="submit" style="width: 100%">
-                    <h4>${sessionScope.book.author.firstName} ${sessionScope.book.author.lastName}</h4>
+                    <h4>${requestScope.book.author.firstName} ${requestScope.book.author.lastName}</h4>
                 </button>
 
             </form>
             <c:choose>
-                <c:when test="${not empty sessionScope.book.photoLink}">
-                    <img src="${sessionScope.book.photoLink}" alt="book picture"
+                <c:when test="${not empty requestScope.book.photoLink}">
+                    <img src="${requestScope.book.photoLink}" alt="book picture"
                          class="w3-image">
                 </c:when>
                 <c:otherwise>
@@ -271,13 +271,13 @@
                          alt="default book picture" class="w3-image">
                 </c:otherwise>
             </c:choose>
-            <c:if test="${not empty sessionScope.book.description}">
+            <c:if test="${not empty requestScope.book.description}">
                 <div class="w3-panel w3-medium w3-purple w3-opacity">
-                    <h5>${sessionScope.book.description}</h5>
+                    <h5>${requestScope.book.description}</h5>
                 </div>
             </c:if>
             <div class="w3-panel w3-large w3-purple w3-opacity">
-                <h4>${sessionScope.book.price} BYN</h4>
+                <h4>${requestScope.book.price} BYN</h4>
             </div>
         </div>
         <c:if test="${not empty sessionScope.currentUser}">
@@ -287,6 +287,7 @@
                     <br/>
                     <form>
                         <input type="hidden" name="command" value="EDIT_BOOK_MENU_COMMAND">
+                        <input type="hidden" name="bookId" value="${requestScope.book.id}">
                         <button class="w3-button w3-purple w3-ripple w3-large w3-opacity-off w3-hover-deep-purple"
                                 type="submit">
                             <fmt:message key="change"></fmt:message>

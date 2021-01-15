@@ -207,15 +207,16 @@
                 <h4><fmt:message key="${requestScope.position.status}"/></h4>
             </div>
         </div>
-        <c:if test="${not empty requestScope.currentUser}">
-            <c:if test="${requestScope.currentUser.status.id > 1}">
+        <c:if test="${not empty sessionScope.currentUser}">
+            <c:if test="${sessionScope.currentUser.status.id > 1}">
                 <div class="w3-card-4 w3-half w3-center w3-padding">
                     <br/>
                     <br/>
                     <form>
                         <input type="hidden" name="command" value="EDIT_POSITION_MENU_COMMAND">
+                        <input type="hidden" name="positionId" value="${requestScope.position.id}">
                         <button class="w3-button w3-purple w3-ripple w3-large w3-opacity" type="submit">
-                            <fmt:message key="change"></fmt:message>
+                            <fmt:message key="change"/>
                         </button>
                     </form>
 

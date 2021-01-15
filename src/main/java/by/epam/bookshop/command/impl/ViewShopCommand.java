@@ -33,7 +33,7 @@ public class ViewShopCommand implements Command {
         try {
             Shop shop = ShopService.getInstance().read(
                     Integer.parseInt(request.getParameter(RequestParameters.SHOP_ID)));
-            request.getSession().setAttribute(SessionParameters.SHOP, shop);
+            request.setAttribute(RequestParameters.SHOP, shop);
             Object currentUserObj = request.getSession()
                     .getAttribute(SessionParameters.CURRENT_USER);
 

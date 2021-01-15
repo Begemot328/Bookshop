@@ -24,7 +24,7 @@ public class EditPositionMenuCommand implements Command {
             if (request.getSession().getAttribute(SessionParameters.POSITION) == null) {
                 Position position = PositionService.getInstance().read(Integer.parseInt(
                         request.getParameter(RequestParameters.POSITION_ID)));
-                request.getSession().setAttribute(SessionParameters.POSITION, position);
+                request.setAttribute(RequestParameters.POSITION, position);
             }
             Book[] books = BookService.getInstance().findAll().toArray(Book[]::new);
             request.setAttribute(RequestParameters.BOOKS, books);

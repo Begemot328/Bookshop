@@ -187,18 +187,18 @@
               enctype="multipart/form-data">>
             <input type="hidden" name="command" value="EDIT_SHOP_COMMAND">
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="text" name="shop-name" value="${sessionScope.shop.name}"
+                <input class="w3-input w3-border" type="text" name="shop-name" value="${requestScope.shop.name}"
                        required placeholder="<fmt:message key="shop.name"/>">
             </div>
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="text" name="address" required value="${sessionScope.shop.address}"
+                <input class="w3-input w3-border" type="text" name="address" required value="${requestScope.shop.address}"
                        placeholder="<fmt:message key="shop.address"/>">
             </div>
             <br/>
             <br/>
             <!-- photo link adding-->
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="url" name="photolink" value="${photolink}" id="photoLinkText"
+                <input class="w3-input w3-border" type="url" name="photolink" value="${requestScope.shop.photoLink}" id="photoLinkText"
                        placeholder="<fmt:message key="photolink"/>">
             </div>
 
@@ -209,9 +209,9 @@
             <br/>
 
             <!-- error message box! -->
-            <c:if test="${errorMessage != null}">
+            <c:if test="${requestScope.errorMessage != null}">
                 <div class="w3-container w3-panel w3-red" style="width:50%">
-                    <p class="w3-large w3-animate-opacity"><fmt:message key="${errorMessage}"/></p>
+                    <p class="w3-large w3-animate-opacity"><fmt:message key="${requestScope.errorMessage}"/></p>
                 </div>
             </c:if>
             <div class="w3-btn" style="width:10%">

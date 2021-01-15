@@ -18,11 +18,9 @@ public class EditAuthorMenuCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
 
         try {
-            if (request.getSession().getAttribute(SessionParameters.AUTHOR) == null) {
-                Author author = AuthorService.getInstance().read(Integer.parseInt(
-                        request.getParameter(RequestParameters.AUTHOR_ID)));
-                request.getSession().setAttribute(SessionParameters.AUTHOR, author);
-            }
+            Author author = AuthorService.getInstance().read(Integer.parseInt(
+                    request.getParameter(RequestParameters.AUTHOR_ID)));
+            request.setAttribute(RequestParameters.AUTHOR, author);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

@@ -188,7 +188,7 @@
                 <select id="shop" name="shopId">
                     <c:forEach var="shop" items="${shops}">
                         <c:choose>
-                            <c:when test="${sessionScope.position.shop.id == shop.id}">
+                            <c:when test="${requestScope.position.shop.id == shop.id}">
                                 <option selected value="${shop.id}">${shop.name} ${shop.address}</option>
                             </c:when>
                             <c:otherwise>
@@ -204,7 +204,7 @@
                 <select id="books" name="bookId">
                     <c:forEach var="book" items="${books}">
                         <c:choose>
-                            <c:when test="${sessionScope.position.book.id == book.id}">
+                            <c:when test="${requestScope.position.book.id == book.id}">
                                 <option selected value="${book.id}">${book.title} by ${book.author.firstName}
                                         ${book.author.lastName}</option>
                             </c:when>
@@ -220,18 +220,18 @@
 
             <div class="w3-container" style="width:35%">
                 <input class="w3-input w3-border" type="number"  min="1"  step="1" name="quantity" required
-                       value="${sessionScope.position.quantity}" placeholder="<fmt:message key="quantity"/>">
+                       value="${requestScope.position.quantity}" placeholder="<fmt:message key="quantity"/>">
             </div>
             <br/>
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="text" name="note" value="${sessionScope.position.note}"
+                <input class="w3-input w3-border" type="text" name="note" value="${requestScope.position.note}"
                        placeholder="<fmt:message key="description"/>">
             </div>
             <br/>
             <br/>
-            <c:if test="${errorMessage != null}">
+            <c:if test="${requestScope.errorMessage != null}">
                 <div class="w3-container" style="width:50%">
-                    <p class="w3-large w3-text-red w3-animate-opacity"><fmt:message key="${errorMessage}"/></p>
+                    <p class="w3-large w3-text-red w3-animate-opacity"><fmt:message key="${requestScope.errorMessage}"/></p>
                 </div>
             </c:if>
             <div class="w3-btn" style="width:10%">

@@ -31,13 +31,8 @@ public class EditAuthorCommand implements Command {
         String description = request.getParameter(RequestParameters.DESCRIPTION);
         URL link;
 
-        if (request.getSession().getAttribute(SessionParameters.AUTHOR) instanceof Author) {
-            newAuthor = (Author) request.getSession().getAttribute(SessionParameters.AUTHOR);
-        } else {
-            throw new CommandException(ErrorMessages.WRONG_ENTITY);
-        }
-
         try {
+            newAuthor = AuthorService.getInstance().read(Integer.parseInt(request.getParameter(RequestParameters.AUTHOR_ID)));
             link = CommandUtil.getBookLink(request, PICTURE_WIDTH, PICTURE_HEIGHT, PATH_ID);
             new AuthorValidator().validate(firstName, lastName, description, link);
         } catch (ValidationException e) {
@@ -46,7 +41,7 @@ public class EditAuthorCommand implements Command {
         } catch (MalformedURLException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, ErrorMessages.URL_INPUT_ERROR);
             return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
-        } catch (GeneralSecurityException | ServletException e) {
+        } catch (GeneralSecurityException | ServletException | ServiceException e) {
             throw new CommandException(e);
         } catch (IOException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, ErrorMessages.FILE_INPUT_ERROR);

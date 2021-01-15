@@ -188,7 +188,7 @@
               enctype="multipart/form-data">
             <input type="hidden" name="command" value="EDIT_BOOK_COMMAND">
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="text" name="title" value="${sessionScope.book.title}" required placeholder="<fmt:message key="book.title"/>">
+                <input class="w3-input w3-border" type="text" name="title" value="${requestScope.book.title}" required placeholder="<fmt:message key="book.title"/>">
             </div>
             <br/>
 
@@ -196,7 +196,7 @@
                 <select id="users" name="authorId">
                     <c:forEach var="author" items="${authors}">
                         <c:choose>
-                            <c:when test="${sessionScope.book.author.id == author.id}">
+                            <c:when test="${requestScope.book.author.id == author.id}">
                                 <option selected value="${author.id}">
                                         ${author.firstName} ${author.lastName}</option>
                             </c:when>
@@ -212,17 +212,18 @@
 
             <div class="w3-container" style="width:35%">
                 <input class="w3-input w3-border" type="number" step="0.01" min="0" name="price" required
-                       placeholder="<fmt:message key="price"/>" value="${sessionScope.book.price}">
+                       placeholder="<fmt:message key="price"/>" value="${requestScope.book.price}">
             </div>
             <br/>
             <div class="w3-container" style="width:35%">
                 <input class="w3-input w3-border" type="text" name="description"
-                       placeholder="<fmt:message key="description"/>" value="${sessionScope.book.description}">
+                       placeholder="<fmt:message key="description"/>" value="${requestScope.book.description}">
             </div>
             <br/>
             <!-- photo link adding-->
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="url" name="photolink" value="${photolink}" id="photoLinkText"
+                <input class="w3-input w3-border" type="url" name="photolink" value="${requestScope.book.photoLink}"
+                       id="photoLinkText"
                        placeholder="<fmt:message key="photolink"/>">
             </div>
 
@@ -233,9 +234,9 @@
             <br/>
 
             <!-- error message box! -->
-            <c:if test="${errorMessage != null}">
+            <c:if test="${requestScope.errorMessage != null}">
                 <div class="w3-container w3-panel w3-red" style="width:50%">
-                    <p class="w3-large w3-animate-opacity"><fmt:message key="${errorMessage}"/></p>
+                    <p class="w3-large w3-animate-opacity"><fmt:message key="${requestScope.errorMessage}"/></p>
                 </div>
             </c:if>
             <div class="w3-btn" style="width:10%">

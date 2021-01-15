@@ -159,11 +159,11 @@
     <div class="w3-cell w3-container w3-padding-large w3-center" style="width:70%">
         <div class="w3-card-4 w3-twothird w3-center">
             <div class="w3-panel w3-large w3-purple w3-opacity">
-                <h4>${sessionScope.author.firstName} ${sessionScope.author.lastName}</h4>
+                <h4>${requestScope.author.firstName} ${requestScope.author.lastName}</h4>
             </div>
             <c:choose>
-                <c:when test="${not empty sessionScope.author.photoLink}">
-                    <img src="${sessionScope.author.photoLink}" alt="author picture"
+                <c:when test="${not empty requestScope.author.photoLink}">
+                    <img src="${requestScope.author.photoLink}" alt="author picture"
                          class="w3-image">
                 </c:when>
                 <c:otherwise>
@@ -171,9 +171,9 @@
                     alt="default author picture"  class="w3-image">
                 </c:otherwise>
             </c:choose>
-            <c:if test="${not empty sessionScope.author.description}">
+            <c:if test="${not empty requestScope.author.description}">
                 <div class="w3-panel w3-medium w3-purple w3-opacity">
-                    <h5>${sessionScope.author.description}</h5>
+                    <h5>${requestScope.author.description}</h5>
                 </div>
             </c:if>
         </div>
@@ -184,9 +184,10 @@
                     <br/>
                     <form>
                         <input type="hidden" name="command" value="EDIT_AUTHOR_MENU_COMMAND">
+                        <input type="hidden" name="authorId" value="${requestScope.author.id}">
                         <button class="w3-button w3-purple w3-ripple w3-large w3-hover-deep-purple"
                                 type="submit">
-                            <fmt:message key="change"></fmt:message>
+                            <fmt:message key="change"/>
                         </button>
                     </form>
                 </div>

@@ -86,7 +86,7 @@
         // Initialize and add the map
         function initMap() {
             // The location of Minsk
-            const address = {lat: ${sessionScope.user.address.latitude}, lng: ${sessionScope.user.address.longitude}};
+            const address = {lat: ${requestScope.user.address.latitude}, lng: ${requestScope.user.address.longitude}};
             // The map, centered at Uluru
             const map = new google.maps.Map(document.getElementById("map"), {
                 zoom: 8,
@@ -102,7 +102,7 @@
 
             google.maps.event.addListener(marker, 'click', (function (marker) {
                 return function () {
-                    var html = '<p>${sessionScope.user.address}</p>';
+                    var html = '<p>${requestScope.user.address}</p>';
                     infowindow.setContent(html);
                     infowindow.open(map, marker);
                 };
@@ -247,12 +247,12 @@
     <div class="w3-cell w3-padding-large w3-center" style="width:70%">
         <div class="w3-card-4 w3-half w3-center">
             <div class="w3-panel w3-large w3-purple w3-opacity">
-                <h4>${sessionScope.user.firstName} ${sessionScope.user.lastName}</h4>
+                <h4>${requestScope.user.firstName} ${requestScope.user.lastName}</h4>
             </div>
 
             <c:choose>
-                <c:when test="${not empty sessionScope.user.photoLink}">
-                    <img src="${sessionScope.user.photoLink}" alt="user picture"
+                <c:when test="${not empty requestScope.user.photoLink}">
+                    <img src="${requestScope.user.photoLink}" alt="user picture"
                          class="w3-image">
                 </c:when>
                 <c:otherwise>
@@ -277,10 +277,10 @@
                 <th><fmt:message key="status"/></th>
                 <c:if test="${sessionScope.currentUser.status.id > 2}">
                     <c:choose>
-                        <c:when test="${sessionScope.user.status.id == 2}">
+                        <c:when test="${requestScope.user.status.id == 2}">
                             <th><fmt:message key="seller"/></th>
                         </c:when>
-                        <c:when test="${sessionScope.user.status.id > 2}">
+                        <c:when test="${requestScope.user.status.id > 2}">
                             <th><fmt:message key="buyer"/></th>
                         </c:when>
                     </c:choose>
@@ -304,11 +304,11 @@
                         <td><fmt:message key="${action.initialStatus}.${action.finalStatus}"/></td>
                         <c:if test="${sessionScope.currentUser.status.id > 2}">
                             <c:choose>
-                                <c:when test="${sessionScope.user.status.id == 2}">
+                                <c:when test="${requestScope.user.status.id == 2}">
                                     <th><c:out value="${action.seller.firstName}
                                          ${action.seller.lastName}"/></th>
                                 </c:when>
-                                <c:when test="${sessionScope.user.status.id > 2}">
+                                <c:when test="${requestScope.user.status.id > 2}">
                                     <th><c:out value="${action.buyer.firstName}
                                      ${action.buyer.lastName}"/></th>
                                 </c:when>

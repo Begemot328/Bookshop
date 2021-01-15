@@ -78,11 +78,7 @@ public class EditBookCommand implements Command {
                 request.setAttribute(RequestParameters.ERROR_MESSAGE, INPUT_ERROR);
                 return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
             }
-            if (request.getSession().getAttribute(SessionParameters.BOOK) instanceof Book) {
-                newBook = (Book) request.getSession().getAttribute(SessionParameters.BOOK);
-            } else {
-                throw new CommandException(WRONG_ENTITY);
-            }
+            newBook = BookService.getInstance().read(Integer.parseInt(request.getParameter(RequestParameters.BOOK_ID)));
                 newBook.setAuthor(author);
                 newBook.setTitle(title);
                 newBook.setPrice(price);

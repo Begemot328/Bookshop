@@ -9,12 +9,10 @@ package by.epam.bookshop.command;
 public enum JSPPages {
   START_PAGE("WEB-INF/jsp/searchBooks.jsp"),
   ERROR_PAGE("WEB-INF/jsp/error.jsp"),
-
   SEARCH_BOOKS_PAGE("WEB-INF/jsp/searchBooks.jsp"),
   SEARCH_AUTHORS_PAGE("WEB-INF/jsp/searchAuthors.jsp"),
   SEARCH_SHOPS_PAGE("WEB-INF/jsp/searchShops.jsp"),
   SEARCH_USERS_PAGE("WEB-INF/jsp/searchUsers.jsp"),
-
   ADD_POSITION_PAGE("WEB-INF/jsp/addPosition.jsp"),
   ADD_BOOK_PAGE("WEB-INF/jsp/addBook.jsp"),
   ADD_SHOP_PAGE("WEB-INF/jsp/addShop.jsp"),

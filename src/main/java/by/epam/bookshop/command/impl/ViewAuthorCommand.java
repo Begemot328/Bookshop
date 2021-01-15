@@ -29,7 +29,6 @@ public class ViewAuthorCommand implements Command {
         }
 
         try {
-
             Author author = AuthorService.getInstance()
                     .read(Integer.parseInt(request.getParameter(RequestParameters.AUTHOR_ID)));
 
@@ -42,7 +41,7 @@ public class ViewAuthorCommand implements Command {
             request.setAttribute(RequestParameters.BOOKS, books);
             request.setAttribute(RequestParameters.PAGE_QUANTITY, pageQuantity);
             request.setAttribute(RequestParameters.CURRENT_PAGE, page);
-            request.getSession().setAttribute(SessionParameters.AUTHOR, author);
+            request.setAttribute(RequestParameters.AUTHOR, author);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

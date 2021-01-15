@@ -26,7 +26,7 @@ public class ReturnBookCommand implements Command {
                     == UserStatus.ADMIN || user.getStatus()
                     == UserStatus.SELLER) {
                 User buyer = UserService.getInstance().read(
-                        Integer.valueOf(request.getParameter(RequestParameters.USER_ID))
+                        Integer.parseInt(request.getParameter(RequestParameters.USER_ID))
                 );
                 Position oldPosition = (Position) request.getSession().getAttribute(SessionParameters.POSITION);
                 Position newPosition = PositionService.getInstance().splitPosition(

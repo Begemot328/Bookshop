@@ -10,6 +10,7 @@ public class RequestParameters {
     public static final String USER = "user";
     public static final String PAGE = "page";
     public static final String PRICE = "price";
+    public static final String BOOK = "book";
     public static final String DESCRIPTION = "description";
     public static final String NOTE = "note";
     public static final String LOGIN = "login";
@@ -28,6 +29,7 @@ public class RequestParameters {
     public static final String ADDRESS = "address";
     public static final String USER_PHOTO = "userPhoto";
     public static final String USER_STATUS = "userStatus";
+    public static final String SHOP = "shop";
 
     public static final String SHOP_ID = "shopId";
     public static final String SHOP_NAME = "shopName";

@@ -32,7 +32,7 @@ public class ViewBookCommand implements Command {
         try {
             Book book = BookService.getInstance().read(
                     Integer.parseInt(request.getParameter(RequestParameters.BOOK_ID)));
-            request.getSession().setAttribute(SessionParameters.BOOK, book);
+            request.setAttribute(RequestParameters.BOOK, book);
 
             PositionFinder finder = new PositionFinder().findByBook(book.getId());
             Position[] positions = PositionService.getInstance().findBy(finder)
