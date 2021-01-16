@@ -16,27 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `user_status`
+-- Table structure for table `position_status`
 --
 
-DROP TABLE IF EXISTS `user_status`;
+DROP TABLE IF EXISTS `position_status`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user_status` (
+CREATE TABLE `position_status` (
   `id` tinyint NOT NULL,
   `name` varchar(40) NOT NULL,
+  `picture_link` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `user_status`
+-- Dumping data for table `position_status`
 --
 
-LOCK TABLES `user_status` WRITE;
-/*!40000 ALTER TABLE `user_status` DISABLE KEYS */;
-INSERT INTO `user_status` VALUES (0,'non-existent'),(1,'disabled'),(2,'buyer'),(3,'seller'),(4,'admin'),(5,'courier');
-/*!40000 ALTER TABLE `user_status` ENABLE KEYS */;
+LOCK TABLES `position_status` WRITE;
+/*!40000 ALTER TABLE `position_status` DISABLE KEYS */;
+INSERT INTO `position_status` VALUES (0,'non-existent',NULL),(1,'ready',NULL),(2,'sold',NULL),(3,'reserved',NULL),(4,'transfer',NULL);
+/*!40000 ALTER TABLE `position_status` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -48,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-01-13 16:24:08
+-- Dump completed on 2021-01-16 15:22:30

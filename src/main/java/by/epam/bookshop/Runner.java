@@ -1,5 +1,6 @@
 package by.epam.bookshop;
 
+import by.epam.bookshop.controller.Controller;
 import by.epam.bookshop.dao.EntityDAO;
 import by.epam.bookshop.dao.impl.author.AuthorFinder;
 import by.epam.bookshop.dao.impl.author.MySQLAuthorDAO;
@@ -47,6 +48,7 @@ public class Runner {
             System.out.println(new AddressObject(obj3.getFormattedAddress()).getFormattedAddress());
             System.out.println(obj3.getLatitude());
             System.out.println(obj3.getLongitude());
+            Controller.getLoggerInstance().warn(obj3.getFormattedAddress());
         } catch (AddressException e) {
             e.printStackTrace();
         }

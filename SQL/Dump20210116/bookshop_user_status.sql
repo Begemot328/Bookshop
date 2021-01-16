@@ -16,35 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `users`
+-- Table structure for table `user_status`
 --
 
-DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `user_status`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `users` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(40) NOT NULL,
-  `last_name` varchar(40) NOT NULL,
-  `login` varchar(10) NOT NULL,
-  `password` int NOT NULL,
-  `address` varchar(100) NOT NULL,
-  `photo_link` varchar(100) DEFAULT NULL,
-  `status` tinyint DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_index` (`id`),
-  KEY `lastname_index` (`last_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `user_status` (
+  `id` tinyint NOT NULL,
+  `name` varchar(40) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `users`
+-- Dumping data for table `user_status`
 --
 
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Yury','Zmushko','root',3506402,'vulica Hrušaŭskaja 73, Minsk 220089, Belarus',NULL,4),(2,'Ivan','Ivanoy','IIvanoy',-946852072,'praspiekt Niezaliežnasci 65, Minsk, Belarus',NULL,3),(3,'Petr','Petroy','PPetroy',-946852072,'Ulitsa Novovilenskaya 11, Minsk, Belarus',NULL,3),(4,'Sidor ','Sidorov','SSidorov',-946852072,'vulica Janki Lučyny 11, Minsk, Belarus',NULL,2),(5,'Morozov ','Igor','IMorozov',-946852072,'praspiekt Haziety Praŭda 25, Minsk 220089, Belarus',NULL,2);
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+LOCK TABLES `user_status` WRITE;
+/*!40000 ALTER TABLE `user_status` DISABLE KEYS */;
+INSERT INTO `user_status` VALUES (0,'non-existent'),(1,'disabled'),(2,'buyer'),(3,'seller'),(4,'admin'),(5,'courier');
+/*!40000 ALTER TABLE `user_status` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -56,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-01-13 16:24:09
+-- Dump completed on 2021-01-16 15:22:27

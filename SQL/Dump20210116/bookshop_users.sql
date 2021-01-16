@@ -16,38 +16,35 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `positions`
+-- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `positions`;
+DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `positions` (
+CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `book_id` int DEFAULT NULL,
-  `shop_id` int DEFAULT NULL,
-  `status` tinyint NOT NULL,
-  `note` text,
-  `quantity` int NOT NULL DEFAULT '1',
+  `first_name` varchar(40) NOT NULL,
+  `last_name` varchar(40) NOT NULL,
+  `login` varchar(10) NOT NULL,
+  `password` int NOT NULL,
+  `address` varchar(100) NOT NULL,
+  `photo_link` varchar(100) DEFAULT NULL,
+  `status` tinyint DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `status` (`status`),
   KEY `id_index` (`id`),
-  KEY `book_index` (`book_id`),
-  KEY `shop_index` (`shop_id`),
-  CONSTRAINT `positions_ibfk_1` FOREIGN KEY (`status`) REFERENCES `position_status` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `positions_ibfk_2` FOREIGN KEY (`shop_id`) REFERENCES `shops` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `positions_ibfk_3` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `lastname_index` (`last_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `positions`
+-- Dumping data for table `users`
 --
 
-LOCK TABLES `positions` WRITE;
-/*!40000 ALTER TABLE `positions` DISABLE KEYS */;
-INSERT INTO `positions` VALUES (1,1,1,1,NULL,1),(2,2,1,0,NULL,1),(3,2,1,0,NULL,3),(4,1,2,1,NULL,2),(5,2,1,0,NULL,1),(6,4,1,1,NULL,1),(7,4,1,2,NULL,1),(8,2,1,1,NULL,5);
-/*!40000 ALTER TABLE `positions` ENABLE KEYS */;
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'Yury','Zmushko','root',3506402,'vulica Hrušaŭskaja 73, Minsk 220089, Belarus',NULL,4),(2,'Ivan','Ivanoy','IIvanoy',-946852072,'praspiekt Niezaliežnasci 65, Minsk, Belarus',NULL,3),(3,'Petr','Petroy','PPetroy',-946852072,'Ulitsa Novovilenskaya 11, Minsk, Belarus',NULL,3),(4,'Sidor ','Sidorov','SSidorov',-946852072,'vulica Janki Lučyny 11, Minsk, Belarus',NULL,2),(5,'Morozov ','Igor','IMorozov',-946852072,'praspiekt Haziety Praŭda 25, Minsk 220089, Belarus',NULL,2);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -59,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-01-13 16:24:10
+-- Dump completed on 2021-01-16 15:22:28
