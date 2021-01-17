@@ -4,6 +4,7 @@ import by.epam.bookshop.entity.Entity;
 import by.epam.bookshop.util.AddressObject;
 
 import java.net.URL;
+import java.util.Objects;
 
 public class User extends Entity {
     private int id;
@@ -90,5 +91,25 @@ public class User extends Entity {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return getId() == user.getId() && getPassword() == user.getPassword()
+                && getFirstName().equals(user.getFirstName())
+                && getLastName().equals(user.getLastName())
+                && getLogin().equals(user.getLogin())
+                && getAddress().equals(user.getAddress())
+                && Objects.equals(getPhotoLink(), user.getPhotoLink())
+                && getStatus() == user.getStatus();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getFirstName(), getLastName(),
+                getLogin(), getPassword(), getAddress(), getPhotoLink(), getStatus());
     }
 }

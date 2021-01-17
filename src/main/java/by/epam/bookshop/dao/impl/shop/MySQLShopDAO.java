@@ -63,7 +63,9 @@ public class MySQLShopDAO extends MySQLEntityDAO<Shop> {
         Map<String, Object> map = new HashMap<>();
         map.put(NAME, shop.getName());
         map.put(ADDRESS, shop.getAddress().getFormattedAddress());
-        map.put(PHOTO_LINK, shop.getPhotoLink().toString());
+        if (shop.getPhotoLink() != null) {
+            map.put(PHOTO_LINK, shop.getPhotoLink().toString());
+        }
         return map;
     }
 

@@ -9,7 +9,7 @@ public class ShopFinder extends EntityFinder<Shop> {
 
     private final static String VIEW_NAME = "SHOPS";
     private static final String NAME = "NAME";
-    private static final String ADRESS = "ADRESS";
+    private static final String ADDRESS = "ADDRESS";
     private static final String POSITION = "POSITION";
     private static final String ID = "ID";
 
@@ -25,7 +25,7 @@ public class ShopFinder extends EntityFinder<Shop> {
 
     public ShopFinder findByAdress(String adress) {
         return (ShopFinder) this.findBy(SQL_QUERY +
-                WHERE_LIKE.replace(PARAMETER, ADRESS)
+                WHERE_LIKE.replace(PARAMETER, ADDRESS)
                         .replace(VALUE, adress));
     }
 }

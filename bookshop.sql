@@ -97,7 +97,8 @@ create table authors
     id         int primary key auto_increment,
     first_name varchar(40) not null,
     last_name  varchar(40) not null,
-    photo_link varchar(100)
+    photo_link varchar(100),
+    description varchar(400)
 );
 
 create

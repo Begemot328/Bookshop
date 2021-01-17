@@ -77,7 +77,8 @@ public class MySQLAuthorDAO extends MySQLEntityDAO<Author> {
         map.put(LASTNAME, author.getLastName());
         if (author.getPhotoLink() != null) {
             map.put(PHOTO_LINK, author.getPhotoLink().toString());
-        }if (author.getPhotoLink() != null) {
+        }
+        if (author.getPhotoLink() != null) {
             map.put(DESCRIPTION, author.getDescription());
         }
         return map;

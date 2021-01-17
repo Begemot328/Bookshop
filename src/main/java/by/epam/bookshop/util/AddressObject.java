@@ -35,8 +35,9 @@ public class AddressObject {
         addressToGeo.put("key", key);
         addressToGeo.put(language,"en");
         addressToGeo.put("charset","utf-8");
+        String url = getURL(baseURL, addressToGeo);
         try {
-            response = JsonReader.read(getURL(baseURL, addressToGeo));
+            response = JsonReader.read(url);
         } catch (IOException e) {
             throw new AddressException(e);
         }
@@ -103,7 +104,7 @@ public class AddressObject {
         if (o == null || getClass() != o.getClass()) return false;
         AddressObject that = (AddressObject) o;
         return Double.compare(that.getLongitude(), getLongitude()) == 0 && Double.compare(that.getLatitude(),
-                getLatitude()) == 0 && isStatus() == that.isStatus() && Objects.equals(address, that.address)
+                getLatitude()) == 0 && isStatus() == that.isStatus()
                 && Objects.equals(getFormattedAddress(), that.getFormattedAddress())
                 && Objects.equals(getErrorMessage(), that.getErrorMessage());
     }

@@ -11,9 +11,6 @@ import by.epam.bookshop.validator.EntityValidator;
 import java.sql.Connection;
 
 public class BookService extends AbstractEntityService<Book> {
-    private static final String SQL_CONNECTION_EXCEPTION = "SQL Exception: ";
-    private static final String DAO_EXCEPTION = "User DAO Exception: ";
-    private static final String FACTORY_EXCEPTION = "User factory Exception: ";
 
     private static final BookService INSTANCE = new BookService();
 
