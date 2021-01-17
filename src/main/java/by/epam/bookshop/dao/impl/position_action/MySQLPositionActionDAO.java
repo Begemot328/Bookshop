@@ -64,10 +64,10 @@ public class MySQLPositionActionDAO extends MySQLEntityDAO<PositionAction> {
     @Override
     public PositionAction read(int id) throws DAOException {
         Collection<PositionAction> result = findBy((new PositionActionFinder()).findByID(id));
-        if (result == null || result.isEmpty() || result.size() > 1) {
+        if (result == null || result.size() != 1) {
             return null;
         } else {
-            return result.stream().toArray(PositionAction[]::new)[0];
+            return result.toArray(PositionAction[]::new)[0];
         }
     }
 

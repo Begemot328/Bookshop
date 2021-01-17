@@ -6,7 +6,10 @@ import by.epam.bookshop.entity.position.PositionStatus;
 import by.epam.bookshop.entity.shop.Shop;
 import by.epam.bookshop.entity.user.User;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.Objects;
 
 public class PositionAction extends Entity implements Pricefull {
@@ -31,7 +34,7 @@ public class PositionAction extends Entity implements Pricefull {
         this.finalPosition = finalPosition;
         this.buyer = buyer;
         this.seller = seller;
-        this.date = date;
+        setDate(date);
         this.quantity = quantity;
         this.initialStatus = initialStatus;
         this.finalStatus = finalStatus;
@@ -113,7 +116,7 @@ public class PositionAction extends Entity implements Pricefull {
     }
 
     public void setDate(LocalDateTime date) {
-        this.date = date;
+        this.date = date.truncatedTo(ChronoUnit.SECONDS);
     }
 
     public void setQuantity(int quantity) {

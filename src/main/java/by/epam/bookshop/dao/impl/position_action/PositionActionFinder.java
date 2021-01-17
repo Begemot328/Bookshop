@@ -17,7 +17,7 @@ public class PositionActionFinder extends EntityFinder<PositionAction> {
     private static final String BOOK_ID = "BOOK_ID";
     private static final String BUYER_ID = "BUYER_ID";
     private static final String SELLER_ID = "SELLER_ID";
-    private static final String SHOP_ID = "SELLER_ID";
+    private static final String SHOP_ID = "SHOP_ID";
     private static final String QUANTITY = "QUANTITY";
     private static final String INITIAL_STATUS = "INITIAL_STATUS";
     private static final String FINAL_STATUS = "FINAL_STATUS";
@@ -53,7 +53,7 @@ public class PositionActionFinder extends EntityFinder<PositionAction> {
 
     public PositionActionFinder findByShop(int id) {
         return (PositionActionFinder) this.findBy(SQL_QUERY +
-                WHERE_LIKE.replace(PARAMETER, SHOP_ID)
+                WHERE.replace(PARAMETER, SHOP_ID)
                         .replace(VALUE, Integer.toString(id)));
     }
 
@@ -87,7 +87,7 @@ public class PositionActionFinder extends EntityFinder<PositionAction> {
                         .replace(VALUE, Integer.toString(status)));
     }
 
-    public PositionActionFinder findByDateLater(Timestamp dateTime) {
+    public PositionActionFinder findByDateLater(LocalDateTime dateTime) {
         return (PositionActionFinder) this.findBy(SQL_QUERY +
                 WHERE_COMPARING.replace(PARAMETER, DATE_TIME).replace(COMPARE, MORE)
                         .replace(VALUE, new SimpleDateFormat(TIMESTAMP_FORMAT).format(dateTime)));
