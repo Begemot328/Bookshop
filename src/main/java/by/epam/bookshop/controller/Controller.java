@@ -95,11 +95,10 @@ public class Controller  extends HttpServlet {
         Router router;
         try {
             router = command.execute(request);
-        } catch (CommandException | ServletRuntimeException e) {
-            request.setAttribute(RequestParameters.ERROR, e);
-            router = new Router(JSPPages.ERROR_PAGE);
         } catch (Exception e) {
             request.setAttribute(RequestParameters.ERROR, e);
+            logger.error(e.getMessage());
+            e.printStackTrace();
             router = new Router(JSPPages.ERROR_PAGE);
         }
 

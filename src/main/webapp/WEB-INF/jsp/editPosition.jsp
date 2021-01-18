@@ -54,7 +54,7 @@
         <br/>
         <form class="w3-card-4 w3-row-padding" method="POST" action="${pageContext.request.contextPath}/ControllerURL">
             <input type="hidden" name="command" value="EDIT_POSITION_COMMAND">
-
+            <input type="hidden" name="positionId" value="${requestScope.position.id}">
             <div class="w3-container" style="width:35%">
                 <select id="shop" name="shopId">
                     <c:forEach var="shop" items="${shops}">

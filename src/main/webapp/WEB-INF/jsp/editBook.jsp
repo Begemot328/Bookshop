@@ -57,6 +57,7 @@
               action="${pageContext.request.contextPath}/ControllerURL"
               enctype="multipart/form-data">
             <input type="hidden" name="command" value="EDIT_BOOK_COMMAND">
+            <input type="hidden" name="bookId" value="${requestScope.book.id}">
             <div class="w3-container" style="width:35%">
                 <input class="w3-input w3-border" type="text" name="title" value="${requestScope.book.title}" required placeholder="<fmt:message key="book.title"/>">
             </div>
@@ -86,8 +87,9 @@
             </div>
             <br/>
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="text" name="description"
-                       placeholder="<fmt:message key="description"/>" value="${requestScope.book.description}">
+                <textarea class="w3-input w3-border" type="text" name="description"
+                       placeholder="<fmt:message key="description"/>"
+                       value="${requestScope.book.description}" style="height: 100px"></textarea>
             </div>
             <br/>
             <!-- photo link adding-->
@@ -97,7 +99,7 @@
             <c:import url="elements/errorMessage.jsp" charEncoding="utf-8"/>
             <div class="w3-btn" style="width:10%">
                 <input class="w3-btn w3-deep-purple w3-ripple w3-hover-purple" type="submit"
-                       value="<fmt:message key="apply"/>!">
+                       value="<fmt:message key="apply"/>!"/>
             </div>
         </form>
     </div>

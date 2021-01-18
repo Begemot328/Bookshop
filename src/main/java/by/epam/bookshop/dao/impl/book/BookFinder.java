@@ -46,7 +46,7 @@ public class BookFinder extends EntityFinder<Book> {
 
         for (Author author:authors) {
             if (first) {
-                first = true;
+                first = false;
                 authorsQuery = WHERE.replace(PARAMETER, AUTHOR_ID).replace(VALUE, Integer.toString(author.getId()));
             } else {
                 authorsQuery = authorsQuery.concat(
@@ -66,12 +66,6 @@ public class BookFinder extends EntityFinder<Book> {
     public BookFinder findByPriceLess(Float price) {
         return (BookFinder) this.findBy(SQL_QUERY +
                 WHERE_COMPARING.replace(PARAMETER, PRICE).replace(COMPARE, LESS)
-                        .replace(VALUE, Float.toString(price)));
-    }
-
-    public BookFinder findByPrice(Float price) {
-        return (BookFinder) this.findBy(SQL_QUERY +
-                WHERE.replace(PARAMETER, PRICE)
                         .replace(VALUE, Float.toString(price)));
     }
 }

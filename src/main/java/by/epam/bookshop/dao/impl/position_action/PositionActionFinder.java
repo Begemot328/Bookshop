@@ -6,6 +6,9 @@ import by.epam.bookshop.entity.position_action.PositionAction;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 
 
 public class PositionActionFinder extends EntityFinder<PositionAction> {
@@ -25,7 +28,7 @@ public class PositionActionFinder extends EntityFinder<PositionAction> {
     private static final String CURRENT_PRICE = "CURRENT_PRICE";
 
     private static final String ID = "ID";
-    private static final String TIMESTAMP_FORMAT = "yyyy-mm-dd hh:mm:ss";
+    private static final String TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     public PositionActionFinder() {
         super(VIEW_NAME);
@@ -90,13 +93,15 @@ public class PositionActionFinder extends EntityFinder<PositionAction> {
     public PositionActionFinder findByDateLater(LocalDateTime dateTime) {
         return (PositionActionFinder) this.findBy(SQL_QUERY +
                 WHERE_COMPARING.replace(PARAMETER, DATE_TIME).replace(COMPARE, MORE)
-                        .replace(VALUE, new SimpleDateFormat(TIMESTAMP_FORMAT).format(dateTime)));
+                        .replace(VALUE, dateTime.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC"))
+                                .toLocalDateTime().format(DateTimeFormatter.ofPattern(TIMESTAMP_FORMAT))));
     }
 
     public PositionActionFinder findByDateEarlier(LocalDateTime dateTime) {
         return (PositionActionFinder) this.findBy(SQL_QUERY +
                 WHERE_COMPARING.replace(PARAMETER, DATE_TIME).replace(COMPARE, LESS)
-                        .replace(VALUE, new SimpleDateFormat(TIMESTAMP_FORMAT).format(dateTime)));
+                        .replace(VALUE, dateTime.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC"))
+                                .toLocalDateTime().format(DateTimeFormatter.ofPattern(TIMESTAMP_FORMAT))));
     }
 
     public PositionActionFinder findByPriceMore(Float price) {

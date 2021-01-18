@@ -279,18 +279,29 @@ public class DAOTest extends Assert {
                 PositionStatus.SOLD.getId())).contains(positionAction));
 
         assertTrue(positionActionDAO.findBy(new PositionActionFinder().findByDateEarlier(
-                LocalDateTime.now().plusMinutes(10))).contains(positionAction));
+                positionAction.getDate().plusMinutes(1))).contains(positionAction));
         assertEquals(positionActionDAO.countBy(new PositionActionFinder().findByDateEarlier(
-                LocalDateTime.now().plusMinutes(10))), 1);
+                positionAction.getDate().plusMinutes(1))), 1);
         assertFalse(positionActionDAO.findBy(new PositionActionFinder().findByDateEarlier(
-                LocalDateTime.now().minusMinutes(10))).contains(positionAction));
+                positionAction.getDate().minusMinutes(1))).contains(positionAction));
 
         assertTrue(positionActionDAO.findBy(new PositionActionFinder().findByDateLater(
-                LocalDateTime.now().minusMinutes(10))).contains(positionAction));
+                positionAction.getDate().minusMinutes(1))).contains(positionAction));
         assertEquals(positionActionDAO.countBy(new PositionActionFinder().findByDateLater(
-                LocalDateTime.now().minusMinutes(10))), 1);
+                positionAction.getDate().minusMinutes(1))), 1);
         assertFalse(positionActionDAO.findBy(new PositionActionFinder().findByDateLater(
-                LocalDateTime.now().plusMinutes(10))).contains(positionAction));
+                positionAction.getDate().plusMinutes(1))).contains(positionAction));
+
+        assertTrue(positionActionDAO.findBy(new PositionActionFinder().findByDateLater(
+                positionAction.getDate().minusMinutes(1)).findByDateEarlier(
+                positionAction.getDate().plusMinutes(1))).contains(positionAction));
+        assertEquals(positionActionDAO.countBy(new PositionActionFinder().findByDateLater(
+                positionAction.getDate().minusMinutes(1)).findByDateEarlier(
+                positionAction.getDate().plusMinutes(1))), 1);
+        assertFalse(positionActionDAO.findBy(new PositionActionFinder().findByDateLater(
+                positionAction.getDate().plusMinutes(1)).findByDateEarlier(
+                positionAction.getDate().minusMinutes(1))).contains(positionAction));
+
 
         assertTrue(positionActionDAO.findBy(new PositionActionFinder().findByQuantity(
                 positionAction.getQuantity())).contains(positionAction));
@@ -306,6 +317,28 @@ public class DAOTest extends Assert {
         assertFalse(positionActionDAO.findBy(new PositionActionFinder()
                 .findByQuantityLess(5).findByQuantityMore(2)).contains(positionAction));
 
+        assertTrue(positionActionDAO.findBy(new PositionActionFinder().findByBuyer(positionAction.getBuyer().getId()))
+                .contains(positionAction));
+        assertFalse(positionActionDAO.findBy(new PositionActionFinder().findByBuyer(10))
+                .contains(positionAction));
+
+        assertTrue(positionActionDAO.findBy(new PositionActionFinder().findBySeller(positionAction.getSeller().getId()))
+                .contains(positionAction));
+        assertFalse(positionActionDAO.findBy(new PositionActionFinder().findBySeller(10))
+                .contains(positionAction));
+
+        assertTrue(positionActionDAO.findBy(new PositionActionFinder().findByPriceLess(
+                positionAction.getCurrentPrice() * 1.1f)
+                .findByPriceMore(positionAction.getCurrentPrice() * 0.9f)).contains(positionAction));
+        assertEquals(positionActionDAO.countBy(new PositionActionFinder()
+                .findByPriceLess(
+                        positionAction.getCurrentPrice() * 1.1f)
+                .findByPriceMore(positionAction.getCurrentPrice() * 0.9f)), 1);
+        assertFalse(positionActionDAO.findBy(new PositionActionFinder()
+                .findByPriceMore(positionAction.getCurrentPrice() * 1.1f)).contains(positionAction));
+        assertFalse(positionActionDAO.findBy(new PositionActionFinder()
+                .findByPriceLess(positionAction.getCurrentPrice() * 0.9f)).contains(positionAction));
+
         // Update
         positionAction.setFinalStatus(PositionStatus.SOLD);
         positionActionDAO.update(positionAction);
@@ -316,12 +349,12 @@ public class DAOTest extends Assert {
         assertTrue(positionActionDAO.findAll().isEmpty());
 
         //Clear
+        positionDAO.delete(position.getId());
         userDAO.delete(buyer.getId());
         userDAO.delete(seller.getId());
         bookDAO.delete(book.getId());
         authorDAO.delete(author.getId());
         shopDAO.delete(shop.getId());
-        positionDAO.delete(position.getId());
     }
     
     @Test

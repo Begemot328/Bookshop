@@ -16,6 +16,7 @@ import by.epam.bookshop.exceptions.FactoryException;
 import by.epam.bookshop.exceptions.UnknownEntityException;
 
 import java.sql.*;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -61,16 +62,6 @@ public class MySQLPositionActionDAO extends MySQLEntityDAO<PositionAction> {
         return new PositionActionFinder();
     }
 
-    @Override
-    public PositionAction read(int id) throws DAOException {
-        Collection<PositionAction> result = findBy((new PositionActionFinder()).findByID(id));
-        if (result == null || result.size() != 1) {
-            return null;
-        } else {
-            return result.toArray(PositionAction[]::new)[0];
-        }
-    }
-
     public Map<String, Object> mapEntity(PositionAction positionAction) {
         Map<String, Object> map = new HashMap<>();
         if (positionAction.getInitialPosition() != null) {
@@ -103,7 +94,7 @@ public class MySQLPositionActionDAO extends MySQLEntityDAO<PositionAction> {
                         new MySQLPositionDAO(connection).read(resultSet.getInt(FINAL_POSITION_ID)),
                         new MySQLUserDAO(connection).read(resultSet.getInt(BUYER_ID)),
                         new MySQLUserDAO(connection).read(resultSet.getInt(SELLER_ID)),
-                        resultSet.getTimestamp(DATE_TIME).toLocalDateTime(),
+                        resultSet.getTimestamp(DATE_TIME).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
                         resultSet.getInt(QUANTITY),
                         PositionStatus.resolveById(resultSet.getInt(INITIAL_STATUS)),
                         PositionStatus.resolveById(resultSet.getInt(FINAL_STATUS)),

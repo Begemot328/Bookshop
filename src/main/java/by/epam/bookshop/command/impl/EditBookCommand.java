@@ -95,6 +95,9 @@ public class EditBookCommand implements Command {
         } catch (ValidationException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage());
             return new Router(JSPPages.EDIT_BOOK_PAGE);
+        } catch (NumberFormatException e) {
+            request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage());
+            return new Router(JSPPages.EDIT_BOOK_PAGE);
         }
     }
 

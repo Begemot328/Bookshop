@@ -55,6 +55,7 @@
               action="${pageContext.request.contextPath}/ControllerURL"
               enctype="multipart/form-data">>
             <input type="hidden" name="command" value="EDIT_SHOP_COMMAND">
+            <input type="hidden" name="shopId" value="${requestScope.shop.id}">
             <div class="w3-container" style="width:35%">
                 <input class="w3-input w3-border" type="text" name="shop-name" value="${requestScope.shop.name}"
                        required placeholder="<fmt:message key="shop.name"/>">
