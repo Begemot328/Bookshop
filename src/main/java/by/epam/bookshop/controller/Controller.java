@@ -63,10 +63,7 @@ public class Controller  extends HttpServlet {
         try {
             context.setAttribute(RequestParameters.GENRES,
                     GenreService.getInstance().findAll().toArray(Genre[]::new));
-        } catch (DAOException e) {
-            logger.error(e.getMessage());
-            e.printStackTrace();
-        } catch (ServiceException e) {
+        } catch (DAOException | ServiceException e) {
             logger.error(e.getMessage());
             e.printStackTrace();
         }

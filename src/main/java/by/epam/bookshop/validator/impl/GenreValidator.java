@@ -17,7 +17,7 @@ public class GenreValidator extends AbstractEntityValidator<Genre> {
 
     @Override
     protected Class[] getTypes() {
-        return new Class[0];
+        return types;
     }
 
     @Override

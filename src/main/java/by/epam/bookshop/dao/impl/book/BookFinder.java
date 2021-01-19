@@ -71,7 +71,8 @@ public class BookFinder extends EntityFinder<Book> {
 
     public BookFinder findByPriceLess(Float price) {
         return (BookFinder) this.findBy(SQL_QUERY +
-                WHERE_COMPARING.replace(PARAMETER, PRICE).replace(COMPARE, LESS)
+                WHERE_COMPARING.replace(PARAMETER, PRICE)
+                        .replace(COMPARE, LESS)
                         .replace(VALUE, Float.toString(price)));
     }
 
@@ -80,6 +81,7 @@ public class BookFinder extends EntityFinder<Book> {
 
         return (BookFinder) result.findBy(SQL_QUERY +
                 WHERE_COMPARING.replace(PARAMETER, GENRE_ID)
+                        .replace(COMPARE, EQUAL)
                         .replace(VALUE, Integer.toString(id)));
     }
 }

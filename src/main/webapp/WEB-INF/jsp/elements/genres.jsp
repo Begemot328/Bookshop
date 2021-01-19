@@ -26,26 +26,28 @@
         </c:forEach>
 
         function addItem() {
-            var form = document.getElementById(<c:out value="${formId}"/>);
+            var form = document.getElementById("<c:out value="${requestScope.formId}"/>");
             var input = document.createElement("input");
             var removeButton = document.createElement("button");
             var select = document.getElementById("genreSelect");
             var option = document.getElementById(select.value);
 
-            input.setAttribute('id', 'input_' + select.value);
-            input.setAttribute('type', 'hidden');
-            input.setAttribute('name', "genreId");
-            input.setAttribute('value', select.value);
-            removeButton.appendChild(document.createTextNode(genresArray[select.value]));
-            removeButton.setAttribute('id', 'btn_' + select.value);
-            removeButton.setAttribute('onclick', "removeItem(this)");
-            form.appendChild(removeButton);
-            form.appendChild(input);
-            select.removeChild(option);
+            if (option != null) {
+                input.setAttribute('id', 'input_' + select.value);
+                input.setAttribute('type', 'hidden');
+                input.setAttribute('name', "genreId");
+                input.setAttribute('value', select.value);
+                removeButton.appendChild(document.createTextNode(genresArray[select.value]));
+                removeButton.setAttribute('id', 'btn_' + select.value);
+                removeButton.setAttribute('onclick', "removeItem(this)");
+                form.appendChild(removeButton);
+                form.appendChild(input);
+                select.removeChild(option);
+            }
         }
 
         function removeItem(item) {
-            var form = document.getElementById(formId);
+            var form = document.getElementById("<c:out value="${requestScope.formId}"/>");
             var input = document.getElementById(item.id.replace('btn_', 'input_'));
             var select = document.getElementById("genreSelect");
             var option = document.createElement("option");
@@ -79,19 +81,5 @@
         <fmt:message>item.add</fmt:message>
     </button>
 </div>
-
-
-<!--  Remove later -->
-<c:set var="formId" value="genreFormId"/>
-<form id="genreFormId" method="get" action="${pageContext.request.contextPath}/ControllerURL">
-    <input name="command" type="hidden" value="GET_VALUES_COMMAND">
-    <!--  Add into form -->
-    <c:forEach var="genre" items="${requestScope.bookGenres}">
-        <input name="genreId" form="${formId}" type="hidden" value="${genre.id}">
-        <button class="w3-btn w3-deep-purple w3-ripple w3-hover-purple"
-                id="btn_${genre.id}" value="btn_${genre.id}" onclick="removeItem(this)">${genre.name}</button>
-    </c:forEach>
-</form>
-<button form="genreFormId" type="submit">try!</button>
 </body>
 </html>
