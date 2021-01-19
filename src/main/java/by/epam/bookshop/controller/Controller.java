@@ -1,10 +1,16 @@
 package by.epam.bookshop.controller;
 
 import by.epam.bookshop.command.*;
+import by.epam.bookshop.entity.genre.Genre;
+import by.epam.bookshop.exceptions.DAOException;
+import by.epam.bookshop.exceptions.ServiceException;
+import by.epam.bookshop.service.genre.GenreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import by.epam.bookshop.exceptions.CommandException;
 import by.epam.bookshop.exceptions.ServletRuntimeException;
+
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -49,6 +55,21 @@ public class Controller  extends HttpServlet {
         logger.debug(GET);
         processRequest(request, response);
 
+    }
+
+    @Override
+    public void init() {
+        ServletContext context = getServletContext();
+        try {
+            context.setAttribute(RequestParameters.GENRES,
+                    GenreService.getInstance().findAll().toArray(Genre[]::new));
+        } catch (DAOException e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+        } catch (ServiceException e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**

@@ -3,6 +3,7 @@ package by.epam.bookshop.filter;
 import by.epam.bookshop.command.CommandEnum;
 import by.epam.bookshop.command.RequestParameters;
 import by.epam.bookshop.command.SessionParameters;
+import by.epam.bookshop.controller.Controller;
 import by.epam.bookshop.controller.dto.UserDTO;
 import by.epam.bookshop.entity.user.UserStatus;
 
@@ -55,6 +56,7 @@ public class XSSFilter implements Filter {
                 if (matcher.matches()) {
                     filterWorked = true;
                     request.setParameter(key, matcher.replaceAll(BLANK));
+                    Controller.getLoggerInstance().warn(matcher.group(0) +  " replaced");
                 }
             }
         }

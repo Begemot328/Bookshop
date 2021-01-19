@@ -30,7 +30,10 @@ public enum JSPPages {
   VIEW_USER_PAGE("WEB-INF/jsp/user.jsp"),
   VIEW_POSITION_PAGE("WEB-INF/jsp/position.jsp"),
   PROCESS_POSITION_PAGE("WEB-INF/jsp/positionSeller.jsp"),
-  BOOK_POSITION_PAGE("WEB-INF/jsp/positionBuyer.jsp");
+  BOOK_POSITION_PAGE("WEB-INF/jsp/positionBuyer.jsp"),
+  ADD_GENRE_PAGE("WEB-INF/jsp/addGenre.jsp"),
+
+  AUTHORS_PAGE("WEB-INF/jsp/elements/authors.jsp");
 
     private String page;
 

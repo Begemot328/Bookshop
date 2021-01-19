@@ -12,6 +12,58 @@ create table position_status
     picture_link varchar(40)
 );
 
+drop table if exists genres;
+
+create table genres
+(
+    id   int primary key auto_increment,
+    name varchar(40) not null
+);
+
+create index id_index on genres (id);
+
+drop table if exists genre_books;
+
+create table genre_books
+(
+    genre_id int,
+    book_id  int,
+    primary key (genre_id, book_id),
+    foreign key (book_id) references books (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    foreign key (genre_id) references genres (id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+create index book_id_index on genre_books (book_id);
+create index genre_id_index on genre_books (genre_id);
+
+drop view if exists books_genres;
+
+create view books_genres as
+select books.id, books.title, books.author_id, books.price,
+       books.description, books.photo_link,
+       g.id as genre_id
+from books
+         join genre_books gb on gb.book_id = books.id
+         join genres g on gb.genre_id = g.id;
+
+insert into genres(name) values ('detective');
+insert into genres(name) values ('novel');
+insert into genres(name) values ('classic');
+insert into genres(name) values ('russian');
+insert into genres(name) values ('india');
+
+
+insert into genre_books(genre_id, book_id) values (5, 6);
+insert into genre_books(genre_id, book_id) values (3, 8);
+insert into genre_books(genre_id, book_id) values (3, 9);
+insert into genre_books(genre_id, book_id) values (3, 10);
+insert into genre_books(genre_id, book_id) values (3, 11);
+insert into genre_books(genre_id, book_id) values (3, 12);
+insert into genre_books(genre_id, book_id) values (4, 8);
+insert into genre_books(genre_id, book_id) values (4, 9);
+insert into genre_books(genre_id, book_id) values (4, 10);
+insert into genre_books(genre_id, book_id) values (4, 11);
+insert into genre_books(genre_id, book_id) values (4, 12);
+
 insert
 position_status (id, name)
 values (0, 'non-existent');

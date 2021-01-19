@@ -15,13 +15,19 @@ public class BookFinder extends EntityFinder<Book> {
 
 
     private final static String VIEW_NAME = "BOOKS";
+    private final static String SPECIAL_VIEW_NAME = "BOOKS_GENRES";
     private static final String TITLE = "TITLE";
     private static final String AUTHOR_ID = "AUTHOR_ID";
     private static final String PRICE = "PRICE";
     private static final String ID = "ID";
+    private static final String GENRE_ID = "GENRE_ID";
 
     public BookFinder() {
         super(VIEW_NAME);
+    }
+
+    private BookFinder(String view) {
+        super(view);
     }
 
     public BookFinder findByTitle(String title) {
@@ -67,5 +73,13 @@ public class BookFinder extends EntityFinder<Book> {
         return (BookFinder) this.findBy(SQL_QUERY +
                 WHERE_COMPARING.replace(PARAMETER, PRICE).replace(COMPARE, LESS)
                         .replace(VALUE, Float.toString(price)));
+    }
+
+    public BookFinder findByGenre(int id) {
+        BookFinder result = new BookFinder(SPECIAL_VIEW_NAME);
+
+        return (BookFinder) result.findBy(SQL_QUERY +
+                WHERE_COMPARING.replace(PARAMETER, GENRE_ID)
+                        .replace(VALUE, Integer.toString(id)));
     }
 }

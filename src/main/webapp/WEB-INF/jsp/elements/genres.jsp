@@ -14,9 +14,9 @@
 <head>
     <title>AddPhoto</title>
 <script type="text/javascript">
-    var authorsArray = [];
-    <c:forEach var="author" items="${requestScope.authors}">
-    authorsArray[${author.id}] =  ['${author.firstName}', '${author.lastName}'];
+    var genresArray = [];
+    <c:forEach var="genre" items="${applicationScope.genres}">
+    genresArray[${genre.id}] =  '${genre.name}';
     </c:forEach>
 
 
@@ -24,15 +24,15 @@
         var form = document.getElementById("formId");
         var input = document.createElement("input");
         var removeButton = document.createElement("button");
-        var select = document.getElementById("authorsSelect");
+        var select = document.getElementById("genreSelect");
         var option = document.getElementById(select.value);
 
         input.setAttribute('id', 'input_' + select.value);
         input.setAttribute('type','hidden');
-        input.setAttribute('name', "authorId");
+        input.setAttribute('name', "genreId");
         input.setAttribute('value', select.value);
-        removeButton.appendChild(document.createTextNode(authorsArray[select.value][0] + " " +
-        authorsArray[select.value][1]));
+        removeButton.appendChild(document.createTextNode(genresArray[select.value][0] + " " +
+        genresArray[select.value][1]));
         removeButton.setAttribute('id','btn_' + select.value);
         removeButton.setAttribute('onclick',"removeItem(this)");
         form.appendChild(removeButton);
@@ -43,36 +43,31 @@
     function removeItem(item){
         var form = document.getElementById("formId");
         var input = document.getElementById(item.id.replace('btn_', 'input_'));
-        var select = document.getElementById("authorsSelect");
+        var select = document.getElementById("genreSelect");
         var option = document.createElement("option");
         option.setAttribute('id', item.id.replace('btn_', ''));
         option.setAttribute('value', item.id.replace('btn_', ''));
-        option.appendChild(document.createTextNode(authorsArray[item.id.replace('btn_', '')][0] + " "
-            + authorsArray[item.id.replace('btn_', '')][1]));
+        option.appendChild(document.createTextNode(genresArray[item.id.replace('btn_', '')]));
         select.appendChild(option);
         form.removeChild(item);
         form.removeChild(input);
     }
-
 </script>
 </head>
 <body>
 <div>
     <br />
-    <select id="authorsSelect" name="authorSelector">
-        <c:forEach var="author" items="${authors}">
-            <option id="${author.id}" value="${author.id}">${author.firstName} ${author.lastName}</option>
+    <select id="genreSelect" name="genreSelect">
+        <c:forEach var="genre" items="${applicationScope.genres}">
+            <option id="${genre.id}" value="${genre.id}">${genre.name}</option>
         </c:forEach>
     </select>
     <button onclick="addItem()" id="add">add item</button>
 </div>
-<form id="formId" method="get" action="${pageContext.request.contextPath}/ControllerURL">
+<form id="genreFormId" method="get" action="${pageContext.request.contextPath}/ControllerURL">
     <input name="command" type="hidden" value="GET_VALUES_COMMAND">
 </form>
-<button form="formId" type="submit">try!</button>
+<button form="genreFormId" type="submit">try!</button>
 
-<c:forEach var="author" items="${requestScope.authorId}">
-    <p> ${author}</p>
-</c:forEach>
 </body>
 </html>

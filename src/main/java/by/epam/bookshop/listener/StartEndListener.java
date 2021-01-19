@@ -1,5 +1,6 @@
 package by.epam.bookshop.listener;
 
+import by.epam.bookshop.command.RequestParameters;
 import by.epam.bookshop.controller.Controller;
 import by.epam.bookshop.exceptions.ConnectionPoolException;
 import by.epam.bookshop.exceptions.ConnectionPoolRuntimeException;
@@ -14,6 +15,7 @@ public class StartEndListener implements ServletContextListener {
 
     public void contextInitialized (ServletContextEvent ev) {
         ServletContext context = ev.getServletContext();
+
         try {
             ConnectionPool.getInstance();
             Controller.getLoggerInstance().debug("Pool init");

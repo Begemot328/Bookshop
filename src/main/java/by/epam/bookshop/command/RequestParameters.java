@@ -53,6 +53,7 @@ public class RequestParameters {
     public static final String SHOPS = "shops";
     public static final String POSITIONS = "positions";
     public static final String USERS = "users";
+    public static final String GENRES = "genres";
 
     public static final String COMMAND = "command";
     public static final String ERROR_MESSAGE = "errorMessage";
@@ -60,4 +61,6 @@ public class RequestParameters {
     public static final String LANGUAGE = "language";
     public static final String CURRENT_PAGE = "currentPage";
     public static final String PAGE_QUANTITY = "pageQuantity";
+    public static final String NAME = "name";
+    public static final String GENRE_ID = "genreId";
 }

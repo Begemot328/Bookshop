@@ -54,8 +54,8 @@ public enum CommandEnum {
     LOGOUT_COMMAND(new LogOutCommand()),
     SIGNIN_COMMAND(new ForwardCommand(JSPPages.LOGIN_PAGE)),
     REGISTER_MENU_COMMAND(new ForwardCommand(JSPPages.REGISTER_PAGE)),
-    REGISTER_COMMAND(new RegisterCommand());
-
+    REGISTER_COMMAND(new RegisterCommand()),
+    GET_VALUES_COMMAND(new GetValuesCommand());
     private Command command;
 
     /**
