@@ -54,6 +54,7 @@ public class RequestParameters {
     public static final String POSITIONS = "positions";
     public static final String USERS = "users";
     public static final String GENRES = "genres";
+    public static final String BOOK_GENRES = "bookGenres";
 
     public static final String COMMAND = "command";
     public static final String ERROR_MESSAGE = "errorMessage";

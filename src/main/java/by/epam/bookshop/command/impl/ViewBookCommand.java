@@ -1,14 +1,17 @@
 package by.epam.bookshop.command.impl;
 
 import by.epam.bookshop.command.*;
+import by.epam.bookshop.dao.impl.genre.GenreFinder;
 import by.epam.bookshop.dao.impl.position.PositionFinder;
 import by.epam.bookshop.entity.book.Book;
+import by.epam.bookshop.entity.genre.Genre;
 import by.epam.bookshop.entity.position.Position;
 import by.epam.bookshop.entity.position.PositionStatus;
 import by.epam.bookshop.entity.shop.Shop;
 import by.epam.bookshop.exceptions.CommandException;
 import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.service.book.BookService;
+import by.epam.bookshop.service.genre.GenreService;
 import by.epam.bookshop.service.position.PositionService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,9 +49,12 @@ public class ViewBookCommand implements Command {
                             || position.getStatus() == PositionStatus.RESERVED)
                      .toArray(Position[]::new);
             Shop[] shops =  Arrays.stream(positions)
-                    .map(position -> position.getShop())
+                    .map(Position::getShop)
                     .distinct().toArray(Shop[]::new);
 
+            Genre[] genres = GenreService.getInstance().findBy(new GenreFinder()
+                    .findByBook(book.getId())).toArray(Genre[]::new);
+            request.setAttribute(RequestParameters.BOOK_GENRES, genres);
             request.setAttribute(RequestParameters.PAGE_QUANTITY, pageQuantity);
             request.setAttribute(RequestParameters.CURRENT_PAGE, page);
             request.setAttribute(RequestParameters.POSITIONS, positions);

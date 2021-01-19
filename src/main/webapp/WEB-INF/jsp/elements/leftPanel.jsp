@@ -18,11 +18,14 @@
 <div class="w3-cell  w3-deep-purple w3-opacity" style="width:15%">
     <div class="w3-bar-block">
         <div class="w3-bar-item w3-large"><fmt:message key="book.genres"/></div>
-        <form class="w3-bar-item w3-large w3-hover-purple" method="GET"
-              action="${pageContext.request.contextPath}/ControllerURL">
-            <input type="hidden" name="command" value="${SEARCH_BOOKS_COMMAND}">
-            <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"><fmt:message key="all"/></button>
-        </form>
+        <c:forEach var="genre" items="${applicationScope.genres}">
+            <form class="w3-bar-item w3-large w3-hover-purple" method="GET"
+                  action="${pageContext.request.contextPath}/ControllerURL">
+                <input type="hidden" name="command" value="SEARCH_BOOKS_COMMAND">
+                <input type="hidden" name="genreId" value="${genre.id}">
+                <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit">${genre.name}</button>
+            </form>
+        </c:forEach>
     </div>
 </div>
 </body>

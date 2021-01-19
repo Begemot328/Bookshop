@@ -3,13 +3,19 @@ package by.epam.bookshop.command.impl;
 import by.epam.bookshop.command.*;
 import by.epam.bookshop.dao.impl.author.AuthorFinder;
 import by.epam.bookshop.dao.impl.book.BookFinder;
+import by.epam.bookshop.dao.impl.genre.GenreFinder;
 import by.epam.bookshop.entity.book.Book;
+import by.epam.bookshop.entity.genre.Genre;
 import by.epam.bookshop.exceptions.CommandException;
 import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.service.author.AuthorService;
 import by.epam.bookshop.service.book.BookService;
+import by.epam.bookshop.service.genre.GenreService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class FindBooksCommand implements Command {
 
@@ -47,8 +53,21 @@ public class FindBooksCommand implements Command {
             finder = finder.findByPriceMore(Float.parseFloat(request.getParameter(RequestParameters.MIN_PRICE)));
             request.setAttribute(RequestParameters.MIN_PRICE, request.getParameter(RequestParameters.MIN_PRICE));
         }
-
         try {
+            List<Genre> bookGenres = new ArrayList<>();
+            if (request.getParameterValues(RequestParameters.GENRE_ID) != null
+                    && request.getParameterValues(RequestParameters.GENRE_ID).length > 0) {
+
+
+                for (String id :
+                        request.getParameterValues(RequestParameters.GENRE_ID)) {
+                    finder = finder.findByGenre(Integer.parseInt(id));
+                    bookGenres.add(GenreService.getInstance().read(Integer.parseInt(id)));
+                }
+                request.setAttribute(RequestParameters.GENRE_ID, request.getParameterValues(RequestParameters.GENRE_ID));
+            }
+
+
             if (isNotEmpty(request.getParameter(RequestParameters.AUTHOR_FIRSTNAME))
                     || isNotEmpty(request.getParameter(RequestParameters.AUTHOR_LASTNAME))) {
 
@@ -78,6 +97,14 @@ public class FindBooksCommand implements Command {
             request.setAttribute(RequestParameters.BOOKS, books);
             request.setAttribute(RequestParameters.PAGE_QUANTITY, pageQuantity);
             request.setAttribute(RequestParameters.CURRENT_PAGE, page);
+
+            request.setAttribute(RequestParameters.BOOK_GENRES, bookGenres.toArray(Genre[]::new));
+            if (request.getServletContext().getAttribute(RequestParameters.GENRES) instanceof Genre[]) {
+                List<Genre> genres = Arrays.asList(
+                        (Genre[]) request.getServletContext().getAttribute(RequestParameters.GENRES));
+                genres.removeAll(bookGenres);
+                request.setAttribute(RequestParameters.GENRES, genres.toArray(Genre[]::new));
+            }
         } catch (ServiceException e) {
             throw new CommandException(e);
         }
