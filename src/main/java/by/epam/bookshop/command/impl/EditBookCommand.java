@@ -53,9 +53,7 @@ public class EditBookCommand implements Command {
         } catch (MalformedURLException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, URL_INPUT_ERROR);
             return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
-        } catch (GeneralSecurityException e) {
-            throw new CommandException(e);
-        } catch (ServletException e) {
+        } catch (GeneralSecurityException | ServletException e) {
             throw new CommandException(e);
         } catch (IOException e) {
             return tryAgain(request, FILE_INPUT_ERROR);

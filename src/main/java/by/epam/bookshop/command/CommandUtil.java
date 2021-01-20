@@ -70,7 +70,8 @@ public class CommandUtil {
         URL link = null;
         String fileString = null;
         File file = null;
-        Part filePart = null; // Retrieves <input type="file" name="file">
+        Part filePart = null;
+        // Retrieves <input type="file" name="file">
         filePart = request.getPart(RequestParameters.FILE);
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
         if (!fileName.isEmpty()) {

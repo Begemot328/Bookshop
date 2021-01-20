@@ -1,17 +1,23 @@
 package by.epam.bookshop.service.genre;
 
 import by.epam.bookshop.dao.MySQLEntityDAO;
+import by.epam.bookshop.dao.MySQLGenreBookDAO;
 import by.epam.bookshop.dao.impl.genre.MySQLGenreDAO;
+import by.epam.bookshop.entity.Entity;
 import by.epam.bookshop.entity.book.Book;
 import by.epam.bookshop.entity.genre.Genre;
 import by.epam.bookshop.entity.genre.GenreFactory;
 import by.epam.bookshop.entity.user.AbstractEntityFactory;
+import by.epam.bookshop.exceptions.DAOException;
+import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.service.AbstractEntityService;
 import by.epam.bookshop.service.EntityService;
 import by.epam.bookshop.validator.EntityValidator;
 import by.epam.bookshop.validator.impl.GenreValidator;
 
 import java.sql.Connection;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class GenreService  extends AbstractEntityService<Genre> {
@@ -37,5 +43,28 @@ public class GenreService  extends AbstractEntityService<Genre> {
     @Override
     public EntityValidator<Genre> getValidator() {
         return new GenreValidator();
+    }
+
+    public void changeBooks(Genre genre, List<Book> books) throws ServiceException {
+        MySQLGenreBookDAO genreBookDAO = new MySQLGenreBookDAO(getConnection());
+        List<Integer> list = null;
+        try {
+            list = genreBookDAO.findByGenre(genre.getId());
+
+            List<Integer> bookList = Arrays.asList(books.stream().map(Entity::getId).toArray(Integer[]::new).clone());
+
+            for (Integer book: bookList) {
+                if (!list.contains(book)) {
+                    genreBookDAO.create(genre.getId(), book);
+                }
+            }
+            for (Integer book: list) {
+                if (!bookList.contains(book)) {
+                    genreBookDAO.delete(genre.getId(), book);
+                }
+            }
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 }

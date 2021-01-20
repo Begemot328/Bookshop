@@ -39,9 +39,7 @@ public class EditBookMenuCommand implements Command {
             Author[] authors = AuthorService.getInstance().findAll().toArray(Author[]::new);
             request.setAttribute(RequestParameters.AUTHORS, authors);
 
-        } catch (ServiceException e) {
-            throw new CommandException(e);
-        } catch (DAOException e) {
+        } catch (ServiceException | DAOException e) {
             throw new CommandException(e);
         }
         return new Router(JSPPages.EDIT_BOOK_PAGE);
