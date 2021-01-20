@@ -53,7 +53,9 @@
     <!-- middle panel-->
     <div class="w3-cell w3-padding-large w3-center" style="width:70%">
         <br/>
-        <form class="w3-card-4 w3-row-padding" method="POST"
+
+        <c:set var="formId" value="editForm" scope="request"/>
+        <form id="${formId}" class="w3-card-4 w3-row-padding" method="POST"
               action="${pageContext.request.contextPath}/ControllerURL"
               enctype="multipart/form-data">
             <input type="hidden" name="command" value="EDIT_BOOK_COMMAND">
@@ -97,10 +99,21 @@
             <br/>
             <!-- error message box! -->
             <c:import url="elements/errorMessage.jsp" charEncoding="utf-8"/>
+
+            <!-- genres -->
+            <c:import url="elements/genres.jsp" charEncoding="utf-8"/>
+            <!-- for genres -->
+            <c:forEach var="genre" items="${requestScope.bookGenres}">
+                <input name="genreId" form="${formId}" id="input_${genre.id}" type="hidden" value="${genre.id}">
+                <button class="w3-button w3-padding w3-deep-purple w3-ripple w3-hover-purple"
+                        id="btn_${genre.id}" value="btn_${genre.id}"
+                        onclick="removeItem(this)">${genre.name}</button>
+            </c:forEach>
             <div class="w3-btn" style="width:10%">
                 <input class="w3-btn w3-deep-purple w3-ripple w3-hover-purple" type="submit"
                        value="<fmt:message key="apply"/>!"/>
             </div>
+
         </form>
     </div>
     <!--  right panel bar       -->

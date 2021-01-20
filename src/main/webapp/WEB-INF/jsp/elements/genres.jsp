@@ -40,6 +40,8 @@
                 removeButton.appendChild(document.createTextNode(genresArray[select.value]));
                 removeButton.setAttribute('id', 'btn_' + select.value);
                 removeButton.setAttribute('onclick', "removeItem(this)");
+                removeButton.setAttribute('class',"w3-btn w3-padding w3-deep-purple " +
+                    "w3-ripple w3-hover-purple");
                 form.appendChild(removeButton);
                 form.appendChild(input);
                 select.removeChild(option);

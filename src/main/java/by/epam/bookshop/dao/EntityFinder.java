@@ -12,6 +12,8 @@ public class EntityFinder<T extends Entity> {
     protected static final String MORE = ">";
     protected static final String LESS = "<";
     protected static final String EQUAL = "=";
+    protected static final String IN = "IN";
+    protected static final String ALL = "*";
     protected static final String WHERE_LIKE = " WHERE [PARAMETER] LIKE '%[VALUE]%'";
     protected static final String PARAMETER = "[PARAMETER]";
     protected static final String VALUE = "[VALUE]";
@@ -21,10 +23,10 @@ public class EntityFinder<T extends Entity> {
     protected static final String QUERY = "[QUERY]";
     protected static final String ALIAS = "[ALIAS]";
     protected static final String ALIAS_NAME = "ALIAS";
+    protected static final String INTERSECT = " INTERSECT ";
 
-
-    private String query;
-    private int counter = 0;
+    protected String query;
+    protected int counter = 0;
 
     public EntityFinder(String table) {
         this.query = SELECT_FROM_TABLE.replace(QUERY, table);
@@ -32,7 +34,6 @@ public class EntityFinder<T extends Entity> {
 
     public EntityFinder<T> findBy(String query) {
         this.query = query.replace(QUERY, RESULT)
-                .replace(QUERY, this.query)
                 .replace(QUERY, this.query)
                 .replace(ALIAS, ALIAS_NAME + ++counter);
         return this;

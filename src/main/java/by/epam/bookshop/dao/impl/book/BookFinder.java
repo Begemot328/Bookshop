@@ -45,12 +45,12 @@ public class BookFinder extends EntityFinder<Book> {
     public BookFinder findByAuthors(Collection<Author> authors) {
         String authorsQuery = new String();
 
-        if(authors.isEmpty()) {
+        if (authors.isEmpty()) {
             return (BookFinder) (new BookFinder().findByID(-1));
         }
-                boolean first = true;
+        boolean first = true;
 
-        for (Author author:authors) {
+        for (Author author : authors) {
             if (first) {
                 first = false;
                 authorsQuery = WHERE.replace(PARAMETER, AUTHOR_ID).replace(VALUE, Integer.toString(author.getId()));
@@ -77,11 +77,16 @@ public class BookFinder extends EntityFinder<Book> {
     }
 
     public BookFinder findByGenre(int id) {
-        BookFinder result = new BookFinder(SPECIAL_VIEW_NAME);
 
-        return (BookFinder) result.findBy(SQL_QUERY +
-                WHERE_COMPARING.replace(PARAMETER, GENRE_ID)
-                        .replace(COMPARE, EQUAL)
-                        .replace(VALUE, Integer.toString(id)));
+        String interimQuery = SQL_QUERY.replace(ALL, ID)
+                .replace(QUERY, SPECIAL_VIEW_NAME)
+                + WHERE.replace(PARAMETER, GENRE_ID)
+                .replace(VALUE, Integer.toString(id));
+
+        return (BookFinder) this.findBy(SQL_QUERY +
+                WHERE_COMPARING.replace(PARAMETER, ID)
+                        .replace(COMPARE, IN)
+                        .replace(VALUE, "(" + interimQuery + ")")
+                        .replace("'", ""));
     }
 }

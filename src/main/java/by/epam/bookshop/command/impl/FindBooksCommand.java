@@ -58,10 +58,10 @@ public class FindBooksCommand implements Command {
             if (request.getParameterValues(RequestParameters.GENRE_ID) != null
                     && request.getParameterValues(RequestParameters.GENRE_ID).length > 0) {
 
-
+                List<Integer> genreId = new ArrayList<>();
                 for (String id :
                         request.getParameterValues(RequestParameters.GENRE_ID)) {
-                    finder = finder.findByGenre(Integer.parseInt(id));
+                    finder.findByGenre(Integer.parseInt(id));
                     bookGenres.add(GenreService.getInstance().read(Integer.parseInt(id)));
                 }
                 request.setAttribute(RequestParameters.GENRE_ID, request.getParameterValues(RequestParameters.GENRE_ID));
@@ -100,8 +100,8 @@ public class FindBooksCommand implements Command {
 
             request.setAttribute(RequestParameters.BOOK_GENRES, bookGenres.toArray(Genre[]::new));
             if (request.getServletContext().getAttribute(RequestParameters.GENRES) instanceof Genre[]) {
-                List<Genre> genres = Arrays.asList(
-                        (Genre[]) request.getServletContext().getAttribute(RequestParameters.GENRES));
+                List<Genre> genres = new ArrayList<>(Arrays.asList(
+                        (Genre[]) request.getServletContext().getAttribute(RequestParameters.GENRES)));
                 genres.removeAll(bookGenres);
                 request.setAttribute(RequestParameters.GENRES, genres.toArray(Genre[]::new));
             }

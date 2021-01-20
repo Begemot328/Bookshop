@@ -76,16 +76,15 @@
                 </div>
             </div>
             <br/>
-
-            <div class="w3-row-padding">
+            <!-- for genres -->
                 <c:forEach var="genre" items="${requestScope.bookGenres}">
-                    <input name="genreId" form="${formId}" type="hidden" value="${genre.id}">
-                    <button class="w3-btn w3-deep-purple w3-ripple w3-hover-purple"
+                    <input name="genreId" form="${formId}" id="input_${genre.id}" type="hidden" value="${genre.id}">
+                    <button class="w3-button w3-padding w3-deep-purple w3-ripple w3-hover-purple"
                             id="btn_${genre.id}" value="btn_${genre.id}"
                             onclick="removeItem(this)">${genre.name}</button>
                 </c:forEach>
-            </div>
         </form>
+        <br/>
         <c:import url="elements/genres.jsp" />
         <div class="w3-row-padding">
             <c:forEach var="book"

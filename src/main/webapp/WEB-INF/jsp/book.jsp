@@ -171,6 +171,10 @@
             <div class="w3-panel w3-large w3-purple w3-opacity">
                 <h4>${requestScope.book.price} BYN</h4>
             </div>
+            <c:forEach var="genre" items="${requestScope.bookGenres}">
+                <button class="w3-btn w3-padding w3-purple">${genre.name}</button>
+            </c:forEach>
+            <br/>
         </div>
         <c:if test="${not empty sessionScope.currentUser}">
             <c:if test="${sessionScope.currentUser.status.id > 1}">

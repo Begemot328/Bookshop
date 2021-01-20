@@ -9,6 +9,7 @@ public class GenreFinder extends EntityFinder<Genre> {
     private final static String SPECIAL_VIEW_NAME = "BOOKS_GENRES";
     private static final String ID = "ID";
     private static final String BOOK_ID = "BOOK_ID";
+    private static final String GENRE_ID = "GENRE_ID";
 
     public GenreFinder() {
         super(VIEW_NAME);
@@ -19,11 +20,16 @@ public class GenreFinder extends EntityFinder<Genre> {
     }
 
     public GenreFinder findByBook(int id) {
-        GenreFinder result = new GenreFinder(SPECIAL_VIEW_NAME);
 
-        return (GenreFinder) result.findBy(SQL_QUERY +
-                WHERE_COMPARING.replace(PARAMETER, BOOK_ID)
-                        .replace(COMPARE, EQUAL)
-                        .replace(VALUE, Integer.toString(id)));
+        String interimQuery = SQL_QUERY.replace(ALL, GENRE_ID)
+                .replace(QUERY, SPECIAL_VIEW_NAME)
+                + WHERE.replace(PARAMETER, ID)
+                .replace(VALUE, Integer.toString(id));
+
+        return (GenreFinder) this.findBy(SQL_QUERY +
+                WHERE_COMPARING.replace(PARAMETER, ID)
+                        .replace(COMPARE, IN)
+                        .replace(VALUE, "(" + interimQuery + ")")
+                        .replace("'", ""));
     }
 }

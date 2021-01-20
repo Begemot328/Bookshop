@@ -68,6 +68,7 @@ public class AddBookCommand implements Command {
             Map<String, String> parameters = new HashMap<>();
             parameters.put(RequestParameters.COMMAND, CommandEnum.VIEW_BOOK_COMMAND.toString());
             parameters.put(RequestParameters.BOOK_ID, Integer.toString(newBook.getId()));
+
             return new Router(new URL(CommandUtil.getURL(
                     request.getRequestURL().toString(), parameters)));
         } catch (NumberFormatException e) {
