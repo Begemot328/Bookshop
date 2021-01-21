@@ -43,13 +43,12 @@ public class BookService extends AbstractEntityService<Book> {
         return new BookValidator();
     }
 
-    public void changeGenres(Book book, List<Genre> genres) throws ServiceException {
+    public void changeGenres(Book book, List<Integer> genreList) throws ServiceException {
         MySQLGenreBookDAO genreBookDAO = new MySQLGenreBookDAO(getConnection());
         List<Integer> list = null;
         try {
             list = genreBookDAO.findByBook(book.getId());
 
-        List<Integer> genreList = Arrays.asList(genres.stream().map(Entity::getId).toArray(Integer[]::new).clone());
 
         for (Integer genre: genreList) {
             if (!list.contains(genre)) {

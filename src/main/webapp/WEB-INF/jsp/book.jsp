@@ -175,6 +175,7 @@
                 <button class="w3-btn w3-padding w3-purple">${genre.name}</button>
             </c:forEach>
             <br/>
+            <br/>
         </div>
         <c:if test="${not empty sessionScope.currentUser}">
             <c:if test="${sessionScope.currentUser.status.id > 1}">

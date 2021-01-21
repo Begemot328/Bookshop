@@ -39,8 +39,9 @@
                 input.setAttribute('value', select.value);
                 removeButton.appendChild(document.createTextNode(genresArray[select.value]));
                 removeButton.setAttribute('id', 'btn_' + select.value);
+                removeButton.setAttribute('type', "button");
                 removeButton.setAttribute('onclick', "removeItem(this)");
-                removeButton.setAttribute('class',"w3-btn w3-padding w3-deep-purple " +
+                removeButton.setAttribute('class',"w3-button w3-padding w3-deep-purple " +
                     "w3-ripple w3-hover-purple");
                 form.appendChild(removeButton);
                 form.appendChild(input);
@@ -80,7 +81,7 @@
     </select>
     <button onclick="addItem()" id="add"
             class="w3-btn w3-deep-purple w3-ripple w3-hover-purple">
-        <fmt:message>item.add</fmt:message>
+        <fmt:message>add.item</fmt:message>
     </button>
 </div>
 </body>

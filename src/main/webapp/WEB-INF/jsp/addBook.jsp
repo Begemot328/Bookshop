@@ -79,7 +79,7 @@
             <br/>
             <div class="w3-container" style="width:35%">
                 <textarea class="w3-input w3-border" type="text" name="description" value="${description}"
-                          placeholder="<fmt:message key="description"/>" style="height: 100px" ></textarea>
+                          placeholder="<fmt:message key="description"/>" style="height: 100px"></textarea>
             </div>
             <br/>
             <!-- photo link adding-->
@@ -87,6 +87,17 @@
             <br/>
             <!-- error message box! -->
             <c:import url="elements/errorMessage.jsp" charEncoding="utf-8"/>
+            <div class="w3-container">
+                <!-- genres -->
+                <c:import url="elements/genres.jsp" charEncoding="utf-8"/>
+                <!-- for genres -->
+                <c:forEach var="genre" items="${requestScope.bookGenres}">
+                    <input name="genreId" form="${formId}" id="input_${genre.id}" type="hidden" value="${genre.id}">
+                    <button class="w3-button w3-padding w3-deep-purple w3-ripple w3-hover-purple"
+                            id="btn_${genre.id}" value="btn_${genre.id}"
+                            onclick="removeItem(this)">${genre.name}</button>
+                </c:forEach>
+            </div>
             <div class="w3-btn" style="width:10%">
                 <input class="w3-btn w3-deep-purple w3-ripple w3-hover-purple" type="submit"
                        value="<fmt:message key="create"/>!">

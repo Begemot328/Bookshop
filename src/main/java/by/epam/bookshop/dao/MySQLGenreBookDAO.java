@@ -25,7 +25,7 @@ public class MySQLGenreBookDAO {
     private static final String VALUE = "[VALUE]";
     private static final String DELIMETER = ", ";
     private static final String QUESTION_MARK = "?";
-    private static final String CONDITION = "CONDITION";
+    private static final String CONDITION = "[CONDITION]";
     private static final String INSERT_QUERY =
             "INSERT INTO [SCHEMA].[TABLE]([PARAMETERS]) VALUES ([VALUES]);";
     private static final String UPDATE_QUERY =
@@ -33,7 +33,7 @@ public class MySQLGenreBookDAO {
     private static final String DELETE_QUERY =
             "DELETE FROM [SCHEMA].[TABLE] [CONDITION];";
     private static final String SELECT_QUERY =
-            "SELECT FROM [SCHEMA].[TABLE] [CONDITION];";
+            "SELECT * FROM [SCHEMA].[TABLE] [CONDITION];";
 
     private Connection connection;
 
@@ -79,7 +79,9 @@ public class MySQLGenreBookDAO {
 
     public List<Integer> findByBook(int id) throws DAOException {
         List<Integer> result = new ArrayList<Integer>();
-        String query = SELECT_QUERY.replace(CONDITION, WHERE)
+        String query = SELECT_QUERY.replace(SCHEMA, SCHEMA_NAME)
+                .replace(TABLE, TABLE_NAME)
+                .replace(CONDITION, WHERE)
                 .replace(PARAMETER, BOOK_ID)
                 .replace(VALUE, Integer.toString(id));
 
@@ -98,7 +100,9 @@ public class MySQLGenreBookDAO {
 
     public List<Integer> findByGenre(int id) throws DAOException {
         List<Integer> result = new ArrayList<Integer>();
-        String query = SELECT_QUERY.replace(CONDITION, WHERE)
+        String query = SELECT_QUERY.replace(SCHEMA, SCHEMA_NAME)
+                .replace(TABLE, TABLE_NAME)
+                .replace(CONDITION, WHERE)
                 .replace(PARAMETER, GENRE_ID)
                 .replace(VALUE, Integer.toString(id));
 

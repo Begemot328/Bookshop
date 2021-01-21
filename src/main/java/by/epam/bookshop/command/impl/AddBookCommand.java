@@ -2,14 +2,17 @@ package by.epam.bookshop.command.impl;
 
 import by.epam.bookshop.command.*;
 import by.epam.bookshop.dao.impl.author.AuthorFinder;
+import by.epam.bookshop.dao.impl.genre.GenreFinder;
 import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.entity.book.Book;
+import by.epam.bookshop.entity.genre.Genre;
 import by.epam.bookshop.exceptions.CommandException;
 import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.service.author.AuthorService;
 import by.epam.bookshop.service.book.BookService;
+import by.epam.bookshop.service.genre.GenreService;
 import by.epam.bookshop.validator.impl.BookValidator;
 
 import javax.servlet.ServletException;
@@ -18,9 +21,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.GeneralSecurityException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class AddBookCommand implements Command {
 
@@ -64,11 +65,25 @@ public class AddBookCommand implements Command {
 
             new BookValidator().validate(title, author, description, price, link);
             newBook = BookService.getInstance().create(title, author, description, price, link);
+            if (request.getParameterValues(RequestParameters.GENRE_ID) != null
+                    && request.getParameterValues(RequestParameters.GENRE_ID).length > 0) {
+
+                List<Integer> bookGenres = new ArrayList<>();
+                for (String id :
+                        request.getParameterValues(RequestParameters.GENRE_ID)) {
+                    bookGenres.add(Integer.parseInt(id));
+                }
+                request.setAttribute(RequestParameters.GENRE_ID,
+                        request.getParameterValues(RequestParameters.GENRE_ID));
+                ((BookService) BookService.getInstance()).changeGenres(newBook, bookGenres);
+            }
 
             Map<String, String> parameters = new HashMap<>();
+            Genre[] genres = GenreService.getInstance().findBy(new GenreFinder()
+                    .findByBook(newBook.getId())).toArray(Genre[]::new);
+            request.setAttribute(RequestParameters.BOOK_GENRES, genres);
             parameters.put(RequestParameters.COMMAND, CommandEnum.VIEW_BOOK_COMMAND.toString());
             parameters.put(RequestParameters.BOOK_ID, Integer.toString(newBook.getId()));
-
             return new Router(new URL(CommandUtil.getURL(
                     request.getRequestURL().toString(), parameters)));
         } catch (NumberFormatException e) {
