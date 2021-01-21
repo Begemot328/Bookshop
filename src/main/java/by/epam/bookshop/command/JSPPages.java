@@ -8,6 +8,7 @@ package by.epam.bookshop.command;
  */
 public enum JSPPages {
   START_PAGE("WEB-INF/jsp/searchBooks.jsp"),
+  GENRE_MENU_PAGE("WEB-INF/jsp/genre.jsp"),
   ERROR_PAGE("WEB-INF/jsp/error.jsp"),
   SEARCH_BOOKS_PAGE("WEB-INF/jsp/searchBooks.jsp"),
   SEARCH_AUTHORS_PAGE("WEB-INF/jsp/searchAuthors.jsp"),

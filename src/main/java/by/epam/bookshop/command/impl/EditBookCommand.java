@@ -85,9 +85,6 @@ public class EditBookCommand implements Command {
                 newBook.setPhotoLink(link);
                 BookService.getInstance().update(newBook);
 
-            if (request.getParameterValues(RequestParameters.GENRE_ID) != null
-                    && request.getParameterValues(RequestParameters.GENRE_ID).length > 0) {
-
                 List<Integer> bookGenres = new ArrayList<>();
                 for (String id :
                         request.getParameterValues(RequestParameters.GENRE_ID)) {
@@ -96,7 +93,6 @@ public class EditBookCommand implements Command {
                 request.setAttribute(RequestParameters.GENRE_ID,
                         request.getParameterValues(RequestParameters.GENRE_ID));
                 ((BookService) BookService.getInstance()).changeGenres(newBook, bookGenres);
-            }
 
             Map<String, String> parameters = new HashMap<>();
             Genre[] genres = GenreService.getInstance().findBy(new GenreFinder()

@@ -61,7 +61,7 @@
     </style>
 </head>
 <body>
-<<!-- Top panel-->
+<!-- Top panel-->
 <c:import url="elements/header.jsp" charEncoding="utf-8"/>
 <div class="w3-cell-row">
     <!-- left panel-->

@@ -27,6 +27,7 @@
 
         function addItem() {
             var form = document.getElementById("<c:out value="${requestScope.formId}"/>");
+            var div = document.getElementById("<c:out value="${requestScope.divId}"/>");
             var input = document.createElement("input");
             var removeButton = document.createElement("button");
             var select = document.getElementById("genreSelect");
@@ -36,6 +37,7 @@
                 input.setAttribute('id', 'input_' + select.value);
                 input.setAttribute('type', 'hidden');
                 input.setAttribute('name', "genreId");
+                input.setAttribute('form', "${requestScope.formId}");
                 input.setAttribute('value', select.value);
                 removeButton.appendChild(document.createTextNode(genresArray[select.value]));
                 removeButton.setAttribute('id', 'btn_' + select.value);
@@ -43,14 +45,15 @@
                 removeButton.setAttribute('onclick', "removeItem(this)");
                 removeButton.setAttribute('class',"w3-button w3-padding w3-deep-purple " +
                     "w3-ripple w3-hover-purple");
-                form.appendChild(removeButton);
-                form.appendChild(input);
+                div.appendChild(removeButton);
+                div.appendChild(input);
                 select.removeChild(option);
             }
         }
 
         function removeItem(item) {
             var form = document.getElementById("<c:out value="${requestScope.formId}"/>");
+            var div = document.getElementById("<c:out value="${requestScope.divId}"/>");
             var input = document.getElementById(item.id.replace('btn_', 'input_'));
             var select = document.getElementById("genreSelect");
             var option = document.createElement("option");
@@ -58,8 +61,8 @@
             option.setAttribute('value', item.id.replace('btn_', ''));
             option.appendChild(document.createTextNode(genresArray[item.id.replace('btn_', '')]));
             select.appendChild(option);
-            form.removeChild(item);
-            form.removeChild(input);
+            div.removeChild(item);
+            div.removeChild(input);
         }
     </script>
 </head>
@@ -80,7 +83,7 @@
         </c:choose>
     </select>
     <button onclick="addItem()" id="add"
-            class="w3-btn w3-deep-purple w3-ripple w3-hover-purple">
+            class="w3-btn w3-purple w3-ripple w3-hover-purple">
         <fmt:message>add.item</fmt:message>
     </button>
 </div>

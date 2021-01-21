@@ -15,7 +15,7 @@
     <title>Pagination</title>
 </head>
 <body>
-<div class="w3-cell w3-deep-purple w3-opacity" style="width:15%">
+<div class="w3-cell w3-deep-purple w3-opacity" style="width:15%; height:100%"">
     <div class="w3-bar-block">
         <form class="w3-bar-item w3-large w3-hover-purple">
             <input type="hidden" name="command" value="SEARCH_BOOKS_COMMAND">

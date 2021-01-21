@@ -63,20 +63,19 @@ public class AddBookCommand implements Command {
                 author = authorOptional.get();
             }
 
+            List<Integer> bookGenres = new ArrayList<>();
             new BookValidator().validate(title, author, description, price, link);
             newBook = BookService.getInstance().create(title, author, description, price, link);
             if (request.getParameterValues(RequestParameters.GENRE_ID) != null
                     && request.getParameterValues(RequestParameters.GENRE_ID).length > 0) {
-
-                List<Integer> bookGenres = new ArrayList<>();
                 for (String id :
                         request.getParameterValues(RequestParameters.GENRE_ID)) {
                     bookGenres.add(Integer.parseInt(id));
                 }
-                request.setAttribute(RequestParameters.GENRE_ID,
-                        request.getParameterValues(RequestParameters.GENRE_ID));
-                ((BookService) BookService.getInstance()).changeGenres(newBook, bookGenres);
             }
+            request.setAttribute(RequestParameters.GENRE_ID,
+                    request.getParameterValues(RequestParameters.GENRE_ID));
+            ((BookService) BookService.getInstance()).changeGenres(newBook, bookGenres);
 
             Map<String, String> parameters = new HashMap<>();
             Genre[] genres = GenreService.getInstance().findBy(new GenreFinder()

@@ -40,6 +40,7 @@ public class Router {
      */
     public Router(JSPPages page) {
         this.page = page;
+        this.setForward();
     }
 
     /**

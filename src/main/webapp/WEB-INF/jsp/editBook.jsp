@@ -55,70 +55,76 @@
         <br/>
 
         <c:set var="formId" value="editForm" scope="request"/>
-        <form id="${formId}" class="w3-card-4 w3-row-padding" method="POST"
-              action="${pageContext.request.contextPath}/ControllerURL"
-              enctype="multipart/form-data">
-            <input type="hidden" name="command" value="EDIT_BOOK_COMMAND">
-            <input type="hidden" name="bookId" value="${requestScope.book.id}">
-            <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="text" name="title" value="${requestScope.book.title}" required
-                       placeholder="<fmt:message key="book.title"/>">
-            </div>
-            <br/>
+        <c:set var="divId" value="genreDiv" scope="request"/>g
+        <div class="w3-card-4 w3-row-padding w3-center">
+            <form id="${formId}" method="POST"
+                  action="${pageContext.request.contextPath}/ControllerURL"
+                  enctype="multipart/form-data">
+                <input type="hidden" name="command" value="EDIT_BOOK_COMMAND">
+                <input type="hidden" name="bookId" value="${requestScope.book.id}">
+                <div class="w3-container" style="width:35%">
+                    <input class="w3-input w3-border" type="text" name="title" value="${requestScope.book.title}"
+                           required
+                           placeholder="<fmt:message key="book.title"/>">
+                </div>
+                <br/>
 
-            <div class="w3-container" style="width:35%">
-                <select id="users" name="authorId">
-                    <c:forEach var="author" items="${authors}">
-                        <c:choose>
-                            <c:when test="${requestScope.book.author.id == author.id}">
-                                <option selected value="${author.id}">
-                                        ${author.firstName} ${author.lastName}</option>
-                            </c:when>
-                            <c:otherwise>
-                                <option value="${author.id}">
-                                        ${author.firstName} ${author.lastName}</option>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-                </select>
-            </div>
-            <br/>
+                <div class="w3-container" style="width:35%">
+                    <select id="users" name="authorId">
+                        <c:forEach var="author" items="${authors}">
+                            <c:choose>
+                                <c:when test="${requestScope.book.author.id == author.id}">
+                                    <option selected value="${author.id}">
+                                            ${author.firstName} ${author.lastName}</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${author.id}">
+                                            ${author.firstName} ${author.lastName}</option>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </select>
+                </div>
+                <br/>
 
-            <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="number" step="0.01" min="0" name="price" required
-                       placeholder="<fmt:message key="price"/>" value="${requestScope.book.price}">
-            </div>
-            <br/>
-            <div class="w3-container" style="width:35%">
+                <div class="w3-container" style="width:35%">
+                    <input class="w3-input w3-border" type="number" step="0.01" min="0" name="price" required
+                           placeholder="<fmt:message key="price"/>" value="${requestScope.book.price}">
+                </div>
+                <br/>
+                <div class="w3-container" style="width:35%">
                 <textarea class="w3-input w3-border" type="text" name="description"
                           placeholder="<fmt:message key="description"/>"
                           value="${requestScope.book.description}" style="height: 100px"></textarea>
-            </div>
-            <br/>
-            <!-- photo link adding-->
-            <c:import url="elements/addPhoto.jsp" charEncoding="utf-8"/>
-            <br/>
-            <!-- error message box! -->
-            <c:import url="elements/errorMessage.jsp" charEncoding="utf-8"/>
+                </div>
+                <br/>
+                <!-- photo link adding-->
+                <c:import url="elements/addPhoto.jsp" charEncoding="utf-8"/>
+                <br/>
+                <!-- error message box! -->
+                <c:import url="elements/errorMessage.jsp" charEncoding="utf-8"/>
 
-            <div class="w3-container">
-                <!-- genres -->
-                <c:import url="elements/genres.jsp" charEncoding="utf-8"/>
+            </form>
+
+            <div class="w3-container" id="${divId}" style="width: 35%">
                 <!-- for genres -->
                 <c:forEach var="genre" items="${requestScope.bookGenres}">
-                    <input name="genreId" form="${formId}" id="input_${genre.id}" type="hidden" value="${genre.id}">
-                    <button class="w3-button w3-padding w3-deep-purple w3-ripple w3-hover-purple"
+                    <input name="genreId" form="${formId}" id="input_${genre.id}" type="hidden" value="${genre.id}"/>
+                    <button class="w3-button w3-padding w3-purple w3-ripple w3-hover-purple"
                             id="btn_${genre.id}" value="btn_${genre.id}"
                             onclick="removeItem(this)">${genre.name}</button>
                 </c:forEach>
-                <br/>
-            </div>
-            <div class="w3-btn" style="width:10%">
-                <input class="w3-btn w3-deep-purple w3-ripple w3-hover-purple" type="submit"
-                       value="<fmt:message key="apply"/>!"/>
+                <c:import url="elements/genres.jsp"/>
+
             </div>
 
-        </form>
+            <div class="w3-container" style="width:35%">
+                <div class="w3-btn" style="width:auto">
+                    <input class="w3-btn w3-deep-purple w3-ripple w3-hover-purple" type="submit" form="${formId}"
+                           value="<fmt:message key="apply"/>!"/>
+                </div>
+            </div>
+        </div>
     </div>
     <!--  right panel bar       -->
     <c:import url="elements/rightPanel.jsp" charEncoding="utf-8"/>

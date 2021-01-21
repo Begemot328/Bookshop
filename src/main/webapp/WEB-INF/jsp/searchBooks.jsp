@@ -45,6 +45,7 @@
     <!-- middle panel-->
     <c:set var="commandName" value="SEARCH_BOOKS_COMMAND"/>
     <c:set var="formId" value="searchForm" scope="request"/>
+    <c:set var="divId" value="searchForm" scope="request"/>
     <div class="w3-cell w3-padding-large" style="width:70%">
         <form method="GET" action="${pageContext.request.contextPath}/ControllerURL" id="${formId}">
             <input type="hidden" name="command" value="${commandName}">
@@ -78,14 +79,14 @@
             <br/>
             <!-- for genres -->
                 <c:forEach var="genre" items="${requestScope.bookGenres}">
-                    <input name="genreId" form="${formId}" id="input_${genre.id}" type="hidden" value="${genre.id}">
+                    <input name="genreId" form="${formId}" id="input_${genre.id}" type="hidden" value="${genre.id}"/>
                     <button class="w3-button w3-padding w3-deep-purple w3-ripple w3-hover-purple"
                             id="btn_${genre.id}" value="btn_${genre.id}"
                             onclick="removeItem(this)">${genre.name}</button>
                 </c:forEach>
         </form>
-        <br/>
         <c:import url="elements/genres.jsp" />
+        <br/>
         <div class="w3-row-padding">
             <c:forEach var="book"
                        items="${requestScope.books}">

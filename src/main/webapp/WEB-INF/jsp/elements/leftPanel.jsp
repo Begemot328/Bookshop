@@ -15,8 +15,21 @@
     <title>Pagination</title>
 </head>
 <body>
-<div class="w3-cell  w3-deep-purple w3-opacity" style="width:15%">
+<div class="w3-cell  w3-deep-purple w3-opacity" style="width:15%; height:100vh; min-height: content-box">
     <div class="w3-bar-block">
+        <c:if test="${not empty sessionScope.currentUser}">
+            <c:choose>
+                <c:when test="${sessionScope.currentUser.status.id >2 }">
+                    <form class="w3-bar-item w3-large w3-hover-purple" method="GET"
+                          action="${pageContext.request.contextPath}/ControllerURL">
+                        <input type="hidden" name="command" value="GENRE_MENU_COMMAND">
+                        <button class="w3-button w3-bar-item w3-ripple w3-hover-purple"
+                                type="submit"><fmt:message key="genre.menu"/>
+                        </button>
+                    </form>
+                </c:when>
+            </c:choose>
+        </c:if>
         <div class="w3-bar-item w3-large"><fmt:message key="book.genres"/></div>
         <c:forEach var="genre" items="${applicationScope.genres}">
             <form class="w3-bar-item w3-large w3-hover-purple" method="GET"
@@ -26,6 +39,7 @@
                 <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit">${genre.name}</button>
             </form>
         </c:forEach>
+
     </div>
 </div>
 </body>

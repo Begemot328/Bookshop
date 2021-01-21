@@ -35,21 +35,19 @@ public enum CommandEnum {
     SEARCH_USERS_COMMAND(new FindUsersCommand()),
     SEARCH_SHOPS_COMMAND (new FindShopsCommand()),
     SEARCH_BOOKS_COMMAND(new FindBooksCommand()),
-
+    MANAGE_GENRES_COMMAND(new GenreManageCommand()),
+    GENRE_MENU_COMMAND(new ForwardCommand(JSPPages.GENRE_MENU_PAGE)),
     PROCESS_POSITION_COMMAND(new ProcessPositionCommand()),
     BOOK_BOOK_COMMAND(new BookBookCommand()),
     CANCEL_BOOK_COMMAND(new CancelBookCommand()),
     RETURN_BOOK_COMMAND(new ReturnBookCommand()),
     SELL_BOOK_COMMAND(new SellBookCommand()),
-
     VIEW_POSITION_COMMAND(new ViewPositionCommand()),
     VIEW_BOOK_COMMAND(new ViewBookCommand()),
     VIEW_AUTHOR_COMMAND(new ViewAuthorCommand()),
     VIEW_USER_COMMAND(new ViewUserCommand()),
     VIEW_SHOP_COMMAND(new ViewShopCommand()),
-
     CHANGE_LOCALE_COMMAND(new ChangeLocaleCommand()),
-
     LOGIN_COMMAND(new LoginCommand()),
     LOGOUT_COMMAND(new LogOutCommand()),
     SIGNIN_COMMAND(new ForwardCommand(JSPPages.LOGIN_PAGE)),

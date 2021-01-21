@@ -15,7 +15,6 @@ import java.util.Enumeration;
 
 public class CancelBookCommand implements Command {
 
-    private static final String SERVICE_EXCEPTION = "Service Exception: ";
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
