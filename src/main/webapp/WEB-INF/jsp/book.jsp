@@ -27,7 +27,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <html>
 <head>
-    <title>Search books</title>
+    <title><c:out value="${requestScope.book.title}"/></title>
     <style>
         body {
             display: block;
@@ -189,57 +189,7 @@
         <c:if test="${not empty requestScope.shops}">
             <div id="map"></div>
             <!-- position table -->
-            <table class="w3-table-all w3-purple w3-opacity-min">
-                <tr class="w3-deep-purple">
-                    <th><fmt:message key="shop"/></th>
-                    <th><fmt:message key="shop.address"/></th>
-                    <th><fmt:message key="quantity"/></th>
-                    <c:if test="${not empty sessionScope.currentUser}">
-                        <c:choose>
-                            <c:when test="${sessionScope.currentUser.status.id == 2}">
-                                <th></th>
-                            </c:when>
-                            <c:when test="${sessionScope.currentUser.status.id >2 }">
-                                <th><fmt:message key="status"/></th>
-                                <th></th>
-                            </c:when>
-                        </c:choose>
-                    </c:if>
-                </tr>
-
-                <c:forEach var="position"
-                           items="${requestScope.positions}">
-                    <c:if test="${position.status.id == 1
-                || sessionScope.currentUser.status.id == 3
-                || sessionScope.currentUser.status.id == 4}">
-                        <tr class="w3-deep-purple">
-                            <td>
-                                <a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_SHOP_COMMAND&shopId=${position.shop.id}">
-                                    <c:out value="${position.shop.name}"/></a></td>
-                            <td><c:out value="${position.shop.address}"/></td>
-                            <td><c:out value="${position.quantity}"/></td>
-                            <c:if test="${not empty sessionScope.currentUser}">
-                                <c:choose>
-                                    <c:when test="${sessionScope.currentUser.status.id == 2}">
-                                        <td>
-                                            <a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shopId=${position.shop.id}&positionId=${position.id}"
-                                               class="w3-button w3-hover-purple"><fmt:message key="position.book"/></a>
-                                        </td>
-                                    </c:when>
-                                    <c:when test="${sessionScope.currentUser.status.id > 2}">
-                                        <td><fmt:message key="${position.status}"/></td>
-                                        <td>
-                                            <a href="${pageContext.request.contextPath}/ControllerURL?command=PROCESS_POSITION_COMMAND&shopId=${position.shop.id}&positionId=${position.id}"
-                                               class="w3-button w3-hover-purple"><fmt:message
-                                                    key="position.process"/></a>
-                                        </td>
-                                    </c:when>
-                                </c:choose>
-                            </c:if>
-                        </tr>
-                    </c:if>
-                </c:forEach>
-            </table>
+            <c:import url="elements/positionTableBook.jsp"/>
         </c:if>
         <!-- Pagination          -->
         <c:import url="elements/pagination.jsp"/>

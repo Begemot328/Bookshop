@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/materialIcons.css">
 <html>
 <head>
-    <title><fmt:message key="add.author.title"/></title>
+    <title><fmt:message key="book.genres"/></title>
     <style>
         body {
             display: block;

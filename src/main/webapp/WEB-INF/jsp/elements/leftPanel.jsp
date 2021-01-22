@@ -12,7 +12,7 @@
 <fmt:setBundle basename="locale"/>
 <html>
 <head>
-    <title>Pagination</title>
+    <title>Left panel</title>
 </head>
 <body>
 <div class="w3-cell  w3-deep-purple w3-opacity" style="width:15%; height:100vh; min-height: content-box">

@@ -12,7 +12,7 @@
 <fmt:setBundle basename="locale"/>
 <html>
 <head>
-    <title>AddPhoto</title>
+    <title>Authors</title>
 <script type="text/javascript">
     var authorsArray = [];
     <c:forEach var="author" items="${requestScope.authors}">

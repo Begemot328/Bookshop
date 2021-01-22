@@ -25,7 +25,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/materialIcons.css">
 <html>
 <head>
-    <title><fmt:message key="login_page.title"/></title>
+    <title><fmt:message key="edit.position.title"/></title>
     <style>
         body {
             display: block;

@@ -25,7 +25,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/materialIcons.css">
 <html>
 <head>
-    <title><fmt:message key="login_page.title"/></title>
+    <title><c:out value="${requestScope.author.firstname} ${requestScope.author.lastname}"/></title>
     <style>
         body {
             display: block;
@@ -58,11 +58,11 @@
             <input type="hidden" name="command" value="EDIT_AUTHOR_COMMAND">
             <div class="w3-container" style="width:35%">
                 <input class="w3-input w3-border" type="text" name="authorFirstname" required
-                       value="${sessionScope.author.firstName}" placeholder="<fmt:message key="author.firstname"/>">
+                       value="${author.firstName}" placeholder="<fmt:message key="author.firstname"/>">
             </div>
             <div class="w3-container" style="width:35%">
                 <input class="w3-input w3-border" type="text" name="authorLastname" required
-                       value="${sessionScope.author.lastName}" placeholder="<fmt:message key="author.lastname"/>">
+                       value="${author.lastName}" placeholder="<fmt:message key="author.lastname"/>">
             </div>
             <br/>
             <div class="w3-container" style="width:35%">

@@ -27,7 +27,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/materialIcons.css">
 <html>
 <head>
-    <title>Search books</title>
+    <title><fmt:message key="shops"/></title>
     <style>
         body {
             display: block;

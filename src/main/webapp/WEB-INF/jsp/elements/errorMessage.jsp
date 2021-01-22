@@ -12,7 +12,7 @@
 <fmt:setBundle basename="locale"/>
 <html>
 <head>
-    <title>Pagination</title>
+    <title>Error message</title>
 </head>
 <body>
 <c:if test="${errorMessage != null}">

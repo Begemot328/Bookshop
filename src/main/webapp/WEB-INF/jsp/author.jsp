@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/materialIcons.css">
 <html>
 <head>
-    <title>Search books</title>
+    <title><c:out value="${requestScope.author.firstname} ${requestScope.author.lastname}"/></title>
     <style>
         body {
             display: block;
@@ -84,36 +84,8 @@
                 </div>
             </c:if>
         </c:if>
-        <div class="w3-row-padding">
-            <c:forEach var="book"
-                       items="${books}">
-                <form class="w3-col l2 m6 s12  w3-center"
-                      method="POST" action="${pageContext.request.contextPath}/ControllerURL">
-                    <input type="hidden" name="command" value="VIEW_BOOK_COMMAND">
-                    <input type="hidden" name="bookId" value="${book.id}">
-                    <button class="w3-button  w3-ripple">
-                        <c:choose>
-                            <c:when test="${not empty book.photoLink}">
-                                <img src="${book.photoLink}"
-                                     class="w3-image">
-                            </c:when>
-                            <c:otherwise>
-                                <img src="${pageContext.request.contextPath}/resources/images/book_cover.jpg"
-                                     class="w3-image">
-                            </c:otherwise>
-                        </c:choose>
-                    </button>
-                    <p class="w3-signal-blue w3-large w3-opacity-min">
-                        <c:out value="${book.title}"/>
-                        <br/>
-                        <c:out value="${book.author.firstName}"/>
-                        <c:out value="${book.author.lastName}"/>
-                        <br/>
-                        <c:out value="${book.price}"/> BYN
-                    </p>
-                </form>
-            </c:forEach>
-        </div>
+        <!-- Book plate          -->
+        <c:import url="elements/bookPlate.jsp"/>
         <!-- Pagination          -->
         <c:import url="elements/pagination.jsp"/>
     </div>

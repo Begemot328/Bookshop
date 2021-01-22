@@ -27,7 +27,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/materialIcons.css">
 <html>
 <head>
-    <title>Search books</title>
+    <title><c:out value="${requestScope.user.firstName} ${requestScope.user.lastName}"/></title>
     <style>
         body {
             display: block;

@@ -62,6 +62,16 @@ create table users
     status     tinyint
 );
 
+drop table if exists genres;
+
+create table genres
+(
+    id   int primary key auto_increment,
+    name varchar(40) not null
+);
+
+create index id_index on genres (id);
+
 create
     index id_index on users (id);
 create
@@ -120,6 +130,31 @@ create
     index author_index on books (author_id);
 create
     index price_index on books (price);
+
+
+drop table if exists genre_books;
+
+create table genre_books
+(
+    genre_id int,
+    book_id  int,
+    primary key (genre_id, book_id),
+    foreign key (book_id) references books (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    foreign key (genre_id) references genres (id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+create index book_id_index on genre_books (book_id);
+create index genre_id_index on genre_books (genre_id);
+
+drop view if exists books_genres;
+
+create view books_genres as
+select books.id, books.title, books.author_id, books.price,
+       books.description, books.photo_link,
+       g.id as genre_id
+from books
+         join genre_books gb on gb.book_id = books.id
+         join genres g on gb.genre_id = g.id;
+
 
 create table shops
 (

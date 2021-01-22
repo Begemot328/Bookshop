@@ -25,7 +25,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/materialIcons.css">
 <html>
 <head>
-    <title><fmt:message key="login_page.title"/></title>
+    <title><c:out value="${requestScope.book.title}"/></title>
     <style>
         body {
             display: block;
