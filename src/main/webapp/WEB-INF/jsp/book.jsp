@@ -147,12 +147,12 @@
             </form>
             <c:choose>
                 <c:when test="${not empty requestScope.book.photoLink}">
-                    <img src="${requestScope.book.photoLink}" alt="book picture"
+                    <img src="${requestScope.book.photoLink}" alt="book picture" style="min-height: 400px;min-width: 300px"
                          class="w3-image">
                 </c:when>
                 <c:otherwise>
                     <img src="${pageContext.request.contextPath}/resources/images/book_cover.jpg"
-                         alt="default book picture" class="w3-image">
+                         alt="default book picture" style="min-height: 400px;min-width: 300px"/>
                 </c:otherwise>
             </c:choose>
             <c:if test="${not empty requestScope.book.description}">

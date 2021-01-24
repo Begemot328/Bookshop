@@ -93,22 +93,22 @@
 <div class="w3-cell-row">
     <!-- left panel-->
     <c:import url="elements/leftPanel.jsp" charEncoding="utf-8"/>
-    <!-- middle panel-->
+    <!-- Center panel -->
     <c:set var="commandName" value="VIEW_SHOP_COMMAND"/>
-    <div class="w3-cell w3-padding-large w3-center" style="width:70%">
+    <div class="w3-cell w3-container w3-padding-large w3-center" style="width:70%">
         <div class="w3-card-4 w3-half w3-center">
             <div class="w3-panel w3-large w3-purple w3-opacity">
-                <h4>${sessionScope.shop.name}</h4>
+                <h4>${requestScope.shop.name}</h4>
             </div>
 
             <c:choose>
                 <c:when test="${not empty requestScope.shop.photoLink}">
                     <img src="${requestScope.shop.photoLink}"
-                         class="w3-image" alt="shop picture">
+                         class="w3-image" alt="shop picture" style="min-height: 500px;min-width: 500px">
                 </c:when>
                 <c:otherwise>
                     <img src="${pageContext.request.contextPath}/resources/images/shop.jpg"
-                         class="w3-image" alt="default shop picture">
+                         class="w3-image" alt="default shop picture" style="min-height: 500px;min-width: 500px">
                 </c:otherwise>
             </c:choose>
             <div class="w3-panel w3-large w3-purple w3-opacity">
@@ -138,7 +138,7 @@
                         <input type="hidden" name="command" value="EDIT_SHOP_MENU_COMMAND">
                         <input type="hidden" name="shopId" value="${requestScope.shop.id}">
                         <button class="w3-button w3-purple w3-ripple w3-large w3-opacity-off" type="submit">
-                            <fmt:message key="change"></fmt:message>
+                            <fmt:message key="change"/>
                         </button>
                     </form>
 

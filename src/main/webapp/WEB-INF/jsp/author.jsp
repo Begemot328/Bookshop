@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/materialIcons.css">
 <html>
 <head>
-    <title><c:out value="${requestScope.author.firstname} ${requestScope.author.lastname}"/></title>
+    <title><c:out value="${requestScope.author.firstName} ${requestScope.author.lastName}"/></title>
     <style>
         body {
             display: block;
@@ -54,12 +54,12 @@
             </div>
             <c:choose>
                 <c:when test="${not empty requestScope.author.photoLink}">
-                    <img src="${requestScope.author.photoLink}" alt="author picture"
+                    <img src="${requestScope.author.photoLink}" alt="author picture" style="min-height: 500px;min-width: 500px"
                          class="w3-image">
                 </c:when>
                 <c:otherwise>
-                    <img src="${pageContext.request.contextPath}/resources/images/author.jpg"
-                    alt="default author picture"  class="w3-image">
+                    <img src="${pageContext.request.contextPath}/resources/images/author.jpg" style="min-height: 500px;min-width: 500px"
+                    alt="default author picture"  class="w3-image" />
                 </c:otherwise>
             </c:choose>
             <c:if test="${not empty requestScope.author.description}">
@@ -67,6 +67,7 @@
                     <h5>${requestScope.author.description}</h5>
                 </div>
             </c:if>
+            <br/>
         </div>
         <c:if test="${not empty sessionScope.currentUser}">
             <c:if test="${sessionScope.currentUser.status.id > 1}">

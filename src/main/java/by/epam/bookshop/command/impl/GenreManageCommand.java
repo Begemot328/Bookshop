@@ -69,6 +69,6 @@ public class GenreManageCommand implements Command {
             default:
                 return new Router(JSPPages.GENRE_MENU_PAGE);
         }
-        return null;
+        return new Router(JSPPages.GENRE_MENU_PAGE);
     }
 }

@@ -88,18 +88,18 @@
     <div class="w3-cell w3-padding-large w3-center" style="width:70%">
         <div class="w3-card-4 w3-half w3-center">
             <div class="w3-panel w3-large w3-purple w3-opacity">
-                <h4>${sessionScope.position.book.title}</h4>
+                <h4>${requestScope.position.book.title}</h4>
             </div>
             <form method="POST" action="${pageContext.request.contextPath}/ControllerURL">
                 <input type="hidden" name="command" value="VIEW_AUTHOR_COMMAND">
-                <input type="hidden" name="authorId" value="${sessionScope.book.author.id}">
+                <input type="hidden" name="authorId" value="${requestScope.position.book.author.id}">
                 <button class="w3-panel w3-button w3-large w3-purple w3-opacity" type="submit" style="width: 100%">
-                    <h4>${sessionScope.position.book.author.firstName} ${sessionScope.position.book.author.lastName}</h4>
+                    <h4>${requestScope.position.book.author.firstName} ${requestScope.position.book.author.lastName}</h4>
                 </button>
             </form>
             <c:choose>
-                <c:when test="${not empty sessionScope.position.book.photoLink}">
-                    <img src="${sessionScope.position.book.photoLink}" alt="book picture"
+                <c:when test="${not empty requestScope.position.book.photoLink}">
+                    <img src="${requestScope.position.book.photoLink}" alt="book picture"
                          class="w3-image">
                 </c:when>
                 <c:otherwise>
@@ -108,31 +108,32 @@
                 </c:otherwise>
             </c:choose>
             <div class="w3-panel w3-large w3-purple w3-opacity">
-                <h4>${sessionScope.position.book.price} BYN</h4>
+                <h4>${requestScope.position.book.price} BYN</h4>
             </div>
             <div class="w3-panel w3-large w3-purple w3-opacity">
-                <h4><fmt:message key="quantity"/>: ${sessionScope.position.quantity}</h4>
+                <h4><fmt:message key="quantity"/>: ${requestScope.position.quantity}</h4>
             </div>
-            <c:if test="${not empty sessionScope.seller}">
+            <c:if test="${not empty requestScope.seller}">
                 <div class="w3-panel w3-large w3-purple w3-opacity">
-                    <h4><fmt:message key="seller"/>: ${sessionScope.seller.firstName}
-                            ${sessionScope.seller.lastName}</h4>
+                    <h4><fmt:message key="seller"/>: ${requestScope.seller.firstName}
+                            ${requestScope.seller.lastName}</h4>
                 </div>
             </c:if>
-            <c:if test="${not empty sessionScope.buyer}">
+            <c:if test="${not empty requestScope.buyer}">
                 <div class="w3-panel w3-large w3-purple w3-opacity">
-                    <h4><fmt:message key="buyer"/>: ${sessionScope.buyer.firstName}
-                            ${sessionScope.buyer.lastName}</h4>
+                    <h4><fmt:message key="buyer"/>: ${requestScope.buyer.firstName}
+                            ${requestScope.buyer.lastName}</h4>
                 </div>
             </c:if>
             <div class="w3-panel w3-large w3-purple w3-opacity">
-                <h4><fmt:message key="${sessionScope.position.status}"/></h4>
+                <h4><fmt:message key="${requestScope.position.status}"/></h4>
             </div>
         </div>
         <div class="w3-card-4 w3-half w3-center w3-opacity-min w3-purple w3-padding">
             <form>
                 <br/>
-                <c:if test="${sessionScope.position.status.id == 1}">
+                <input type="hidden" name="positionId" value="${requestScope.position.id}">
+                <c:if test="${requestScope.position.status.id == 1}">
                 <input type="radio" class="w3-radio" id="sell" name="command" value="SELL_BOOK_COMMAND" checked>
                 <label for="sell"><fmt:message key="position.sell"/></label>
                 <br/>
@@ -141,26 +142,26 @@
                 <br/>
                 <br/>
                 <select id="users" name="userId">
-                    <c:forEach var="author" items="${sessionScope.buyers}">
-                        <option value="${author.id}">${author.firstName} ${author.lastName}</option>
+                    <c:forEach var="user" items="${requestScope.buyers}">
+                        <option value="${user.id}">${user.firstName} ${user.lastName}</option>
                     </c:forEach>
                 </select>
                 <br/><br/>
                 <label for="quantity"><fmt:message key="quantity"/> :
                     <span id="quantityOut"></span></label>
-                <input type="range" id="quantity" name="quantity" min="1" max="${sessionScope.position.quantity}"
+                <input type="range" id="quantity" name="quantity" min="1" max="${requestScope.position.quantity}"
                        value="1" step="1" class="slider">
                 <br/>
 
                 <button class="w3-button w3-purple w3-ripple w3-opacity" type="submit">
                     <fmt:message key="position.process" /></button>
                 </c:if>
-                <c:if test="${sessionScope.position.status.id == 2}">
+                <c:if test="${requestScope.position.status.id == 2}">
                     <input type="hidden" name="command" value="RETURN_BOOK_COMMAND">
                     <button class="w3-button w3-purple w3-ripple w3-opacity" type="submit">
                         <fmt:message key="position.return" /></button>
                 </c:if>
-                <c:if test="${sessionScope.position.status.id == 3}">
+                <c:if test="${requestScope.position.status.id == 3}">
                     <input type="radio" class="w3-radio" id="sell" name="command" value="SELL_BOOK_COMMAND" checked>
                     <label for="sell"><fmt:message key="position.sell"/></label>
                     <br/>

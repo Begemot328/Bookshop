@@ -35,7 +35,7 @@ public class RequestParameters {
     public static final String USER_ID = "userId";
     public static final String BOOK_ID = "bookId";
     public static final String AUTHOR_ID = "authorId";
-    public static final String AUTHOR = "book.author";
+    public static final String AUTHOR = "author";
     public static final String TITLE = "title";
     public static final String MAX_PRICE = "maxPrice";
     public static final String MIN_PRICE = "minPrice";

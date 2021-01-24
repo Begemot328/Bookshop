@@ -38,7 +38,8 @@ public class FindShopsCommand implements Command {
 
             request.setAttribute(
                     RequestParameters.SHOPS,
-                    ShopService.getInstance().findBy(finder).toArray(Shop[]::new));
+                    ShopService.getInstance().findBy(finder,
+                            (page - 1) * ELEMENTS_PER_PAGE, ELEMENTS_PER_PAGE).toArray(Shop[]::new));
             request.setAttribute(RequestParameters.PAGE_QUANTITY, pageQuantity);
             request.setAttribute(RequestParameters.CURRENT_PAGE, page);
         } catch (ServiceException e) {

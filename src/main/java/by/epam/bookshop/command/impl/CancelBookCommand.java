@@ -22,14 +22,16 @@ public class CancelBookCommand implements Command {
         User user = ((User) request.getSession()
                 .getAttribute(SessionParameters.CURRENT_USER));
         try {
+            int id = Integer.parseInt(request.getParameter(RequestParameters.POSITION_ID));
+
             if (user.getStatus()
                     == UserStatus.BUYER) {
                 Position newPosition = PositionService.getInstance().splitPosition(
-                        (Position) request.getSession().getAttribute(SessionParameters.POSITION),
+                        PositionService.getInstance().read(id),
                         Integer.valueOf(request.getParameter(RequestParameters.QUANTITY)),
                         user, null, null,
                         PositionStatus.READY);
-                request.getSession().setAttribute(SessionParameters.POSITION, newPosition);
+                request.setAttribute(RequestParameters.POSITION, newPosition);
                 return new Router(JSPPages.VIEW_POSITION_PAGE);
             }
             if (user.getStatus()
@@ -38,14 +40,14 @@ public class CancelBookCommand implements Command {
                 System.out.println(request.getParameter(RequestParameters.USER_ID));
 
                 Position newPosition = PositionService.getInstance().splitPosition(
-                        (Position) request.getSession().getAttribute(SessionParameters.POSITION),
+                        PositionService.getInstance().read(id),
                         Integer.valueOf(request.getParameter(RequestParameters.QUANTITY)),
                         null, user, null,
                         PositionStatus.READY);
-                request.getSession().setAttribute(SessionParameters.POSITION, newPosition);
+                request.setAttribute(RequestParameters.POSITION, newPosition);
                 return new Router(JSPPages.VIEW_POSITION_PAGE);
             }
-        } catch (ServiceException e) {
+        } catch (ServiceException | NumberFormatException e) {
             throw new CommandException(e);
         } catch (ValidationException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage());

@@ -44,8 +44,11 @@
     <!-- middle panel-->
     <div class="w3-cell w3-padding-large w3-center" style="width:70%">
         <br/>
-        <form class="w3-card-4 w3-row-padding" method="POST" style="width:35%">
-                <input class="w3-input w3-border" type="text" name="authorFirstname" required
+        <form class="w3-card-4 w3-row-padding" method="POST" style="width:35%"
+              action="${pageContext.request.contextPath}/ControllerURL">
+            <input type="hidden" name="command" value="MANAGE_GENRES_COMMAND"/>
+            <input type="hidden" name="genreCommand" value="create"/>
+                <input class="w3-input w3-border" type="text" name="name" required
                        placeholder="<fmt:message key="shop.name"/>" value="${name}">
             <input class="w3-btn w3-deep-purple w3-ripple w3-hover-purple" type="submit"
                    value="<fmt:message key="create"/>!">

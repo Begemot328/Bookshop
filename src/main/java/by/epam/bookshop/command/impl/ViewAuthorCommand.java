@@ -17,7 +17,6 @@ public class ViewAuthorCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        request.getParameter(RequestParameters.AUTHOR_ID);
         int page;
         try {
             page = Integer.parseInt(request.getParameter(RequestParameters.PAGE));

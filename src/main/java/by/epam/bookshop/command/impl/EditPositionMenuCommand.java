@@ -15,17 +15,13 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
 public class EditPositionMenuCommand implements Command {
-    private static final String SERVICE_EXCEPTION = "Service Exception: ";
-    private static final String DAO_EXCEPTION = "DAO Exception: ";
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         try {
-            if (request.getSession().getAttribute(SessionParameters.POSITION) == null) {
-                Position position = PositionService.getInstance().read(Integer.parseInt(
-                        request.getParameter(RequestParameters.POSITION_ID)));
-                request.setAttribute(RequestParameters.POSITION, position);
-            }
+            Position position = PositionService.getInstance().read(Integer.parseInt(
+                    request.getParameter(RequestParameters.POSITION_ID)));
+            request.setAttribute(RequestParameters.POSITION, position);
             Book[] books = BookService.getInstance().findAll().toArray(Book[]::new);
             request.setAttribute(RequestParameters.BOOKS, books);
             Shop[] shops = ShopService.getInstance().findAll().toArray(Shop[]::new);

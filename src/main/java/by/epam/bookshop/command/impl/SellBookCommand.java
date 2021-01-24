@@ -26,17 +26,17 @@ public class SellBookCommand implements Command {
                     == UserStatus.ADMIN || user.getStatus()
                     == UserStatus.SELLER) {
                 User buyer = UserService.getInstance().read(
-                        Integer.valueOf(request.getParameter(RequestParameters.USER_ID))
-                );
+                        Integer.parseInt(request.getParameter(RequestParameters.USER_ID)));
                 Position newPosition = PositionService.getInstance().splitPosition(
-                        (Position) request.getSession().getAttribute(SessionParameters.POSITION),
+                        PositionService.getInstance().read(
+                                Integer.parseInt(request.getParameter(RequestParameters.POSITION_ID))),
                         Integer.valueOf(request.getParameter(RequestParameters.QUANTITY)),
                         buyer, user, null,
                         PositionStatus.SOLD);
-                request.getSession().setAttribute(SessionParameters.POSITION, newPosition);
+                request.setAttribute(RequestParameters.POSITION, newPosition);
                 return new Router(JSPPages.VIEW_POSITION_PAGE);
             }
-        } catch (ServiceException e) {
+        } catch (ServiceException | NumberFormatException e) {
             throw new CommandException(e);
         } catch (ValidationException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage());

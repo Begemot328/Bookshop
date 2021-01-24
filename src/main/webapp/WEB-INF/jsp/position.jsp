@@ -65,11 +65,11 @@
             </form>
             <c:choose>
                 <c:when test="${not empty requestScope.position.book.photoLink}">
-                    <img src="${requestScope.position.book.photoLink}" alt="book picture"
+                    <img src="${requestScope.position.book.photoLink}" alt="book picture" style="min-height: 400px;min-width: 300px"
                          class="w3-image">
                 </c:when>
                 <c:otherwise>
-                    <img src="${pageContext.request.contextPath}/resources/images/book_cover.jpg"
+                    <img src="${pageContext.request.contextPath}/resources/images/book_cover.jpg" style="min-height: 400px;min-width: 300px"
                          alt="default book picture" class="w3-image">
                 </c:otherwise>
             </c:choose>

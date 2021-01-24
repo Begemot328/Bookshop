@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class FindAuthorsCommand implements Command {
 
-    private static final int ELEMENTS_PER_PAGE = 30;
+    private static final int ELEMENTS_PER_PAGE = 12;
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
@@ -38,7 +38,8 @@ public class FindAuthorsCommand implements Command {
             int pageQuantity = CommandUtil.pageQuantity(AuthorService.getInstance().countBy(finder),
                     ELEMENTS_PER_PAGE);
 
-            Author[] authors = AuthorService.getInstance().findBy(finder).toArray(Author[]::new);
+            Author[] authors = AuthorService.getInstance().findBy(finder,
+                    (page - 1) * ELEMENTS_PER_PAGE, ELEMENTS_PER_PAGE).toArray(Author[]::new);
             request.setAttribute(RequestParameters.AUTHORS, authors);
             request.setAttribute(RequestParameters.PAGE_QUANTITY, pageQuantity);
             request.setAttribute(RequestParameters.CURRENT_PAGE, page);

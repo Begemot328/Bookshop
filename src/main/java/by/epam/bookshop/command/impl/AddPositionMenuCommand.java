@@ -23,12 +23,7 @@ public class AddPositionMenuCommand implements Command {
             request.setAttribute(RequestParameters.BOOKS, books);
             Shop[] shops = ShopService.getInstance().findAll().toArray(Shop[]::new);
             request.setAttribute(RequestParameters.SHOPS, shops);
-        } catch (ServiceException e) {
-            request.getSession().setAttribute(SessionParameters.ERROR_MESSAGE, e.getMessage()
-                    + Arrays.toString(e.getStackTrace()));
-            throw new CommandException(e);
-        } catch (DAOException e) {
-
+        } catch (ServiceException | DAOException e) {
             throw new CommandException(e);
         }
         return new Router(JSPPages.ADD_POSITION_PAGE);

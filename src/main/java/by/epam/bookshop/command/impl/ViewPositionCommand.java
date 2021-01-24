@@ -16,7 +16,7 @@ public class ViewPositionCommand implements Command {
             if (request.getParameter(RequestParameters.POSITION_ID) != null) {
                 Position position = PositionService.getInstance().read(
                         Integer.parseInt(request.getParameter(RequestParameters.POSITION_ID)));
-                request.getSession().setAttribute(SessionParameters.POSITION, position);
+                request.setAttribute(RequestParameters.POSITION, position);
             }
         } catch (ServiceException e) {
             throw new CommandException(e);

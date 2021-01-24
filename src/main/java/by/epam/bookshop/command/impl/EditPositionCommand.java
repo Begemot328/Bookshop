@@ -32,6 +32,7 @@ public class EditPositionCommand implements Command {
         String note = request.getParameter(RequestParameters.NOTE);
         int shopId = 0;
         int bookId = 0;
+        int positionId = 0;
         int quantity;
         User currentUser = null;
 
@@ -39,6 +40,7 @@ public class EditPositionCommand implements Command {
             shopId = Integer.parseInt(request.getParameter(RequestParameters.SHOP_ID));
             bookId = Integer.parseInt(request.getParameter(RequestParameters.BOOK_ID));
             quantity = Integer.parseInt(request.getParameter(RequestParameters.QUANTITY));
+            positionId = Integer.parseInt(request.getParameter(RequestParameters.POSITION_ID));
         } catch (NumberFormatException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, INPUT_ERROR);
             return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
@@ -68,7 +70,7 @@ public class EditPositionCommand implements Command {
                 request.setAttribute(RequestParameters.ERROR_MESSAGE, INPUT_ERROR);
                 return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
             }
-            newPosition = (Position) request.getSession().getAttribute(SessionParameters.POSITION);
+            newPosition = PositionService.getInstance().read(positionId);
                 newPosition.setQuantity(quantity);
                 newPosition.setShop(shop);
                 newPosition.setBook(book);

@@ -82,7 +82,7 @@ public enum CommandEnum {
         CommandEnum commandEnum;
 
         try {
-            commandEnum = valueOf(commandName);
+            commandEnum = valueOf(commandName.toUpperCase());
             command = commandEnum.getCommand();
 
         } catch (IllegalArgumentException e) {

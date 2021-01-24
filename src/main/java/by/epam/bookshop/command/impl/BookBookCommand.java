@@ -10,29 +10,27 @@ import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.service.position.PositionService;
 import by.epam.bookshop.service.user.UserService;
-
 import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
 
 public class BookBookCommand implements Command {
-
-    private static final String SERVICE_EXCEPTION = "Service Exception: ";
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         User user = ((User) request.getSession()
                 .getAttribute(SessionParameters.CURRENT_USER));
         try {
+            int id = Integer.parseInt(request.getParameter(RequestParameters.POSITION_ID));
+
             if (user.getStatus()
                     == UserStatus.BUYER) {
                 Position newPosition = PositionService.getInstance().splitPosition(
-                        (Position) request.getSession().getAttribute(SessionParameters.POSITION),
+                        PositionService.getInstance().read(id),
                         Integer.valueOf(request.getParameter(RequestParameters.QUANTITY)),
                         user, null, null,
                         PositionStatus.RESERVED);
-                request.getSession().setAttribute(SessionParameters.POSITION, newPosition);
-                request.getSession().setAttribute(SessionParameters.SELLER, null);
-                request.getSession().setAttribute(SessionParameters.BUYER, user);
+                request.setAttribute(RequestParameters.POSITION, newPosition);
+                request.setAttribute(RequestParameters.SELLER, null);
+                request.setAttribute(RequestParameters.BUYER, user);
                 return new Router(JSPPages.VIEW_POSITION_PAGE);
             }
             if (user.getStatus()
@@ -40,10 +38,10 @@ public class BookBookCommand implements Command {
                     == UserStatus.SELLER) {
                 System.out.println(request.getParameter(RequestParameters.USER_ID));
                 User buyer = UserService.getInstance().read(
-                        Integer.valueOf(request.getParameter(RequestParameters.USER_ID))
+                        Integer.parseInt(request.getParameter(RequestParameters.USER_ID))
                 );
                 Position newPosition = PositionService.getInstance().splitPosition(
-                        (Position) request.getSession().getAttribute(SessionParameters.POSITION),
+                        PositionService.getInstance().read(id),
                         Integer.valueOf(request.getParameter(RequestParameters.QUANTITY)),
                         buyer, user, null,
                         PositionStatus.RESERVED);
@@ -52,7 +50,7 @@ public class BookBookCommand implements Command {
                 request.setAttribute(RequestParameters.SELLER, user);
                 return new Router(JSPPages.VIEW_POSITION_PAGE);
             }
-        } catch (ServiceException e) {
+        } catch (ServiceException | NumberFormatException e) {
             throw new CommandException(e);
         } catch (ValidationException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage());

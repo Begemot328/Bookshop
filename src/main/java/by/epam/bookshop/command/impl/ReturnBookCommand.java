@@ -28,16 +28,17 @@ public class ReturnBookCommand implements Command {
                 User buyer = UserService.getInstance().read(
                         Integer.parseInt(request.getParameter(RequestParameters.USER_ID))
                 );
-                Position oldPosition = (Position) request.getSession().getAttribute(SessionParameters.POSITION);
+                Position oldPosition = PositionService.getInstance().read(
+                        Integer.parseInt(request.getParameter(RequestParameters.POSITION_ID)));
                 Position newPosition = PositionService.getInstance().splitPosition(
                         oldPosition,
                         oldPosition.getQuantity(),
                         null, user, null,
                         PositionStatus.READY);
-                request.getSession().setAttribute(SessionParameters.POSITION, newPosition);
+                request.setAttribute(RequestParameters.POSITION, newPosition);
                 return new Router(JSPPages.VIEW_POSITION_PAGE);
             }
-        } catch (ServiceException e) {
+        } catch (ServiceException | NumberFormatException e) {
             throw new CommandException(e);
         } catch (ValidationException e) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, e.getMessage());

@@ -19,7 +19,7 @@ public class ProcessPositionCommand implements Command {
         try {
             Position position = PositionService.getInstance().read(
                     Integer.parseInt(request.getParameter(RequestParameters.POSITION_ID)));
-            request.getSession().setAttribute(SessionParameters.POSITION, position);
+            request.setAttribute(RequestParameters.POSITION, position);
 
             if (((User)request.getSession().getAttribute(SessionParameters.CURRENT_USER)).getStatus()
                     == UserStatus.SELLER

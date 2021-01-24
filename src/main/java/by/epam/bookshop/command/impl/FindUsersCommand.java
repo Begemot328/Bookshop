@@ -51,7 +51,8 @@ public class FindUsersCommand implements Command {
         int pageQuantity = CommandUtil.pageQuantity(UserService.getInstance().countBy(finder),
                 ELEMENTS_PER_PAGE);
 
-            User[] users = UserService.getInstance().findBy(finder).toArray(User[]::new);
+            User[] users = UserService.getInstance().findBy(finder,
+                    (page - 1) * ELEMENTS_PER_PAGE, ELEMENTS_PER_PAGE).toArray(User[]::new);
 
             request.setAttribute(RequestParameters.USERS, users);
             request.setAttribute(RequestParameters.PAGE_QUANTITY, pageQuantity);
