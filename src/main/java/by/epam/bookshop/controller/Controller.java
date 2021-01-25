@@ -124,6 +124,7 @@ public class Controller  extends HttpServlet {
             request.getSession().setAttribute(SessionParameters.LAST_PAGE, router.getPage());
             request.getRequestDispatcher(router.getPage().getPage()).forward(request, response);
         } else if (router.getType() == Router.Type.REDIRECT){
+            logger.debug(router.getURL().toString());
             response.sendRedirect(router.getURL().toString());
         }
     }

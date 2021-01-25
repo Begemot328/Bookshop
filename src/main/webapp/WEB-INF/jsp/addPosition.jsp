@@ -92,10 +92,6 @@
                 <input class="w3-btn w3-deep-purple w3-ripple w3-hover-purple" type="submit"
                        value="<fmt:message key="create"/>!">
             </div>
-            <div class="w3-btn" style="width:10%">
-                <input class="w3-btn w3-deep-purple w3-ripple w3-hover-purple" type="submit"
-                       value="<fmt:message key="create"/>!">
-            </div>
         </form>
     </div>
     <!--  right panel bar       -->

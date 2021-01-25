@@ -234,9 +234,7 @@ public class PositionService extends AbstractEntityService<Position> {
                 connection.rollback();
                 connection.setAutoCommit(true);
                 throw new ServiceException(e);
-            } catch (DAOException e) {
-                throw new ServiceException(e);
-            } catch (FactoryException e) {
+            } catch (DAOException | FactoryException e) {
                 throw new ServiceException(e);
             }
         } catch (SQLException e) {
