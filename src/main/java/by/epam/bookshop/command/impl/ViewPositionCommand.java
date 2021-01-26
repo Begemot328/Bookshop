@@ -21,6 +21,6 @@ public class ViewPositionCommand implements Command {
         } catch (ServiceException e) {
             throw new CommandException(e);
         }
-        return new Router(JSPPages.PROCESS_POSITION_PAGE);
+        return new Router(JSPPages.VIEW_POSITION_PAGE);
     }
 }

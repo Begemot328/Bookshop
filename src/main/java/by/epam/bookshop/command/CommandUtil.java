@@ -39,6 +39,14 @@ public class CommandUtil {
         }
     }
 
+    public static void clearParameters(HttpServletRequest request) {
+        Enumeration<String> enumeration = request.getAttributeNames();
+        while (enumeration.hasMoreElements()) {
+            String element = enumeration.nextElement();
+            request.removeAttribute(element);
+        }
+    }
+
     /**
      * Simple method to calculate quantity of pages for pagination
      *

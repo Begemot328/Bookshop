@@ -101,15 +101,17 @@ public class Controller  extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        CommandUtil.transferParameter(request);
-
         Enumeration<String> pars = request.getParameterNames();
         while (pars.hasMoreElements()) {
             String name = pars.nextElement();
             logger.debug(name.concat("=").concat(request.getParameter(name)));
         }
 
+        CommandUtil.transferParameter(request);
+
+
         Command command = CommandEnum.getCommand(request.getParameter(RequestParameters.COMMAND));
+
         Router router;
         try {
             router = command.execute(request);
@@ -123,9 +125,13 @@ public class Controller  extends HttpServlet {
         if (router.getType() == Router.Type.FORWARD) {
             request.getSession().setAttribute(SessionParameters.LAST_PAGE, router.getPage());
             request.getRequestDispatcher(router.getPage().getPage()).forward(request, response);
+
         } else if (router.getType() == Router.Type.REDIRECT){
             logger.debug(router.getURL().toString());
+
+            CommandUtil.clearParameters(request);
             response.sendRedirect(router.getURL().toString());
+
         }
     }
 }

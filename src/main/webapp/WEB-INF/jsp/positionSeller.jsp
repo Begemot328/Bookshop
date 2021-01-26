@@ -85,7 +85,7 @@
     <!-- left panel-->
     <c:import url="elements/leftPanel.jsp" charEncoding="utf-8"/>
     <!-- middle panel-->
-    <div class="w3-cell w3-padding-large w3-center" style="width:70%">
+    <div class="w3-cell w3-container w3-padding-large w3-center" style="width:70%">
         <div class="w3-card-4 w3-half w3-center">
             <div class="w3-panel w3-large w3-purple w3-opacity">
                 <h4>${requestScope.position.book.title}</h4>
