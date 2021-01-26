@@ -101,6 +101,7 @@ public class Controller  extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        logger.debug(request.toString());
         Enumeration<String> pars = request.getParameterNames();
         while (pars.hasMoreElements()) {
             String name = pars.nextElement();
@@ -108,8 +109,6 @@ public class Controller  extends HttpServlet {
         }
 
         CommandUtil.transferParameter(request);
-
-
         Command command = CommandEnum.getCommand(request.getParameter(RequestParameters.COMMAND));
 
         Router router;
@@ -131,7 +130,6 @@ public class Controller  extends HttpServlet {
 
             CommandUtil.clearParameters(request);
             response.sendRedirect(router.getURL().toString());
-
         }
     }
 }

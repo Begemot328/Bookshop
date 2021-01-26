@@ -67,14 +67,16 @@ public class AddPositionCommand implements Command {
                 return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
             }
 
+
             newPosition = PositionService.getInstance().createPosition(
                     currentUser, book, shop, note, quantity);
 
             Map<String, String> parameters = new HashMap<>();
-            parameters.put(RequestParameters.COMMAND, CommandEnum.VIEW_POSITION_COMMAND.toString());
+        /*    parameters.put(RequestParameters.COMMAND, CommandEnum.VIEW_POSITION_COMMAND.toString());
             parameters.put(RequestParameters.POSITION_ID, Integer.toString(newPosition.getId()));
             return new Router(new URL(CommandUtil.getURL(
-                    request.getRequestURL().toString(), parameters)));
+                    request.getRequestURL().toString(), parameters))); */
+            return new Router(new URL(request.getRequestURL().toString()));
         } catch (ServiceException | MalformedURLException e) {
             throw new CommandException(e);
         } catch (ValidationException e) {

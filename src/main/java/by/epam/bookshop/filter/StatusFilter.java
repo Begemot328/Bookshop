@@ -64,8 +64,9 @@ public class StatusFilter implements Filter {
 
                 filterChain.doFilter(request, servletResponse);
             }
+        } else {
+            filterChain.doFilter(servletRequest, servletResponse);
         }
-        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override

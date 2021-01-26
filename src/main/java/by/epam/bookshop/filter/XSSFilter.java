@@ -62,9 +62,9 @@ public class XSSFilter implements Filter {
         }
 
         if (filterWorked) {
-            filterChain.doFilter(servletRequest, servletResponse);
-        } else {
             filterChain.doFilter(request, servletResponse);
+        } else {
+            filterChain.doFilter(servletRequest, servletResponse);
         }
     }
 

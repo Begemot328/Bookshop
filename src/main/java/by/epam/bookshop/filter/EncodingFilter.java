@@ -1,8 +1,10 @@
 package by.epam.bookshop.filter;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
+@WebFilter(urlPatterns = {"/ControllerURL"})
 public class EncodingFilter implements Filter {
 
     private String encoding = "utf-8";
