@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
     class HttpServletRequestSetParameterWrapper extends HttpServletRequestWrapper {
-    private Map<String, String[]> myParameters = new HashMap<>();
+    private final Map<String, String[]> myParameters = new HashMap<>();
 
     public HttpServletRequestSetParameterWrapper(HttpServletRequest request) {
         super(request);

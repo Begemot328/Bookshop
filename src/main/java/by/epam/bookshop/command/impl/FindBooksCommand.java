@@ -3,7 +3,6 @@ package by.epam.bookshop.command.impl;
 import by.epam.bookshop.command.*;
 import by.epam.bookshop.dao.impl.author.AuthorFinder;
 import by.epam.bookshop.dao.impl.book.BookFinder;
-import by.epam.bookshop.dao.impl.genre.GenreFinder;
 import by.epam.bookshop.entity.book.Book;
 import by.epam.bookshop.entity.genre.Genre;
 import by.epam.bookshop.exceptions.CommandException;

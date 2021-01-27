@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.net.URL;
 
 public class RedirectCommand implements Command {
-    private URL url;
+    private final URL url;
 
     public RedirectCommand(URL url) {
         this.url = url;

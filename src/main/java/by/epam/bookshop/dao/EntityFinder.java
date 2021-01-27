@@ -40,7 +40,7 @@ public class EntityFinder<T extends Entity> {
     }
 
     public EntityFinder<T> findByID(int id) {
-        EntityFinder<T> finder  = (EntityFinder<T>) this.findBy(SQL_QUERY +
+        EntityFinder<T> finder  = this.findBy(SQL_QUERY +
                 WHERE.replace(PARAMETER, ID)
                         .replace(VALUE, Integer.toString(id)));
         return finder;

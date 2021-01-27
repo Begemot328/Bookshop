@@ -1,12 +1,13 @@
 package by.epam.bookshop.listener;
 
-import by.epam.bookshop.command.RequestParameters;
 import by.epam.bookshop.controller.Controller;
 import by.epam.bookshop.exceptions.ConnectionPoolException;
 import by.epam.bookshop.exceptions.ConnectionPoolRuntimeException;
 import by.epam.bookshop.pool.ConnectionPool;
 
-import javax.servlet.*;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import java.io.IOException;
 

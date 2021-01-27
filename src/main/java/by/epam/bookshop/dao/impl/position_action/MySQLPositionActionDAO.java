@@ -1,21 +1,21 @@
 package by.epam.bookshop.dao.impl.position_action;
 
-import by.epam.bookshop.dao.EntityFinder;
 import by.epam.bookshop.dao.MySQLEntityDAO;
-import by.epam.bookshop.dao.impl.book.MySQLBookDAO;
 import by.epam.bookshop.dao.impl.position.MySQLPositionDAO;
-import by.epam.bookshop.dao.impl.position.PositionFinder;
 import by.epam.bookshop.dao.impl.shop.MySQLShopDAO;
 import by.epam.bookshop.dao.impl.user.MySQLUserDAO;
 import by.epam.bookshop.entity.EntityFactory;
+import by.epam.bookshop.entity.position.PositionStatus;
 import by.epam.bookshop.entity.position_action.PositionAction;
 import by.epam.bookshop.entity.position_action.PositionActionFactory;
-import by.epam.bookshop.entity.position.PositionStatus;
 import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.FactoryException;
 import by.epam.bookshop.exceptions.UnknownEntityException;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collection;

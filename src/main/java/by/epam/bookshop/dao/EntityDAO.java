@@ -2,9 +2,7 @@ package by.epam.bookshop.dao;
 
 import by.epam.bookshop.entity.Entity;
 import by.epam.bookshop.exceptions.DAOException;
-import by.epam.bookshop.exceptions.FactoryException;
 
-import java.sql.SQLException;
 import java.util.Collection;
 
 public interface EntityDAO<T extends Entity> {

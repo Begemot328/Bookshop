@@ -2,8 +2,8 @@ package by.epam.bookshop.entity.position;
 
 import by.epam.bookshop.entity.Entity;
 import by.epam.bookshop.entity.Pricefull;
-import by.epam.bookshop.entity.shop.Shop;
 import by.epam.bookshop.entity.book.Book;
+import by.epam.bookshop.entity.shop.Shop;
 
 import java.util.Objects;
 

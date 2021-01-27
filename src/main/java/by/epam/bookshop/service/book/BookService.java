@@ -2,20 +2,16 @@ package by.epam.bookshop.service.book;
 
 import by.epam.bookshop.dao.MySQLGenreBookDAO;
 import by.epam.bookshop.dao.impl.book.MySQLBookDAO;
-import by.epam.bookshop.entity.Entity;
 import by.epam.bookshop.entity.book.Book;
 import by.epam.bookshop.entity.book.BookFactory;
-import by.epam.bookshop.entity.genre.Genre;
 import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.service.AbstractEntityService;
 import by.epam.bookshop.service.EntityService;
-import by.epam.bookshop.validator.impl.BookValidator;
 import by.epam.bookshop.validator.EntityValidator;
+import by.epam.bookshop.validator.impl.BookValidator;
 
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class BookService extends AbstractEntityService<Book> {

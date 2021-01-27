@@ -2,16 +2,12 @@ package by.epam.bookshop.dao.impl.genre;
 
 import by.epam.bookshop.dao.EntityFinder;
 import by.epam.bookshop.dao.MySQLEntityDAO;
-import by.epam.bookshop.dao.impl.author.MySQLAuthorDAO;
 import by.epam.bookshop.entity.EntityFactory;
-import by.epam.bookshop.entity.book.Book;
-import by.epam.bookshop.entity.book.BookFactory;
 import by.epam.bookshop.entity.genre.Genre;
 import by.epam.bookshop.entity.genre.GenreFactory;
 import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.FactoryException;
 
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -11,12 +11,13 @@ import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.service.user.UserService;
 import by.epam.bookshop.util.AddressObject;
-import by.epam.bookshop.validator.impl.UserValidator;
 import by.epam.bookshop.util.PasswordCoder;
+import by.epam.bookshop.validator.impl.UserValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.GeneralSecurityException;

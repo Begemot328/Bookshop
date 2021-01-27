@@ -1,20 +1,17 @@
 package by.epam.bookshop.filter;
 
 import by.epam.bookshop.command.CommandEnum;
-import by.epam.bookshop.command.JSPPages;
 import by.epam.bookshop.command.RequestParameters;
 import by.epam.bookshop.command.SessionParameters;
-import by.epam.bookshop.command.impl.AddShopCommand;
-import by.epam.bookshop.command.impl.ForwardCommand;
 import by.epam.bookshop.controller.dto.UserDTO;
 import by.epam.bookshop.entity.user.UserStatus;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Optional;
 
 @WebFilter(urlPatterns = {"/ControllerURL"})
 public class StatusFilter implements Filter {

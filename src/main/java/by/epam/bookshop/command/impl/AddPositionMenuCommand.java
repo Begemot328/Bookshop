@@ -1,6 +1,9 @@
 package by.epam.bookshop.command.impl;
 
-import by.epam.bookshop.command.*;
+import by.epam.bookshop.command.Command;
+import by.epam.bookshop.command.JSPPages;
+import by.epam.bookshop.command.RequestParameters;
+import by.epam.bookshop.command.Router;
 import by.epam.bookshop.entity.book.Book;
 import by.epam.bookshop.entity.shop.Shop;
 import by.epam.bookshop.exceptions.CommandException;
@@ -10,7 +13,6 @@ import by.epam.bookshop.service.book.BookService;
 import by.epam.bookshop.service.shop.ShopService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
 
 public class AddPositionMenuCommand implements Command {
     private static final String SERVICE_EXCEPTION = "Service Exception: ";

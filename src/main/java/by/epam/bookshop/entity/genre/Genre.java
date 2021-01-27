@@ -1,11 +1,8 @@
 package by.epam.bookshop.entity.genre;
 
 import by.epam.bookshop.entity.Entity;
-import by.epam.bookshop.entity.book.Book;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 public class Genre extends Entity {
     private String name;

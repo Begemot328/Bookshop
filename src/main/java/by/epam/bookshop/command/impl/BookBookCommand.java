@@ -10,6 +10,7 @@ import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.service.position.PositionService;
 import by.epam.bookshop.service.user.UserService;
+
 import javax.servlet.http.HttpServletRequest;
 
 public class BookBookCommand implements Command {

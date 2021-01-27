@@ -57,7 +57,7 @@ public class ConnectionPool implements Closeable {
         }
     }
 
-    private static Map<String, String> dbParameters = new HashMap<>();
+    private static final Map<String, String> dbParameters = new HashMap<>();
 
     {
         addDBparameter(TIMEZONE, DB_TIMEZONE);

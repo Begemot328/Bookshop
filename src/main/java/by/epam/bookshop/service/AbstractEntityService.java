@@ -3,7 +3,6 @@ package by.epam.bookshop.service;
 import by.epam.bookshop.dao.EntityFinder;
 import by.epam.bookshop.dao.MySQLEntityDAO;
 import by.epam.bookshop.entity.Entity;
-import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.entity.user.AbstractEntityFactory;
 import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.FactoryException;

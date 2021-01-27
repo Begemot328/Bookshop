@@ -12,7 +12,7 @@ public class ConnectionProxy implements Connection {
 
     private static final String CONNECTION_POOL_EXCEPTION = "Connection pool exception: ";
     /** The connection. */
-    private Connection connection;
+    private final Connection connection;
 
     /**
      * Instantiates a new proxy connection.

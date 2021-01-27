@@ -17,7 +17,7 @@ import by.epam.bookshop.validator.impl.BookValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import java.io.*;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.GeneralSecurityException;

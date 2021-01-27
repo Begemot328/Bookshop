@@ -7,8 +7,6 @@ import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.service.genre.GenreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import by.epam.bookshop.exceptions.CommandException;
-import by.epam.bookshop.exceptions.ServletRuntimeException;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;

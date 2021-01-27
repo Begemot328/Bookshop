@@ -1,6 +1,5 @@
 package by.epam.bookshop.validator.impl;
 
-import by.epam.bookshop.entity.book.Book;
 import by.epam.bookshop.entity.position.Position;
 import by.epam.bookshop.entity.position.PositionStatus;
 import by.epam.bookshop.entity.position_action.PositionAction;

@@ -1,11 +1,7 @@
 package by.epam.bookshop.validator.impl;
 
 import by.epam.bookshop.entity.author.Author;
-import by.epam.bookshop.entity.book.Book;
-import by.epam.bookshop.entity.position.PositionStatus;
-import by.epam.bookshop.entity.shop.Shop;
 import by.epam.bookshop.exceptions.ValidationException;
-import by.epam.bookshop.util.ValidationUtil;
 import by.epam.bookshop.validator.AbstractEntityValidator;
 
 import java.net.URL;

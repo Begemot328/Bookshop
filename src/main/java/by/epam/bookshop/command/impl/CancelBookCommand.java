@@ -11,7 +11,6 @@ import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.service.position.PositionService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
 
 public class CancelBookCommand implements Command {
 

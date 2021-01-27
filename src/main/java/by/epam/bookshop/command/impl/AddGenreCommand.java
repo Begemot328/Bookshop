@@ -10,7 +10,6 @@ import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.service.genre.GenreService;
-import org.mortbay.jetty.Request;
 
 import javax.servlet.http.HttpServletRequest;
 

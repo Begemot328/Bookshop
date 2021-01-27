@@ -1,13 +1,13 @@
 package by.epam.bookshop.service.position;
 
-import by.epam.bookshop.dao.impl.position_action.MySQLPositionActionDAO;
 import by.epam.bookshop.dao.impl.position.MySQLPositionDAO;
+import by.epam.bookshop.dao.impl.position_action.MySQLPositionActionDAO;
 import by.epam.bookshop.entity.book.Book;
-import by.epam.bookshop.entity.position_action.PositionAction;
-import by.epam.bookshop.entity.position_action.PositionActionFactory;
 import by.epam.bookshop.entity.position.Position;
 import by.epam.bookshop.entity.position.PositionFactory;
 import by.epam.bookshop.entity.position.PositionStatus;
+import by.epam.bookshop.entity.position_action.PositionAction;
+import by.epam.bookshop.entity.position_action.PositionActionFactory;
 import by.epam.bookshop.entity.shop.Shop;
 import by.epam.bookshop.entity.user.User;
 import by.epam.bookshop.entity.user.UserStatus;

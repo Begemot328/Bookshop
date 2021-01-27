@@ -1,6 +1,9 @@
 package by.epam.bookshop.command.impl;
 
-import by.epam.bookshop.command.*;
+import by.epam.bookshop.command.Command;
+import by.epam.bookshop.command.JSPPages;
+import by.epam.bookshop.command.RequestParameters;
+import by.epam.bookshop.command.Router;
 import by.epam.bookshop.dao.impl.genre.GenreFinder;
 import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.entity.book.Book;

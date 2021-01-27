@@ -35,7 +35,7 @@ public enum JSPPages {
 
   AUTHORS_PAGE("WEB-INF/jsp/elements/authors.jsp");
 
-    private String page;
+    private final String page;
 
     /**
      * Constructor

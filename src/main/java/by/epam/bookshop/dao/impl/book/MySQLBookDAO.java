@@ -1,25 +1,18 @@
 package by.epam.bookshop.dao.impl.book;
 
-import by.epam.bookshop.dao.EntityFinder;
 import by.epam.bookshop.dao.MySQLEntityDAO;
-import by.epam.bookshop.dao.impl.author.AuthorFinder;
 import by.epam.bookshop.dao.impl.author.MySQLAuthorDAO;
 import by.epam.bookshop.entity.EntityFactory;
 import by.epam.bookshop.entity.book.Book;
 import by.epam.bookshop.entity.book.BookFactory;
-import by.epam.bookshop.entity.user.User;
-import by.epam.bookshop.entity.user.UserFactory;
-import by.epam.bookshop.entity.user.UserStatus;
 import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.FactoryException;
-import by.epam.bookshop.exceptions.UnknownEntityException;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;

@@ -2,30 +2,16 @@ package by.epam.bookshop;
 
 import by.epam.bookshop.controller.Controller;
 import by.epam.bookshop.dao.EntityDAO;
-import by.epam.bookshop.dao.impl.author.AuthorFinder;
-import by.epam.bookshop.dao.impl.author.MySQLAuthorDAO;
 import by.epam.bookshop.dao.impl.book.MySQLBookDAO;
-import by.epam.bookshop.dao.impl.shop.MySQLShopDAO;
-import by.epam.bookshop.entity.EntityFactory;
-import by.epam.bookshop.entity.author.Author;
-import by.epam.bookshop.entity.author.AuthorFactory;
 import by.epam.bookshop.entity.book.Book;
-import by.epam.bookshop.entity.book.BookFactory;
-import by.epam.bookshop.entity.shop.Shop;
-import by.epam.bookshop.entity.shop.ShopFactory;
 import by.epam.bookshop.exceptions.AddressException;
+import by.epam.bookshop.exceptions.ConnectionPoolException;
 import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.FactoryException;
 import by.epam.bookshop.pool.ConnectionPool;
-import by.epam.bookshop.exceptions.ConnectionPoolException;
 import by.epam.bookshop.pool.ConnectionProxy;
 import by.epam.bookshop.util.AddressObject;
-import by.epam.bookshop.util.PasswordCoder;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 public class Runner {
@@ -168,7 +154,7 @@ public class Runner {
 }
 
  class DAOTester implements Runnable {
-    private String name;
+    private final String name;
 
     public DAOTester(String name) {
         this.name = name;

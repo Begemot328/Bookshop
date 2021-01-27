@@ -35,7 +35,7 @@ public class MySQLGenreBookDAO {
     private static final String SELECT_QUERY =
             "SELECT * FROM [SCHEMA].[TABLE] [CONDITION];";
 
-    private Connection connection;
+    private final Connection connection;
 
     public MySQLGenreBookDAO(Connection connection) {
         this.connection = connection;

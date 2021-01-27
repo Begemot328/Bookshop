@@ -1,6 +1,5 @@
 package by.epam.bookshop.entity.position;
 
-import by.epam.bookshop.entity.user.UserStatus;
 import by.epam.bookshop.exceptions.UnknownEntityException;
 
 import java.util.Arrays;

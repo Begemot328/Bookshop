@@ -14,7 +14,7 @@ public class DbResourceManager {
     private final static DbResourceManager instance=new DbResourceManager();
     
     /** The bundle. */
-    private ResourceBundle bundle=ResourceBundle.getBundle(DATABASE);
+    private final ResourceBundle bundle=ResourceBundle.getBundle(DATABASE);
     
     /**
      * Gets the single instance of DbResourceManager.

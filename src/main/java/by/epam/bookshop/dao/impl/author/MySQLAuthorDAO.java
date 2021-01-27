@@ -1,6 +1,5 @@
 package by.epam.bookshop.dao.impl.author;
 
-import by.epam.bookshop.dao.EntityFinder;
 import by.epam.bookshop.dao.MySQLEntityDAO;
 import by.epam.bookshop.entity.EntityFactory;
 import by.epam.bookshop.entity.author.Author;
@@ -13,7 +12,6 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;

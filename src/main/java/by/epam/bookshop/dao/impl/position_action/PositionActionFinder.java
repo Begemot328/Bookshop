@@ -3,11 +3,8 @@ package by.epam.bookshop.dao.impl.position_action;
 import by.epam.bookshop.dao.EntityFinder;
 import by.epam.bookshop.entity.position_action.PositionAction;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
 

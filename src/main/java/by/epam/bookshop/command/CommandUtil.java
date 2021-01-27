@@ -1,6 +1,5 @@
 package by.epam.bookshop.command;
 
-import by.epam.bookshop.service.book.BookService;
 import by.epam.bookshop.util.GoogleDriveUtil;
 import by.epam.bookshop.util.ImageUtil;
 

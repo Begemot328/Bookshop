@@ -3,11 +3,11 @@ package by.epam.bookshop.service;
 
 import by.epam.bookshop.dao.EntityFinder;
 import by.epam.bookshop.entity.Entity;
+import by.epam.bookshop.exceptions.ConnectionPoolException;
 import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.pool.ConnectionPool;
-import by.epam.bookshop.exceptions.ConnectionPoolException;
 
 import java.sql.Connection;
 import java.util.Collection;
@@ -22,13 +22,13 @@ public interface EntityService<T extends Entity> {
         }
     }
 
-    public T create(Object ... args) throws ServiceException, ValidationException;
+    T create(Object... args) throws ServiceException, ValidationException;
 
-    public T read(int id) throws ServiceException;
+    T read(int id) throws ServiceException;
 
-    public void update(T t) throws ServiceException, ValidationException;
+    void update(T t) throws ServiceException, ValidationException;
 
-    public void delete(T t) throws ServiceException;
+    void delete(T t) throws ServiceException;
 
     Collection<T> findBy(EntityFinder<T> finder) throws ServiceException;
 

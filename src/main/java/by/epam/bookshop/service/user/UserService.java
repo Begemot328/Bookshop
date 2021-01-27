@@ -25,7 +25,7 @@ public class UserService extends AbstractEntityService<User> {
 
     private static final UserService INSTANCE = new UserService();
 
-    private UserService() {};
+    private UserService() {}
 
     @Override
     public EntityValidator<User> getValidator() {

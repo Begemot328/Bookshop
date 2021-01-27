@@ -65,7 +65,7 @@ public class DAOTest extends Assert {
     private static final String DB_USE_UNICODE =
             DbResourceManager.getInstance().getValue(DbParameter.DB_USE_UNICODE);
     private static final String DROP_SCHEMA = "drop schema if exists bookshop;";
-    private static Map<String, String> dbParameters = new HashMap<>();
+    private static final Map<String, String> dbParameters = new HashMap<>();
     private static Connection connection;
     private static Book book;
     private static Author author;

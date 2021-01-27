@@ -1,6 +1,5 @@
 package by.epam.bookshop.util;
 
-import by.epam.bookshop.controller.Controller;
 import by.epam.bookshop.exceptions.AddressException;
 import org.json.JSONObject;
 
@@ -13,11 +12,11 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class AddressObject {
-    private static String baseURL = "https://maps.googleapis.com/maps/api/geocode/json";
+    private static final String baseURL = "https://maps.googleapis.com/maps/api/geocode/json";
     Map <String, String> addressToGeo = new HashMap<>();
-    private String key = "AIzaSyCwIrGRwhU9pynlNeOMDXPqQYZmwroni4Q";
-    private String address;
-    private String language = "language";
+    private final String key = "AIzaSyCwIrGRwhU9pynlNeOMDXPqQYZmwroni4Q";
+    private final String address;
+    private final String language = "language";
     private String formattedAddress;
     private double longitude;
     private double latitude;

@@ -19,7 +19,7 @@ public class ShopService extends AbstractEntityService<Shop> {
 
     private static final ShopService INSTANCE = new ShopService();
 
-    private ShopService() {};
+    private ShopService() {}
 
     public static EntityService<Shop> getInstance() {
         return INSTANCE;

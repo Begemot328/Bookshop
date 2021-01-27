@@ -9,7 +9,7 @@ import by.epam.bookshop.service.author.AuthorService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import java.io.*;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.GeneralSecurityException;

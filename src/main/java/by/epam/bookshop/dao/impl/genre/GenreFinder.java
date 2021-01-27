@@ -1,7 +1,6 @@
 package by.epam.bookshop.dao.impl.genre;
 
 import by.epam.bookshop.dao.EntityFinder;
-import by.epam.bookshop.dao.impl.book.BookFinder;
 import by.epam.bookshop.entity.genre.Genre;
 
 public class GenreFinder extends EntityFinder<Genre> {

@@ -1,15 +1,14 @@
 package by.epam.bookshop.entity.position_action;
 
-import by.epam.bookshop.entity.*;
+import by.epam.bookshop.entity.Entity;
+import by.epam.bookshop.entity.Pricefull;
 import by.epam.bookshop.entity.position.Position;
 import by.epam.bookshop.entity.position.PositionStatus;
 import by.epam.bookshop.entity.shop.Shop;
 import by.epam.bookshop.entity.user.User;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.Objects;
 
 public class PositionAction extends Entity implements Pricefull {

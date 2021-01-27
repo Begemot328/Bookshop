@@ -1,11 +1,8 @@
 package by.epam.bookshop.validator.impl;
 
-import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.entity.genre.Genre;
 import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.validator.AbstractEntityValidator;
-
-import java.net.URL;
 
 public class GenreValidator extends AbstractEntityValidator<Genre> {
 

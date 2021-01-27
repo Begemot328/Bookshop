@@ -54,7 +54,7 @@ public enum CommandEnum {
     REGISTER_MENU_COMMAND(new ForwardCommand(JSPPages.REGISTER_PAGE)),
     REGISTER_COMMAND(new RegisterCommand()),
     GET_VALUES_COMMAND(new GetValuesCommand());
-    private Command command;
+    private final Command command;
 
     /**
      * Constructor

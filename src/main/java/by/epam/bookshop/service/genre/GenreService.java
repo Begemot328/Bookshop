@@ -3,8 +3,6 @@ package by.epam.bookshop.service.genre;
 import by.epam.bookshop.dao.MySQLEntityDAO;
 import by.epam.bookshop.dao.MySQLGenreBookDAO;
 import by.epam.bookshop.dao.impl.genre.MySQLGenreDAO;
-import by.epam.bookshop.entity.Entity;
-import by.epam.bookshop.entity.book.Book;
 import by.epam.bookshop.entity.genre.Genre;
 import by.epam.bookshop.entity.genre.GenreFactory;
 import by.epam.bookshop.entity.user.AbstractEntityFactory;
@@ -16,7 +14,6 @@ import by.epam.bookshop.validator.EntityValidator;
 import by.epam.bookshop.validator.impl.GenreValidator;
 
 import java.sql.Connection;
-import java.util.Arrays;
 import java.util.List;
 
 

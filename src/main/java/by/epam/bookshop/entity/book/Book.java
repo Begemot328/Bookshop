@@ -1,7 +1,7 @@
 package by.epam.bookshop.entity.book;
 
-import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.entity.Entity;
+import by.epam.bookshop.entity.author.Author;
 
 import java.net.URL;
 import java.util.Objects;

@@ -27,7 +27,7 @@
                 //Disable the TextBox when File has file.
                 photoLinkText.disabled = true;
             }
-        };
+        }
     </script>
 </head>
 <body>

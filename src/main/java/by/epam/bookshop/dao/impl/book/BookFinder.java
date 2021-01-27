@@ -1,13 +1,9 @@
 package by.epam.bookshop.dao.impl.book;
 
 import by.epam.bookshop.dao.EntityFinder;
-import by.epam.bookshop.dao.impl.author.AuthorFinder;
 import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.entity.book.Book;
-import by.epam.bookshop.entity.user.User;
-import by.epam.bookshop.entity.user.UserStatus;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 
@@ -43,7 +39,7 @@ public class BookFinder extends EntityFinder<Book> {
     }
 
     public BookFinder findByAuthors(Collection<Author> authors) {
-        String authorsQuery = new String();
+        String authorsQuery = "";
 
         if (authors.isEmpty()) {
             return (BookFinder) (new BookFinder().findByID(-1));
