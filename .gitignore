@@ -27,9 +27,9 @@ hs_err_pid*
 
 *.iml
 
-.run
+*.run
 
-.gitignore
+*.gitignore
 
 
 target/**
