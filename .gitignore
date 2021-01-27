@@ -35,4 +35,7 @@ target/**
 !*.SQL
 !SQL/
 
-.run/
+.run
+
+.gitignore
+

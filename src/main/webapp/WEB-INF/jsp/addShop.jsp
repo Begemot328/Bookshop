@@ -71,10 +71,8 @@
             <br/>
             <!-- error message box! -->
             <c:import url="elements/errorMessage.jsp" charEncoding="utf-8"/>
-            <div class="w3-btn" style="width:10%">
-                <input class="w3-btn w3-deep-purple w3-ripple w3-hover-purple" type="submit"
-                       value="<fmt:message key="create"/>!">
-            </div>
+            <button class="w3-btn w3-deep-purple w3-ripple w3-hover-purple" type="submit"
+                    value="<fmt:message key="create"/>!"></button>
         </form>
     </div>
     <!--  right panel bar       -->

@@ -188,9 +188,10 @@
         <!-- positions map -->
         <c:if test="${not empty requestScope.shops}">
             <div id="map"></div>
+        </c:if>
+
             <!-- position table -->
             <c:import url="elements/positionTableBook.jsp"/>
-        </c:if>
         <!-- Pagination          -->
         <c:import url="elements/pagination.jsp"/>
     </div>

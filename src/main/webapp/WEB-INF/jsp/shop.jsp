@@ -100,7 +100,6 @@
             <div class="w3-panel w3-large w3-purple w3-opacity">
                 <h4>${requestScope.shop.name}</h4>
             </div>
-
             <c:choose>
                 <c:when test="${not empty requestScope.shop.photoLink}">
                     <img src="${requestScope.shop.photoLink}"
@@ -141,7 +140,6 @@
                             <fmt:message key="change"/>
                         </button>
                     </form>
-
                 </div>
             </c:if>
         </c:if>

@@ -42,9 +42,33 @@
         body, h1, h2, h3, h4, h5, h6 {
             font-family: Arial, Helvetica, sans-serif;
         }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 80%;
+            height: 25px;
+            background: #9370DB;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+
+        .slider:hover {
+            opacity: 1;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #800080;
+            cursor: pointer;
+        }
     </style>
     <script>
-        let slider = document.getElementById("quantity");
+        let slider = document.getElementById("quantityRange");
         let output = document.getElementById("quantityOut");
         output.innerHTML = slider.value;
         slider.oninput = function () {
@@ -91,18 +115,26 @@
         <div class="w3-card-4 w3-half w3-center w3-opacity-min w3-purple w3-padding">
             <form>
                 <br/>
-                <input type="hidden" name="positionId" value="${requestScope.position.id}">
+                <input type="hidden" name="positionId" value="${requestScope.position.id}"/>
                 <c:if test="${requestScope.position.status.id == 1}">
-                <input type="hidden" name="command" value="BOOK_BOOK_COMMAND">
-                <label for="quantity"><fmt:message key="quantity"/> :
-                    <span id="quantityOut"></span>
-                </label>
-                <input type="range" id="quantity" name="quantity" min="1" max="${requestScope.position.quantity}"
-                       value="1" step="1" class="slider">
-                <br/>
-                <button class="w3-button w3-purple w3-ripple w3-opacity" type="submit">
-                    <fmt:message key="position.book" />
-                </button>
+                    <input type="hidden" name="command" value="BOOK_BOOK_COMMAND"/>
+                    <div class="slidecontainer">
+                        <label for="quantityRange">
+                            <fmt:message key="quantity"/> :
+                            <span id="quantityOut"></span>
+                        </label>
+                        <fmt:message key="quantity"/> :
+                        <p id="quantityOut"></p>
+                        <p><fmt:message key="quantity"/> :
+                            <span id="quantityOut"></span></p>
+                        <input type="range" id="quantityRange" name="quantity" min="1"
+                               max="${requestScope.position.quantity}"
+                               value="1" step="1" class="slider">
+                    </div>
+                    <br/>
+                    <button class="w3-button w3-purple w3-ripple w3-opacity" type="submit">
+                        <fmt:message key="position.book"/>
+                    </button>
                 </c:if>
                 <c:if test="${requestScope.position.status.id == 3}">
                     <br/>
@@ -111,7 +143,7 @@
                     <br/>
                     <br/>
                     <button class="w3-button w3-purple w3-ripple w3-opacity" type="submit">
-                        <fmt:message key="position.process" />
+                        <fmt:message key="position.process"/>
                     </button>
                 </c:if>
             </form>

@@ -30,7 +30,6 @@ public class StatusFilter implements Filter {
             CommandEnum.MANAGE_GENRES_COMMAND,
             CommandEnum.ADD_BOOK_MENU_COMMAND,
             CommandEnum.ADD_POSITION_MENU_COMMAND,
-            CommandEnum.PROCESS_POSITION_COMMAND,
             CommandEnum.RETURN_BOOK_COMMAND,
             CommandEnum.SELL_BOOK_COMMAND,
     };

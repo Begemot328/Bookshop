@@ -118,7 +118,7 @@
     <c:import url="elements/leftPanel.jsp" charEncoding="utf-8"/>
     <!-- middle panel-->
     <c:set var="commandName" value="VIEW_USER_COMMAND"/>
-    <div class="w3-cell w3-padding-large w3-center" style="width:70%">
+    <div class="w3-cell w3-container w3-padding-large w3-center" style="width:70%">
         <div class="w3-card-4 w3-half w3-center">
             <div class="w3-panel w3-large w3-purple w3-opacity">
                 <h4>${requestScope.user.firstName} ${requestScope.user.lastName}</h4>
@@ -172,7 +172,11 @@
                         ${action.initialPosition.book.author.lastName}"/></a></td>
                         <td><c:out value="${action.quantity}"/></td>
                         <td><c:out value="${action.currentPrice}"/></td>
-                        <td><c:out value="${action.date}"/></td>
+
+                        <td>
+                            <fmt:formatDate type = "both" dateStyle = "short" timeStyle = "short"
+                                            value="${action.date}"/>
+                        </td>
                         <td><fmt:message key="${action.initialStatus}.${action.finalStatus}"/></td>
                         <c:if test="${sessionScope.currentUser.status.id > 2}">
                             <c:choose>
