@@ -96,7 +96,7 @@
             </div>
         </div>
         <c:if test="${not empty sessionScope.currentUser}">
-            <c:if test="${sessionScope.currentUser.status.id > 1}">
+            <c:if test="${sessionScope.currentUser.status.id > 2}">
                 <div class="w3-card-4 w3-half w3-center w3-padding">
                     <br/>
                     <br/>
@@ -107,7 +107,6 @@
                             <fmt:message key="change"/>
                         </button>
                     </form>
-
                 </div>
             </c:if>
         </c:if>

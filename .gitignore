@@ -27,6 +27,11 @@ hs_err_pid*
 
 *.iml
 
+.run
+
+.gitignore
+
+
 target/**
 
 !pom.xml
@@ -35,7 +40,4 @@ target/**
 !*.SQL
 !SQL/
 
-.run
-
-.gitignore
 

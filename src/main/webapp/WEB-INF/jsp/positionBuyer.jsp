@@ -67,14 +67,6 @@
             cursor: pointer;
         }
     </style>
-    <script>
-        let slider = document.getElementById("quantityRange");
-        let output = document.getElementById("quantityOut");
-        output.innerHTML = slider.value;
-        slider.oninput = function () {
-            output.innerHTML = this.value;
-        }
-    </script>
 </head>
 <body>
 <!-- Top panel-->
@@ -118,21 +110,22 @@
                 <input type="hidden" name="positionId" value="${requestScope.position.id}"/>
                 <c:if test="${requestScope.position.status.id == 1}">
                     <input type="hidden" name="command" value="BOOK_BOOK_COMMAND"/>
-                    <div class="slidecontainer">
-                        <label for="quantityRange">
-                            <fmt:message key="quantity"/> :
-                            <span id="quantityOut"></span>
-                        </label>
-                        <fmt:message key="quantity"/> :
-                        <p id="quantityOut"></p>
-                        <p><fmt:message key="quantity"/> :
-                            <span id="quantityOut"></span></p>
-                        <input type="range" id="quantityRange" name="quantity" min="1"
-                               max="${requestScope.position.quantity}"
-                               value="1" step="1" class="slider">
-                    </div>
+                    <label for="quantityRange"><fmt:message key="quantity"/> :
+                        <span id="quantityOut"></span>
+                    </label>
+                    <input type="range" id="quantityRange" name="quantity" min="1"
+                           max="${requestScope.position.quantity}"
+                           value="1" step="1" class="slider"/>
+                    <script>
+                        let slider = document.getElementById("quantityRange");
+                        let output = document.getElementById("quantityOut");
+                        output.innerHTML = slider.value;
+                        slider.oninput = function () {
+                            output.innerHTML = this.value;
+                        }
+                    </script>
                     <br/>
-                    <button class="w3-button w3-purple w3-ripple w3-opacity" type="submit">
+                    <button class="w3-button w3-deep-purple w3-ripple w3-opacity-off" type="submit">
                         <fmt:message key="position.book"/>
                     </button>
                 </c:if>

@@ -68,15 +68,7 @@
         }
 
     </style>
-    <script>
-        let slider = document.getElementById("quantity");
-        let output = document.getElementById("quantityOut");
-        output.innerHTML = slider.value;
 
-        slider.oninput = function () {
-            output.innerHTML = this.value;
-        }
-    </script>
 </head>
 <body>
 <!-- Top panel-->
@@ -134,32 +126,41 @@
                 <br/>
                 <input type="hidden" name="positionId" value="${requestScope.position.id}">
                 <c:if test="${requestScope.position.status.id == 1}">
-                <input type="radio" class="w3-radio" id="sell" name="command" value="SELL_BOOK_COMMAND" checked>
-                <label for="sell"><fmt:message key="position.sell"/></label>
-                <br/>
-                <input type="radio" class="w3-radio" id="book" name="command" value="BOOK_BOOK_COMMAND">
-                <label for="book"><fmt:message key="position.book"/></label>
-                <br/>
-                <br/>
-                <select id="users" name="userId">
-                    <c:forEach var="user" items="${requestScope.buyers}">
-                        <option value="${user.id}">${user.firstName} ${user.lastName}</option>
-                    </c:forEach>
-                </select>
-                <br/><br/>
-                <label for="quantity"><fmt:message key="quantity"/> :
-                    <span id="quantityOut"></span></label>
-                <input type="range" id="quantity" name="quantity" min="1" max="${requestScope.position.quantity}"
-                       value="1" step="1" class="slider">
-                <br/>
-
-                <button class="w3-button w3-purple w3-ripple w3-opacity" type="submit">
-                    <fmt:message key="position.process" /></button>
+                    <input type="radio" class="w3-radio" id="sell" name="command" value="SELL_BOOK_COMMAND" checked>
+                    <label for="sell"><fmt:message key="position.sell"/></label>
+                    <br/>
+                    <input type="radio" class="w3-radio" id="book" name="command" value="BOOK_BOOK_COMMAND">
+                    <label for="book"><fmt:message key="position.book"/></label>
+                    <br/>
+                    <br/>
+                    <select id="users" name="userId">
+                        <c:forEach var="user" items="${requestScope.buyers}">
+                            <option value="${user.id}">${user.firstName} ${user.lastName}</option>
+                        </c:forEach>
+                    </select>
+                    <br/><br/>
+                    <label for="quantityRange"><fmt:message key="quantity"/> :
+                        <span id="quantityOut"></span>
+                    </label>
+                    <input type="range" id="quantityRange" name="quantity" min="1"
+                           max="${requestScope.position.quantity}"
+                           value="1" step="1" class="slider"/>
+                    <script>
+                        let slider = document.getElementById("quantityRange");
+                        let output = document.getElementById("quantityOut");
+                        output.innerHTML = slider.value;
+                        slider.oninput = function () {
+                            output.innerHTML = this.value;
+                        }
+                    </script>
+                    <br/>
+                    <button class="w3-button w3-deep-purple w3-ripple w3-opacity-off" type="submit">
+                        <fmt:message key="position.process"/></button>
                 </c:if>
                 <c:if test="${requestScope.position.status.id == 2}">
                     <input type="hidden" name="command" value="RETURN_BOOK_COMMAND">
                     <button class="w3-button w3-purple w3-ripple w3-opacity" type="submit">
-                        <fmt:message key="position.return" /></button>
+                        <fmt:message key="position.return"/></button>
                 </c:if>
                 <c:if test="${requestScope.position.status.id == 3}">
                     <input type="radio" class="w3-radio" id="sell" name="command" value="SELL_BOOK_COMMAND" checked>
@@ -170,7 +171,7 @@
                     <br/>
                     <br/>
                     <button class="w3-button w3-purple w3-ripple w3-opacity" type="submit">
-                        <fmt:message key="position.process" /></button>
+                        <fmt:message key="position.process"/></button>
                 </c:if>
             </form>
         </div>
