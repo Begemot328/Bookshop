@@ -62,11 +62,8 @@
                 <input class="w3-input w3-border" type="password" name="password" required
                        placeholder="<fmt:message key="password"/>">
             </div>
-            <c:if test="${errorMessage != null}">
-                <div class="w3-container" style="width:50%">
-                    <p class="w3-large w3-text-red w3-animate-opacity"><fmt:message key="${errorMessage}"/></p>
-                </div>
-            </c:if>
+            <!-- error message box! -->
+            <c:import url="elements/errorMessage.jsp" charEncoding="utf-8"/>
             <br/>
             <div class="w3-btn" style="width:10%">
                 <input class="w3-btn w3-deep-purple w3-ripple w3-hover-purple" type="submit"

@@ -79,6 +79,11 @@
             <div class="w3-panel w3-large w3-purple w3-opacity">
                 <h4><fmt:message key="quantity"/>: ${requestScope.position.quantity}</h4>
             </div>
+            <c:if test="${not empty requestScope.position.note}">
+                <div class="w3-panel w3-large w3-purple w3-opacity">
+                    <h4>${requestScope.position.note}</h4>
+                </div>
+            </c:if>
             <c:if test="${not empty requestScope.seller}">
                 <div class="w3-panel w3-large w3-purple w3-opacity">
                     <h4><fmt:message key="seller"/>: ${requestScope.seller.firstName}

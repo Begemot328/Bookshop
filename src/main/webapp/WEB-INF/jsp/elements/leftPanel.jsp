@@ -15,7 +15,7 @@
     <title>Left panel</title>
 </head>
 <body>
-<div class="w3-cell  w3-deep-purple w3-opacity" style="width:15%; height:100vh; min-height: content-box">
+<div class="w3-cell w3-container w3-deep-purple w3-opacity" style="width:15%; height:100vh; min-height: content-box">
     <div class="w3-bar-block">
         <c:if test="${not empty sessionScope.currentUser}">
             <c:choose>
@@ -39,7 +39,6 @@
                 <button class="w3-button w3-bar-item w3-ripple w3-hover-purple" type="submit">${genre.name}</button>
             </form>
         </c:forEach>
-
     </div>
 </div>
 </body>

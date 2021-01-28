@@ -129,7 +129,6 @@
 <div class="w3-cell-row">
     <!-- left panel-->
     <c:import url="elements/leftPanel.jsp" charEncoding="utf-8"/>
-
     <c:set var="commandName" value="VIEW_BOOK_COMMAND"/>
     <!-- Center panel -->
     <div class="w3-cell w3-container w3-padding-large w3-center" style="width:70%">

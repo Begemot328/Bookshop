@@ -48,8 +48,8 @@
     <!-- map -->
     <script
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwIrGRwhU9pynlNeOMDXPqQYZmwroni4Q&callback=initMap&libraries=&v=weekly"
-            defer
-    ></script>
+            defer>
+    </script>
     <style type="text/css">
         /* Set the size of the div element that contains the map */
         #map {

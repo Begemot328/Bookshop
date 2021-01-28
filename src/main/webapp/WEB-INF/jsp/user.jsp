@@ -1,11 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: WorkPC
-  Date: 12.12.2020
-  Time: 18:03
-  To change this template use File | Settings | File Templates.
---%>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -42,37 +34,12 @@
         body, h1, h2, h3, h4, h5, h6 {
             font-family: Arial, Helvetica, sans-serif;
         }
-
-        .slider {
-            -webkit-appearance: none;
-            width: 80%;
-            height: 25px;
-            background: #9370DB;
-            outline: none;
-            opacity: 0.7;
-            -webkit-transition: .2s;
-            transition: opacity .2s;
-        }
-
-        .slider:hover {
-            opacity: 1;
-        }
-
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 25px;
-            height: 25px;
-            background: #800080;
-            cursor: pointer;
-        }
     </style>
-
     <!-- map -->
     <script
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwIrGRwhU9pynlNeOMDXPqQYZmwroni4Q&callback=initMap&libraries=&v=weekly"
-            defer
-    ></script>
+            defer>
+    </script>
     <style type="text/css">
         /* Set the size of the div element that contains the map */
         #map {
@@ -113,6 +80,7 @@
 <body>
 <!-- Top panel-->
 <c:import url="elements/header.jsp" charEncoding="utf-8"/>
+<!--  Columns -->
 <div class="w3-cell-row">
     <!-- left panel-->
     <c:import url="elements/leftPanel.jsp" charEncoding="utf-8"/>
@@ -123,7 +91,6 @@
             <div class="w3-panel w3-large w3-purple w3-opacity">
                 <h4>${requestScope.user.firstName} ${requestScope.user.lastName}</h4>
             </div>
-
             <c:choose>
                 <c:when test="${not empty requestScope.user.photoLink}">
                     <img src="${requestScope.user.photoLink}" alt="user picture"
@@ -131,7 +98,7 @@
                 </c:when>
                 <c:otherwise>
                     <img src="${pageContext.request.contextPath}/resources/images/user.png"
-                    alt="default author picture"  class="w3-image">
+                         alt="default author picture" class="w3-image">
                 </c:otherwise>
             </c:choose>
         </div>
@@ -162,35 +129,38 @@
             </tr>
             <c:forEach var="action"
                        items="${requestScope.actions}">
-                    <tr class="w3-deep-purple">
-                        <td><a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_SHOP_COMMAND&shopId=${action.shop.id}">
-                                <c:out value="${action.shop.name}"/></a></td>
-                        <td><a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_BOOK_COMMAND&bookId=${action.initialPosition.book.id}">
+                <tr class="w3-deep-purple">
+                    <td>
+                        <a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_SHOP_COMMAND&shopId=${action.shop.id}">
+                            <c:out value="${action.shop.name}"/></a></td>
+                    <td>
+                        <a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_BOOK_COMMAND&bookId=${action.initialPosition.book.id}">
                             <c:out value="${action.initialPosition.book.title}"/></a></td>
-                        <td><a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_AUTHOR_COMMAND&authorId=${action.initialPosition.book.author.id}">
+                    <td>
+                        <a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_AUTHOR_COMMAND&authorId=${action.initialPosition.book.author.id}">
                             <c:out value="${action.initialPosition.book.author.firstName}
                         ${action.initialPosition.book.author.lastName}"/></a></td>
-                        <td><c:out value="${action.quantity}"/></td>
-                        <td><c:out value="${action.currentPrice}"/></td>
+                    <td><c:out value="${action.quantity}"/></td>
+                    <td><c:out value="${action.currentPrice}"/></td>
 
-                        <td>
-                            <fmt:formatDate type = "both" dateStyle = "short" timeStyle = "short"
-                                            value="${action.date}"/>
-                        </td>
-                        <td><fmt:message key="${action.initialStatus}.${action.finalStatus}"/></td>
-                        <c:if test="${sessionScope.currentUser.status.id > 2}">
-                            <c:choose>
-                                <c:when test="${requestScope.user.status.id == 2}">
-                                    <th><c:out value="${action.seller.firstName}
+                    <td>
+                        <fmt:formatDate type="both" dateStyle="short" timeStyle="short"
+                                        value="${action.date}"/>
+                    </td>
+                    <td><fmt:message key="${action.initialStatus}.${action.finalStatus}"/></td>
+                    <c:if test="${sessionScope.currentUser.status.id > 2}">
+                        <c:choose>
+                            <c:when test="${requestScope.user.status.id == 2}">
+                                <th><c:out value="${action.seller.firstName}
                                          ${action.seller.lastName}"/></th>
-                                </c:when>
-                                <c:when test="${requestScope.user.status.id > 2}">
-                                    <th><c:out value="${action.buyer.firstName}
+                            </c:when>
+                            <c:when test="${requestScope.user.status.id > 2}">
+                                <th><c:out value="${action.buyer.firstName}
                                      ${action.buyer.lastName}"/></th>
-                                </c:when>
-                            </c:choose>
-                        </c:if>
-                    </tr>
+                            </c:when>
+                        </c:choose>
+                    </c:if>
+                </tr>
             </c:forEach>
         </table>
         <!-- Pagination          -->

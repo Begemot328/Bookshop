@@ -41,7 +41,7 @@
                 || sessionScope.currentUser.status.id == 4}">
                 <tr class="w3-deep-purple">
                     <td>
-                        <a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_BOOK_COMMAND&shopId=${position.book.id}">
+                        <a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_BOOK_COMMAND&bookId=${position.book.id}">
                             <c:out value="${position.book.title}"/></a></td>
                     <td><c:out value="${position.book.author.firstName} ${position.book.author.lastName}"/></td>
                     <td><c:out value="${position.quantity}"/></td>

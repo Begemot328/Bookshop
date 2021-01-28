@@ -72,11 +72,10 @@ public class AddPositionCommand implements Command {
                     currentUser, book, shop, note, quantity);
 
             Map<String, String> parameters = new HashMap<>();
-        /*    parameters.put(RequestParameters.COMMAND, CommandEnum.VIEW_POSITION_COMMAND.toString());
+            parameters.put(RequestParameters.COMMAND, CommandEnum.VIEW_POSITION_COMMAND.toString());
             parameters.put(RequestParameters.POSITION_ID, Integer.toString(newPosition.getId()));
             return new Router(new URL(CommandUtil.getURL(
-                    request.getRequestURL().toString(), parameters))); */
-            return new Router(new URL(request.getRequestURL().toString()));
+                    request.getRequestURL().toString(), parameters)));
         } catch (ServiceException | MalformedURLException e) {
             throw new CommandException(e);
         } catch (ValidationException e) {

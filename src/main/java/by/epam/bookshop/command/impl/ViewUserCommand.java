@@ -16,7 +16,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class ViewUserCommand implements Command {
-    private static final int ELEMENTS_PER_PAGE = 30;
+    private static final int ELEMENTS_PER_PAGE = 10;
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
@@ -27,15 +27,12 @@ public class ViewUserCommand implements Command {
             PositionActionFinder finder;
             if (user.getStatus().equals(UserStatus.BUYER) ) {
                 finder = new PositionActionFinder().findByBuyer(user.getId());
-                actions = PositionActionService.getInstance()
-                        .findBy(finder)
-                        .toArray(PositionAction[]::new);
             } else {
                 finder = new PositionActionFinder().findBySeller(user.getId());
-                actions = PositionActionService.getInstance()
-                        .findBy(finder)
-                        .toArray(PositionAction[]::new);
             }
+            actions = PositionActionService.getInstance()
+                    .findBy(finder)
+                    .toArray(PositionAction[]::new);
 
             int pageQuantity = CommandUtil.pageQuantity(PositionActionService.getInstance().countBy(finder),
                     ELEMENTS_PER_PAGE);
