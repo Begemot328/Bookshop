@@ -23,18 +23,16 @@ import java.util.Map;
 public class EditPositionCommand implements Command {
 
     private static final String WRONG_AUTHOR_ERROR = "error.author.id";
-    private static final String SERVICE_EXCEPTION = "Service Exception: ";
     private static final String INPUT_ERROR = "error.input";
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         Position newPosition;
         String note = request.getParameter(RequestParameters.NOTE);
-        int shopId = 0;
-        int bookId = 0;
-        int positionId = 0;
+        int shopId;
+        int bookId;
+        int positionId;
         int quantity;
-        User currentUser = null;
 
         try {
             shopId = Integer.parseInt(request.getParameter(RequestParameters.SHOP_ID));
@@ -58,11 +56,6 @@ public class EditPositionCommand implements Command {
                 return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
             }
 
-            if (request.getSession().getAttribute(SessionParameters.CURRENT_USER) == null) {
-                return new Router(JSPPages.LOGIN_PAGE);
-            } else {
-                currentUser = (User) request.getSession().getAttribute(SessionParameters.CURRENT_USER);
-            }
 
             try {
                 new PositionValidator().validate(book, shop, PositionStatus.READY, note, quantity);

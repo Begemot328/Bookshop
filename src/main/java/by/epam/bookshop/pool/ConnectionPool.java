@@ -160,8 +160,18 @@ public class ConnectionPool implements Closeable {
 
     @Override
     public void close() throws IOException {
-        workingConnections.clear();
-        freeConnections.clear();
+        try {
+            for (ConnectionProxy connectionProxy : workingConnections
+            ) {
+                connectionProxy.realClose();
+            }
+            for (ConnectionProxy connectionProxy : freeConnections
+            ) {
+                connectionProxy.realClose();
+            }
+        } catch (SQLException e) {
+            throw new ConnectionPoolRuntimeException(e);
+        }
         Controller.getLoggerInstance().debug("Pool destroyed");
     }
 

@@ -145,8 +145,8 @@
                     <td><c:out value="${action.quantity}"/></td>
                     <td><c:out value="${action.currentPrice}"/></td>
                     <td>
-                        <fmt:formatDate type="both" dateStyle="short" timeStyle="short"
-                                        value="${action.date}"/>
+                        <fmt:parseDate value="${action.date}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+                        <fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${parsedDateTime}"/>
                     </td>
                     <td><fmt:message key="${action.initialStatus}.${action.finalStatus}"/></td>
                     <c:if test="${sessionScope.currentUser.status.id > 2}">

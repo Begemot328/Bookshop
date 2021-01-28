@@ -57,7 +57,6 @@ public class FindBooksCommand implements Command {
             if (request.getParameterValues(RequestParameters.GENRE_ID) != null
                     && request.getParameterValues(RequestParameters.GENRE_ID).length > 0) {
 
-                List<Integer> genreId = new ArrayList<>();
                 for (String id :
                         request.getParameterValues(RequestParameters.GENRE_ID)) {
                     finder.findByGenre(Integer.parseInt(id));

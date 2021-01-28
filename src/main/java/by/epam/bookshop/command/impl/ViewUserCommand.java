@@ -23,7 +23,7 @@ public class ViewUserCommand implements Command {
         try {
             User user = UserService.getInstance()
                     .read(Integer.parseInt(request.getParameter(RequestParameters.USER_ID)));
-            PositionAction[] actions = null;
+            PositionAction[] actions;
             PositionActionFinder finder;
             if (user.getStatus().equals(UserStatus.BUYER) ) {
                 finder = new PositionActionFinder().findByBuyer(user.getId());
@@ -50,12 +50,10 @@ public class ViewUserCommand implements Command {
                     return new Router(JSPPages.VIEW_USER_PAGE);
                 }
             } else {
-                //Router router = new Router(new URL(request.getRequestURL().toString()));
-                //return router;
+                return new Router(new URL(request.getRequestURL().toString()));
 
-                return new Router(JSPPages.VIEW_USER_PAGE);
             }
-        } catch (ServiceException /*| MalformedURLException*/ e) {
+        } catch (ServiceException | MalformedURLException e) {
             throw new CommandException(e);
         }
         return new Router(JSPPages.VIEW_USER_PAGE);

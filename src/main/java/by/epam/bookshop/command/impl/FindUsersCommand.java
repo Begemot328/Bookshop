@@ -14,8 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 public class FindUsersCommand implements Command {
     private static final int ELEMENTS_PER_PAGE = 30;
 
-    private static final String UNKNOWN_ENTITY_EXCEPTION = "Unknown entity exception";
-
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         UserFinder finder = new UserFinder();

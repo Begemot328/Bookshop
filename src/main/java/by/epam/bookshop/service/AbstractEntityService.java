@@ -91,7 +91,7 @@ public abstract class AbstractEntityService<T extends Entity> implements EntityS
     }
 
     @Override
-    public int countAll() throws DAOException, ServiceException {
+    public int countAll() throws ServiceException {
         try (Connection connection = getConnection()) {
             return getDAO(connection).countAll();
         } catch (DAOException | SQLException e) {

@@ -35,10 +35,10 @@ public class AddBookCommand implements Command {
         Book newBook;
         String title = request.getParameter(RequestParameters.TITLE);
         String description = request.getParameter(RequestParameters.DESCRIPTION);
-        int authorId = 0;
-        float price = 0;
+        int authorId;
+        float price;
         Author author;
-        URL link = null;
+        URL link;
 
         try {
             link = CommandUtil.getBookLink(request, PICTURE_WIDTH, PICTURE_HEIGHT, PATH_ID);

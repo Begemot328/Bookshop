@@ -16,7 +16,6 @@ import java.util.Optional;
 
 public class LoginCommand implements Command {
     private static final String LOGIN_ERROR = "error.login";
-    private static final String SERVICE_EXCEPTION = "Service Exception: ";
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
@@ -25,12 +24,11 @@ public class LoginCommand implements Command {
         Optional<User> user;
         try {
             user = UserService.getInstance().findBy(new UserFinder().findByLogin(login)).stream().findAny();
-            if (!user.isPresent() || user.get().getPassword() != PasswordCoder.code(password)) {
+            if (user.isEmpty() || user.get().getPassword() != PasswordCoder.code(password)) {
 
                 request.setAttribute(RequestParameters.ERROR_MESSAGE, LOGIN_ERROR);
 
-                Router router = new Router(JSPPages.LOGIN_PAGE);
-                return router;
+                return new Router(JSPPages.LOGIN_PAGE);
             }
             request.getSession().setAttribute(SessionParameters.CURRENT_USER, new UserDTO(user.get()));
             Router router = new Router();

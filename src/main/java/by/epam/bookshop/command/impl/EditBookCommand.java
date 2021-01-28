@@ -39,9 +39,9 @@ public class EditBookCommand implements Command {
         Book newBook;
         String title = request.getParameter(RequestParameters.TITLE);
         String description = request.getParameter(RequestParameters.DESCRIPTION);
-        URL link = null;
-        int authorId = 0;
-        float price = 0;
+        URL link;
+        int authorId;
+        float price;
         Author author;
 
         try {

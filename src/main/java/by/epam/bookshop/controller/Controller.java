@@ -29,7 +29,6 @@ import java.util.Enumeration;
 public class Controller  extends HttpServlet {
     private static final String GET = "GET";
     private static final String POST = "POST";
-    private static final String COMMAND = "?command=";
 
     static Logger logger = LoggerFactory.getLogger(Controller.class);
 

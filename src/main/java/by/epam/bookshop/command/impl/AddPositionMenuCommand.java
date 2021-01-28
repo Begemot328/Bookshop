@@ -15,8 +15,6 @@ import by.epam.bookshop.service.shop.ShopService;
 import javax.servlet.http.HttpServletRequest;
 
 public class AddPositionMenuCommand implements Command {
-    private static final String SERVICE_EXCEPTION = "Service Exception: ";
-    private static final String DAO_EXCEPTION = "DAO Exception: ";
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {

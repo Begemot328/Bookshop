@@ -28,10 +28,10 @@ public class AddPositionCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
         Position newPosition;
         String note = request.getParameter(RequestParameters.NOTE);
-        int shopId = 0;
-        int bookId = 0;
+        int shopId;
+        int bookId;
         int quantity;
-        User currentUser = null;
+        User currentUser;
 
         try {
             shopId = Integer.parseInt(request.getParameter(RequestParameters.SHOP_ID));

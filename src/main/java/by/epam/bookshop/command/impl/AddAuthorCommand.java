@@ -28,7 +28,7 @@ public class AddAuthorCommand implements Command {
         String description = request.getParameter(RequestParameters.DESCRIPTION);
         String firstName = request.getParameter(RequestParameters.AUTHOR_FIRSTNAME);
         String lastName = request.getParameter(RequestParameters.AUTHOR_LASTNAME);
-        URL link = null;
+        URL link;
 
         try {
             link = CommandUtil.getBookLink(request, PICTURE_WIDTH, PICTURE_HEIGHT, PATH_ID);

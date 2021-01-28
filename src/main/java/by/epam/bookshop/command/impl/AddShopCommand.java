@@ -31,8 +31,8 @@ public class AddShopCommand implements Command {
         String address = request.getParameter(RequestParameters.ADDRESS);
         String name = request.getParameter(RequestParameters.SHOP_NAME);
 
-        AddressObject addressObject = null;
-        URL link = null;
+        AddressObject addressObject;
+        URL link;
 
         try {
             link = CommandUtil.getBookLink(request, PICTURE_WIDTH, PICTURE_HEIGHT, PATH_ID);

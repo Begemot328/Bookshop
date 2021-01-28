@@ -62,15 +62,14 @@ public class GoogleDriveUtil {
     }
 
     public static java.io.File downloadFile(String url) throws IOException {
-        String filePathString = url;
         String fileName;
-        if (filePathString.contains("/")) {
-            fileName = filePathString.substring(filePathString.lastIndexOf("/") + 1, filePathString.length() - 1);
+        if (url.contains("/")) {
+            fileName = url.substring(url.lastIndexOf("/") + 1, url.length() - 1);
         } else {
-            fileName = filePathString;
+            fileName = url;
         }
         java.io.File localFile = new java.io.File("temp/" + fileName);
-        org.apache.commons.io.FileUtils.copyURLToFile(new URL(filePathString), localFile);
+        org.apache.commons.io.FileUtils.copyURLToFile(new URL(url), localFile);
         return localFile;
     }
 
@@ -90,10 +89,8 @@ public class GoogleDriveUtil {
         File file = service.files().create(fileMetadata, mediaContent)
                 .setFields("id")
                 .execute();
-        System.out.println("File ID: " + file.getId());
-        String photoLink = PATH.concat(file.getId());
 
-        return photoLink;
+        return PATH.concat(file.getId());
     }
 
     public static String transferFile(String url, String pathId) throws GeneralSecurityException, IOException {

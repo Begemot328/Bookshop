@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 
 public class Runner {
     public static void main(String[] args) throws FactoryException {
-        try {
+        /*try {
             AddressObject obj = new AddressObject("Минск, Янки Лучины, 11");
             System.out.println(obj.getFormattedAddress());
             System.out.println(new AddressObject(obj.getFormattedAddress()).getFormattedAddress());
@@ -38,7 +38,7 @@ public class Runner {
         } catch (AddressException e) {
             e.printStackTrace();
         }
-        /*System.out.println(PasswordCoder.code("root"));
+        System.out.println(PasswordCoder.code("root"));
         System.out.println(PasswordCoder.code("qwerty"));
 
         System.out.println("AuthorDAO");

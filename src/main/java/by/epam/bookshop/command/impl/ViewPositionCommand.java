@@ -15,6 +15,7 @@ import by.epam.bookshop.service.position_action.PositionActionService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Optional;
 
 public class ViewPositionCommand implements Command {
@@ -34,7 +35,7 @@ public class ViewPositionCommand implements Command {
                                             .findByFinalStatus(position.getStatus().getId()));
                     Optional<PositionAction> action =
                             actions.stream().max(
-                                    (action1, action2) -> action1.getDate().compareTo(action2.getDate()));
+                                    Comparator.comparing(PositionAction::getDate));
                     if (action.isPresent()) {
                         request.setAttribute(RequestParameters.BUYER, action.get().getBuyer());
                         request.setAttribute(RequestParameters.SELLER, action.get().getSeller());

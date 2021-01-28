@@ -51,12 +51,9 @@ public class RegisterCommand implements Command {
             return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
         }
 
-        AddressObject addressObject = null;
+        AddressObject addressObject;
         User user;
-        String photoLink = null;
-        URL link = null;
-        String fileString = null;
-        File file = null;
+        URL link;
 
         try {
             link = CommandUtil.getBookLink(request, PICTURE_WIDTH, PICTURE_HEIGHT, PATH_ID);
@@ -76,20 +73,18 @@ public class RegisterCommand implements Command {
 
         try {
             new UserValidator().validate(firstName, lastName, login,
-                    PasswordCoder.code(password), addressObject, photoLink, UserStatus.BUYER);
+                    PasswordCoder.code(password), addressObject, link, UserStatus.BUYER);
         } catch (ValidationException validationException) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, REGISTER_ERROR);
-            Router router = new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
-            return router;
+            return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
         }
         try {
             if (UserService.getInstance().findBy(new UserFinder().findByLogin(login)).isEmpty()) {
                 user = UserService.getInstance().create(firstName, lastName, login,
-                        PasswordCoder.code(password), address, photoLink, UserStatus.BUYER);
+                        PasswordCoder.code(password), address, link, UserStatus.BUYER);
             } else {
                 request.setAttribute(RequestParameters.ERROR_MESSAGE, OCCUPIED_LOGIN_ERROR);
-                Router router = new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
-                return router;
+                return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
             }
             request.getSession().setAttribute(SessionParameters.CURRENT_USER, new UserDTO(user));
             Router router = new Router();

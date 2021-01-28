@@ -28,14 +28,12 @@ public class EditShopCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         Shop newShop;
-        AddressObject addressObject = null;
-        URL link = null;
+        AddressObject addressObject;
+        URL link;
 
         String name = request.getParameter(RequestParameters.SHOP_NAME);
-        String photoLink = request.getParameter(RequestParameters.PHOTOLINK);
         String address = request.getParameter(RequestParameters.ADDRESS);
         try {
-
             link = CommandUtil.getBookLink(request, PICTURE_WIDTH, PICTURE_HEIGHT, PATH_ID);
             addressObject = new AddressObject(address);
 
