@@ -78,13 +78,13 @@
     </script>
 </head>
 <body>
-<!-- Top panel-->
+<!-- Top panel -->
 <c:import url="elements/header.jsp" charEncoding="utf-8"/>
 <!--  Columns -->
 <div class="w3-cell-row">
     <!-- left panel-->
     <c:import url="elements/leftPanel.jsp" charEncoding="utf-8"/>
-    <!-- middle panel-->
+    <!-- Card panel -->
     <c:set var="commandName" value="VIEW_USER_COMMAND"/>
     <div class="w3-cell w3-container w3-padding-large w3-center" style="width:70%">
         <div class="w3-card-4 w3-half w3-center">
@@ -127,8 +127,10 @@
                     </c:choose>
                 </c:if>
             </tr>
+
             <c:forEach var="action"
                        items="${requestScope.actions}">
+
                 <tr class="w3-deep-purple">
                     <td>
                         <a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_SHOP_COMMAND&shopId=${action.shop.id}">
@@ -142,7 +144,6 @@
                         ${action.initialPosition.book.author.lastName}"/></a></td>
                     <td><c:out value="${action.quantity}"/></td>
                     <td><c:out value="${action.currentPrice}"/></td>
-
                     <td>
                         <fmt:formatDate type="both" dateStyle="short" timeStyle="short"
                                         value="${action.date}"/>

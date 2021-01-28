@@ -50,10 +50,12 @@ public class ViewUserCommand implements Command {
                     return new Router(JSPPages.VIEW_USER_PAGE);
                 }
             } else {
-                Router router = new Router(new URL(request.getRequestURL().toString()));
-                return router;
+                //Router router = new Router(new URL(request.getRequestURL().toString()));
+                //return router;
+
+                return new Router(JSPPages.VIEW_USER_PAGE);
             }
-        } catch (ServiceException | MalformedURLException e) {
+        } catch (ServiceException /*| MalformedURLException*/ e) {
             throw new CommandException(e);
         }
         return new Router(JSPPages.VIEW_USER_PAGE);
