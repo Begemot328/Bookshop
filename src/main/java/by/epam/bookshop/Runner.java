@@ -11,6 +11,7 @@ import by.epam.bookshop.exceptions.FactoryException;
 import by.epam.bookshop.pool.ConnectionPool;
 import by.epam.bookshop.pool.ConnectionProxy;
 import by.epam.bookshop.util.AddressObject;
+import by.epam.bookshop.util.PasswordCoder;
 
 import java.time.LocalDateTime;
 
@@ -149,7 +150,8 @@ public class Runner {
             new Thread(new DAOTester("Thread" + i)).start();
         }
         */
-
+        System.out.println(PasswordCoder.hash("root"));
+        System.out.println(PasswordCoder.hash("qwerty"));
     }
 }
 

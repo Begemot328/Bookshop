@@ -52,14 +52,15 @@ values (5, 'courier');
 
 create table users
 (
-    id         int primary key auto_increment,
-    first_name varchar(40) not null,
-    last_name  varchar(40) not null,
-    login      varchar(10) not null,
-    password   int(10) not null,
+    id         int auto_increment
+        primary key,
+    first_name varchar(40)  not null,
+    last_name  varchar(40)  not null,
+    login      varchar(40)  not null,
+    password   varchar(100)  not null,
     address    varchar(100) not null,
-    photo_link varchar(100),
-    status     tinyint
+    photo_link varchar(100) null,
+    status     tinyint      null
 );
 
 drop table if exists genres;

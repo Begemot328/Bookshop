@@ -11,13 +11,13 @@ public class User extends Entity {
     private String firstName;
     private String lastName;
     private String login;
-    private int password;
+    private String password;
     private AddressObject address;
     private URL photoLink;
     private UserStatus status;
 
     public User(String firstName, String lastName,
-                String login, int password,
+                String login, String password,
                 AddressObject address, URL photoLink,
                 UserStatus status) {
         this.firstName = firstName;
@@ -45,11 +45,11 @@ public class User extends Entity {
         this.login = login;
     }
 
-    public int getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(int password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 

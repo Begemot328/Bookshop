@@ -18,7 +18,7 @@ public class UserDTO extends User {
 
     public UserDTO (User user) {
         super(user.getFirstName(), user.getLastName(),
-                user.getLogin(), 0, user.getAddress(),
+                user.getLogin(), null, user.getAddress(),
                 user.getPhotoLink(), user.getStatus());
         this.setId(user.getId());
 
@@ -26,6 +26,6 @@ public class UserDTO extends User {
 
     private UserDTO(String firstName, String lastName, String login, int password,
                     AddressObject address, URL photoLink, UserStatus status) {
-        super(firstName, lastName, login, 0, address, photoLink, status);
+        super(firstName, lastName, login, null, address, photoLink, status);
     }
 }

@@ -16,7 +16,7 @@ public class UserValidator extends AbstractEntityValidator<User> {
             String.class,
             String.class,
             String.class,
-            Integer.class,
+            String.class,
             AddressObject.class,
             URL.class,
             UserStatus.class
@@ -38,7 +38,7 @@ public class UserValidator extends AbstractEntityValidator<User> {
             throw new ValidationException(INPUT_ERROR);
         }
         if (user.getLogin().isEmpty()
-                || user.getPassword() == 0) {
+                || user.getPassword().isEmpty()) {
             throw new ValidationException(INPUT_ERROR);
         }
     }

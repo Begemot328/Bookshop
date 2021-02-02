@@ -24,7 +24,8 @@ public class LoginCommand implements Command {
         Optional<User> user;
         try {
             user = UserService.getInstance().findBy(new UserFinder().findByLogin(login)).stream().findAny();
-            if (user.isEmpty() || user.get().getPassword() != PasswordCoder.code(password)) {
+            if (user.isEmpty()
+                    || !user.get().getPassword().equals(PasswordCoder.hash(password))) {
 
                 request.setAttribute(RequestParameters.ERROR_MESSAGE, LOGIN_ERROR);
 

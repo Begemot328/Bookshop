@@ -10,6 +10,7 @@ import by.epam.bookshop.exceptions.ServiceException;
 import by.epam.bookshop.exceptions.ValidationException;
 import by.epam.bookshop.service.AbstractEntityService;
 import by.epam.bookshop.service.EntityService;
+import by.epam.bookshop.util.PasswordCoder;
 import by.epam.bookshop.validator.EntityValidator;
 import by.epam.bookshop.validator.impl.UserValidator;
 
@@ -59,7 +60,7 @@ public class UserService extends AbstractEntityService<User> {
         if (user == null) {
             return null;
         }
-        if (password.hashCode() == user.getPassword()) {
+        if (PasswordCoder.hash(password).equals(user.getPassword())) {
             return user;
         } else {
             return null;

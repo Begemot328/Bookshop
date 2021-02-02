@@ -73,7 +73,7 @@ public class RegisterCommand implements Command {
 
         try {
             new UserValidator().validate(firstName, lastName, login,
-                    PasswordCoder.code(password), addressObject, link, UserStatus.BUYER);
+                    PasswordCoder.hash(password), addressObject, link, UserStatus.BUYER);
         } catch (ValidationException validationException) {
             request.setAttribute(RequestParameters.ERROR_MESSAGE, REGISTER_ERROR);
             return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
@@ -81,7 +81,7 @@ public class RegisterCommand implements Command {
         try {
             if (UserService.getInstance().findBy(new UserFinder().findByLogin(login)).isEmpty()) {
                 user = UserService.getInstance().create(firstName, lastName, login,
-                        PasswordCoder.code(password), address, link, UserStatus.BUYER);
+                        PasswordCoder.hash(password), address, link, UserStatus.BUYER);
             } else {
                 request.setAttribute(RequestParameters.ERROR_MESSAGE, OCCUPIED_LOGIN_ERROR);
                 return new Router((JSPPages) request.getSession().getAttribute(SessionParameters.LAST_PAGE));
