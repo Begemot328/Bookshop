@@ -12,8 +12,14 @@ public class ChangeLocaleCommand implements Command {
 
         request.getSession().setAttribute(SessionParameters.LANGUAGE,
                 request.getParameter(RequestParameters.LANGUAGE));
-        Router router = new Router(
-                JSPPages.START_PAGE);
-        return router;
+        if (request.getSession().getAttribute(SessionParameters.LAST_GET_REQUEST) != null
+        && request.getSession().getAttribute(SessionParameters.LAST_GET_REQUEST) instanceof HttpServletRequest) {
+            request = (HttpServletRequest) request.getSession().getAttribute(SessionParameters.LAST_GET_REQUEST);
+            Command command = CommandEnum.getCommand(request.getParameter(RequestParameters.COMMAND));
+            return command.execute(request);
+        } else {
+            return new Router(JSPPages.START_PAGE);
+        }
+
     }
 }

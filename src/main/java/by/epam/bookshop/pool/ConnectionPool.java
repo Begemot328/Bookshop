@@ -1,9 +1,9 @@
 package by.epam.bookshop.pool;
 
-import by.epam.bookshop.controller.Controller;
 import by.epam.bookshop.exceptions.ConnectionPoolException;
 import by.epam.bookshop.exceptions.ConnectionPoolRuntimeException;
 import by.epam.bookshop.resource.DbResourceManager;
+import by.epam.bookshop.util.LoggerUtil;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -122,7 +122,7 @@ public class ConnectionPool implements Closeable {
                 throw new ConnectionPoolRuntimeException(e);
             }
         });
-        Controller.getLoggerInstance().debug("Pool initiated");
+        LoggerUtil.getLoggerInstance().debug("Pool initiated");
     }
 
     public static ConnectionPool getInstance() throws ConnectionPoolException {
@@ -172,7 +172,7 @@ public class ConnectionPool implements Closeable {
         } catch (SQLException e) {
             throw new ConnectionPoolRuntimeException(e);
         }
-        Controller.getLoggerInstance().debug("Pool destroyed");
+        LoggerUtil.getLoggerInstance().debug("Pool destroyed");
     }
 
     public void releaseConnection(ConnectionProxy connection) throws ConnectionPoolException {

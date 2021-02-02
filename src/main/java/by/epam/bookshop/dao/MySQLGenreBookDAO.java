@@ -1,7 +1,7 @@
 package by.epam.bookshop.dao;
 
-import by.epam.bookshop.controller.Controller;
 import by.epam.bookshop.exceptions.DAOException;
+import by.epam.bookshop.util.LoggerUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -52,7 +52,7 @@ public class MySQLGenreBookDAO {
             statement.setInt(1, bookId);
             statement.setInt(2, genreId);
 
-            Controller.getLoggerInstance().debug(query);
+            LoggerUtil.getLoggerInstance().debug(query);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -70,7 +70,7 @@ public class MySQLGenreBookDAO {
             statement.setInt(1, bookId);
             statement.setInt(2, genreId);
 
-            Controller.getLoggerInstance().debug(query);
+            LoggerUtil.getLoggerInstance().debug(query);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -85,7 +85,7 @@ public class MySQLGenreBookDAO {
                 .replace(PARAMETER, BOOK_ID)
                 .replace(VALUE, Integer.toString(id));
 
-        Controller.getLoggerInstance().debug(query);
+        LoggerUtil.getLoggerInstance().debug(query);
         try (Statement statement = connection.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(query)) {
                 while (resultSet.next()) {
@@ -106,7 +106,7 @@ public class MySQLGenreBookDAO {
                 .replace(PARAMETER, GENRE_ID)
                 .replace(VALUE, Integer.toString(id));
 
-        Controller.getLoggerInstance().debug(query);
+        LoggerUtil.getLoggerInstance().debug(query);
         try (Statement statement = connection.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(query)) {
                 while (resultSet.next()) {

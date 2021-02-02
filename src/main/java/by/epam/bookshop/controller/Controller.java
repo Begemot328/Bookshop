@@ -4,7 +4,9 @@ import by.epam.bookshop.command.*;
 import by.epam.bookshop.entity.genre.Genre;
 import by.epam.bookshop.exceptions.DAOException;
 import by.epam.bookshop.exceptions.ServiceException;
+import by.epam.bookshop.filter.HttpServletRequestSetParameterWrapper;
 import by.epam.bookshop.service.genre.GenreService;
+import by.epam.bookshop.util.LoggerUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,11 +32,7 @@ public class Controller  extends HttpServlet {
     private static final String GET = "GET";
     private static final String POST = "POST";
 
-    static Logger logger = LoggerFactory.getLogger(Controller.class);
-
-    public static Logger getLoggerInstance() {
-        return logger;
-    }
+    static Logger logger = LoggerUtil.getLoggerInstance();
 
     /**
      * GET method to process GET request
@@ -50,8 +48,10 @@ public class Controller  extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         logger.debug(GET);
+        HttpServletRequestSetParameterWrapper servletRequest  = (new HttpServletRequestSetParameterWrapper(
+                request));
+        request.getSession().setAttribute(SessionParameters.LAST_GET_REQUEST, servletRequest);
         processRequest(request, response);
-
     }
 
     @Override
@@ -98,7 +98,6 @@ public class Controller  extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        logger.debug(request.toString());
         Enumeration<String> pars = request.getParameterNames();
         while (pars.hasMoreElements()) {
             String name = pars.nextElement();
@@ -129,4 +128,6 @@ public class Controller  extends HttpServlet {
             response.sendRedirect(router.getURL().toString());
         }
     }
+
+
 }

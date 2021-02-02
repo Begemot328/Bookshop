@@ -1,9 +1,9 @@
 package by.epam.bookshop.listener;
 
-import by.epam.bookshop.controller.Controller;
 import by.epam.bookshop.exceptions.ConnectionPoolException;
 import by.epam.bookshop.exceptions.ConnectionPoolRuntimeException;
 import by.epam.bookshop.pool.ConnectionPool;
+import by.epam.bookshop.util.LoggerUtil;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -19,7 +19,7 @@ public class StartEndListener implements ServletContextListener {
 
         try {
             ConnectionPool.getInstance();
-            Controller.getLoggerInstance().debug("Pool init");
+            LoggerUtil.getLoggerInstance().debug("Pool init");
         } catch (ConnectionPoolException e) {
             throw new ConnectionPoolRuntimeException(e);
         }
@@ -29,7 +29,7 @@ public class StartEndListener implements ServletContextListener {
         ServletContext context = ev.getServletContext();
         try {
             ConnectionPool.getInstance().close();
-            Controller.getLoggerInstance().debug("Pool destroy");
+            LoggerUtil.getLoggerInstance().debug("Pool destroy");
         } catch (ConnectionPoolException | IOException e) {
             throw new ConnectionPoolRuntimeException(e);
         }

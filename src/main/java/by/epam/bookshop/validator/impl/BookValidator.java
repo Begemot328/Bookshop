@@ -35,6 +35,10 @@ public class BookValidator extends AbstractEntityValidator<Book> {
             throw new ValidationException(INPUT_ERROR);
         }
 
+        if (book.getPrice() < 0) {
+            throw new ValidationException(INPUT_ERROR);
+        }
+
     }
 
 }

@@ -89,6 +89,13 @@
                     <h4>${requestScope.position.book.author.firstName} ${requestScope.position.book.author.lastName}</h4>
                 </button>
             </form>
+            <form method="POST" action="${pageContext.request.contextPath}/ControllerURL">
+                <input type="hidden" name="command" value="VIEW_SHOP_COMMAND">
+                <input type="hidden" name="shopId" value="${requestScope.position.shop.id}">
+                <button class="w3-panel w3-button w3-large w3-purple w3-opacity" type="submit" style="width: 100%">
+                    <h4><fmt:message key="shop"/>${requestScope.position.shop.name}</h4>
+                </button>
+            </form>
             <c:choose>
                 <c:when test="${not empty requestScope.position.book.photoLink}">
                     <img src="${requestScope.position.book.photoLink}" alt="book picture"
@@ -99,6 +106,7 @@
                          alt="default book picture" class="w3-image">
                 </c:otherwise>
             </c:choose>
+
             <div class="w3-panel w3-large w3-purple w3-opacity">
                 <h4>${requestScope.position.book.price} BYN</h4>
             </div>
@@ -159,18 +167,21 @@
                 </c:if>
                 <c:if test="${requestScope.position.status.id == 2}">
                     <input type="hidden" name="command" value="RETURN_BOOK_COMMAND">
-                    <button class="w3-button w3-purple w3-ripple w3-opacity" type="submit">
+                    <input type="hidden" name="userId" value="${requestScope.buyer.id}">
+                    <button class="w3-button w3-purple w3-ripple w3-opacity-off" type="submit">
                         <fmt:message key="position.return"/></button>
                 </c:if>
                 <c:if test="${requestScope.position.status.id == 3}">
                     <input type="radio" class="w3-radio" id="sell" name="command" value="SELL_BOOK_COMMAND" checked>
+                    <input type="hidden" name="userId" value="${requestScope.buyer.id}">
+                    <input type="hidden" name="quantity" value="${requestScope.position.quantity}">
                     <label for="sell"><fmt:message key="position.sell"/></label>
                     <br/>
                     <input type="radio" class="w3-radio" id="cancel-book" name="command" value="CANCEL_BOOK_COMMAND">
                     <label for="cancel-book"><fmt:message key="position.cancel.book"/></label>
                     <br/>
                     <br/>
-                    <button class="w3-button w3-purple w3-ripple w3-opacity" type="submit">
+                    <button class="w3-button w3-purple w3-ripple w3-opacity-off" type="submit">
                         <fmt:message key="position.process"/></button>
                 </c:if>
             </form>

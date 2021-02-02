@@ -1,8 +1,8 @@
 package by.epam.bookshop.dao;
 
-import by.epam.bookshop.controller.Controller;
 import by.epam.bookshop.entity.Entity;
 import by.epam.bookshop.exceptions.DAOException;
+import by.epam.bookshop.util.LoggerUtil;
 
 import java.sql.*;
 import java.util.Collection;
@@ -173,8 +173,8 @@ public abstract class MySQLEntityDAO<T extends Entity> implements EntityDAO<T> {
                 statement.setObject(++i, map.get(key));
 
             }
+            LoggerUtil.getLoggerInstance().debug(statement.toString());
             statement.executeUpdate();
-
             ResultSet resultSet = statement.getGeneratedKeys();
 
             if (resultSet.next()) {
@@ -200,6 +200,7 @@ public abstract class MySQLEntityDAO<T extends Entity> implements EntityDAO<T> {
                 statement.setObject(++i, map.get(key));
             }
             statement.setInt(++i, t.getId());
+            LoggerUtil.getLoggerInstance().debug(statement.toString());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -215,7 +216,7 @@ public abstract class MySQLEntityDAO<T extends Entity> implements EntityDAO<T> {
     @Override
     public int countBy(EntityFinder<T> finder) throws DAOException {
         try (Statement statement = connection.createStatement()) {
-            Controller.getLoggerInstance().debug(finder.getQuery().replaceFirst("\\*", COUNT));
+            LoggerUtil.getLoggerInstance().debug(finder.getQuery().replaceFirst("\\*", COUNT));
             try (ResultSet resultSet = statement.executeQuery(finder.getQuery().replaceFirst("\\*", COUNT))) {
                 resultSet.next();
                 return resultSet.getInt(1);
@@ -259,7 +260,7 @@ public abstract class MySQLEntityDAO<T extends Entity> implements EntityDAO<T> {
     public Collection<T> findBy(EntityFinder<T> finder) throws DAOException {
         try (Statement statement = connection.createStatement()) {
 
-            Controller.getLoggerInstance().debug(finder.getQuery());
+            LoggerUtil.getLoggerInstance().debug(finder.getQuery());
             try (ResultSet resultSet = statement.executeQuery(finder.getQuery())) {
                 return mapToList(resultSet);
             }
@@ -279,14 +280,11 @@ public abstract class MySQLEntityDAO<T extends Entity> implements EntityDAO<T> {
     @Override
     public Collection<T> findBy(EntityFinder<T> finder, int offset, int quantity) throws DAOException {
         try (Statement statement = connection.createStatement()) {
-            try (ResultSet resultSet = statement.executeQuery(
-                    finder.getQuery().concat(LIMIT
-                            .replace(FIRST, Integer.toString(offset))
-                            .replace(LAST, Integer.toString(quantity))))) {
-                Controller.getLoggerInstance().debug(
-                        finder.getQuery().concat(LIMIT
-                                .replace(FIRST, Integer.toString(offset))
-                                .replace(LAST, Integer.toString(quantity))));
+            String query = finder.getQuery().concat(LIMIT
+                    .replace(FIRST, Integer.toString(offset))
+                    .replace(LAST, Integer.toString(quantity)));
+            LoggerUtil.getLoggerInstance().debug(query);
+            try (ResultSet resultSet = statement.executeQuery(query)) {
                 return mapToList(resultSet);
             }
         } catch (SQLException e) {
@@ -297,8 +295,8 @@ public abstract class MySQLEntityDAO<T extends Entity> implements EntityDAO<T> {
     protected void delete(int id, String schemaName, String tableName) throws DAOException {
         try (PreparedStatement statement = connection.prepareStatement(
                 DELETE_QUERY.replace(SCHEMA, schemaName).replace(TABLE, tableName))) {
-
             statement.setInt(1, id);
+            LoggerUtil.getLoggerInstance().debug(statement.toString());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException(e);

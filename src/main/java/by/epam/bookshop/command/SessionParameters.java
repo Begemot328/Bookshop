@@ -10,4 +10,5 @@ public class SessionParameters {
     public final static String CURRENT_USER = "currentUser";
     public final static String LANGUAGE = "language";
     public final static String LAST_PAGE = "lastPage";
+    public static final String LAST_GET_REQUEST = "lastGetRequest";
 }

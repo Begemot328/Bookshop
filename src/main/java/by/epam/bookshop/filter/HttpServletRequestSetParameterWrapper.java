@@ -7,7 +7,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
-    class HttpServletRequestSetParameterWrapper extends HttpServletRequestWrapper {
+    public class HttpServletRequestSetParameterWrapper extends HttpServletRequestWrapper {
     private final Map<String, String[]> myParameters = new HashMap<>();
 
     public HttpServletRequestSetParameterWrapper(HttpServletRequest request) {

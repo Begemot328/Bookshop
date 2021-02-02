@@ -87,6 +87,13 @@
                     <h4>${requestScope.position.book.author.firstName} ${requestScope.position.book.author.lastName}</h4>
                 </button>
             </form>
+            <form method="POST" action="${pageContext.request.contextPath}/ControllerURL">
+                <input type="hidden" name="command" value="VIEW_SHOP_COMMAND">
+                <input type="hidden" name="shopId" value="${requestScope.position.shop.id}">
+                <button class="w3-panel w3-button w3-large w3-purple w3-opacity" type="submit" style="width: 100%">
+                    <h4><fmt:message key="shop"/>${requestScope.position.shop.name}</h4>
+                </button>
+            </form>
             <c:choose>
                 <c:when test="${not empty requestScope.position.book.photoLink}">
                     <img src="${requestScope.position.book.photoLink}" alt="book picture"
@@ -130,6 +137,7 @@
                     </button>
                 </c:if>
                 <c:if test="${requestScope.position.status.id == 3}">
+                    <input type="hidden" name="userId" value="${sessionScope.currentUser.id}">
                     <br/>
                     <input type="radio" class="w3-radio" id="cancel-book" name="command" value="CANCEL_BOOK_COMMAND">
                     <label for="cancel-book"><fmt:message key="position.cancel.book"/></label>

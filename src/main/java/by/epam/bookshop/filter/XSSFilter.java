@@ -1,6 +1,6 @@
 package by.epam.bookshop.filter;
 
-import by.epam.bookshop.controller.Controller;
+import by.epam.bookshop.util.LoggerUtil;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -48,7 +48,7 @@ public class XSSFilter implements Filter {
                 if (matcher.matches()) {
                     filterWorked = true;
                     request.setParameter(key, matcher.replaceAll(BLANK));
-                    Controller.getLoggerInstance().warn(matcher.group(0) +  " replaced");
+                    LoggerUtil.getLoggerInstance().warn(matcher.group(0) +  " replaced");
                 }
             }
         }
