@@ -1,4 +1,4 @@
-package test.by.epam.bookshop.util;
+package test.by.epam.bookshop.dao;
 
 import by.epam.bookshop.dao.impl.author.AuthorFinder;
 import by.epam.bookshop.dao.impl.author.MySQLAuthorDAO;
@@ -91,7 +91,7 @@ public class DAOTest extends Assert {
         addDBparameter(USE_UNICODE, DB_USE_UNICODE);
         System.out.println(getDbUrl());
         connection = DriverManager.getConnection(
-                getDbUrl(), DB_USER, DB_PASSWORD);
+                "jdbc:mysql://localhost:3306?useUnicode=true&serverTimezone=UTC", DB_USER, DB_PASSWORD);
         Scanner scanner = new Scanner(new FileReader(new File("SQL/bookshopTest.sql")));
         scanner.useDelimiter(";");
         Statement statement = connection.createStatement();
@@ -103,9 +103,9 @@ public class DAOTest extends Assert {
         author = new AuthorFactory().create("Alexander", "Pushkin", null, null);
         book = new BookFactory().create("The tale about the Golden Rooster",
                 author, "The tale about the Golden Rooster by Alexander Pushkin", (float) 10.1, null);
-        seller = new UserFactory().create("Yury", "Zmushko", "login", -946852072,
+        seller = new UserFactory().create("Yury", "Zmushko", "login", "946852072",
                 new AddressObject("Минск, Дзержинского, 11"), null, UserStatus.SELLER);
-        buyer = new UserFactory().create("Yury", "Zmushko", "login", -946852072,
+        buyer = new UserFactory().create("Yury", "Zmushko", "login", "946852072",
                 new AddressObject("Минск, Дзержинского, 11"), null, UserStatus.SELLER);
         position = new PositionFactory().create(book, shop, PositionStatus.READY, null, 1);
         positionAction = new PositionActionFactory().create(null, position, buyer, seller, LocalDateTime.now(),

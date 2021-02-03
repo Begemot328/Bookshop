@@ -73,7 +73,7 @@ public abstract class AbstractEntityService<T extends Entity> implements EntityS
     }
 
     @Override
-    public Collection<T> findAll() throws DAOException, ServiceException {
+    public Collection<T> findAll() throws ServiceException {
         try (Connection connection = getConnection()) {
             return getDAO(connection).findAll();
         } catch (DAOException | SQLException e) {

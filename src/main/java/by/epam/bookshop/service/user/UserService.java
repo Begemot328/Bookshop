@@ -18,9 +18,6 @@ import java.sql.Connection;
 import java.util.Arrays;
 
 public class UserService extends AbstractEntityService<User> {
-    private static final String SQL_CONNECTION_EXCEPTION = "SQL Exception: ";
-    private static final String DAO_EXCEPTION = "User DAO Exception: ";
-    private static final String FACTORY_EXCEPTION = "User factory Exception: ";
     private static final String WRONG_INPUT_EXCEPTION
             = "Wrong data input!";
 

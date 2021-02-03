@@ -26,7 +26,7 @@ public class AddGenreCommand implements Command {
                         GenreService.getInstance().findAll());
                 request.setAttribute(RequestParameters.GENRE_ID, genre.getId());
                 return new FindBooksCommand().execute(request);
-            } catch (DAOException | ServiceException | ValidationException e) {
+            } catch (ServiceException | ValidationException e) {
                 throw new CommandException(e);
             }
         }

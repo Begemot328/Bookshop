@@ -1,4 +1,4 @@
-package test.by.epam.bookshop.util;
+package test.by.epam.bookshop.validate;
 
 import by.epam.bookshop.entity.author.Author;
 import by.epam.bookshop.entity.author.AuthorFactory;
@@ -43,9 +43,9 @@ public class PositionValidatorTest extends Assert {
         author = new AuthorFactory().create("Alexander", "Pushkin", "description", url);
         book = new BookFactory().create("The tale about the Golden Rooster",
                 author, "The tale about the Golden Rooster by Alexander Pushkin", (float) 10.1, url);
-        seller = new UserFactory().create("Yury", "Zmushko", "login", -946852072,
+        seller = new UserFactory().create("Yury", "Zmushko", "login", "946852072",
                 new AddressObject("Минск, Дзержинского, 11"), null, UserStatus.SELLER);
-        buyer = new UserFactory().create("Yury", "Zmushko", "login", -946852072,
+        buyer = new UserFactory().create("Yury", "Zmushko", "login", "946852072",
                 new AddressObject("Минск, Дзержинского, 11"), null, UserStatus.SELLER);
         shop = new ShopFactory().create("На Сурганова", new AddressObject("Минск, Сурганова, 11"), null);
         position = new PositionFactory().create(book, shop, PositionStatus.READY, "note", (Integer) 1);

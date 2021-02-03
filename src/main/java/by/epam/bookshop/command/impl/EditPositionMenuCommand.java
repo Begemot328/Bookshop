@@ -30,8 +30,6 @@ public class EditPositionMenuCommand implements Command {
             request.setAttribute(RequestParameters.SHOPS, shops);
         } catch (ServiceException e) {
             throw new CommandException(e);
-        } catch (DAOException e) {
-            throw new CommandException(e);
         }
         return new Router(JSPPages.EDIT_POSITION_PAGE);
     }

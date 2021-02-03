@@ -121,7 +121,7 @@ public class EditBookCommand implements Command {
         request.setAttribute(RequestParameters.ERROR_MESSAGE, error_message);
         try {
             request.setAttribute(RequestParameters.AUTHORS, AuthorService.getInstance().findAll());
-        } catch (DAOException | ServiceException exception) {
+        } catch (ServiceException exception) {
             throw new CommandException(exception);
         }
         return new Router(JSPPages.ADD_BOOK_PAGE);

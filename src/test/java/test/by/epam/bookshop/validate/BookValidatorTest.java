@@ -1,4 +1,4 @@
-package test.by.epam.bookshop.util;
+package test.by.epam.bookshop.validate;
 
 import by.epam.bookshop.entity.EntityFactory;
 import by.epam.bookshop.entity.author.Author;

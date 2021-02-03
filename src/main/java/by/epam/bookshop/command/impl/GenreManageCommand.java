@@ -26,7 +26,7 @@ public class GenreManageCommand implements Command {
                         Genre newGenre = GenreService.getInstance().create(name);
                         request.getServletContext().setAttribute(RequestParameters.GENRES,
                                 GenreService.getInstance().findAll().toArray(Genre[]::new));
-                    } catch (ServiceException | DAOException e) {
+                    } catch (ServiceException e) {
                         throw new CommandException(e);
                     } catch (ValidationException e) {
                         request.setAttribute(RequestParameters.ERROR_MESSAGE, ErrorMessages.INPUT_ERROR);
@@ -43,7 +43,7 @@ public class GenreManageCommand implements Command {
                 } catch (NumberFormatException e) {
                     request.setAttribute(RequestParameters.ERROR_MESSAGE, ErrorMessages.INPUT_ERROR);
                     return new Router(JSPPages.GENRE_MENU_PAGE);
-                } catch (ServiceException | DAOException e) {
+                } catch (ServiceException e) {
                     throw new CommandException(e);
                 }
                 break;
@@ -58,7 +58,7 @@ public class GenreManageCommand implements Command {
                         GenreService.getInstance().update(newGenre);
                         request.getServletContext().setAttribute(RequestParameters.GENRES,
                                 GenreService.getInstance().findAll().toArray(Genre[]::new));
-                    } catch (ServiceException | DAOException e) {
+                    } catch (ServiceException e) {
                         throw new CommandException(e);
                     } catch (ValidationException e) {
                         request.setAttribute(RequestParameters.ERROR_MESSAGE, ErrorMessages.INPUT_ERROR);

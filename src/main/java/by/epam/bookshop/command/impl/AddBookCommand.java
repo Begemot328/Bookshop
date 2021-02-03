@@ -87,7 +87,7 @@ public class AddBookCommand implements Command {
                     request.getRequestURL().toString(), parameters)));
         } catch (NumberFormatException e) {
             return tryAgain(request, ErrorMessages.INPUT_ERROR);
-        } catch (ServiceException | DAOException | MalformedURLException e) {
+        } catch (ServiceException | MalformedURLException e) {
             throw new CommandException(e);
         } catch (ValidationException e) {
             return tryAgain(request, e);
@@ -102,7 +102,7 @@ public class AddBookCommand implements Command {
         request.setAttribute(RequestParameters.ERROR_MESSAGE, error_message);
         try {
             request.setAttribute(RequestParameters.AUTHORS, AuthorService.getInstance().findAll());
-        } catch (DAOException | ServiceException exception) {
+        } catch (ServiceException exception) {
             throw new CommandException(exception);
         }
         return new Router(JSPPages.ADD_BOOK_PAGE);

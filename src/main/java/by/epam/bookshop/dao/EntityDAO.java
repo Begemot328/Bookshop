@@ -2,9 +2,14 @@ package by.epam.bookshop.dao;
 
 import by.epam.bookshop.entity.Entity;
 import by.epam.bookshop.exceptions.DAOException;
-
 import java.util.Collection;
 
+/**
+ * Entity DAO interface.
+ *
+ * @author Yury Zmushko
+ * @version 1.0
+ */
 public interface EntityDAO<T extends Entity> {
 
     /**
@@ -77,6 +82,11 @@ public interface EntityDAO<T extends Entity> {
      */
     Collection<T> findBy(EntityFinder<T> finder, int offset, int quantity) throws DAOException;
 
+    /**
+     * Count all objects method
+     *
+     * @throws DAOException
+     */
     int countAll() throws DAOException;
 
     /**

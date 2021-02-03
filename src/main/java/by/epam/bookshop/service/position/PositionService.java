@@ -27,10 +27,6 @@ import java.util.Arrays;
 import java.util.Collection;
 
 public class PositionService extends AbstractEntityService<Position> {
-    private static final String SQL_CONNECTION_EXCEPTION = "SQL Connection Exception: ";
-    private static final String SQL_EXCEPTION = "SQL Connection Exception: ";
-    private static final String DAO_EXCEPTION = "DAO Exception: ";
-    private static final String FACTORY_EXCEPTION = "Position factory Exception: ";
     private static final String NO_RIGHTS_EXCEPTION
             = "Only admin or seller can manage positions";
     private static final String WRONG_INPUT_EXCEPTION

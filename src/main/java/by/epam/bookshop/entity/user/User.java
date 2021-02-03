@@ -98,7 +98,7 @@ public class User extends Entity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return getId() == user.getId() && getPassword() == user.getPassword()
+        return getId() == user.getId() && getPassword().equals(user.getPassword())
                 && getFirstName().equals(user.getFirstName())
                 && getLastName().equals(user.getLastName())
                 && getLogin().equals(user.getLogin())

@@ -19,7 +19,7 @@ public class AddBookMenuCommand implements Command {
         try {
             Author[] authors = AuthorService.getInstance().findAll().toArray(Author[]::new);
             request.setAttribute(RequestParameters.AUTHORS, authors);
-        } catch (ServiceException | DAOException e) {
+        } catch (ServiceException e) {
             throw new CommandException(e);
         }
         return new Router(JSPPages.ADD_BOOK_PAGE);

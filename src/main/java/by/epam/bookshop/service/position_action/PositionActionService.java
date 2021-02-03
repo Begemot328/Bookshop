@@ -11,13 +11,6 @@ import java.sql.Connection;
 
 public class PositionActionService extends AbstractEntityService<PositionAction> {
 
-    private static final String SQL_CONNECTION_EXCEPTION = "SQL Exception: ";
-    private static final String DAO_EXCEPTION = "DAO Exception: ";
-    private static final String FACTORY_EXCEPTION = "User factory Exception: ";
-    private static final String NO_RIGHTS_EXCEPTION
-            = "Only admin or seller can manage books";
-    private static final String WRONG_INPUT_EXCEPTION
-            = "Wrong data input!";
     private final static PositionActionService INSTANCE = new PositionActionService();
 
     public static PositionActionService getInstance() {

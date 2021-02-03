@@ -1,4 +1,4 @@
-package test.by.epam.bookshop.util;
+package test.by.epam.bookshop.service;
 
 import by.epam.bookshop.dao.EntityFinder;
 import by.epam.bookshop.dao.impl.author.AuthorFinder;

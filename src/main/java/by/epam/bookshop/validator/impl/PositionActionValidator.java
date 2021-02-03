@@ -33,12 +33,12 @@ public class PositionActionValidator extends AbstractEntityValidator<PositionAct
     @Override
     public void validate(PositionAction positionAction) throws ValidationException {
         if (positionAction.getShop() == null
-        || positionAction.getFinalPosition() == null
-        || positionAction.getCurrentPrice() <= 0
-        || positionAction.getInitialPosition() == null
-        || positionAction.getInitialStatus() == null
-        || positionAction.getFinalStatus() == null) {
-
+                || positionAction.getFinalPosition() == null
+                || positionAction.getCurrentPrice() <= 0
+                || positionAction.getQuantity() <= 0
+                || positionAction.getInitialStatus() == null
+                || positionAction.getFinalStatus() == null) {
+            throw new ValidationException(INPUT_ERROR);
         }
     }
 }
