@@ -21,8 +21,6 @@ public class MySQLAuthorDAO extends MySQLEntityDAO<Author> {
     private static final String ID = "ID";
     private static final String FIRSTNAME = "first_name";
     private static final String LASTNAME = "last_name";
-    private static final String SQL_EXCEPTION = "SQL Exception: ";
-    private static final String FACTORY_EXCEPTION = "Factory Exception: ";
     private static final String SCHEMA = "BOOKSHOP";
     private static final String TABLE = "AUTHORS";
     private static final String PHOTO_LINK = "PHOTO_LINK";
@@ -45,8 +43,6 @@ public class MySQLAuthorDAO extends MySQLEntityDAO<Author> {
     public AuthorFinder getFinder() {
         return new AuthorFinder();
     }
-
-
 
     @Override
     public Collection<Author> mapToList(ResultSet resultSet) throws DAOException {
