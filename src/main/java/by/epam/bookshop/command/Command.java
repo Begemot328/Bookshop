@@ -16,8 +16,8 @@ public interface Command {
      * {@link Router} creation after command execution.
      *
      * @param request   {@link HttpServletRequest} request to get params
-     * @throws {@link CommandException} exception
      * @return {@link Router} object
+     * @throws CommandException {@link CommandException} exception
      */
     Router execute (HttpServletRequest request) throws CommandException;
 }

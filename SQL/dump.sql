@@ -30,7 +30,7 @@ CREATE TABLE `authors` (
   `description` text,
   PRIMARY KEY (`id`),
   KEY `id_index` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `authors` (
 
 LOCK TABLES `authors` WRITE;
 /*!40000 ALTER TABLE `authors` DISABLE KEYS */;
-INSERT INTO `authors` VALUES (1,' ','The Church',NULL,NULL),(2,'George','Martin','https://drive.google.com/uc?export=view&id=10c9CU4e_FWvGbc4RMvwSCH7HMqPPbgTX','George Raymond Richard Martin(born George Raymond Martin; September 20, 1948), also known as GRRM, is an American novelist and short story writer, screenwriter, and television producer. He is the author of the series of epic fantasy novels A Song of Ice and Fire, which was adapted into the Emmy Award-winning HBO series Game of Thrones (2011–2019).\r\n\r\nIn 2005, Lev Grossman of Time called Martin \"the American Tolkien\", and in 2011, he was included on the annual Time 100 list of the most influential people in the world.'),(3,'George','Orwell','https://drive.google.com/uc?export=view&id=1MkbsHovRhQFoYSE_0DLWSkJW-SIYbSSD',NULL),(4,'Roger ','Zelazny','https://drive.google.com/uc?export=view&id=1W7yH9YKjrvxdb5ILvo3u57T2NIBw23_t',NULL),(5,'Лев','Толстой','https://drive.google.com/uc?export=view&id=1j-sx_Uq_Cc1YEUcQGxc_m2ucZ-PsrPxq',NULL),(6,'John','Tolkien','https://drive.google.com/uc?export=view&id=197fOoctZCdA3NhoRpycjoM2tTu4vwyFV',NULL),(7,'Федор','Достоевский','https://drive.google.com/uc?export=view&id=1ffGYUh8B3gFX-0vgrnjg2fyunoZ9cZiM',NULL),(8,'Александр','Пушкин','https://drive.google.com/uc?export=view&id=1b6-V7ZBHNWINqrHKMLGGcetWPVXooEoD',NULL),(9,'Terry','Pratchett','https://drive.google.com/uc?export=view&id=1ZzlzMEfk1r0G1Tm2fgMrCrhqPepD13TK',NULL),(10,'Янка','Купала','https://drive.google.com/uc?export=view&id=1XlhV2kImiFwHPnnxDtduYFaNREuTueIk',NULL),(11,'Сергей','Довлатов','https://drive.google.com/uc?export=view&id=19F_Al4LukFLFjd-rY04_wpW0LnFpQjJl',NULL),(12,'Віктар','Марціновіч','https://drive.google.com/uc?export=view&id=1YvwCqMAAuPt_DW-ZdbE7qljAq4PWjL5y',NULL),(13,'Александр','Солженицын','https://drive.google.com/uc?export=view&id=1wQQSj6brxAB8xjbimKwlUyKf3yPpE6BA',NULL),(14,'Gregory David','Roberts','https://drive.google.com/uc?export=view&id=1FMeaPu8dAwqBBiOhXj5mzm755ykS7-ii',NULL),(15,'fdfsd','sdfsdf',NULL,NULL);
+INSERT INTO `authors` VALUES (1,' ','The Church',NULL,NULL),(2,'George','Martin','https://drive.google.com/uc?export=view&id=10c9CU4e_FWvGbc4RMvwSCH7HMqPPbgTX','George Raymond Richard Martin(born George Raymond Martin; September 20, 1948), also known as GRRM, is an American novelist and short story writer, screenwriter, and television producer. He is the author of the series of epic fantasy novels A Song of Ice and Fire, which was adapted into the Emmy Award-winning HBO series Game of Thrones (2011–2019).\r\n\r\nIn 2005, Lev Grossman of Time called Martin \"the American Tolkien\", and in 2011, he was included on the annual Time 100 list of the most influential people in the world.'),(3,'George','Orwell','https://drive.google.com/uc?export=view&id=1MkbsHovRhQFoYSE_0DLWSkJW-SIYbSSD',NULL),(4,'Roger ','Zelazny','https://drive.google.com/uc?export=view&id=1W7yH9YKjrvxdb5ILvo3u57T2NIBw23_t',NULL),(5,'Лев','Толстой','https://drive.google.com/uc?export=view&id=1j-sx_Uq_Cc1YEUcQGxc_m2ucZ-PsrPxq',NULL),(6,'John','Tolkien','https://drive.google.com/uc?export=view&id=197fOoctZCdA3NhoRpycjoM2tTu4vwyFV',NULL),(7,'Федор','Достоевский','https://drive.google.com/uc?export=view&id=1ffGYUh8B3gFX-0vgrnjg2fyunoZ9cZiM',NULL),(8,'Александр','Пушкин','https://drive.google.com/uc?export=view&id=1b6-V7ZBHNWINqrHKMLGGcetWPVXooEoD',NULL),(9,'Terry','Pratchett','https://drive.google.com/uc?export=view&id=1ZzlzMEfk1r0G1Tm2fgMrCrhqPepD13TK',NULL),(10,'Янка','Купала','https://drive.google.com/uc?export=view&id=1XlhV2kImiFwHPnnxDtduYFaNREuTueIk',NULL),(11,'Сергей','Довлатов','https://drive.google.com/uc?export=view&id=19F_Al4LukFLFjd-rY04_wpW0LnFpQjJl',NULL),(12,'Віктар','Марціновіч','https://drive.google.com/uc?export=view&id=1YvwCqMAAuPt_DW-ZdbE7qljAq4PWjL5y',NULL),(13,'Александр','Солженицын','https://drive.google.com/uc?export=view&id=1wQQSj6brxAB8xjbimKwlUyKf3yPpE6BA',NULL),(14,'Gregory David','Roberts','https://drive.google.com/uc?export=view&id=1FMeaPu8dAwqBBiOhXj5mzm755ykS7-ii',NULL),(15,'fdfsd','sdfsdf',NULL,NULL),(16,'Alexander','Pushkin','http://www.google.com','description'),(17,'Alexander','Pushkin','http://www.google.com','description'),(18,'Alexander','Pushkin','http://www.google.com','description');
 /*!40000 ALTER TABLE `authors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -427,8 +427,8 @@ CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT,
   `first_name` varchar(40) NOT NULL,
   `last_name` varchar(40) NOT NULL,
-  `login` varchar(10) NOT NULL,
-  `password` int NOT NULL,
+  `login` varchar(40) NOT NULL,
+  `password` varchar(100) NOT NULL,
   `address` varchar(100) NOT NULL,
   `photo_link` varchar(100) DEFAULT NULL,
   `status` tinyint DEFAULT NULL,
@@ -444,7 +444,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Yury','Zmushko','root',3506402,'vulica Hrušaŭskaja 73, Minsk 220089, Belarus',NULL,4),(2,'Ivan','Ivanoy','IIvanoy',-946852072,'praspiekt Niezaliežnasci 65, Minsk, Belarus',NULL,3),(3,'Petr','Petroy','PPetroy',-946852072,'Ulitsa Novovilenskaya 11, Minsk, Belarus',NULL,3),(4,'Sidor ','Sidorov','SSidorov',-946852072,'vulica Janki Lučyny 11, Minsk, Belarus',NULL,2),(5,'Morozov ','Igor','IMorozov',-946852072,'praspiekt Haziety Praŭda 25, Minsk 220089, Belarus',NULL,2);
+INSERT INTO `users` VALUES (1,'Yury','Zmushko','root','ma3CMbBFMx5RSlFrS3aA9YjjgjITq+kBc4vDrWey9vyzxk77k9GAAliNPMwaSe+64c4gy0PfNrOGUfEfp1Z46A==','vulica Hrušaŭskaja 73, Minsk 220089, Belarus',NULL,4),(2,'Ivan','Ivanoy','IIvanoy','DdPlEmQsl8o/dH+aduN0+9pz+SkoI8AxO+nXit183Y9yI1rwxVPdJnl+eOGFTt7grgAviroHSwZt/OGvEU4y+A==','praspiekt Niezaliežnasci 65, Minsk, Belarus',NULL,3),(3,'Petr','Petroy','PPetroy','DdPlEmQsl8o/dH+aduN0+9pz+SkoI8AxO+nXit183Y9yI1rwxVPdJnl+eOGFTt7grgAviroHSwZt/OGvEU4y+A==','Ulitsa Novovilenskaya 11, Minsk, Belarus',NULL,3),(4,'Sidor ','Sidorov','SSidorov','DdPlEmQsl8o/dH+aduN0+9pz+SkoI8AxO+nXit183Y9yI1rwxVPdJnl+eOGFTt7grgAviroHSwZt/OGvEU4y+A==','vulica Janki Lučyny 11, Minsk, Belarus',NULL,2),(5,'Morozov ','Igor','IMorozov','DdPlEmQsl8o/dH+aduN0+9pz+SkoI8AxO+nXit183Y9yI1rwxVPdJnl+eOGFTt7grgAviroHSwZt/OGvEU4y+A==','praspiekt Haziety Praŭda 25, Minsk 220089, Belarus',NULL,2);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -565,4 +565,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-02-01 16:59:37
+-- Dump completed on 2021-02-04 11:02:56

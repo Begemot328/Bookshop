@@ -110,7 +110,7 @@ public interface EntityService<T extends Entity> {
      * @param first quantity of elements to skip
      * @param last quantity of elements to return
      * @param finder criteria to find
-     * @throws DAOException
+     * @throws ServiceException
      */
     Collection<T> findBy(EntityFinder<T> finder, int first, int last) throws ServiceException;
 

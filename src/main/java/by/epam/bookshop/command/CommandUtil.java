@@ -51,6 +51,7 @@ public class CommandUtil {
      *
      * @param elements quantity of elements
      * @param elementsPerPage quantity of elements per page
+     * @return quantity of pages
      */
     public static int pageQuantity(int elements, int elementsPerPage) {
         int pageQuantity =elements / elementsPerPage;
@@ -70,6 +71,9 @@ public class CommandUtil {
      * @param pathId ID of target path at DriveGoogle
      * @param request {@link HttpServletRequest} to handle
      * @see HttpServletRequest
+     * @throws GeneralSecurityException
+     * @throws IOException
+     * @throws ServletException
      */
     public static URL getBookLink(HttpServletRequest request, int width, int height, String pathId)
             throws GeneralSecurityException, IOException, ServletException {
