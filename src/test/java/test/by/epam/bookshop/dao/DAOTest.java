@@ -32,10 +32,7 @@ import by.epam.bookshop.exceptions.FactoryException;
 import by.epam.bookshop.pool.DbParameter;
 import by.epam.bookshop.resource.DbResourceManager;
 import by.epam.bookshop.util.AddressObject;
-import org.junit.Assert;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -83,7 +80,7 @@ public class DAOTest extends Assert {
     private static MySQLPositionActionDAO positionActionDAO;
 
     @BeforeClass
-    public static void initDatabase() throws AddressException, ClassNotFoundException, NoSuchMethodException,
+    public static void initDatabase() throws ClassNotFoundException, NoSuchMethodException,
             IllegalAccessException, InvocationTargetException, InstantiationException, SQLException,
             FileNotFoundException, FactoryException {
         Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
@@ -99,17 +96,6 @@ public class DAOTest extends Assert {
             statement.addBatch(scanner.next().concat(";"));
         }
         statement.executeBatch();
-        shop = new ShopFactory().create("На Сурганова", new AddressObject("Минск, Сурганова, 11"), null);
-        author = new AuthorFactory().create("Alexander", "Pushkin", null, null);
-        book = new BookFactory().create("The tale about the Golden Rooster",
-                author, "The tale about the Golden Rooster by Alexander Pushkin", (float) 10.1, null);
-        seller = new UserFactory().create("Yury", "Zmushko", "login", "946852072",
-                new AddressObject("Минск, Дзержинского, 11"), null, UserStatus.SELLER);
-        buyer = new UserFactory().create("Yury", "Zmushko", "login", "946852072",
-                new AddressObject("Минск, Дзержинского, 11"), null, UserStatus.SELLER);
-        position = new PositionFactory().create(book, shop, PositionStatus.READY, null, 1);
-        positionAction = new PositionActionFactory().create(null, position, buyer, seller, LocalDateTime.now(),
-                1, PositionStatus.NON_EXISTENT, PositionStatus.READY, shop, book.getPrice());
 
         userDAO = new MySQLUserDAO(connection);
         shopDAO = new MySQLShopDAO(connection);
@@ -124,6 +110,22 @@ public class DAOTest extends Assert {
         PreparedStatement statement = connection.prepareStatement(DROP_SCHEMA);
         statement.executeUpdate();
         connection.close();
+    }
+
+    @Before
+    public static void initTest() throws FactoryException, AddressException {
+        shop = new ShopFactory().create("На Сурганова", new AddressObject("Минск, Сурганова, 11"), null);
+        author = new AuthorFactory().create("Alexander", "Pushkin", null, null);
+        book = new BookFactory().create("The tale about the Golden Rooster",
+                author, "The tale about the Golden Rooster by Alexander Pushkin", (float) 10.1, null);
+        seller = new UserFactory().create("Yury", "Zmushko", "login", "946852072",
+                new AddressObject("Минск, Дзержинского, 11"), null, UserStatus.SELLER);
+        buyer = new UserFactory().create("Yury", "Zmushko", "login", "946852072",
+                new AddressObject("Минск, Дзержинского, 11"), null, UserStatus.SELLER);
+        position = new PositionFactory().create(book, shop, PositionStatus.READY, null, 1);
+        positionAction = new PositionActionFactory().create(null, position, buyer, seller, LocalDateTime.now(),
+                1, PositionStatus.NON_EXISTENT, PositionStatus.READY, shop, book.getPrice());
+
     }
 
     @Test
