@@ -137,11 +137,11 @@
                             <c:out value="${action.shop.name}"/></a></td>
                     <td>
                         <a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_BOOK_COMMAND&bookId=${action.initialPosition.book.id}">
-                            <c:out value="${action.initialPosition.book.title}"/></a></td>
+                            <c:out value="${action.finalPosition.book.title}"/></a></td>
                     <td>
                         <a href="${pageContext.request.contextPath}/ControllerURL?command=VIEW_AUTHOR_COMMAND&authorId=${action.initialPosition.book.author.id}">
-                            <c:out value="${action.initialPosition.book.author.firstName}
-                        ${action.initialPosition.book.author.lastName}"/></a></td>
+                            <c:out value="${action.finalPosition.book.author.firstName}
+                        ${action.finalPosition.book.author.lastName}"/></a></td>
                     <td><c:out value="${action.quantity}"/></td>
                     <td><c:out value="${action.currentPrice}"/></td>
                     <td>

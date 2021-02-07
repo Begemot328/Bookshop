@@ -21,6 +21,16 @@ public class ViewUserCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         try {
+            int page;
+            try {
+                page = Integer.parseInt(request.getParameter(RequestParameters.PAGE));
+                if (page <= 0) {
+                    page = 1;
+                }
+            } catch (NumberFormatException e) {
+                page = 1;
+            }
+
             User user = UserService.getInstance()
                     .read(Integer.parseInt(request.getParameter(RequestParameters.USER_ID)));
             PositionAction[] actions;
@@ -31,7 +41,7 @@ public class ViewUserCommand implements Command {
                 finder = new PositionActionFinder().findBySeller(user.getId());
             }
             actions = PositionActionService.getInstance()
-                    .findBy(finder)
+                    .findBy(finder, (page - 1) * ELEMENTS_PER_PAGE, ELEMENTS_PER_PAGE)
                     .toArray(PositionAction[]::new);
 
             int pageQuantity = CommandUtil.pageQuantity(PositionActionService.getInstance().countBy(finder),
@@ -39,6 +49,9 @@ public class ViewUserCommand implements Command {
 
             request.setAttribute(RequestParameters.ACTIONS, actions);
             request.setAttribute(RequestParameters.USER, new UserDTO(user));
+
+            request.setAttribute(RequestParameters.PAGE_QUANTITY, pageQuantity);
+            request.setAttribute(RequestParameters.CURRENT_PAGE, page);
 
             if (request.getSession().getAttribute(SessionParameters.CURRENT_USER) != null) {
                 User currentUser = (User) request.getSession().getAttribute(SessionParameters.CURRENT_USER);

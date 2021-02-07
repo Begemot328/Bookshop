@@ -93,7 +93,7 @@
                 <input type="hidden" name="command" value="VIEW_SHOP_COMMAND">
                 <input type="hidden" name="shopId" value="${requestScope.position.shop.id}">
                 <button class="w3-panel w3-button w3-large w3-purple w3-opacity" type="submit" style="width: 100%">
-                    <h4><fmt:message key="shop"/>${requestScope.position.shop.name}</h4>
+                    <h4><fmt:message key="shop"/>: ${requestScope.position.shop.name}</h4>
                 </button>
             </form>
             <c:choose>

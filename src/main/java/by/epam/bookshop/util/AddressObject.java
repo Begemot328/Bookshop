@@ -30,7 +30,7 @@ public class AddressObject {
 
     public void processAddress(String address) throws AddressException {
         final JSONObject response;
-        addressToGeo.put("address", URLEncoder.encode(address, StandardCharsets.UTF_8));
+        addressToGeo.put("address", address);
         addressToGeo.put("key", key);
         addressToGeo.put(language,"en");
         addressToGeo.put("charset","utf-8");
@@ -67,7 +67,8 @@ public class AddressObject {
         StringBuilder builder = new StringBuilder(baseURL);
         builder.append("?");
         for (String key :params.keySet()) {
-            builder.append(key).append("=").append(params.get(key).replace(" ", "%20")).append("&");
+            builder.append(key).append("=").append(URLEncoder.encode(params.get(key), StandardCharsets.UTF_8))
+                    .append("&");
         }
         builder.deleteCharAt(builder.length() - 1);
         return builder.toString();
