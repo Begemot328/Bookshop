@@ -122,10 +122,9 @@ public class Controller  extends HttpServlet {
             request.getRequestDispatcher(router.getPage().getPage()).forward(request, response);
 
         } else if (router.getType() == Router.Type.REDIRECT){
-            logger.debug(router.getURL().toString());
-
+            logger.debug(response.encodeRedirectURL(router.getURL().toString()));
             CommandUtil.clearParameters(request);
-            response.sendRedirect(router.getURL().toString());
+            response.sendRedirect(response.encodeRedirectURL(router.getURL().toString()));
         }
     }
 
