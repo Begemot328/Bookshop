@@ -54,7 +54,7 @@
         <form class="w3-row-padding" method="POST" action="${pageContext.request.contextPath}/ControllerURL">
             <input type="hidden" name="command" value="LOGIN_COMMAND">
             <div class="w3-container" style="width:35%">
-                <input class="w3-input w3-border" type="text" name="login" required
+                <input class="w3-input w3-border" type="text" name="login" required value="${requestScope.login}"
                        placeholder="<fmt:message key="login"/>">
             </div>
             <br/>
